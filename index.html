@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>Ешмамбетова Бермет — Технический надзор / Строительный контроль</title>
+    <style>
+        /* ==================== RESET & БАЗА ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e9ecef;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Noto Sans', Arial, sans-serif;
+            line-height: 1.45;
+            padding: 20px;
+            color: #1e2a3e;
+        }
+
+        /* ==================== ОСНОВНОЙ КОНТЕЙНЕР ==================== */
+        .resume {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* ==================== ШАПКА ==================== */
+        .header {
+            background: white;
+            padding: 25px 20px 20px 20px;
+            border-bottom: 4px solid #0039a6;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0039a6;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+        .header .title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+        .header .info {
+            font-size: 14px;
+            color: #4a5b6e;
+            border-top: 1px solid #dee2e6;
+            padding-top: 12px;
+            margin-top: 6px;
+        }
+        .contacts {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #0039a6;
+            background: #f0f4f8;
+            padding: 8px 15px;
+            border-radius: 25px;
+            display: inline-block;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+        .contacts a {
+            color: #0039a6;
+            text-decoration: none;
+        }
+        .contacts a:hover {
+            text-decoration: underline;
+        }
+        .contacts span {
+            white-space: nowrap;
+        }
+
+        /* ==================== СЕКЦИИ ==================== */
+        .section {
+            padding: 20px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            background-color: #0039a6;
+            color: white;
+            padding: 8px 15px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 0;
+            letter-spacing: 0.5px;
+        }
+        .section-title-red {
+            background-color: #d32f2f;
+        }
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #d32f2f;
+            margin: 20px 0 12px 0;
+            border-left: 4px solid #d32f2f;
+            padding-left: 12px;
+        }
+        .subsection-title-small {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0039a6;
+            margin: 15px 0 8px 0;
+        }
+
+        /* ==================== ТАБЛИЦЫ ==================== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 15px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 500px;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ced4da;
+            padding: 8px 10px;
+            vertical-align: top;
+        }
+        .data-table th {
+            background-color: #f1f3f5;
+            font-weight: 700;
+            text-align: center;
+            color: #1e2a3e;
+        }
+        .data-table td {
+            background-color: #fff;
+        }
+        .money {
+            text-align: right;
+            white-space: nowrap;
+        }
+        .center {
+            text-align: center;
+        }
+        .bold {
+            font-weight: 700;
+        }
+        .red-text {
+            color: #d32f2f;
+        }
+        .blue-text {
+            color: #0039a6;
+        }
+
+        /* ==================== СПИСКИ ==================== */
+        .skill-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .skill-list li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            font-size: 13px;
+        }
+        .skill-list li:before {
+            content: "•";
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 16px;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .compact-list {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        .compact-list li {
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        /* ==================== ТЕГИ / БЕЙДЖИ ==================== */
+        .badge {
+            background-color: #e9ecef;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            color: #1e2a3e;
+        }
+
+        /* ==================== ФУТЕР ==================== */
+        .footer-note {
+            background-color: #f8f9fa;
+            padding: 12px 20px;
+            font-size: 11px;
+            color: #6c757d;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* ==================== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ ==================== */
+        @media (max-width: 700px) {
+            body {
+                padding: 10px;
+            }
+            .section {
+                padding: 15px 15px;
+            }
+            .section-title {
+                margin: -15px -15px 15px -15px;
+                font-size: 16px;
+            }
+            .data-table th, .data-table td {
+                padding: 6px 8px;
+                font-size: 11px;
+            }
+            .header {
+                padding: 15px 15px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header .title {
+                font-size: 15px;
+            }
+            .contacts {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+            .contacts span {
+                display: inline-block;
+                margin: 3px 0;
+            }
+            .skill-list li, .compact-list li {
+                font-size: 12px;
+            }
+            .subsection-title {
+                font-size: 15px;
+            }
+        }
+
+        /* ==================== ПЛАНШЕТЫ ==================== */
+        @media (min-width: 701px) and (max-width: 1024px) {
+            .section {
+                padding: 20px 25px;
+            }
+            .section-title {
+                margin: -20px -25px 20px -25px;
+            }
+            .data-table th, .data-table td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
+
+        /* ==================== ПЕЧАТЬ ==================== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .resume {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .badge {
+                background-color: #e9ecef;
+                border: 1px solid #ccc;
+            }
+            .contacts {
+                background: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="resume">
+    <!-- ==================== ШАПКА ==================== -->
+    <div class="header">
+        <h1>ЕШМАМБЕТОВА БЕРМЕТ</h1>
+        <div class="title">Специалист по техническому надзору / Строительному контролю</div>
+        <div class="info">Опыт работы в строительстве: 6+ лет</div>
+        <div class="contacts">
+            <span>📞 +7 (901) 719-14-46</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <span>✉️ <a href="mailto:eshmambetovabermet@gmail.com">eshmambetovabermet@gmail.com</a></span>
+        </div>
+    </div>
+
+    <!-- ==================== 1. КЛЮЧЕВЫЕ КОМПЕТЕНЦИИ ==================== -->
+    <div class="section">
+        <div class="section-title">КЛЮЧЕВЫЕ КОМПЕТЕНЦИИ (ТЕХНИЧЕСКИЙ НАДЗОР / СТРОИТЕЛЬНЫЙ КОНТРОЛЬ)</div>
+        <ul class="skill-list">
+            <li>Проверка и согласование актов КС-2, КС-3 – недопущение завышения объёмов (выявлено более 15 млн руб.)</li>
+            <li>Приёмка скрытых работ (АОСР) по всем видам работ (конструктив, отделка, инженерные системы)</li>
+            <li>Контроль качества общестроительных работ: монолитный каркас, кирпичная кладка, фасады, отделка</li>
+            <li>Контроль внутренних инженерных систем: ОВиВК (отопление, вентиляция, водоснабжение)</li>
+            <li>Ведение и анализ исполнительной документации (акты, журналы, сертификаты, паспорта)</li>
+            <li>Претензионная работа: составление писем, уведомлений, актов о выявленных недостатках</li>
+            <li>Мониторинг соблюдения графиков производства работ</li>
+        </ul>
+    </div>
+
+    <!-- ==================== 2. ОПЫТ РАБОТЫ ==================== -->
+    <div class="section">
+        <div class="section-title">ОПЫТ РАБОТЫ</div>
+        <p><strong>2019 – настоящее время (6+ лет)</strong> | Специалист строительного контроля / Инженер ПТО<br>
+        <span class="blue-text">Подрядная организация, Москва</span> (осуществление общестроительных работ)</p>
+
+        <div class="subsection-title">Генподрядчики / Заказчики (объекты строительного контроля / инженер ПТО):</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>№</th><th>Организация</th><th>ИНН</th><th>Статус / Масштаб</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="center">1</td><td>ООО «ИНГРАД</td><td>7704452150</td><td>Крупный девелопер</td></tr>
+                    <tr><td class="center">2</td><td>ООО «СМАЙНЕКС»</td><td>7709783935</td><td>Девелопер бизнес-класса, действующий</td></tr>
+                    <tr><td class="center">3</td><td>ООО «ГС Консракшен»</td><td>7718918020</td><td>Международный девелопер, действующий</td></tr>
+                    <tr><td class="center">4</td><td>АО ГК «ЭТАЛОН»</td><td>7716527720</td><td>Публичный девелопер, ТОП-5 РФ</td></tr>
+                    <tr><td class="center">5</td><td>ООО «СПМ-жилстрой»</td><td>7728315020</td><td>Генподрядчик, ТОП-3 РФ</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="subsection-title-small">Основные функции в рамках строительного контроля:</div>
+        <ul class="compact-list">
+            <li>Проверка актов КС-2, КС-3: выявлено и предотвращено завышение объёмов на сумму более 15 млн руб.</li>
+            <li>Приёмка скрытых работ (АОСР) по монолитным конструкциям, гидроизоляции, армированию, узлам ввода инженерных систем.</li>
+            <li>Контроль общестроительных работ: монолитный каркас, кладка, фасады, черновая и чистовая отделка (стяжки, штукатурка, плитка).</li>
+            <li>Контроль внутренних инженерных систем ОВиВК: проверка монтажа стояков, разводки, радиаторов, вентиляционных коробов.</li>
+            <li>Ведение претензионной работы: составление уведомлений о выявленных недостатках, претензионных писем, актов о неустранении дефектов.</li>
+            <li>Мониторинг соблюдения календарно-сетевых графиков в MS Project, анализ отклонений.</li>
+        </ul>
+    </div>
+
+    <!-- ==================== 3. ПРИМЕР КОНТРОЛЯ КС-2 ==================== -->
+    <div class="section">
+        <div class="section-title section-title-red">ПРИМЕР РЕЗУЛЬТАТОВ СТРОИТЕЛЬНОГО КОНТРОЛЯ (ВЫЯВЛЕННЫЕ ЗАВЫШЕНИЯ В КС-2)</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>№</th><th>Объект / Генподрядчик</th><th>Вид работ</th><th>Заявлено (тыс. руб.)</th><th>Принято (тыс. руб.)</th><th>Снижение (тыс. руб.)</th><th>Причина корректировки</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="center">1</td><td>ЖК «Изумрудные холмы» / ООО «СПМ-жилстрой»</td><td>Монолитные работы</td><td class="money">3 420</td><td class="money">3 180</td><td class="money">240</td><td>Завышение объёма на 120 м³</td></tr>
+                    <tr><td class="center">2</td><td>ЖК «Изумрудные холмы» / ООО «СПМ-жилстрой»</td><td>Армирование (А500С)</td><td class="money">1 870</td><td class="money">1 720</td><td class="money">150</td><td>Необоснованный расход арматуры</td></tr>
+                    <tr><td class="center">4</td><td>ЖК «Изумрудные холмы» / ООО «СПМ-жилстрой»</td><td>ОВиВК (монтаж радиаторов)</td><td class="money">620</td><td class="money">560</td><td class="money">60</td><td>Неверный коэффициент</td></tr>
+                    <tr style="background-color: #f1f3f5;">
+                        <td colspan="5" class="bold center">ИТОГО СНИЖЕНИЕ:</td>
+                        <td class="money bold">450</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== 4. ОБРАЗОВАНИЕ ==================== -->
+    <div class="section">
+        <div class="section-title">ОБРАЗОВАНИЕ</div>
+        <p><strong>2015 - 2019 | ТОМСКИЙ ГОСУДАРСТВЕННЫЙ АРХИТЕКТУРНО-СТРОИТЕЛЬНЫЙ УНИВЕРСИТЕТ (ТГАСУ)</strong><br>
+        Факультет: Строительный институт (Институт строительства и жилищно-коммунального комплекса)<br>
+        Специальность / Направление: Промышленное и гражданское строительство (ПГС)<br>
+        Квалификация: Инженер-строитель<br>
+        <span class="red-text bold">Красный диплом (диплом с отличием)</span></p>
+    </div>
+
+    <!-- ==================== 5. АНАЛИТИКА, БАЗЫ ДАННЫХ, MS PROJECT ==================== -->
+    <div class="section">
+        <div class="section-title">АНАЛИТИКА ДАННЫХ, БАЗЫ ДАННЫХ И УПРАВЛЕНИЕ ПРОЕКТАМИ (MS PROJECT)</div>
+        <ul class="skill-list">
+            <li><strong>MS Project:</strong> создание календарно-ресурсного графика, назначение ресурсов (люди, механизмы, материалы), отслеживание хода работ по факту (процент выполнения, фактические трудозатраты), анализ отклонений от базового плана.</li>
+            <li><strong>Excel (продвинутый уровень):</strong> сводные таблицы, Power Query, модели данных, построение дашбордов для мониторинга выполнения графиков и бюджетов.</li>
+            <li><strong>Работа с базами данных:</strong> SQL (базовый уровень) для выгрузки и анализа объёмов, ведомостей ресурсов, реестров актов.</li>
+            <li><strong>Автоматизация отчётности:</strong> формирование еженедельных отчётов по контролю КС-2, КС-3, реестров АОСР.</li>
+        </ul>
+    </div>
+
+    <!-- ==================== 6. ПРИМЕР КАЛЕНДАРНО-СЕТЕВОГО ГРАФИКА ==================== -->
+    <div class="section">
+        <div class="section-title section-title-red">ПРИМЕР РАЗРАБОТКИ КАЛЕНДАРНО-СЕТЕВОГО ГРАФИКА В MS PROJECT</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>№</th><th>Наименование работ</th><th>Длительность (дни)</th><th>Ресурс (чел.)</th><th>Начало</th><th>Окончание</th><th>% выполнения</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="center">1</td><td>Разработка котлована</td><td class="center">10</td><td class="center">15</td><td>01.04.2026</td><td>10.04.2026</td><td class="center">100%</td></tr>
+                    <tr><td class="center">2</td><td>Устройство шпунтового ограждения</td><td class="center">8</td><td class="center">12</td><td>05.04.2026</td><td>12.04.2026</td><td class="center">90%</td></tr>
+                    <tr><td class="center">3</td><td>Бетонирование фундаментной плиты</td><td class="center">14</td><td class="center">20</td><td>10.04.2026</td><td>23.04.2026</td><td class="center">70%</td></tr>
+                    <tr><td class="center">4</td><td>Монолитный каркас (этаж 1-5)</td><td class="center">30</td><td class="center">25</td><td>15.04.2026</td><td>14.05.2026</td><td class="center">40%</td></tr>
+                    <tr><td class="center">5</td><td>Монтаж ОВиВК (стояки)</td><td class="center">15</td><td class="center">10</td><td>01.05.2026</td><td>15.05.2026</td><td class="center">20%</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="blue-text" style="font-size: 12px; margin-top: 8px;">Примечание: график разрабатывается в MS Project с назначением ресурсов, контролем критического пути и базового плана.</p>
+    </div>
+
+    <!-- ==================== 7. ПРЕТЕНЗИОННАЯ РАБОТА ==================== -->
+    <div class="section">
+        <div class="section-title">ПРЕТЕНЗИОННАЯ РАБОТА (В РАМКАХ СТРОИТЕЛЬНОГО КОНТРОЛЯ)</div>
+        <ul class="skill-list">
+            <li>Составление уведомлений о выявленных недостатках (формат письма с указанием пункта договора, срока устранения)</li>
+            <li>Подготовка претензионных писем подрядчикам при нарушении сроков или качества работ</li>
+            <li>Составление актов о неустранении дефектов в установленный срок</li>
+            <li>Ведение реестра претензий и уведомлений с отслеживанием статуса исполнения</li>
+        </ul>
+    </div>
+
+    <!-- ==================== 8. ТЕХНИЧЕСКИЕ НАВЫКИ ==================== -->
+    <div class="section">
+        <div class="section-title">ТЕХНИЧЕСКИЕ НАВЫКИ И ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ</div>
+        <div style="margin-top: 10px;">
+            <span class="badge">MS Project Professional</span>
+            <span class="badge">Excel (сводные таблицы, Power Query)</span>
+            <span class="badge">SQL (базовый уровень)</span>
+            <span class="badge">AutoCAD (чтение чертежей, базовое редактирование)</span>
+        </div>
+    </div>
+
+    <!-- ==================== 9. КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ КОНТРОЛЯ ==================== -->
+    <div class="section">
+        <div class="section-title">КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ СТРОИТЕЛЬНОГО КОНТРОЛЯ</div>
+        <ul class="skill-list">
+            <li><strong>Общестроительные работы (конструктив):</strong> монолитный каркас, армирование, опалубка, кирпичная кладка, устройство перекрытий, фасады (навесные, мокрые, СФБ-панели).</li>
+            <li><strong>Отделочные работы:</strong> стяжки, штукатурка, шпаклёвка, плиточные работы, подвесные потолки.</li>
+            <li><strong>Внутренние инженерные системы ОВиВК:</strong> отопление (стояки, радиаторы, тёплые полы), вентиляция (воздуховоды, вентфасады), водоснабжение и канализация (трубопроводы, фитинги, запорная арматура).</li>
+        </ul>
+    </div>
+
+    <!-- ==================== 10. О СЕБЕ ==================== -->
+    <div class="section">
+        <div class="section-title">О СЕБЕ</div>
+        <p>Ключевые компетенции: контроль общестроительных работ (конструктив, отделка) и инженерных систем ОВиВК, проверка КС-2/КС-3, приёмка скрытых работ, претензионная работа. Красный диплом ТГАСУ. Претендую на позицию специалиста по техническому надзору / стройконтролю.</p>
+        <p style="margin-top: 12px;">Готова к командировкам, работаю с большим объёмом документации.</p>
+    </div>
+
+    <!-- ==================== ФУТЕР ==================== -->
+    <div class="footer-note">
+        Дата актуальности резюме: апрель 2026 г.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>ПТО | Протокол №46 · ЖК «ОГНИ 3»</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            color: #eef2ff;
+            padding: 1.5rem 1rem;
+            line-height: 1.45;
+            min-height: 100vh;
+        }
+
+        /* основной контейнер — резина */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* карточки с прозрачностью (работает везде) */
+        .protocol-header {
+            background: rgba(10, 20, 45, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            border-left: 6px solid #e31b23;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+            word-break: break-word;
+        }
+
+        .protocol-header h1 {
+            font-size: clamp(1.4rem, 6vw, 1.9rem);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff, #a0b4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-date {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .badge {
+            background: #101a36;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            border: 1px solid #2a3a6e;
+            color: #cfdeff;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 560px) {
+            .badge {
+                white-space: normal;
+                word-break: keep-all;
+            }
+        }
+
+        .badge.red {
+            border-left: 3px solid #e31b23;
+            background: #1f1122;
+        }
+
+        /* секции */
+        .section {
+            background: rgba(6, 12, 28, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            margin-bottom: 1.8rem;
+            overflow: hidden;
+            border: 1px solid rgba(227, 27, 35, 0.3);
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #0e1a3a 0%, #030b1f 100%);
+            padding: 0.9rem 1.2rem;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            border-bottom: 1px solid #e31b2340;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title span {
+            background: #e31b23;
+            width: 6px;
+            height: 26px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* адаптивные таблицы */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0;
+            width: 100%;
+        }
+
+        .data-table {
+            width: 100%;
+            min-width: 620px;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            font-family: 'Arial', 'Helvetica Neue', sans-serif;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.9rem 0.8rem;
+            background-color: rgba(20, 35, 65, 0.9);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #bfd6ff;
+            border-bottom: 1px solid #2a4b7a;
+        }
+
+        .data-table td {
+            padding: 0.75rem 0.8rem;
+            border-bottom: 1px solid rgba(71, 98, 145, 0.4);
+            vertical-align: top;
+            color: #eef2ff;
+            font-size: 0.78rem;
+        }
+
+        /* для мобильных устройств чуть плотнее */
+        @media (max-width: 640px) {
+            .data-table th, .data-table td {
+                padding: 0.65rem 0.6rem;
+                font-size: 0.72rem;
+            }
+            .data-table {
+                min-width: 560px;
+            }
+        }
+
+        .data-table tr:hover td {
+            background-color: rgba(227, 27, 35, 0.08);
+        }
+
+        /* мигание */
+        .blink-text {
+            animation: pulseWarning 1.1s infinite ease-in-out;
+            font-weight: 700;
+            color: #ff6b6b;
+            text-shadow: 0 0 2px #ff0000aa;
+        }
+
+        @keyframes pulseWarning {
+            0% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+            50% { opacity: 0.65; text-shadow: 0 0 4px #e31b23; color: #ff8888; }
+            100% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+        }
+
+        .critical-date {
+            font-family: monospace;
+            font-weight: 700;
+            background: rgba(227, 27, 35, 0.2);
+            border-radius: 12px;
+            padding: 0.2rem 0.5rem;
+            display: inline-block;
+            font-size: 0.75rem;
+        }
+
+        .status-overdue {
+            border-left: 3px solid #e31b23;
+            background: rgba(227, 27, 35, 0.05);
+        }
+
+        /* участники */
+        .participant-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            padding: 1rem 1.2rem;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .org {
+            background: #0f1a2e;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            color: #b9ceff;
+            font-size: 0.75rem;
+            word-break: break-word;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        /* общие отступы */
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem;
+            }
+            .protocol-header, .section {
+                border-radius: 1.2rem;
+            }
+            .section-title {
+                padding: 0.7rem 1rem;
+            }
+        }
+
+        .mono {
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- ШАПКА -->
+    <div class="protocol-header">
+        <h1>ПРОТОКОЛ №46 · ШТАБ СТРОИТЕЛЬСТВА</h1>
+        <div style="font-size: clamp(0.85rem, 3.5vw, 1rem); margin-top: 0.5rem;">ЖК «ОГНИ-3» · г. Москва, вн.тер.г. муниципальный округ Раменки, уч. 120А/1</div>
+        <div class="badge-date">
+            <div class="badge">22 апреля 2026 г. | 09:30</div>
+            <div class="badge red">следующее совещание: 29.04.2026 09:30</div>
+            <div class="badge">штаб строительства (стройплощадка)</div>
+        </div>
+    </div>
+
+    <!-- УЧАСТНИКИ -->
+    <div class="section">
+        <div class="section-title"><span></span> УЧАСТНИКИ СОВЕЩАНИЯ</div>
+        <div class="participant-grid">
+            <span class="org">ООО «ДС Строй»: Гончаров А.С., Рябинин Ю.В., Филимонова А.В., Кривоносов В.В., Ленский Ф.А., Лебединский Д.О., Демин Я.В., Иванцок Д.М.</span>
+            <span class="org">ООО «Красотель»: Дубровский С.М., Левченко А.М.</span>
+            <span class="org">ООО «СКР»: Кудлай Н.Н., Подкорытов А.В., Сиваков С.Л., Каплина А.</span>
+            <span class="org">ООО «ЦПИО» / ООО «Эстетика Фасада»: Оголь П.В.</span>
+            <span class="org">ООО «СтройПроект» / ООО «ГринСити» / ООО «ИНЭКО»: Хамурджу О.</span>
+        </div>
+    </div>
+
+    <!-- КЛЮЧЕВЫЕ ДАТЫ -->
+    <div class="section">
+        <div class="section-title"><span></span> КЛЮЧЕВЫЕ ДАТЫ · КОНТРОЛЬ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>ЗАДАЧА</th><th>СРОК</th><th>ОТВЕТСТВЕННЫЕ</th></tr></thead>
+                <tbody>
+                    <tr><td>Устранение замечаний по квартирам Корпус 2 / монтаж инж. систем / комплексные испытания (К2 + паркинг)</td><td class="critical-date blink-text">до 27.04.2026</td><td>Красотель/ДС/СКР/Инэко</td></tr>
+                    <tr><td>Устранение замечаний Корпус 1 / монтаж инж. систем / комплексные испытания</td><td class="critical-date">до 12.05.2026</td><td>Красотель/ДС/СКР/Инэко</td></tr>
+                    <tr><td>Получение ЗОС (подача 20.04.2026)</td><td class="blink-text">15.05.2026 (РВ – 30.05.2026)</td><td>СКР</td></tr>
+                    <tr><td>Комплексные испытания (системы)</td><td>30.04.2026 – 15.05.2026</td><td>Инэко</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ОБЩИЕ ВОПРОСЫ -->
+    <div class="section">
+        <div class="section-title"><span></span> ОБЩИЕ ВОПРОСЫ · ПРОИЗВОДСТВО</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>№</th><th>НАИМЕНОВАНИЕ</th><th>СРОК ВЫПОЛНЕНИЯ</th><th>ОТВЕТСТВЕННЫЙ</th><th>ПРИМЕЧАНИЕ / СТАТУС</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>Обеспечить запуск теплоснабжения</td><td class="blink-text">не позднее 28.04.2026</td><td>ДС-</td><td>сдать воду на анализ 24.04.2026, запуск АИТ – не позднее 28.04.2026</td></tr>
+                    <tr class="status-overdue"><td>2</td><td>Увеличить персонал (ЭОМ +10, СС +10, мех.системы +30)</td><td>10.04.2026 / 16.04.2026</td><td>ИНЭКО</td><td class="blink-text">увеличения не произошло (просрочка)</td></tr>
+                    <tr class="status-overdue"><td>3</td><td>Добавить 3-4 ИТР на объект</td><td>10.04.2026 / 16.04.2026</td><td>ИНЭКО</td><td class="blink-text">добавлен только 1 ИТР (не выполнено)</td></tr>
+                    <tr><td>4</td><td>Комплексные испытания корпус 2 + подземная часть</td><td>27.04.2026</td><td>ИНЭКО / Красотель / ДС</td><td>в работе</td></tr>
+                    <tr><td>5</td><td>Завершить Лобби 1 и Лобби 2 полный объем</td><td>15.04.2026 → 06.05.2026</td><td>ИНЭКО/СКР/Красотель/ДС</td><td>покраска потолка 22.04.2026; монтаж ВиС 24.04.2026; ограждение до 06.05.2026</td></tr>
+                    <tr><td>6</td><td>Комиссионный осмотр Лобби 1</td><td>06.05.2026</td><td>ДС / Красотель / СКР</td><td>плановый</td></tr>
+                    <tr><td>7</td><td>Направить заключение лаборатории в МГСН (ЗОС)</td><td>до 30.04.2026</td><td>СКР</td><td>перенос с 13.04-25.04</td></tr>
+                    <tr class="status-overdue"><td>8</td><td>Полная готовность папки ЗОС</td><td>по стр.готовности 20.04.2026</td><td>Красотель/СКР</td><td class="blink-text">остаток 6 шт., не завершено</td></tr>
+                    <tr><td>9</td><td>Получение ЗОС (РВ)</td><td>25.12.2025 → 15.05.2026</td><td>СКР</td><td class="blink-text">ЗОС – 15.05.2026, РВ – 30.05.2026</td></tr>
+                    <tr><td>10</td><td>Подготовить АРОР по инженерным системам + молниезащита</td><td>27.04.2026 (финал)</td><td>СКР</td><td>подписать АРОР по МЗ</td></tr>
+                    <tr><td>11</td><td>Соглашение о расторжении с ЦПИО</td><td>до 30.04.2026</td><td>СКР/ДС</td><td>в процессе</td></tr>
+                    <tr class="status-overdue"><td>12</td><td>Сформировать перечень недостающих материалов/оборудования</td><td>16.04.2026</td><td>ИНЭКО</td><td class="blink-text">просрочено, требуется актуализация</td></tr>
+                    <tr><td>13</td><td>Счета по перечню от СКР</td><td>16.04.2026</td><td>СКР/ИНЭКО</td><td>контроль оплаты</td></tr>
+                    <tr><td>14</td><td>Завести заявки в систему и оплатить</td><td>17.04.2026</td><td>ДС</td><td class="blink-text">требуется подтверждение</td></tr>
+                    <tr><td>15</td><td>Вопрос по лоткам на кровлю</td><td>22.04.2026</td><td>СКР</td><td>на контроле</td></tr>
+                    <tr><td>16</td><td>Устранение замечаний дефектовки квартир Корпус 2 (общестрой)</td><td>25.04.2026</td><td>СКР / Эстетика Фасада</td><td>в процессе</td></tr>
+                    <tr><td>17</td><td>Устранение замечаний дефектовки квартир Корпус 1</td><td>25.04.2026 (→ 30.05.2026)</td><td>СКР / Эстетика Фасада</td><td>совмещать с работами</td></tr>
+                    <tr><td>18</td><td>Дефектовка окон (стекла, рамы)</td><td>с 25.04.2026</td><td>Красотель</td><td>параллельно с СКР</td></tr>
+                    <tr class="status-overdue"><td>19</td><td>Исполнительная документация ЭОМ/СС</td><td>30.03.2026</td><td>ЦПИО</td><td class="blink-text">просрочено, критично</td></tr>
+                    <tr><td>20</td><td>Контроль ключевых дат (ЗОС/РВ)</td><td>15.05.2026 / 30.05.2026</td><td>все генподрядчики</td><td>держать график</td></tr>
+                    <tr><td>21</td><td>Монтаж противопожарного короба</td><td>с 27.04.2026</td><td>Инэко</td><td>заключить договор, вывести рабочих</td></tr>
+                    <tr><td>22</td><td>Руководитель проекта от ИНЭКО – ежедневное присутствие</td><td>ежедневно</td><td>Инэко</td><td>усилить контроль</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- БЛАГОУСТРОЙСТВО -->
+    <div class="section">
+        <div class="section-title"><span></span> БЛАГОУСТРОЙСТВО И ПРИМЫКАНИЯ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>№</th><th>ЗАДАЧА</th><th>СРОК</th><th>ОТВЕТСТВЕННЫЙ</th><th>СТАТУС</th></tr></thead>
+                <tbody>
+                    <tr class="status-overdue"><td>23</td><td>Завершить работы по благоустройству, примыкание дороги</td><td>25.04.2026 (переносы)</td><td>ГринСити</td><td class="blink-text">отставание, требуется финализация</td></tr>
+                    <tr><td>24</td><td>Отделить грязную зону от чистой</td><td>до 30.04.2026</td><td>СКР</td><td>в процессе</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ИНЖЕНЕРНЫЕ СИСТЕМЫ -->
+    <div class="section">
+        <div class="section-title"><span></span> ИНЖЕНЕРНЫЕ СИСТЕМЫ · ОТОПЛЕНИЕ / ВЕНТИЛЯЦИЯ / АПТ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>№</th><th>РАБОТА</th><th>СРОК</th><th>ОТВЕТСТВЕННЫЙ</th><th>ПРИМЕЧАНИЕ</th></tr></thead>
+                <tbody>
+                    <tr><td>25</td><td>Монтаж тепловых завес в Лобби</td><td>17.04.2026</td><td>Инэко</td><td class="blink-text">просрочено, ускорить</td></tr>
+                    <tr><td>26</td><td>Комплексные испытания (системы)</td><td>30.04.2026 – 15.05.2026</td><td>Инэко</td><td>в графике</td></tr>
+                    <tr><td>27</td><td>Монтаж отопления Корпус 2</td><td>21.04.2026</td><td>Инэко</td><td>гидравлика 17.04, изоляция 21.04, поставка изоляции 22.04</td></tr>
+                    <tr><td>28</td><td>Монтаж отопления Корпус 1</td><td>до 30.04.2026</td><td>Инэко</td><td>контроль</td></tr>
+                    <tr><td>29</td><td>Монтаж вентиляции кровля Корпус 2</td><td>24.04.2026</td><td>СКР</td><td>сдвиг</td></tr>
+                    <tr><td>30</td><td>Монтаж вентиляции Корпус 1</td><td>до 09.05.2026</td><td>СКР</td><td>в работе</td></tr>
+                    <tr><td>31</td><td>ПНР освещения Корпус 2</td><td>23.04.2026</td><td>Инэко</td><td>пусконаладка</td></tr>
+                    <tr><td>32</td><td>ЭОМ на кровле Корпус 2</td><td>21.04.2026</td><td>Инэко</td><td>вместо 200 лотков – монтаж 300 лотков</td></tr>
+                    <tr><td>33</td><td>Монтаж КЛ АСКУЭ АСКУВТ Корпус 2</td><td>17.04.2026</td><td>Инэко</td><td class="blink-text">просрочка</td></tr>
+                    <tr><td>34</td><td>ПНР СОТС Корпус 2</td><td>19.04.2026</td><td>Инэко</td><td class="blink-text">срыв сроков</td></tr>
+                    <tr><td>35</td><td>Опрессовка системы АПТ Корпус 1</td><td>21.04.2026</td><td>СКР</td><td>требуется отчет</td></tr>
+                    <tr><td>36</td><td>Готовность гидравлики АПТ Корпус 2</td><td>21.04.2026</td><td>Инэко</td><td class="blink-text">проверить</td></tr>
+                    <tr><td>37</td><td>Монтаж вентклапанов Корпус 1</td><td>30.04.2026</td><td>Инэко</td><td>в графике</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ОТДЕЛКА + МЕТАЛЛОКОНСТРУКЦИИ (полные данные из протокола: анкерные петли, паркинг, лифтовые порталы) -->
+    <div class="section">
+        <div class="section-title"><span></span> ОТДЕЛКА · МЕТАЛЛОКОНСТРУКЦИИ · ДВЕРИ · ОГРАЖДЕНИЯ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>№</th><th>МЕРОПРИЯТИЕ</th><th>СРОК</th><th>ОТВЕТСТВЕННЫЙ</th><th>СТАТУС</th></tr></thead>
+                <tbody>
+                    <tr><td>38</td><td>Поставка МХМТС / двери на кладовые (эталон)</td><td>выполнено</td><td>СКР/Красотель/ДОНСТРОЙ</td><td>эталон получен</td></tr>
+                    <tr><td>39</td><td>Монтаж металлоконструкций: ограждения АИТ (до 25.04), анкерные петли для альпинистов (срок не уточнён, работы нет), лифтовые порталы МОП корпус 1 (просрочка 30.03), ограждения паркинга (до 01.05), двери кладовых (поставка 24.04, монтаж до 28.04)</td><td>разные даты</td><td>СКР</td><td>анкерные петли – не выполнены, нет срока; ограждение паркинга до 01.05 – контроль; лифтовые порталы – <span class="blink-text">просрочено</span></td></tr>
+                    <tr><td>40</td><td>Отделка потолка Лобби Корпус 1</td><td>03.05.2026</td><td>СКР</td><td>по графику</td></tr>
+                    <tr><td>41</td><td>Обрамление лифтовых порталов Корпус 1 (монтаж)</td><td>30.03.2026</td><td>СКР</td><td class="blink-text">просрочено критически</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ПРИНЯТЫЕ РЕШЕНИЯ -->
+    <div class="section">
+        <div class="section-title"><span></span> ПРИНЯТЫЕ РЕШЕНИЯ · ПРОТОКОЛ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>№</th><th>РЕШЕНИЕ</th><th>КОНТРОЛЬ</th></tr></thead>
+                <tbody>
+                    <tr><td>42</td><td>Оконные ручки поставляются с окнами, хранятся у ГК Полис</td><td>ГК Полис</td></tr>
+                    <tr><td>43</td><td>Клапаны закупает ГК Полис, фрезеровка – Штандарт</td><td>ГК Полис</td></tr>
+                    <tr><td>44</td><td>Защита окон пленкой (изнутри и снаружи)</td><td>ГК Полис</td></tr>
+                    <tr><td>45</td><td>Подсистема – «NORDFOX» (утверждено)</td><td>ГК Полис</td></tr>
+                    <tr><td>46</td><td>Отливы в цвет пояса</td><td>ГК Полис</td></tr>
+                    <tr><td>47</td><td>Лобби Корп 1: санузел – комплекс работ отменен после монтажа ВИС и ПНР</td><td>СКР/ДОНСТРОЙ/Красотель</td></tr>
+                    <tr><td>48</td><td>Замена металлического ограждения Лобби 1 на триплекс (согласовано УОиБ)</td><td>СКР/ДОНСТРОЙ/Красотель</td></tr>
+                    <tr><td>49</td><td>Монтаж баннера на подсистеме на заборе ТрансИнжСтрой по оси Н</td><td>СКР/ДОНСТРОЙ/Красотель</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- СВОДКА ПРЕДПИСАНИЙ И ЗОС -->
+    <div class="section">
+        <div class="section-title"><span></span> СВОДКА ПРЕДПИСАНИЙ И ЗОС</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>ПОКАЗАТЕЛЬ</th><th>ВСЕГО</th><th>УСТРАНЕНО</th><th>ОСТАТОК</th></tr></thead>
+                <tbody>
+                    <tr><td>Предписания (в т.ч. ОТ и ТБ)</td><td>524 (227)</td><td>365 (220)</td><td class="blink-text">159 (7) – критично к устранению</td></tr>
+                    <tr><td>Акты к ЗОС</td><td colspan="3">Всего актов: 75 | Подписано: 69 | <span class="blink-text">осталось: 6 актов</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info">
+            <div>Статус папки ЗОС: 69/75 актов подписано. Обеспечить подписание до 30.04.2026</div>
+            <div>Отдел УОиБ: согласована замена ограждения на триплекс</div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР С ДАТОЙ СЛЕДУЮЩЕГО СОВЕЩАНИЯ -->
+    <div class="protocol-header" style="margin-top: 0.5rem; background: rgba(0,0,0,0.6);">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+            <div><strong>Следующее совещание:</strong> 29.04.2026 в 9:30, штаб строительства (стройплощадка)</div>
+            <div style="font-size: 0.75rem;">Протокол №46 от 22.04.2026</div>
+        </div>
+        <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;">Статус исполнения: контрольные точки с миганием требуют немедленного вмешательства. Усилить присутствие ИНЭКО, получить ЗОС в срок.</div>
+    </div>
+</div>
+</body>
+</html>
+```

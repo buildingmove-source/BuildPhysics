@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>ПТО | Сводка оплат и распределение · Счета от 28.04.2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            color: #eef2ff;
+            padding: 1.5rem 1rem;
+            line-height: 1.45;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* шапка */
+        .protocol-header {
+            background: rgba(10, 20, 45, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            border-left: 6px solid #e31b23;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+            word-break: break-word;
+        }
+
+        .protocol-header h1 {
+            font-size: clamp(1.4rem, 6vw, 1.9rem);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff, #a0b4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-date {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .badge {
+            background: #101a36;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            border: 1px solid #2a3a6e;
+            color: #cfdeff;
+        }
+
+        .badge.red {
+            border-left: 3px solid #e31b23;
+            background: #1f1122;
+        }
+
+        /* секции */
+        .section {
+            background: rgba(6, 12, 28, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            margin-bottom: 1.8rem;
+            overflow: hidden;
+            border: 1px solid rgba(227, 27, 35, 0.3);
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #0e1a3a 0%, #030b1f 100%);
+            padding: 0.9rem 1.2rem;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            border-bottom: 1px solid #e31b2340;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title span {
+            background: #e31b23;
+            width: 6px;
+            height: 26px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+
+        .data-table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            font-family: 'Arial', 'Helvetica Neue', sans-serif;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.9rem 0.8rem;
+            background-color: rgba(20, 35, 65, 0.9);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #bfd6ff;
+            border-bottom: 1px solid #2a4b7a;
+        }
+
+        .data-table td {
+            padding: 0.75rem 0.8rem;
+            border-bottom: 1px solid rgba(71, 98, 145, 0.4);
+            vertical-align: top;
+            color: #eef2ff;
+            font-size: 0.78rem;
+        }
+
+        @media (max-width: 640px) {
+            .data-table th, .data-table td {
+                padding: 0.65rem 0.6rem;
+                font-size: 0.72rem;
+            }
+            .data-table {
+                min-width: 620px;
+            }
+        }
+
+        .data-table tr:hover td {
+            background-color: rgba(227, 27, 35, 0.08);
+        }
+
+        /* мигание для критических сумм/сроков */
+        .blink-text {
+            animation: pulseWarning 1.1s infinite ease-in-out;
+            font-weight: 700;
+            color: #ff6b6b;
+            text-shadow: 0 0 2px #ff0000aa;
+        }
+
+        @keyframes pulseWarning {
+            0% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+            50% { opacity: 0.65; text-shadow: 0 0 4px #e31b23; color: #ff8888; }
+            100% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+        }
+
+        .critical-date {
+            font-family: monospace;
+            font-weight: 700;
+            background: rgba(227, 27, 35, 0.2);
+            border-radius: 12px;
+            padding: 0.2rem 0.5rem;
+            display: inline-block;
+            font-size: 0.75rem;
+        }
+
+        .participant-note {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 1.2rem;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(227, 27, 35, 0.2);
+            color: #bbd0ff;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem;
+            }
+            .protocol-header, .section {
+                border-radius: 1.2rem;
+            }
+            .section-title {
+                padding: 0.7rem 1rem;
+            }
+        }
+
+        .amount-highlight {
+            font-weight: 700;
+            color: #ffcd7e;
+        }
+        .contract-link {
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- ШАПКА: ОСНОВНЫЕ ДАННЫЕ ПО РАСПРЕДЕЛЕНИЮ -->
+    <div class="protocol-header">
+        <h1>РАСПОРЯДИТЕЛЬНОЕ ПИСЬМО № КОМПЛЕКТ</h1>
+        <div style="font-size: clamp(0.85rem, 3.5vw, 1rem); margin-top: 0.25rem;">Оплата материалов по Договору подряда № ПД-00396145 от 25.01.2024</div>
+        <div style="font-size: 0.85rem; margin-top: 0.25rem; opacity: 0.9;">Объект: Многофункциональная жилая застройка — г. Москва, ул. Лобачевского, уч. 120А/1</div>
+        <div class="badge-date">
+            <div class="badge">Дата поручений: 29 апреля 2026 г.</div>
+            <div class="badge">Основание: счета от 23.04.2026 – 28.04.2026</div>
+            <div class="badge red">Генподрядчик: ООО «СКР»</div>
+            <div class="badge">Заказчик: ООО «ДС СТРОЙ» (УК ДОНСТРОЙ)</div>
+        </div>
+    </div>
+
+    <!-- ТАБЛИЦА 1: РАСПРЕДЕЛЕНИЕ ПОСТАВЩИКОВ (ПРЯМЫЕ ПЛАТЕЖИ) -->
+    <div class="section">
+        <div class="section-title"><span></span> ПЕРЕЧЕНЬ СЧЕТОВ · ОПЛАТА ТРЕТЬИМ ЛИЦАМ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>Поставщик</th><th>Счет / документ</th><th>Сумма с НДС (руб.)</th><th>Назначение / товар</th><th>Исх. письмо №</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>ООО «Русский Свет</td><td>№ 52387425 от 28.04.2026</td><td class="amount-highlight">3 498,66</td><td>Клеммы проходные DKC TUR-2.5R / TUR-2.5R-BU (25+25 шт)</td><td>исх. 0431 от 29.04.2026</td></tr>
+                    <tr><td>ООО «ВОСХОД ПРО</td><td>№ 81 от 23.04.2026</td><td class="amount-highlight">35 495,00</td><td>Адаптер ModBUS, доставка</td><td>исх. 0430 от 29.04.2026</td></tr>
+                    <tr><td>ООО «РУТЕК</td><td>№ ТР-13329 от 28.04.2026</td><td class="amount-highlight blink-text">1 275 237,62</td><td>Оборудование «Рубеж» (системы безопасности) по спецификации</td><td>исх. 0432 от 29.04.2026</td></tr>
+                    <tr><td>ООО «ТД ТИНКО</td><td>№ ЗкД606830 от 28.04.2026 (счет-договор)</td><td class="amount-highlight">108 793,56</td><td>Аккумуляторы, считыватели, замки, источники питания, кнопки, коробки</td><td>исх. 0433 от 29.04.2026</td></tr>
+                    <tr><td>АО «ТД «Электротехмонтаж</td><td>№ 202/7806777 от 28.04.2026</td><td class="amount-highlight">204 279,61</td><td>Кабель КСПЭВП, труба гофра, клеммы, держатели, ВОЛС (9/125), оптический кабель</td><td>исх. 0435 от 29.04.2026</td></tr>
+                    <tr><td>ООО «ЭЛЕКТРОПОСТАВЩИК</td><td>№ ЭП71144 от 28.04.2026</td><td class="amount-highlight">46 446,68</td><td>ИБП Бастион SKAT-12-8.0 DIN (5 шт)</td><td>исх. 0436 от 29.04.2026</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="participant-note">
+            💡 В платёжных поручениях обязательно указывать: «Оплата по счёту № ... за ООО «СКР» (ИНН 7723423723)». 
+            Суммы вычитаются из будущих объёмов КС-2 по договору подряда. Обязательство ДС СТРОЙ перед СКР погашается в размере перечисленных сумм.
+        </div>
+    </div>
+
+    <!-- РАЗДЕЛ: РАЗВЕРНУТЫЙ СОСТАВ ПО КАЖДОМУ ПОСТАВЩИКУ (ДЕТАЛИ ТОВАРОВ) -->
+    <div class="section">
+        <div class="section-title"><span></span> СПЕЦИФИКАЦИЯ МАТЕРИАЛОВ (СВОДНАЯ)</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>Поставщик / № счета</th><th>Наименование продукции</th><th>Кол-во / Ед.</th><th>Сумма (вкл. НДС)</th><th>Условия / срок готовности</th></tr>
+                </thead>
+                <tbody>
+                    <!-- Русский свет -->
+                    <tr><td rowspan="2"><strong>Русский свет</strong><br>Сч.52387425</td><td>Клемма проходная DKC TUR-2.5R (серая)</td><td>25 шт</td><td>1 715,63</td><td>Товар в наличии, цена действ. 1 б.д.</td></tr>
+                    <tr><td>Клемма проходная DKC TUR-2.5R-BU (синяя)</td><td>25 шт</td><td>1 783,03</td><td>возврат по согласованию</td></tr>
+                    <!-- Восход Про -->
+                    <tr><td rowspan="2"><strong>ВОСХОД ПРО</strong><br>Сч.81 от 23.04.2026</td><td>ЛНГС.465213.271, Адаптер ModBUS</td><td>5 шт</td><td>33 995,00</td><td rowspan="2">Оплата до 28.04.2026, самовывоз</td></tr>
+                    <tr><td>Доставка (услуга)</td><td>1 шт</td><td>1 500,00</td></tr>
+                    <!-- ТД Электротехмонтаж (кабели) -->
+                    <tr><td rowspan="6"><strong>АО «ТД Электротехмонтаж»</strong><br>Сч.202/7806777</td><td>Клемма для предохранителя TUR-4-HESI (4 кв.мм)</td><td>25 шт</td><td>5 640,67</td><td>скидка 19,92% по всему счету</td></tr>
+                    <tr><td>Держатель с защелкой 16 мм (51016S)</td><td>1500 шт</td><td>4 941,00</td><td>складской товар</td></tr>
+                    <tr><td>Труба гофрированная ПВХ 16 мм с протяжкой (100м)</td><td>800 м</td><td>11 350,88</td><td>срок отгрузки 3 раб.дня</td></tr>
+                    <tr><td>Кабель КСПЭВПнг(А)-НF 2x2x0.9</td><td>400 м</td><td>44 583,68</td><td rowspan="3">кабель под заказ</td></tr>
+                    <tr><td>Кабель КСПЭВПнг(А)-НF 1x2x1.3</td><td>600 м</td><td>61 297,68</td></tr>
+                    <tr><td>Кабель ВОЛС 9/125, 24 волокна, LSZH</td><td>130 м</td><td>23 783,66</td></tr>
+                    <tr><td colspan="4" style="background:rgba(227,27,35,0.1);">+ волоконно-оптический 8 волокон (600м) / Итого по позициям: 204 279,61 руб.</td></tr>
+                    <!-- ТД ТИНКО (счёт-договор) -->
+                    <tr><td rowspan="5"><strong>ООО «ТД ТИНКО»</strong><br>Сч.ЗкД606830</td><td>Delta DTM 1207 (АКБ 12В 7Ач)</td><td>24 шт</td><td>30 655,92</td><td rowspan="5">100% предоплата, срок 2 б.дня, склад в Балашихе</td></tr>
+                    <tr><td>Delta DTM 1217 (аккумулятор 12В 17Ач)</td><td>2 шт</td><td>6 540,98</td></tr>
+                    <tr><td>Считыватель DHI-ASR2200A-B (Mifare/Bluetooth)</td><td>6 шт</td><td>16 341,60</td></tr>
+                    <tr><td>Источник SKAT SB 1207, SKAT-12-2.0 DIN, SKAT-12-4.0-DIN</td><td>9 шт (всего)</td><td>22 517,39</td></tr>
+                    <tr><td>Замок ST-EL350ML, разблокировка ST-ER115, кнопка ST-EX142, коробка КС-2 и пр.</td><td>125+ шт</td><td>32 737,67</td></tr>
+                    <!-- Электропоставщик ИБП -->
+                    <tr><td><strong>ООО «ЭЛЕКТРОПОСТАВЩИК»</strong><br>Сч.ЭП71144</td><td>Источник бесперебойного питания Бастион SKAT-12-8.0 DIN 587</td><td>5 шт</td><td>46 446,68</td><td>100% предоплата, компл. 8 раб.дней, доставка ДПД РУС</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="participant-note">
+            ✅ Все позиции по счёту «РУТЕК» (исх.0432, сумма 1 275 237,62 руб.) — оборудование «Рубеж», полная номенклатура уточняется согласно спецификации №ТР-13329 (системы пожарной и охранной сигнализации).
+        </div>
+    </div>
+
+    <!-- СВОДКА ПО ОБЩИМ СУММАМ, КОММЕНТАРИЙ ПО СРОКАМ ДЕЙСТВИЯ -->
+    <div class="section">
+        <div class="section-title"><span></span> КОНСОЛИДИРОВАННЫЙ РАСЧЁТ (ОПЛАТА ЗА СЧЁТ ГЕНПОДРЯДА)</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>Наименование долга / перечисление</th><th>Сумма (руб.)</th><th>Примечание</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>ООО «Русский Свет» (клеммы)</td><td>3 498,66</td><td>Счёт действ. 1 банк. день, резерв после подтверждения</td></tr>
+                    <tr><td>ООО «ВОСХОД ПРО» (адаптер ModBUS + доставка)</td><td>35 495,00</td><td>Оплата до 28.04.2026 (счёт №81)</td></tr>
+                    <tr><td>ООО «РУТЕК» (Рубеж)</td><td class="blink-text">1 275 237,62</td><td>Крупнейшая позиция. Сроки поставки — по доп. спецификации</td></tr>
+                    <tr><td>ООО «ТД ТИНКО» (электрика, АКБ, СКУД)</td><td>108 793,56</td><td>Счёт-договор, цены действ. 2 банк. дня</td></tr>
+                    <tr><td>АО «ТД «Электротехмонтаж» (кабель, труба, клеммы)</td><td>204 279,61</td><td>Скидка 19,92% при условии оплаты всего счёта</td></tr>
+                    <tr><td>ООО «ЭЛЕКТРОПОСТАВЩИК» (ИБП SKAT 12-8.0)</td><td>46 446,68</td><td>Срок комплектации 8 раб.дней после предоплаты</td></tr>
+                    <tr style="border-top:2px solid #e31b23;"><td><strong>ИТОГО к перечислению третьим лицам (в рамках распред. писем)</strong></td><td class="amount-highlight" style="font-size:1rem;"><strong>1 673 751,13</strong></td><td>НДС 22% включён во все суммы</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="participant-note">
+            📌 Основание: письма исх. №0430, 0431, 0432, 0433, 0435, 0436 от 29.04.2026 на имя Ген. директора УК «ДОНСТРОЙ» А.В. Багаева. 
+            Все суммы списываются в счёт выполнения работ по договору подряда №ПД-00396145. После оплаты поставщикам обязательство ДС СТРОЙ перед СКР погашается в размере перечисленных средств.
+        </div>
+    </div>
+
+    <!-- УСЛОВИЯ И ОСОБЫЕ ОТМЕТКИ (по счетам) -->
+    <div class="section">
+        <div class="section-title"><span></span> ОСОБЫЕ УСЛОВИЯ И СРОКИ ПОСТАВКИ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Поставщик</th><th>Условия оплаты</th><th>Срок поставки/готовности</th><th>Возврат/гарантия</th></tr></thead>
+                <tbody>
+                    <tr><td>Русский Свет</td><td>100% по счёту</td><td>Товар в наличии, отгрузка после оплаты</td><td>Позиции «*» возврату не подлежат (кабельно-проводниковая, заказная)</td></tr>
+                    <tr><td>ВОСХОД ПРО</td><td>Предоплата (счёт действителен до 28.04)</td><td>Самовывоз, по факту поступления денег</td><td>Уведомление об оплате обязательно</td></tr>
+                    <tr><td>ТД ТИНКО</td><td>100% предоплата в течение 2 б.дней</td><td>Срок готовности — от 0 до 7 раб.дней (согласно прайсу)</td><td>Гарантия производителя, претензии в течение 3 раб.дней</td></tr>
+                    <tr><td>ЭЛЕКТРОПОСТАВЩИК</td><td>100% предоплата, счёт действ. 1 б.день</td><td>8 раб.дней с момента предоплаты</td><td>Доставка ТК ДПД РУС за счёт покупателя (включено в цену)</td></tr>
+                    <tr><td>ТД Электротехмонтаж</td><td>100% оплата для акцепта счёта</td><td>Срок действия цен 3 раб.дня</td><td>Складское хранение 7 календарных дней</td></tr>
+                    <tr><td>РУТЕК (№ТР-13329)</td><td>По условиям счёта (предоплата)</td><td>Уточняется по спецификации, оборудование под заказ</td><td>По согласованию с поставщиком</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="participant-note">
+            🔔 Внимание: по счёту №52387425 (Русский Свет) указано, что цена действительна 1 банковский день, не считая дня выписки. 
+            По счёту-договору №ЗкД606830 (ТД ТИНКО) — предоплата 100%, при несвоевременной оплате поставщик вправе пересмотреть цену.
+        </div>
+    </div>
+
+    <!-- РЕКВИЗИТЫ ДЛЯ ПЕРЕЧИСЛЕНИЙ (сводка) -->
+    <div class="section">
+        <div class="section-title"><span></span> БАНКОВСКИЕ РЕКВИЗИТЫ ПОСТАВЩИКОВ (выписка из писем)</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Получатель</th><th>ИНН/КПП</th><th>Расчётный счёт / БИК</th><th>Корр. счёт</th></tr></thead>
+                <tbody>
+                    <tr><td>ООО «Русский Свет</td><td>7704844420 / 772045002</td><td>40702810238000050609, БИК 044525225</td><td>30101810400000000225</td></tr>
+                    <tr><td>ООО «ВОСХОД ПРО</td><td>9727078912 / 772701001</td><td>40702810701300048574, БИК 044525593</td><td>30101810200000000593</td></tr>
+                    <tr><td>ООО «РУТЕК</td><td>7716951747 / 771601001</td><td>40702810602500112141, БИК 044525104</td><td>30101810745374525104</td></tr>
+                    <tr><td>ООО «ТД ТИНКО</td><td>7702680818 / 770201001</td><td>40702810102200001456, БИК 044525593</td><td>30101810200000000593</td></tr>
+                    <tr><td>АО «ТД «Электротехмонтаж</td><td>7842224734 / 784201001</td><td>40702810290330002614, БИК 044030790</td><td>30101810900000000790</td></tr>
+                    <tr><td>ООО «ЭЛЕКТРОПОСТАВЩИК</td><td>9710008385 / 324501001</td><td>40702810838000009623, БИК 044525225</td><td>30101810400000000225</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="participant-note">
+            🧾 При заполнении платёжных поручений обязательно указывать назначение: «Оплата по счёту №___ от __.__.2026 за ООО “СКР” (ИНН 7723423723)» 
+            и ссылку на номер письма при необходимости.
+        </div>
+    </div>
+
+    <!-- ФУТЕР КОНТРОЛЬ -->
+    <div class="protocol-header" style="margin-top: 0.5rem; background: rgba(0,0,0,0.6);">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+            <div><strong>Контроль исполнения:</strong> ООО «СКР» / ПТО объект: ул. Лобачевского 120А/1</div>
+            <div style="font-size: 0.75rem;">Сводка сформирована 29.04.2026 (по данным исходящих распред. писем)</div>
+        </div>
+        <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;">
+            💰 Общая сумма материалов, подлежащая оплате Заказчиком (ДС СТРОЙ) напрямую поставщикам по поручению генподрядчика: 1 673 751,13 руб. 
+            НДС 22% учтён. В случае изменения банковских реквизитов или цен — незамедлительно уведомить генподрядчика.
+        </div>
+    </div>
+</div>
+</body>
+</html>

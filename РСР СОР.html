@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Реестр отделочных работ доступных для развертывания · ЖК «ОГНИ-3»</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            color: #eef2ff;
+            padding: 1.5rem 1rem;
+            line-height: 1.45;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .protocol-header {
+            background: rgba(10, 20, 45, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            border-left: 6px solid #e31b23;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+            word-break: break-word;
+        }
+
+        .protocol-header h1 {
+            font-size: clamp(1.4rem, 6vw, 1.9rem);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff, #a0b4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-date {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .badge {
+            background: #101a36;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            border: 1px solid #2a3a6e;
+            color: #cfdeff;
+        }
+
+        .badge.red {
+            border-left: 3px solid #e31b23;
+            background: #1f1122;
+        }
+
+        .badge.critical {
+            border-left: 3px solid #ffaa33;
+            background: #332200;
+            color: #ffdd99;
+        }
+
+        .section {
+            background: rgba(6, 12, 28, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            margin-bottom: 1.8rem;
+            overflow: hidden;
+            border: 1px solid rgba(227, 27, 35, 0.3);
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #0e1a3a 0%, #030b1f 100%);
+            padding: 0.9rem 1.2rem;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            border-bottom: 1px solid #e31b2340;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title span {
+            background: #e31b23;
+            width: 6px;
+            height: 26px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+
+        .data-table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.9rem 0.8rem;
+            background-color: rgba(20, 35, 65, 0.9);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #bfd6ff;
+            border-bottom: 1px solid #2a4b7a;
+        }
+
+        .data-table td {
+            padding: 0.75rem 0.8rem;
+            border-bottom: 1px solid rgba(71, 98, 145, 0.4);
+            vertical-align: top;
+            color: #eef2ff;
+            font-size: 0.76rem;
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+        }
+
+        @media (max-width: 640px) {
+            .data-table th, .data-table td {
+                padding: 0.65rem 0.5rem;
+                font-size: 0.7rem;
+            }
+            .data-table {
+                min-width: 700px;
+            }
+        }
+
+        .data-table tr:hover td {
+            background-color: rgba(227, 27, 35, 0.08);
+        }
+
+        .blink-text {
+            animation: pulseWarning 1.1s infinite ease-in-out;
+            font-weight: 700;
+            color: #ff6b6b;
+            text-shadow: 0 0 2px #ff0000aa;
+        }
+
+        @keyframes pulseWarning {
+            0% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+            50% { opacity: 0.65; text-shadow: 0 0 4px #e31b23; color: #ff8888; }
+            100% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem;
+            }
+            .protocol-header, .section {
+                border-radius: 1.2rem;
+            }
+            .section-title {
+                padding: 0.7rem 1rem;
+            }
+        }
+
+        .total-row {
+            background: rgba(227, 27, 35, 0.25);
+            font-weight: 700;
+            border-top: 2px solid #e31b23;
+        }
+        .cost-cell {
+            font-weight: 700;
+            color: #ffdd99;
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+        .zone-total {
+            background: rgba(0, 50, 100, 0.5);
+            font-weight: 700;
+        }
+        .grand-total {
+            background: rgba(227, 27, 35, 0.3);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .strikethrough {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-right: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- ШАПКА -->
+    <div class="protocol-header">
+        <h1>Реестр отделочных работ доступных для развертывания</h1>
+        <div style="font-size: clamp(0.85rem, 3.5vw, 1rem); margin-top: 0.25rem;">Объект: ЖК «ОГНИ-3» (корпуса 1,2, подземный паркинг, технические помещения)</div>
+        <div style="font-size: 0.85rem; margin-top: 0.25rem; opacity: 0.9;">г. Москва, вн.тер.г. муниципальный округ Раменки, уч. 120А/1</div>
+        <div class="badge-date">
+            <div class="badge">Основание: РСР</div>
+            <div class="badge red">Локации: паркинг / зона МОП (корпус 2 + общие зоны) / технические помещения</div>
+            <div class="badge critical">Устройство перегородок из ГКЛ в 2 слоя (929 м2) — производственный простой</div>
+        </div>
+    </div>
+
+    <!-- 1. ПАРКИНГ -->
+    <div class="section">
+        <div class="section-title"><span></span> 1. ПАРКИНГ (подземная часть, рампы, кладовые)</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <tbody>
+                    <tr><td style="padding-left: 20px;">Шпаклевка цементная KNAUF (паркинг, стены)</td><td class="cost-cell">2 833 742,31</td></tr>
+                    <tr><td style="padding-left: 20px;">Высококачественная окраска стен Dulux (паркинг)</td><td class="cost-cell">1 218 728,71</td></tr>
+                    <tr><td style="padding-left: 20px;">Покрытие топпинг Monopol Top 200 (паркинг)</td><td class="cost-cell">1 218 728,71</td></tr>
+                    <tr><td style="padding-left: 20px;">Топпинг с фрезерованием (рампы)</td><td class="cost-cell">282 620,77</td></tr>
+                    <tr><td style="padding-left: 20px;">Лоток водоотводный Aquastok Norma DN100</td><td class="cost-cell">1 466 262,99</td></tr>
+                    <tr><td style="padding-left: 20px;">Плинтус из керамогранита (паркинг, кладовые)</td><td class="cost-cell">1 380 583,29</td></tr>
+                    <tr><td style="padding-left: 20px;">Кладовые: окраска, штукатурка стен (W1)</td><td class="cost-cell">1 286 499,07</td></tr>
+                    <tr><td style="padding-left: 20px;">Помещения хранения: грунтовка, шлифовка (W2)</td><td class="cost-cell">65 816,47</td></tr>
+                    <tr><td style="padding-left: 20px;">Лоток водоотводный (кладовые, тип ЛВ-1)</td><td class="cost-cell">110 754,81</td></tr>
+                    <tr><td style="padding-left: 20px;">Кладовые: грунтовка, шлифовка потолков (С1)</td><td class="cost-cell">195 185,09</td></tr>
+                    <tr class="total-row"><td style="padding-left: 20px;"><strong>ИТОГО по ПАРКИНГУ</strong></td><td class="cost-cell"><strong>10 058 922,22</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info"><div>Примечание: основные остатки — шпаклевка/окраска стен (2,8 млн), лотки водоотводные (1,47 млн), плинтус и кладовые.</div></div>
+    </div>
+
+    <!-- 2. ЗОНА МОП (корпус 2 + типовые этажи, коридоры, лифтовые холлы) -->
+    <div class="section">
+        <div class="section-title"><span></span> 2. ЗОНА МОП (корпус 2, типовые этажи, коридоры, лифтовые холлы)</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <tbody>
+                    <tr><td style="padding-left: 20px;">Плинтус скрытого монтажа Pro Design Universal 235</td><td class="cost-cell">14 892 011,45</td></tr>
+                    <tr><td style="padding-left: 20px;">Оштукатуривание стен и откосов гипсовой штукатуркой (МОП)</td><td class="cost-cell">1 845 299,51</td></tr>
+                    <tr><td style="padding-left: 20px;">Подготовка стен под окраску (МОП)</td><td class="cost-cell">1 943 172,08</td></tr>
+                    <tr><td style="padding-left: 20px;">Окраска стен Dulux (МОП)</td><td class="cost-cell">1 102 533,66</td></tr>
+                    <tr><td style="padding-left: 20px;">Устройство полусухой стяжки 90 мм (МОП)</td><td class="cost-cell">118 850,92</td></tr>
+                    <tr><td style="padding-left: 20px;">Укладка керамогранита Techno Gris (МОП тип. этажи)</td><td class="cost-cell">1 925 564,85</td></tr>
+                    <tr><td style="padding-left: 20px;">Плинтус из керамогранита Estima Rainbow (МОП тип. этажи)</td><td class="cost-cell">1 218 417,72</td></tr>
+                    <tr><td style="padding-left: 20px;">Устройство потолка Грильято (МОП тип. этажи)</td><td class="cost-cell">8 422 504,79</td></tr>
+                    <tr class="total-row"><td style="padding-left: 20px;"><strong>ИТОГО по ЗОНЕ МОП (корпус 2 + общие зоны)</strong></td><td class="cost-cell"><strong>31 468 354,98</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info"><div>Наибольшие остатки: плинтус скрытого монтажа (14,9 млн), потолки Грильято (8,4 млн).</div></div>
+    </div>
+
+    <!-- 3. ЛЕСТНИЦЫ -->
+    <div class="section">
+        <div class="section-title"><span></span> 3. ЭВАКУАЦИОННЫЕ ЛЕСТНИЦЫ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <tbody>
+                    <tr><td style="padding-left: 20px;">Отделка подступенков лестниц (керамогранит)</td><td class="cost-cell">415 204,21</td></tr>
+                    <tr><td style="padding-left: 20px;">Отделка проступей лестниц (керамогранит)</td><td class="cost-cell">844 614,36</td></tr>
+                    <tr><td style="padding-left: 20px;">Плинтус лестниц из керамогранита</td><td class="cost-cell">981 293,01</td></tr>
+                    <tr><td style="padding-left: 20px;">Оштукатуривание и окраска стен лестничных клеток</td><td class="cost-cell">3 115 816,14</td></tr>
+                    <tr class="total-row"><td style="padding-left: 20px;"><strong>ИТОГО по ЛЕСТНИЦАМ</strong></td><td class="cost-cell"><strong>5 356 927,72</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info"><div>Основной остаток — отделка стен лестничных клеток (3,1 млн).</div></div>
+    </div>
+
+    <!-- 4. ТЕХНИЧЕСКИЕ ПОМЕЩЕНИЯ -->
+    <div class="section">
+        <div class="section-title"><span></span> 4. ТЕХНИЧЕСКИЕ ПОМЕЩЕНИЯ (ИТП, ТП, ВРУ, СС, АИТ, венткамеры)</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <tbody>
+                    <tr><td style="padding-left: 20px;">Венткамера ТП: керамическая плитка, стяжка (тип 3.1)</td><td class="cost-cell">68 825,78</td></tr>
+                    <tr><td style="padding-left: 20px;">ИТП: керамическая плитка стен на h=1500мм (W4*)</td><td class="cost-cell">412 737,69</td></tr>
+                    <tr><td style="padding-left: 20px;">ИТП: окраска стен от 1,5 м (W1)</td><td class="cost-cell">197 409,47</td></tr>
+                    <tr><td style="padding-left: 20px;">Кроссовая, аппаратная: линолеум, стяжка (тип 4.1)</td><td class="cost-cell">121 079,40</td></tr>
+                    <tr><td style="padding-left: 20px;">Оператор связи: линолеум, стяжка, утеплитель (тип 4.2)</td><td class="cost-cell">68 085,36</td></tr>
+                    <tr><td style="padding-left: 20px;">СС: керамогранит, гидроизоляция (тип 9)</td><td class="cost-cell">57 905,70</td></tr>
+                    <tr><td style="padding-left: 20px;">Кроссовая: грунтовка, шлифовка стен (W2)</td><td class="cost-cell">24 996,73</td></tr>
+                    <tr><td style="padding-left: 20px;">ТП: полиуретан-цементное покрытие, стяжка (тип 11)</td><td class="cost-cell">482 522,96</td></tr>
+                    <tr><td style="padding-left: 20px;">Техническое помещение 02.Т1.08: керамогранит, стяжка</td><td class="cost-cell">112 233,72</td></tr>
+                    <tr><td style="padding-left: 20px;">Плинтус из керамической плитки (техпомещение)</td><td class="cost-cell">21 782,82</td></tr>
+                    <tr><td style="padding-left: 20px;">Техническое помещение: грунтовка, шлифовка стен (W2)</td><td class="cost-cell">53 758,49</td></tr>
+                    <tr><td style="padding-left: 20px;">Техническое помещение: грунтовка, шлифовка потолка (С1)</td><td class="cost-cell">14 494,35</td></tr>
+                    <tr><td style="padding-left: 20px;">Люк стальной Л2 (ТП)</td><td class="cost-cell">110 551,86</td></tr>
+                    <tr class="total-row"><td style="padding-left: 20px;"><strong>ИТОГО по ТЕХНИЧЕСКИМ ПОМЕЩЕНИЯМ</strong></td><td class="cost-cell"><strong>1 746 384,33</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info"><div>Наибольшие остатки: ИТП (плитка+окраска — 610 тыс.), ТП (482 тыс.).</div></div>
+    </div>
+
+    <!-- 5. МЕБЕЛЬ, ДЕКОР, ОСВЕЩЕНИЕ -->
+    <div class="section">
+        <div class="section-title"><span></span> 5. МЕБЕЛЬ, ДЕКОР, ОСВЕЩЕНИЕ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <tbody>
+                    <tr><td style="padding-left: 20px;">Кресло Ermes темно-серого цвета</td><td class="cost-cell">606 731,82</td></tr>
+                    <tr><td style="padding-left: 20px;">Приставной столик Ansen металлический белый</td><td class="cost-cell">298 175,91</td></tr>
+                    <tr><td style="padding-left: 20px;">Диван Мисл</td><td class="cost-cell">1 902 390,65</td></tr>
+                    <tr><td style="padding-left: 20px;">Почтовые ящики со смарт-доступом (К1)</td><td class="cost-cell">1 069 675,81</td></tr>
+                    <tr><td style="padding-left: 20px;">Трековый светильник LT-01</td><td class="cost-cell">296 099,41</td></tr>
+                    <tr class="total-row"><td style="padding-left: 20px;"><strong>ИТОГО по МЕБЕЛИ, ДЕКОРУ, ОСВЕЩЕНИЮ</strong></td><td class="cost-cell"><strong>4 173 073,60</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info"><div>Основные остатки: диваны (1,9 млн), почтовые ящики (1,07 млн).</div></div>
+    </div>
+
+    <!-- СВОДНАЯ ТАБЛИЦА ИТОГОВ ПО ЗОНАМ -->
+    <div class="section">
+        <div class="section-title"><span></span> СВОДНАЯ ТАБЛИЦА ОСТАТКОВ ПО ЛОКАЦИЯМ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead><tr><th>Зона / раздел</th><th>Остаток, руб.</th></tr></thead>
+                <tbody>
+                    <tr><td style="padding-left: 20px;">Паркинг (подземная часть, рампы, кладовые)</td><td class="cost-cell">10 058 922,22</td></tr>
+                    <tr><td style="padding-left: 20px;">Зона МОП (корпус 2 + типовые этажи, коридоры, холлы)</td><td class="cost-cell">31 468 354,98</td></tr>
+                    <tr><td style="padding-left: 20px;">Эвакуационные лестницы</td><td class="cost-cell">5 356 927,72</td></tr>
+                    <tr><td style="padding-left: 20px;">Технические помещения (ИТП, ТП, ВРУ, СС, АИТ, венткамеры)</td><td class="cost-cell">1 746 384,33</td></tr>
+                    <tr><td style="padding-left: 20px;">Мебель, декор, освещение</td><td class="cost-cell">4 173 073,60</td></tr>
+                    <tr class="grand-total"><td style="padding-left: 20px;"><strong>ВСЕГО ОБЩИЙ ОСТАТОК (расчетный)</strong></td><td class="cost-cell grand-total blink-text"><strong>52 803 662,85</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info"><div>Стоимость работ, которые могут быть выполнены в текущих условиях (фронт готов, материалы частично обеспечены), составляет 52 803 662,85 руб.</div></div>
+    </div>
+
+    <!-- ФУТЕР С ЗАПРОСОМ -->
+    <div class="protocol-header" style="margin-top: 0.5rem; background: rgba(0,0,0,0.6);">
+        <div><strong>ВЫВОДЫ ПО СОСТОЯНИЮ НА 29.04.2026 (на основании РСР)</strong><br>
+        - Стоимость работ, доступных для немедленного развертывания, составляет 52 803 662,85 руб.<br>
+        - Ключевые зоны сосредоточения остатков: зона МОП (31,5 млн), паркинг (10,1 млн), лестницы (5,4 млн).<br>
+        - Наибольшие единичные остатки: плинтус скрытого монтажа (14,9 млн), потолки Грильято (8,4 млн).<br>
+        - Критический простой: устройство перегородок из ГКЛ в 2 слоя (929 м2) — производственный простой. Требуется немедленная мобилизация бригад и подтверждение поставки материалов.<br>
+        - <strong>Требуется:</strong> подтверждение актуальности остатков СДО СКР, предоставление графика закрытия работ по каждой зоне, усиление бригад на МОП и паркинг.</div>
+        <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;">
+            Контроль: технический надзор ДС СТРОЙ, ИНЭКО, СКР. Запрашивается месячно суточный график — до 30.04.2026.
+        </div>
+    </div>
+</div>
+</body>
+</html>

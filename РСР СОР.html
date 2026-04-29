@@ -13,7 +13,7 @@
 
         body {
             background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
-            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             color: #eef2ff;
             padding: 1.5rem 1rem;
             line-height: 1.45;
@@ -111,10 +111,10 @@
 
         .data-table {
             width: 100%;
-            min-width: 800px;
+            min-width: 600px;
             border-collapse: collapse;
             font-size: 0.78rem;
-            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .data-table th {
@@ -135,16 +135,42 @@
             vertical-align: top;
             color: #eef2ff;
             font-size: 0.76rem;
-            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
             .data-table th, .data-table td {
-                padding: 0.65rem 0.5rem;
+                padding: 0.6rem 0.5rem;
                 font-size: 0.7rem;
             }
             .data-table {
-                min-width: 700px;
+                min-width: 550px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem 0.5rem;
+            }
+            .protocol-header {
+                padding: 1rem;
+            }
+            .section-title {
+                padding: 0.7rem 1rem;
+            }
+            .data-table th, .data-table td {
+                padding: 0.5rem 0.4rem;
+                font-size: 0.65rem;
+            }
+            .data-table {
+                min-width: 500px;
+            }
+            .badge {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.7rem;
             }
         }
 
@@ -177,18 +203,6 @@
             margin-top: 1rem;
         }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 0.8rem;
-            }
-            .protocol-header, .section {
-                border-radius: 1.2rem;
-            }
-            .section-title {
-                padding: 0.7rem 1rem;
-            }
-        }
-
         .total-row {
             background: rgba(227, 27, 35, 0.25);
             font-weight: 700;
@@ -198,7 +212,7 @@
             font-weight: 700;
             color: #ffdd99;
             text-align: right;
-            font-family: 'Courier New', monospace;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 0.85rem;
         }
         .zone-total {
@@ -238,7 +252,9 @@
         <div class="section-title"><span></span> 1. ПАРКИНГ (подземная часть, рампы, кладовые)</div>
         <div class="table-wrapper">
             <table class="data-table">
-                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <thead>
+                    <tr><th>Наименование работ</th><th>Остаток, руб.</th></tr>
+                </thead>
                 <tbody>
                     <tr><td style="padding-left: 20px;">Шпаклевка цементная KNAUF (паркинг, стены)</td><td class="cost-cell">2 833 742,31</td></tr>
                     <tr><td style="padding-left: 20px;">Высококачественная окраска стен Dulux (паркинг)</td><td class="cost-cell">1 218 728,71</td></tr>
@@ -262,7 +278,9 @@
         <div class="section-title"><span></span> 2. ЗОНА МОП (корпус 2, типовые этажи, коридоры, лифтовые холлы)</div>
         <div class="table-wrapper">
             <table class="data-table">
-                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <thead>
+                    <tr><th>Наименование работ</th><th>Остаток, руб.</th></tr>
+                </thead>
                 <tbody>
                     <tr><td style="padding-left: 20px;">Плинтус скрытого монтажа Pro Design Universal 235</td><td class="cost-cell">14 892 011,45</td></tr>
                     <tr><td style="padding-left: 20px;">Оштукатуривание стен и откосов гипсовой штукатуркой (МОП)</td><td class="cost-cell">1 845 299,51</td></tr>
@@ -284,7 +302,9 @@
         <div class="section-title"><span></span> 3. ЭВАКУАЦИОННЫЕ ЛЕСТНИЦЫ</div>
         <div class="table-wrapper">
             <table class="data-table">
-                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <thead>
+                    <tr><th>Наименование работ</th><th>Остаток, руб.</th></tr>
+                </thead>
                 <tbody>
                     <tr><td style="padding-left: 20px;">Отделка подступенков лестниц (керамогранит)</td><td class="cost-cell">415 204,21</td></tr>
                     <tr><td style="padding-left: 20px;">Отделка проступей лестниц (керамогранит)</td><td class="cost-cell">844 614,36</td></tr>
@@ -302,7 +322,9 @@
         <div class="section-title"><span></span> 4. ТЕХНИЧЕСКИЕ ПОМЕЩЕНИЯ (ИТП, ТП, ВРУ, СС, АИТ, венткамеры)</div>
         <div class="table-wrapper">
             <table class="data-table">
-                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <thead>
+                    <tr><th>Наименование работ</th><th>Остаток, руб.</th></tr>
+                </thead>
                 <tbody>
                     <tr><td style="padding-left: 20px;">Венткамера ТП: керамическая плитка, стяжка (тип 3.1)</td><td class="cost-cell">68 825,78</td></tr>
                     <tr><td style="padding-left: 20px;">ИТП: керамическая плитка стен на h=1500мм (W4*)</td><td class="cost-cell">412 737,69</td></tr>
@@ -329,7 +351,9 @@
         <div class="section-title"><span></span> 5. МЕБЕЛЬ, ДЕКОР, ОСВЕЩЕНИЕ</div>
         <div class="table-wrapper">
             <table class="data-table">
-                <thead><tr><th>Наименование работ</th><th>Остаток, руб.</th></tr></thead>
+                <thead>
+                    <tr><th>Наименование работ</th><th>Остаток, руб.</th></tr>
+                </thead>
                 <tbody>
                     <tr><td style="padding-left: 20px;">Кресло Ermes темно-серого цвета</td><td class="cost-cell">606 731,82</td></tr>
                     <tr><td style="padding-left: 20px;">Приставной столик Ansen металлический белый</td><td class="cost-cell">298 175,91</td></tr>
@@ -348,7 +372,9 @@
         <div class="section-title"><span></span> СВОДНАЯ ТАБЛИЦА ОСТАТКОВ ПО ЛОКАЦИЯМ</div>
         <div class="table-wrapper">
             <table class="data-table">
-                <thead><tr><th>Зона / раздел</th><th>Остаток, руб.</th></tr></thead>
+                <thead>
+                    <tr><th>Зона / раздел</th><th>Остаток, руб.</th></tr>
+                </thead>
                 <tbody>
                     <tr><td style="padding-left: 20px;">Паркинг (подземная часть, рампы, кладовые)</td><td class="cost-cell">10 058 922,22</td></tr>
                     <tr><td style="padding-left: 20px;">Зона МОП (корпус 2 + типовые этажи, коридоры, холлы)</td><td class="cost-cell">31 468 354,98</td></tr>
@@ -371,7 +397,7 @@
         - Критический простой: устройство перегородок из ГКЛ в 2 слоя (929 м2) — производственный простой. Требуется немедленная мобилизация бригад и подтверждение поставки материалов.<br>
         - <strong>Требуется:</strong> подтверждение актуальности остатков СДО СКР, предоставление графика закрытия работ по каждой зоне, усиление бригад на МОП и паркинг.</div>
         <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;">
-            Контроль: технический надзор ДС СТРОЙ, ИНЭКО, СКР. Запрашивается месячно суточный график — до 30.04.2026.
+            Контроль: технический надзор ДС СТРОЙ, ИНЭКО, СКР. Запрашивается сетка-календарный график — до 30.04.2026.
         </div>
     </div>
 </div>

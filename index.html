@@ -330,7 +330,7 @@
         
         docsContainer.innerHTML = filtered.map((page, index) => `
             <div class="doc-card" style="animation-delay: ${index * 0.05}s">
-                <a href="${page.file}" class="card-link" target="_blank" rel="noopener noreferrer">
+                <a href="${page.file}" class="card-link" rel="noopener noreferrer">
                     <div class="doc-icon">${page.icon}</div>
                     <div class="doc-name">
                         ${escapeHtml(page.name)}

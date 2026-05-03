@@ -243,18 +243,6 @@
             font-size: 0.7rem;
             color: #8a9bdf;
         }
-
-        /* Стиль для иконки рубля */
-        .rub-icon {
-            font-weight: bold;
-            background: rgba(255, 215, 0, 0.2);
-            border-radius: 50%;
-            width: 2.2rem;
-            height: 2.2rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
     </style>
 </head>
 <body>
@@ -266,7 +254,7 @@
     </div>
 
     <div class="search-box">
-        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Фильтр документов по названию... (например: протокол, огни, реестр)">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Фильтр документов по названию...">
     </div>
 
     <div class="stats">
@@ -274,7 +262,7 @@
         <div>🏗️ Строительная документация</div>
     </div>
 
-    <!-- Ссылка на Google Таблицу (ВИС Огни 3) -->
+    <!-- Google Таблица ВИС Огни 3 -->
     <div class="google-card">
         <a href="VIS-Ogni-3.html" class="google-link">
             <div class="google-icon">📊</div>
@@ -286,7 +274,7 @@
     </div>
 
     <div id="docsContainer" class="docs-grid">
-        <div class="empty-message">⏳ Загрузка списка страниц...</div>
+        <div class="empty-message">⏳ Загрузка списка...</div>
     </div>
 
     <div class="footer">
@@ -295,89 +283,52 @@
 </div>
 
 <script>
-    const GITHUB_USERNAME = "buildingmove-source";
-    const REPO_NAME = "BuildPhysics";
-    const BRANCH = "main";
+    // =============================================
+    // РУЧНОЙ СПИСОК ВСЕХ СТРАНИЦ (ДОБАВЛЯЙТЕ НОВЫЕ СЮДА)
+    // =============================================
+    const pages = [
+        {
+            name: "Протокол №46 · 22 апреля 2026 · 09:30",
+            file: "протокол_46_огни_3_от_22_04_2026.html",
+            icon: "📋"
+        },
+        {
+            name: "Протокол №1 · 28 апреля 2026 · 12:30",
+            file: "протокол 28.04.2026.html",
+            icon: "📋"
+        },
+        {
+            name: "Протокол №47 · 29 апреля 2026 · 09:30",
+            file: "протокол 47 от 29.04.2026.html",
+            icon: "📋"
+        },
+        {
+            name: "РСР Реестр отделочных работ",
+            file: "PCP COP.html",
+            icon: "🪚"
+        },
+        {
+            name: "Сводка оплат",
+            file: "Сводка оплат.html",
+            icon: "₽"
+        },
+        {
+            name: "Реестр для чек-листа ИНЭКО",
+            file: "реестр для ЧЛ.html",
+            icon: "🔧"
+        }
+    ];
 
+    // ===== КОД НИЖЕ НЕ ТРОГАТЬ =====
     const searchInput = document.getElementById('searchInput');
     const docsContainer = document.getElementById('docsContainer');
     const totalSpan = document.getElementById('totalCount');
 
-    let allHtmlFiles = [];
-
-    // ===== СЛОВАРЬ ПЕРЕИМЕНОВАНИЙ =====
-    const renameMap = {
-        "VIS-Ogni-3.html": "ВИС Огни 3",
-        "PCP COP.html": "РСР Реестр отделочных работ",
-        "Сводка оплат.html": "Сводка оплат",
-        "реестр для ЧЛ.html": "Реестр для чек-листа ИНЭКО",
-        "протокол 28.04.2026.html": "Протокол №1 · 28 апреля 2026 · 12:30",
-        "протокол 47 от 29.04.2026.html": "Протокол №47 · 29 апреля 2026 · 09:30",
-        "протокол_46_огни_3_от_22_04_2026.html": "Протокол №46 · 22 апреля 2026 · 09:30"
-    };
-
-    function getDisplayName(filename) {
-        if (renameMap[filename]) {
-            return renameMap[filename];
-        }
-        return filename.replace(/\.html$/i, '');
-    }
-
-    // Функция выбора иконки в зависимости от типа документа
-    function getIconForDocument(displayName, filename) {
-        const lowerName = displayName.toLowerCase();
-        
-        // Протоколы
-        if (lowerName.includes('протокол')) return "📋";
-        // Финансы / оплаты — символ рубля
-        if (lowerName.includes('сводка') || lowerName.includes('оплат') || lowerName.includes('финанс')) return "₽";
-        // Реестры
-        if (lowerName.includes('реестр')) return "📊";
-        // РСР / отделочные работы
-        if (lowerName.includes('рср') || lowerName.includes('отделоч')) return "🪚";
-        // Инженерные системы
-        if (lowerName.includes('инэко') || lowerName.includes('систем')) return "🔧";
-        // По умолчанию
-        return "📄";
-    }
-
-    async function fetchHtmlFiles() {
-        const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/git/trees/${BRANCH}?recursive=1`;
-        
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                throw new Error(`Ошибка API: ${response.status}`);
-            }
-            const data = await response.json();
-            
-            const htmlFiles = data.tree.filter(item => 
-                item.type === 'blob' && 
-                item.path.toLowerCase().endsWith('.html')
-            );
-            
-            return htmlFiles.map(file => ({
-                name: file.path.split('/').pop(),
-                fullPath: file.path,
-                url: `https://${GITHUB_USERNAME}.github.io/${REPO_NAME}/${encodeURIComponent(file.path)}`
-            })).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
-            
-        } catch (error) {
-            console.error('Ошибка загрузки:', error);
-            return null;
-        }
-    }
-
     function renderDocs(filterText = '') {
         const lowerFilter = filterText.toLowerCase();
-        
-        // Исключаем VIS-Ogni-3.html из автоматического списка
-        const filtered = allHtmlFiles.filter(file => {
-            if (file.name === 'VIS-Ogni-3.html') return false;
-            const displayName = getDisplayName(file.name);
-            return displayName.toLowerCase().includes(lowerFilter) || 
-                   file.name.toLowerCase().includes(lowerFilter);
-        });
+        const filtered = pages.filter(page => 
+            page.name.toLowerCase().includes(lowerFilter)
+        );
         
         totalSpan.textContent = filtered.length;
         
@@ -386,26 +337,21 @@
             return;
         }
         
-        docsContainer.innerHTML = filtered.map((file, index) => {
-            const displayName = getDisplayName(file.name);
-            const icon = getIconForDocument(displayName, file.name);
-            
-            return `
-                <div class="doc-card" style="animation-delay: ${index * 0.05}s">
-                    <a href="${file.url}" class="card-link" target="_blank" rel="noopener noreferrer">
-                        <div class="doc-icon">${icon}</div>
-                        <div class="doc-name">
-                            ${escapeHtml(displayName)}
-                            <span>HTML</span>
-                        </div>
-                        <div class="doc-meta">
-                            <span>📂 ${escapeHtml(file.fullPath)}</span>
-                            <span>🔗 Открыть →</span>
-                        </div>
-                    </a>
-                </div>
-            `;
-        }).join('');
+        docsContainer.innerHTML = filtered.map((page, index) => `
+            <div class="doc-card" style="animation-delay: ${index * 0.05}s">
+                <a href="${page.file}" class="card-link" target="_blank" rel="noopener noreferrer">
+                    <div class="doc-icon">${page.icon}</div>
+                    <div class="doc-name">
+                        ${escapeHtml(page.name)}
+                        <span>HTML</span>
+                    </div>
+                    <div class="doc-meta">
+                        <span>📂 ${escapeHtml(page.file)}</span>
+                        <span>🔗 Открыть →</span>
+                    </div>
+                </a>
+            </div>
+        `).join('');
     }
     
     function escapeHtml(str) {
@@ -417,36 +363,17 @@
         });
     }
 
-    async function init() {
-        docsContainer.innerHTML = '<div class="empty-message">⏳ Загрузка списка страниц...</div>';
-        
-        const files = await fetchHtmlFiles();
-        if (!files || files.length === 0) {
-            docsContainer.innerHTML = `<div class="empty-message">❌ Не удалось загрузить список файлов</div>`;
-            totalSpan.textContent = '0';
-            return;
-        }
-        
-        allHtmlFiles = files.filter(f => f.name !== 'index.html');
-        
-        if (allHtmlFiles.length === 0) {
-            docsContainer.innerHTML = `<div class="empty-message">✨ Нет других страниц</div>`;
-            totalSpan.textContent = '0';
-            return;
-        }
-        
-        renderDocs();
-        
-        let debounceTimer;
-        searchInput.addEventListener('input', (e) => {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                renderDocs(e.target.value);
-            }, 250);
-        });
-    }
+    // Запуск
+    renderDocs();
     
-    init();
+    // Поиск
+    let debounceTimer;
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            renderDocs(e.target.value);
+        }, 200);
+    });
 </script>
 </body>
 </html>

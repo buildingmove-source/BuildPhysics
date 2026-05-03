@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ВИС Огни 3 · Google Таблица | BuildPhysics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>ВИС Огни 3 | Google Таблица</title>
     <style>
         * {
             margin: 0;
@@ -11,104 +11,123 @@
             box-sizing: border-box;
         }
 
+        /* Занимаем 100% высоты экрана */
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
             font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
-            min-height: 100vh;
-            padding: 1rem;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Шапка с кнопкой назад */
+        /* Шапка — минимальная высота, компактная */
         .header {
-            background: rgba(6, 12, 28, 0.85);
+            background: rgba(6, 12, 28, 0.95);
             backdrop-filter: blur(8px);
-            border-radius: 1.2rem;
-            padding: 1rem 1.5rem;
-            margin-bottom: 1.5rem;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border: 1px solid rgba(227, 27, 35, 0.3);
+            flex-wrap: nowrap;
+            gap: 8px;
+            border-bottom: 1px solid rgba(227, 27, 35, 0.3);
+            flex-shrink: 0;
         }
 
         .title-section {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
+            gap: 6px;
+            flex: 1;
+            min-width: 0;
         }
 
         .title-section h1 {
-            font-size: clamp(1.2rem, 5vw, 1.6rem);
-            background: linear-gradient(135deg, #ffffff, #6b8cff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .badge {
             background: #34a853;
-            padding: 0.3rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 20px;
+            font-size: 9px;
             font-weight: bold;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .back-btn {
             background: rgba(227, 27, 35, 0.2);
             border: 1px solid #e31b23;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
+            padding: 4px 10px;
+            border-radius: 30px;
             text-decoration: none;
             color: #eef2ff;
-            font-size: 0.85rem;
+            font-size: 11px;
             transition: all 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .back-btn:hover {
             background: #e31b23;
-            transform: translateY(-2px);
         }
 
-        /* Контейнер для iframe */
+        /* Контейнер для iframe — занимает всё оставшееся пространство */
         .sheet-container {
-            background: rgba(6, 12, 28, 0.6);
-            border-radius: 1.2rem;
+            flex: 1;
+            width: 100%;
+            background: #ffffff;
             overflow: hidden;
-            border: 1px solid rgba(52, 168, 83, 0.3);
-            height: calc(100vh - 140px);
-            min-height: 500px;
+            position: relative;
         }
 
         .sheet-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: none;
             background: #ffffff;
         }
 
-        /* Информационная полоска */
+        /* Информационная полоска — минимальная высота */
         .info-bar {
-            margin-top: 1rem;
+            background: rgba(6, 12, 28, 0.9);
+            padding: 6px 12px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            font-size: 0.7rem;
+            gap: 6px;
+            font-size: 9px;
             color: #7a8bc5;
-            background: rgba(6, 12, 28, 0.5);
-            padding: 0.7rem 1.2rem;
-            border-radius: 1rem;
+            border-top: 1px solid rgba(227, 27, 35, 0.2);
+            flex-shrink: 0;
         }
 
         .info-bar a {
@@ -120,29 +139,9 @@
             text-decoration: underline;
         }
 
-        @media (max-width: 640px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .sheet-container {
-                height: calc(100vh - 200px);
-                min-height: 400px;
-            }
-        }
-
-        /* Загрузка */
-        .loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #0a0f2a;
-            padding: 1rem 2rem;
-            border-radius: 60px;
-            color: white;
-            z-index: 1000;
-            border: 1px solid #34a853;
+        /* Скрываем скролл у body */
+        ::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
@@ -150,9 +149,9 @@
 <div class="container">
     <div class="header">
         <div class="title-section">
-            <span style="font-size: 1.8rem;">📊</span>
+            <span style="font-size: 16px;">📊</span>
             <h1>ВИС Огни 3</h1>
-            <span class="badge">Google Таблица</span>
+            <span class="badge">Google</span>
         </div>
         <a href="https://buildingmove-source.github.io/BuildPhysics/" class="back-btn">
             ← На главную
@@ -161,35 +160,20 @@
 
     <div class="sheet-container">
         <iframe class="sheet-frame" 
-                src="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing&rm=minimal"
-                title="ВИС Огни 3 - Google Таблица">
+                src="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing&rm=minimal&widget=true&headers=false"
+                title="ВИС Огни 3 - Google Таблица"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
         </iframe>
     </div>
 
     <div class="info-bar">
-        <span>📌 Данные актуальны на момент открытия</span>
-        <span>🔗 <a href="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing" target="_blank">Открыть в полном окне Google Sheets →</a></span>
+        <span>📌 Актуальные данные</span>
+        <span>🔗 <a href="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Открыть в Google Sheets →</a></span>
     </div>
 </div>
 
-<script>
-    // Добавляем эффект загрузки (опционально)
-    const iframe = document.querySelector('.sheet-frame');
-    const loadingDiv = document.createElement('div');
-    loadingDiv.className = 'loading';
-    loadingDiv.textContent = '⏳ Загрузка таблицы...';
-    loadingDiv.style.display = 'none';
-    document.body.appendChild(loadingDiv);
-
-    iframe.addEventListener('load', () => {
-        loadingDiv.style.display = 'none';
-    });
-
-    iframe.addEventListener('beforeunload', () => {
-        loadingDiv.style.display = 'block';
-    });
-</script>
-    <!-- Кнопка "На главную" -->
+<!-- Кнопка "На главную" с зелёной пульсацией -->
 <style>
     .home-button-global {
         position: fixed;

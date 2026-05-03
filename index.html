@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BuildPhysics | Штаб строительства</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            color: #eef2ff;
+            padding: 2rem 1rem;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* шапка */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            background: linear-gradient(135deg, #ffffff, #6b8cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #8a9bdf;
+            font-size: 1rem;
+        }
+
+        .badge-repo {
+            display: inline-block;
+            background: #1a2448;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+            border: 1px solid #33416e;
+        }
+
+        /* поиск */
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(10, 20, 45, 0.85);
+            border: 1px solid #2a3a6e;
+            border-radius: 60px;
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #e31b23;
+            background: rgba(10, 20, 45, 0.95);
+        }
+
+        .search-input::placeholder {
+            color: #6a7bb5;
+        }
+
+        /* статистика */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .count {
+            background: #e31b23;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* сетка документов */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .doc-card {
+            background: rgba(6, 12, 28, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 1.2rem;
+            border: 1px solid rgba(227, 27, 35, 0.25);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-3px);
+            border-color: #e31b23;
+            background: rgba(10, 20, 45, 0.9);
+            box-shadow: 0 15px 35px -12px rgba(0,0,0,0.5);
+        }
+
+        .card-link {
+            display: block;
+            padding: 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .doc-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-name {
+            font-weight: 700;
+            font-size: 1rem;
+            word-break: break-word;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+        }
+
+        .doc-name span {
+            background: #e31b23;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .doc-meta {
+            font-size: 0.7rem;
+            color: #8a9bdf;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        /* сообщение, если нет страниц */
+        .empty-message {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(6, 12, 28, 0.6);
+            border-radius: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: #5a6ba0;
+            border-top: 1px solid #1e2748;
+            padding-top: 1.5rem;
+        }
+
+        /* скрытие при поиске */
+        .hidden-card {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🏗️ BuildPhysics</h1>
+        <p>Штаб строительства · Протоколы · Реестры · Документация</p>
+        <div class="badge-repo">📁 GitHub Pages · Проектная документация</div>
+    </div>
+
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Фильтр документов по названию... (например: протокол, огни, реестр)">
+    </div>
+
+    <div class="stats">
+        <div>📄 Всего документов: <span id="totalCount" class="count">0</span></div>
+        <div>🔄 Обновлено автоматически из репозитория</div>
+    </div>
+
+    <div id="docsContainer" class="docs-grid">
+        <div class="empty-message">⏳ Загрузка списка страниц...</div>
+    </div>
+
+    <div class="footer">
+        BuildPhysics — автоматический список всех HTML-страниц репозитория<br>
+        Добавьте новый .html файл в репозиторий — и он появится здесь в течение 1-2 минут
+    </div>
+</div>
+
+<script>
+    // --- НАСТРОЙКИ (ЗАМЕНИТЕ НА СВОИ ДАННЫЕ) ---
+    const GITHUB_USERNAME = "StasStasovStasova";        // ВАШ USERNAME на GitHub
+    const REPO_NAME = "BuildPhysics";                   // Имя вашего репозитория
+    const BRANCH = "main";                              // Ветка (обычно main или master)
+    // ---------------------------------------------
+
+    const searchInput = document.getElementById('searchInput');
+    const docsContainer = document.getElementById('docsContainer');
+    const totalSpan = document.getElementById('totalCount');
+
+    let allHtmlFiles = []; // массив { name, path, url }
+
+    // Функция получения списка файлов через GitHub API
+    async function fetchHtmlFiles() {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/git/trees/${BRANCH}?recursive=1`;
+        
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error(`Ошибка API: ${response.status}`);
+            }
+            const data = await response.json();
+            
+            // Фильтруем только .html файлы (включая index.html, но index.html будем пропускать позже)
+            const htmlFiles = data.tree.filter(item => 
+                item.type === 'blob' && 
+                item.path.toLowerCase().endsWith('.html')
+            );
+            
+            // Преобразуем в нужный формат, сортируем по имени
+            return htmlFiles.map(file => ({
+                name: file.path.split('/').pop(), // имя файла
+                fullPath: file.path,
+                url: `https://${GITHUB_USERNAME}.github.io/${REPO_NAME}/${file.path}`
+            })).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+            
+        } catch (error) {
+            console.error('Ошибка загрузки:', error);
+            return null;
+        }
+    }
+
+    // Функция отрисовки карточек с учётом фильтра
+    function renderDocs(filterText = '') {
+        const lowerFilter = filterText.toLowerCase();
+        const filtered = allHtmlFiles.filter(file => 
+            file.name.toLowerCase().includes(lowerFilter)
+        );
+        
+        totalSpan.textContent = filtered.length;
+        
+        if (filtered.length === 0) {
+            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено. Попробуйте другой запрос или добавьте HTML-страницы в репозиторий.</div>`;
+            return;
+        }
+        
+        docsContainer.innerHTML = filtered.map(file => {
+            // Иконка в зависимости от типа документа
+            let icon = "📄";
+            const lowerName = file.name.toLowerCase();
+            if (lowerName.includes('протокол')) icon = "📋";
+            else if (lowerName.includes('реестр')) icon = "📊";
+            else if (lowerName.includes('распределительная')) icon = "📑";
+            else if (lowerName.includes('счета')) icon = "💰";
+            else if (lowerName.includes('огни')) icon = "🔥";
+            else icon = "📄";
+            
+            // Делаем красивое отображение имени (без .html)
+            const displayName = file.name.replace(/\.html$/i, '');
+            
+            return `
+                <div class="doc-card" data-filename="${file.name.toLowerCase()}">
+                    <a href="${file.url}" class="card-link" target="_blank" rel="noopener noreferrer">
+                        <div class="doc-icon">${icon}</div>
+                        <div class="doc-name">
+                            ${escapeHtml(displayName)}
+                            <span>HTML</span>
+                        </div>
+                        <div class="doc-meta">
+                            <span>📂 ${escapeHtml(file.fullPath)}</span>
+                            <span>🔗 Открыть →</span>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // простая защита от XSS
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Загрузка и инициализация
+    async function init() {
+        docsContainer.innerHTML = '<div class="empty-message">⏳ Загрузка списка страниц из GitHub...</div>';
+        
+        const files = await fetchHtmlFiles();
+        if (!files || files.length === 0) {
+            docsContainer.innerHTML = `
+                <div class="empty-message">
+                    ❌ Не удалось загрузить список файлов.<br><br>
+                    <strong>Возможные причины:</strong><br>
+                    1. Неверные настройки: username = "${GITHUB_USERNAME}", repo = "${REPO_NAME}"<br>
+                    2. Репозиторий приватный (нужен публичный для GitHub Pages)<br>
+                    3. Нет ни одного .html файла в ветке ${BRANCH}<br><br>
+                    📌 <a href="https://github.com/${GITHUB_USERNAME}/${REPO_NAME}" target="_blank" style="color:#6b8cff;">Открыть репозиторий</a>
+                </div>
+            `;
+            totalSpan.textContent = '0';
+            return;
+        }
+        
+        // Исключаем саму index.html из списка (чтобы не ссылаться саму на себя)
+        allHtmlFiles = files.filter(f => f.name !== 'index.html');
+        
+        if (allHtmlFiles.length === 0) {
+            docsContainer.innerHTML = `<div class="empty-message">✨ В репозитории нет других HTML-страниц, кроме index.html. Добавьте файлы — и они появятся здесь.</div>`;
+            totalSpan.textContent = '0';
+            return;
+        }
+        
+        renderDocs();
+        
+        // Добавляем поиск с debounce
+        let debounceTimer;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                renderDocs(e.target.value);
+            }, 250);
+        });
+    }
+    
+    // Запускаем
+    init();
+</script>
+</body>
+</html>

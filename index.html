@@ -176,12 +176,41 @@
             padding-top: 1.5rem;
         }
 
-        .hidden-card {
-            display: none;
+        .google-card {
+            background: rgba(52, 168, 83, 0.1);
+            border: 1px solid #34a853;
+            border-radius: 1.2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s ease;
         }
         
-        a {
+        .google-card:hover {
+            background: rgba(52, 168, 83, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .google-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
             text-decoration: none;
+            color: inherit;
+        }
+        
+        .google-icon {
+            font-size: 2rem;
+        }
+        
+        .google-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #eef2ff;
+        }
+        
+        .google-subtitle {
+            font-size: 0.7rem;
+            color: #8a9bdf;
         }
     </style>
 </head>
@@ -190,7 +219,7 @@
     <div class="header">
         <h1>🏗️ Огни 3</h1>
         <p>Штаб строительства · Протоколы · Реестры · Документация</p>
-        <div class="badge-repo">📁 · Документация</div>
+        <div class="badge-repo">📁 Огни 3 · Информация</div>
     </div>
 
     <div class="search-box">
@@ -201,17 +230,27 @@
         <div>📄 Всего документов: <span id="totalCount" class="count">0</span></div>
     </div>
 
+    <!-- Ссылка на Google Таблицу (ВИС Огни 3) -->
+    <div class="google-card">
+        <a href="VIS-Ogni-3.html" class="google-link">
+            <div class="google-icon">📊</div>
+            <div>
+                <div class="google-title">ВИС Огни 3</div>
+                <div class="google-subtitle">Google Таблица · Открыть →</div>
+            </div>
+        </a>
+    </div>
+
     <div id="docsContainer" class="docs-grid">
         <div class="empty-message">⏳ Загрузка списка страниц...</div>
     </div>
 
     <div class="footer">
-        Огни 3 — архив 
+        Огни 3 
     </div>
 </div>
 
 <script>
-    // НАСТРОЙКИ - ВАШИ ДАННЫЕ
     const GITHUB_USERNAME = "buildingmove-source";
     const REPO_NAME = "BuildPhysics";
     const BRANCH = "main";
@@ -221,6 +260,24 @@
     const totalSpan = document.getElementById('totalCount');
 
     let allHtmlFiles = [];
+
+    // ===== СЛОВАРЬ ПЕРЕИМЕНОВАНИЙ (добавляйте новые файлы сюда) =====
+    const renameMap = {
+        "VIS-Ogni-3.html": "ВИС Огни 3",
+        "PCP COP.html": "РСР СОРТ",
+        "Сводка оплат.html": "Сводка оплат",
+        "реестр для ЧЛ.html": "Реестр для ЧЛ",
+        "протокол 28.04.2026.html": "Протокол 28.04.2026",
+        "протокол 47 от 29.04.2026.html": "Протокол 47 от 29.04.2026",
+        "протокол_46_огни_3_от_22_04_2026.html": "Протокол №46 · Огни 3"
+    };
+
+    function getDisplayName(filename) {
+        if (renameMap[filename]) {
+            return renameMap[filename];
+        }
+        return filename.replace(/\.html$/i, '');
+    }
 
     async function fetchHtmlFiles() {
         const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/git/trees/${BRANCH}?recursive=1`;
@@ -251,27 +308,33 @@
 
     function renderDocs(filterText = '') {
         const lowerFilter = filterText.toLowerCase();
-        const filtered = allHtmlFiles.filter(file => 
-            file.name.toLowerCase().includes(lowerFilter)
-        );
+        
+        // Исключаем VIS-Ogni-3.html из автоматического списка, так как уже добавили отдельной карточкой
+        const filtered = allHtmlFiles.filter(file => {
+            if (file.name === 'VIS-Ogni-3.html') return false;
+            const displayName = getDisplayName(file.name);
+            return displayName.toLowerCase().includes(lowerFilter) || 
+                   file.name.toLowerCase().includes(lowerFilter);
+        });
         
         totalSpan.textContent = filtered.length;
         
         if (filtered.length === 0) {
-            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено. Попробуйте другой запрос или добавьте HTML-страницы в репозиторий.</div>`;
+            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено</div>`;
             return;
         }
         
         docsContainer.innerHTML = filtered.map(file => {
             let icon = "📄";
-            const lowerName = file.name.toLowerCase();
+            const displayName = getDisplayName(file.name);
+            const lowerName = displayName.toLowerCase();
+            
             if (lowerName.includes('протокол')) icon = "📋";
             else if (lowerName.includes('реестр')) icon = "📊";
             else if (lowerName.includes('распределительная')) icon = "📑";
-            else if (lowerName.includes('счета')) icon = "💰";
+            else if (lowerName.includes('сводка')) icon = "💰";
             else if (lowerName.includes('огни')) icon = "🔥";
-            
-            const displayName = file.name.replace(/\.html$/i, '');
+            else if (lowerName.includes('рср')) icon = "🔧";
             
             return `
                 <div class="doc-card">
@@ -301,19 +364,11 @@
     }
 
     async function init() {
-        docsContainer.innerHTML = '<div class="empty-message">⏳ Загрузка списка страниц из GitHub...</div>';
+        docsContainer.innerHTML = '<div class="empty-message">⏳ Загрузка списка страниц...</div>';
         
         const files = await fetchHtmlFiles();
         if (!files || files.length === 0) {
-            docsContainer.innerHTML = `
-                <div class="empty-message">
-                    ❌ Не удалось загрузить список файлов.<br><br>
-                    <strong>Возможные причины:</strong><br>
-                    1. Репозиторий приватный (нужен публичный)<br>
-                    2. Нет ни одного .html файла в ветке ${BRANCH}<br><br>
-                    📌 <a href="https://github.com/${GITHUB_USERNAME}/${REPO_NAME}" target="_blank" style="color:#6b8cff;">Открыть репозиторий</a>
-                </div>
-            `;
+            docsContainer.innerHTML = `<div class="empty-message">❌ Не удалось загрузить список файлов</div>`;
             totalSpan.textContent = '0';
             return;
         }
@@ -321,7 +376,7 @@
         allHtmlFiles = files.filter(f => f.name !== 'index.html');
         
         if (allHtmlFiles.length === 0) {
-            docsContainer.innerHTML = `<div class="empty-message">✨ В репозитории нет других HTML-страниц, кроме index.html. Добавьте файлы — и они появятся здесь.</div>`;
+            docsContainer.innerHTML = `<div class="empty-message">✨ Нет других страниц</div>`;
             totalSpan.textContent = '0';
             return;
         }

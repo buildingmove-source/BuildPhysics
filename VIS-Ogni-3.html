@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ВИС Огни 3 · Google Таблица | BuildPhysics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Шапка с кнопкой назад */
+        .header {
+            background: rgba(6, 12, 28, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 1.2rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid rgba(227, 27, 35, 0.3);
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .title-section h1 {
+            font-size: clamp(1.2rem, 5vw, 1.6rem);
+            background: linear-gradient(135deg, #ffffff, #6b8cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .badge {
+            background: #34a853;
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: rgba(227, 27, 35, 0.2);
+            border: 1px solid #e31b23;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #eef2ff;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: #e31b23;
+            transform: translateY(-2px);
+        }
+
+        /* Контейнер для iframe */
+        .sheet-container {
+            background: rgba(6, 12, 28, 0.6);
+            border-radius: 1.2rem;
+            overflow: hidden;
+            border: 1px solid rgba(52, 168, 83, 0.3);
+            height: calc(100vh - 140px);
+            min-height: 500px;
+        }
+
+        .sheet-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #ffffff;
+        }
+
+        /* Информационная полоска */
+        .info-bar {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            font-size: 0.7rem;
+            color: #7a8bc5;
+            background: rgba(6, 12, 28, 0.5);
+            padding: 0.7rem 1.2rem;
+            border-radius: 1rem;
+        }
+
+        .info-bar a {
+            color: #34a853;
+            text-decoration: none;
+        }
+
+        .info-bar a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .sheet-container {
+                height: calc(100vh - 200px);
+                min-height: 400px;
+            }
+        }
+
+        /* Загрузка */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #0a0f2a;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            color: white;
+            z-index: 1000;
+            border: 1px solid #34a853;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="title-section">
+            <span style="font-size: 1.8rem;">📊</span>
+            <h1>ВИС Огни 3</h1>
+            <span class="badge">Google Таблица</span>
+        </div>
+        <a href="https://buildingmove-source.github.io/BuildPhysics/" class="back-btn">
+            ← На главную
+        </a>
+    </div>
+
+    <div class="sheet-container">
+        <iframe class="sheet-frame" 
+                src="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing&rm=minimal"
+                title="ВИС Огни 3 - Google Таблица">
+        </iframe>
+    </div>
+
+    <div class="info-bar">
+        <span>📌 Данные актуальны на момент открытия</span>
+        <span>🔗 <a href="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing" target="_blank">Открыть в полном окне Google Sheets →</a></span>
+    </div>
+</div>
+
+<script>
+    // Добавляем эффект загрузки (опционально)
+    const iframe = document.querySelector('.sheet-frame');
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loading';
+    loadingDiv.textContent = '⏳ Загрузка таблицы...';
+    loadingDiv.style.display = 'none';
+    document.body.appendChild(loadingDiv);
+
+    iframe.addEventListener('load', () => {
+        loadingDiv.style.display = 'none';
+    });
+
+    iframe.addEventListener('beforeunload', () => {
+        loadingDiv.style.display = 'block';
+    });
+</script>
+</body>
+</html>

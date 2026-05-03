@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
     <title>Огни 3 | Штаб строительства</title>
+    
+    <!-- ===== ИКОНКИ ДЛЯ СОХРАНЕНИЯ НА ЭКРАН СМАРТФОНА (РУПОР, ЖЁЛТО-ЧЁРНЫЙ) ===== -->
+    
+    <!-- Стандартная иконка для браузеров (favicon) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23FFD700' rx='20'/%3E%3Cpath fill='%23000000' d='M35,35 L55,35 L55,65 L35,65 Z M58,42 L70,50 L58,58 Z M32,40 L25,40 L25,60 L32,60 Z'/%3E%3C/svg%3E">
+    
+    <!-- Apple Touch Icon (iPhone/iPad) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23FFD700' rx='36'/%3E%3Cpath fill='%23000000' d='M63,63 L99,63 L99,117 L63,117 Z M104,75 L126,90 L104,105 Z M58,72 L45,72 L45,108 L58,108 Z'/%3E%3C/svg%3E">
+    
+    <!-- Иконка для Android Chrome -->
+    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Огни%203%22,%22short_name%22:%22Огни3%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%23FFD700' rx='38'/%3E%3Cpath fill='%23000000' d='M67,67 L107,67 L107,125 L67,125 Z M112,81 L134,96 L112,111 Z M61,77 L48,77 L48,115 L61,115 Z'/%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
+    
+    <!-- Цвет темы для браузера -->
+    <meta name="theme-color" content="#FFD700">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Огни 3">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
             font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
@@ -14,17 +38,32 @@
             line-height: 1.5;
             min-height: 100vh;
         }
-        .container { max-width: 1300px; margin: 0 auto; width: 100%; }
-        .header { text-align: center; margin-bottom: 3rem; }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
         .header h1 {
             font-size: clamp(2rem, 7vw, 3.5rem);
-            background: linear-gradient(135deg, #ffffff, #6b8cff);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
         }
-        .header p { color: #8a9bdf; font-size: 1rem; }
+
+        .header p {
+            color: #FFD700;
+            font-size: 1rem;
+        }
+
         .badge-repo {
             display: inline-block;
             background: #1a2448;
@@ -32,26 +71,37 @@
             border-radius: 40px;
             font-size: 0.75rem;
             margin-top: 1rem;
-            border: 1px solid #33416e;
+            border: 1px solid #FFD700;
+            color: #FFD700;
         }
-        .search-box { margin-bottom: 2rem; }
+
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
         .search-input {
             width: 100%;
             padding: 1rem 1.2rem;
             background: rgba(10, 20, 45, 0.85);
-            border: 1px solid #2a3a6e;
+            border: 1px solid #FFD700;
             border-radius: 60px;
             color: white;
             font-size: 1rem;
             backdrop-filter: blur(8px);
             transition: all 0.2s;
         }
+
         .search-input:focus {
             outline: none;
-            border-color: #e31b23;
+            border-color: #FFA500;
             background: rgba(10, 20, 45, 0.95);
         }
-        .search-input::placeholder { color: #6a7bb5; }
+
+        .search-input::placeholder {
+            color: #FFD700;
+            opacity: 0.6;
+        }
+
         .stats {
             display: flex;
             justify-content: space-between;
@@ -61,61 +111,123 @@
             margin-bottom: 1.5rem;
             padding: 0.5rem 0;
         }
+
         .count {
-            background: #e31b23;
+            background: #FFD700;
+            color: #000000;
             padding: 0.2rem 0.8rem;
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: bold;
         }
+
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 1.2rem;
         }
+
         .doc-card {
             background: rgba(6, 12, 28, 0.75);
             backdrop-filter: blur(4px);
             border-radius: 1.2rem;
-            border: 1px solid rgba(227, 27, 35, 0.25);
+            border: 1px solid rgba(255, 215, 0, 0.3);
             transition: all 0.3s ease;
             cursor: pointer;
             animation: fadeInUp 0.5s ease-out;
         }
+
         .doc-card:hover {
             transform: translateY(-5px) scale(1.02);
-            border-color: #e31b23;
+            border-color: #FFD700;
             background: rgba(10, 20, 45, 0.95);
-            box-shadow: 0 20px 40px -12px rgba(227, 27, 35, 0.3);
+            box-shadow: 0 20px 40px -12px rgba(255, 215, 0, 0.3);
         }
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .doc-card:hover .doc-icon { animation: bounce 0.5s ease; }
+
+        .doc-card:hover .doc-icon {
+            animation: bounce 0.5s ease;
+        }
+
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
         }
-        .card-link { display: block; padding: 1.2rem; text-decoration: none; color: inherit; }
-        .doc-icon { font-size: 2.2rem; margin-bottom: 0.7rem; display: inline-block; transition: all 0.3s ease; }
-        .doc-name { font-weight: 700; font-size: 1rem; word-break: break-word; color: #ffffff; margin-bottom: 0.4rem; line-height: 1.4; }
-        .doc-meta { font-size: 0.7rem; color: #8a9bdf; display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
-        .empty-message { text-align: center; padding: 3rem; background: rgba(6, 12, 28, 0.6); border-radius: 1.5rem; margin-top: 2rem; }
-        .footer { text-align: center; margin-top: 3rem; font-size: 0.7rem; color: #5a6ba0; border-top: 1px solid #1e2748; padding-top: 1.5rem; }
+
+        .card-link {
+            display: block;
+            padding: 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .doc-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.7rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .doc-name {
+            font-weight: 700;
+            font-size: 1rem;
+            word-break: break-word;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .doc-meta {
+            font-size: 0.7rem;
+            color: #FFD700;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(6, 12, 28, 0.6);
+            border-radius: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: #FFD700;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            padding-top: 1.5rem;
+        }
+
         .google-card {
-            background: rgba(52, 168, 83, 0.1);
-            border: 1px solid #34a853;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #FFD700;
             border-radius: 1.2rem;
             margin-bottom: 1.8rem;
             transition: all 0.3s ease;
             animation: fadeInUp 0.5s ease-out;
         }
+        
         .google-card:hover {
-            background: rgba(52, 168, 83, 0.2);
+            background: rgba(255, 215, 0, 0.2);
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px -8px rgba(52, 168, 83, 0.3);
+            box-shadow: 0 10px 25px -8px rgba(255, 215, 0, 0.3);
         }
+        
         .google-link {
             display: flex;
             align-items: center;
@@ -124,18 +236,111 @@
             text-decoration: none;
             color: inherit;
         }
-        .google-icon { font-size: 2rem; transition: transform 0.3s ease; }
-        .google-card:hover .google-icon { transform: scale(1.1); }
-        .google-title { font-weight: 700; font-size: 1.1rem; color: #eef2ff; }
-        .google-subtitle { font-size: 0.7rem; color: #8a9bdf; }
+        
+        .google-icon {
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .google-card:hover .google-icon {
+            transform: scale(1.1);
+        }
+        
+        .google-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #FFD700;
+        }
+        
+        .google-subtitle {
+            font-size: 0.7rem;
+            color: #8a9bdf;
+        }
+
+        /* Кнопка с рупором */
+        .home-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            border: 2px solid #000000;
+        }
+
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.7);
+            background: #FFC107;
+        }
+
+        .home-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Пульсация */
+        .home-button::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 50%;
+            background: #FFD700;
+            animation: pulseYellow 1.5s infinite;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        @keyframes pulseYellow {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        .home-icon {
+            font-size: 28px;
+            color: #000000;
+            transition: transform 0.3s ease;
+        }
+
+        .home-button:hover .home-icon {
+            transform: rotate(-5deg) scale(1.1);
+        }
+
+        @media (max-width: 480px) {
+            .home-button {
+                width: 48px;
+                height: 48px;
+                bottom: 15px;
+                right: 15px;
+            }
+            .home-icon {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>🏗️ Огни 3</h1>
+        <h1>📢 Огни 3</h1>
         <p>Штаб строительства · Протоколы · Реестры · Документация</p>
-        <div class="badge-repo">📁 Огни 3 · Актуальная информация</div>
+        <div class="badge-repo">📢 Огни 3 · Актуальная информация</div>
     </div>
 
     <div class="search-box">
@@ -144,7 +349,7 @@
 
     <div class="stats">
         <div>📄 Всего документов: <span id="totalCount" class="count">0</span></div>
-        <div>🏗️ г. Москва, вн.тер.г. муниципальный округ Раменки, между ул. Лобачевского, земельный участок 120А/1</div>
+        <div>📢 Строительная документация</div>
     </div>
 
     <!-- Google Таблица ВИС Огни 3 -->
@@ -163,12 +368,12 @@
     </div>
 
     <div class="footer">
-        Огни 3 · Штаб строительства
+        📢 Огни 3 · Штаб строительства
     </div>
 </div>
 
 <script>
-    // ===== РУЧНОЙ СПИСОК СТРАНИЦ =====
+    // РУЧНОЙ СПИСОК ВСЕХ СТРАНИЦ
     const pages = [
         {
             name: "Протокол №46 · 22 апреля 2026 · 09:30",
@@ -187,13 +392,13 @@
         },
         {
             name: "РСР Реестр отделочных работ",
-            file: "РСР СОР.html",   
+            file: "PCP COP.html",
             icon: "🪚"
         },
         {
             name: "Сводка оплат",
             file: "Сводка оплат.html",
-            icon: "₽"
+            icon: "💰"
         },
         {
             name: "Реестр для чек-листа ИНЭКО",
@@ -208,11 +413,14 @@
 
     function renderDocs(filterText = '') {
         const lowerFilter = filterText.toLowerCase();
-        const filtered = pages.filter(page => page.name.toLowerCase().includes(lowerFilter));
+        const filtered = pages.filter(page => 
+            page.name.toLowerCase().includes(lowerFilter)
+        );
+        
         totalSpan.textContent = filtered.length;
         
         if (filtered.length === 0) {
-            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено.</div>`;
+            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено. Попробуйте другой запрос.</div>`;
             return;
         }
         
@@ -220,9 +428,11 @@
             <div class="doc-card" style="animation-delay: ${index * 0.05}s">
                 <a href="${page.file}" class="card-link" rel="noopener noreferrer">
                     <div class="doc-icon">${page.icon}</div>
-                    <div class="doc-name">${escapeHtml(page.name)}</div>
+                    <div class="doc-name">
+                        ${escapeHtml(page.name)}
+                    </div>
                     <div class="doc-meta">
-                        <span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
+                        <span>📁 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
                         <span>🔗 Открыть →</span>
                     </div>
                 </a>
@@ -244,7 +454,9 @@
     let debounceTimer;
     searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => renderDocs(e.target.value), 200);
+        debounceTimer = setTimeout(() => {
+            renderDocs(e.target.value);
+        }, 200);
     });
 </script>
 </body>

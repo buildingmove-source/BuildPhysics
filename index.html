@@ -235,7 +235,7 @@
             color: #8a9bdf;
         }
 
-        /* ===== КНОПКА "ДОМОЙ" (анимированная) ===== */
+        /* ===== КНОПКА "ДОМОЙ" ===== */
         .home-button {
             position: fixed;
             bottom: 20px;
@@ -251,17 +251,8 @@
             box-shadow: 0 4px 15px rgba(227, 27, 35, 0.4);
             transition: all 0.3s ease;
             z-index: 1000;
-            opacity: 0;
-            transform: scale(0.8);
-            pointer-events: none;
             text-decoration: none;
             border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .home-button.visible {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto;
         }
 
         .home-button:hover {
@@ -309,7 +300,6 @@
             transform: translateY(-2px);
         }
 
-        /* Адаптация для очень маленьких экранов */
         @media (max-width: 480px) {
             .home-button {
                 width: 48px;
@@ -360,7 +350,7 @@
     </div>
 </div>
 
-<!-- АНИМИРОВАННАЯ КНОПКА "ДОМОЙ" -->
+<!-- АНИМИРОВАННАЯ КНОПКА "ДОМОЙ" (ВСЕГДА ВИДНА) -->
 <a href="#" class="home-button" id="homeButton">
     <span class="home-icon">🏠</span>
 </a>
@@ -460,15 +450,6 @@
     // ===== КОД ДЛЯ КНОПКИ "ДОМОЙ" =====
     const homeButton = document.getElementById('homeButton');
     
-    // Показываем/скрываем кнопку при прокрутке
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            homeButton.classList.add('visible');
-        } else {
-            homeButton.classList.remove('visible');
-        }
-    });
-    
     // Плавная прокрутка наверх при клике
     homeButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -477,11 +458,6 @@
             behavior: 'smooth'
         });
     });
-    
-    // Показываем кнопку при загрузке, если страница уже прокручена
-    if (window.scrollY > 300) {
-        homeButton.classList.add('visible');
-    }
 </script>
 </body>
 </html>

@@ -101,7 +101,7 @@
 
         .docs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 1.2rem;
         }
 
@@ -110,15 +110,36 @@
             backdrop-filter: blur(4px);
             border-radius: 1.2rem;
             border: 1px solid rgba(227, 27, 35, 0.25);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
+            animation: fadeInUp 0.5s ease-out;
         }
 
         .doc-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.02);
             border-color: #e31b23;
-            background: rgba(10, 20, 45, 0.9);
-            box-shadow: 0 15px 35px -12px rgba(0,0,0,0.5);
+            background: rgba(10, 20, 45, 0.95);
+            box-shadow: 0 20px 40px -12px rgba(227, 27, 35, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .doc-card:hover .doc-icon {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         .card-link {
@@ -129,8 +150,10 @@
         }
 
         .doc-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            margin-bottom: 0.7rem;
+            display: inline-block;
+            transition: all 0.3s ease;
         }
 
         .doc-name {
@@ -139,6 +162,7 @@
             word-break: break-word;
             color: #ffffff;
             margin-bottom: 0.4rem;
+            line-height: 1.4;
         }
 
         .doc-name span {
@@ -180,13 +204,15 @@
             background: rgba(52, 168, 83, 0.1);
             border: 1px solid #34a853;
             border-radius: 1.2rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.2s ease;
+            margin-bottom: 1.8rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out;
         }
         
         .google-card:hover {
             background: rgba(52, 168, 83, 0.2);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -8px rgba(52, 168, 83, 0.3);
         }
         
         .google-link {
@@ -200,6 +226,11 @@
         
         .google-icon {
             font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .google-card:hover .google-icon {
+            transform: scale(1.1);
         }
         
         .google-title {
@@ -212,6 +243,18 @@
             font-size: 0.7rem;
             color: #8a9bdf;
         }
+
+        /* Стиль для иконки рубля */
+        .rub-icon {
+            font-weight: bold;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 50%;
+            width: 2.2rem;
+            height: 2.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -219,7 +262,7 @@
     <div class="header">
         <h1>🏗️ Огни 3</h1>
         <p>Штаб строительства · Протоколы · Реестры · Документация</p>
-        <div class="badge-repo">📁 Огни 3 · Информация</div>
+        <div class="badge-repo">📁 Огни 3 · Актуальная информация</div>
     </div>
 
     <div class="search-box">
@@ -228,6 +271,7 @@
 
     <div class="stats">
         <div>📄 Всего документов: <span id="totalCount" class="count">0</span></div>
+        <div>🏗️ Строительная документация</div>
     </div>
 
     <!-- Ссылка на Google Таблицу (ВИС Огни 3) -->
@@ -246,7 +290,7 @@
     </div>
 
     <div class="footer">
-        Огни 3 
+        Огни 3 · Штаб строительства
     </div>
 </div>
 
@@ -261,15 +305,15 @@
 
     let allHtmlFiles = [];
 
-    // ===== СЛОВАРЬ ПЕРЕИМЕНОВАНИЙ (добавляйте новые файлы сюда) =====
+    // ===== СЛОВАРЬ ПЕРЕИМЕНОВАНИЙ =====
     const renameMap = {
         "VIS-Ogni-3.html": "ВИС Огни 3",
-        "PCP COP.html": "РСР Реестр отделочных работ доступных для развертывания",
+        "PCP COP.html": "РСР Реестр отделочных работ",
         "Сводка оплат.html": "Сводка оплат",
-        "реестр для ЧЛ.html": "Реестр для чек листа ИНЭКО Система - СС 5",
-        "протокол 28.04.2026.html": "Протокол № 1 28 апреля 2026 г. | 12:30 · Огни 3",
-        "протокол 47 от 29.04.2026.html": "Протокол №47 29 апреля 2026 г.| 09:30 · Огни 3",
-        "протокол_46_огни_3_от_22_04_2026.html": "Протокол №46 22 апреля 2026 г. | 09:30 · Огни 3"
+        "реестр для ЧЛ.html": "Реестр для чек-листа ИНЭКО",
+        "протокол 28.04.2026.html": "Протокол №1 · 28 апреля 2026 · 12:30",
+        "протокол 47 от 29.04.2026.html": "Протокол №47 · 29 апреля 2026 · 09:30",
+        "протокол_46_огни_3_от_22_04_2026.html": "Протокол №46 · 22 апреля 2026 · 09:30"
     };
 
     function getDisplayName(filename) {
@@ -277,6 +321,24 @@
             return renameMap[filename];
         }
         return filename.replace(/\.html$/i, '');
+    }
+
+    // Функция выбора иконки в зависимости от типа документа
+    function getIconForDocument(displayName, filename) {
+        const lowerName = displayName.toLowerCase();
+        
+        // Протоколы
+        if (lowerName.includes('протокол')) return "📋";
+        // Финансы / оплаты — символ рубля
+        if (lowerName.includes('сводка') || lowerName.includes('оплат') || lowerName.includes('финанс')) return "₽";
+        // Реестры
+        if (lowerName.includes('реестр')) return "📊";
+        // РСР / отделочные работы
+        if (lowerName.includes('рср') || lowerName.includes('отделоч')) return "🪚";
+        // Инженерные системы
+        if (lowerName.includes('инэко') || lowerName.includes('систем')) return "🔧";
+        // По умолчанию
+        return "📄";
     }
 
     async function fetchHtmlFiles() {
@@ -309,7 +371,7 @@
     function renderDocs(filterText = '') {
         const lowerFilter = filterText.toLowerCase();
         
-        // Исключаем VIS-Ogni-3.html из автоматического списка, так как уже добавили отдельной карточкой
+        // Исключаем VIS-Ogni-3.html из автоматического списка
         const filtered = allHtmlFiles.filter(file => {
             if (file.name === 'VIS-Ogni-3.html') return false;
             const displayName = getDisplayName(file.name);
@@ -320,24 +382,16 @@
         totalSpan.textContent = filtered.length;
         
         if (filtered.length === 0) {
-            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено</div>`;
+            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено. Попробуйте другой запрос.</div>`;
             return;
         }
         
-        docsContainer.innerHTML = filtered.map(file => {
-            let icon = "📄";
+        docsContainer.innerHTML = filtered.map((file, index) => {
             const displayName = getDisplayName(file.name);
-            const lowerName = displayName.toLowerCase();
-            
-            if (lowerName.includes('протокол')) icon = "📋";
-            else if (lowerName.includes('реестр')) icon = "📊";
-            else if (lowerName.includes('распределительная')) icon = "📑";
-            else if (lowerName.includes('сводка')) icon = "₽";
-            else if (lowerName.includes('огни')) icon = "🔥";
-            else if (lowerName.includes('рср')) icon = "💼";
+            const icon = getIconForDocument(displayName, file.name);
             
             return `
-                <div class="doc-card">
+                <div class="doc-card" style="animation-delay: ${index * 0.05}s">
                     <a href="${file.url}" class="card-link" target="_blank" rel="noopener noreferrer">
                         <div class="doc-icon">${icon}</div>
                         <div class="doc-name">

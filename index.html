@@ -26,7 +26,6 @@
             width: 100%;
         }
 
-        /* шапка */
         .header {
             text-align: center;
             margin-bottom: 3rem;
@@ -56,7 +55,6 @@
             border: 1px solid #33416e;
         }
 
-        /* поиск */
         .search-box {
             margin-bottom: 2rem;
         }
@@ -83,7 +81,6 @@
             color: #6a7bb5;
         }
 
-        /* статистика */
         .stats {
             display: flex;
             justify-content: space-between;
@@ -102,7 +99,6 @@
             font-weight: bold;
         }
 
-        /* сетка документов */
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -163,7 +159,6 @@
             margin-top: 0.5rem;
         }
 
-        /* сообщение, если нет страниц */
         .empty-message {
             text-align: center;
             padding: 3rem;
@@ -181,9 +176,12 @@
             padding-top: 1.5rem;
         }
 
-        /* скрытие при поиске */
         .hidden-card {
             display: none;
+        }
+        
+        a {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -215,19 +213,17 @@
 </div>
 
 <script>
-    // --- НАСТРОЙКИ (ЗАМЕНИТЕ НА СВОИ ДАННЫЕ) ---
-    const GITHUB_USERNAME = "StasStasovStasova";        // ВАШ USERNAME на GitHub
-    const REPO_NAME = "BuildPhysics";                   // Имя вашего репозитория
-    const BRANCH = "main";                              // Ветка (обычно main или master)
-    // ---------------------------------------------
+    // НАСТРОЙКИ - ВАШИ ДАННЫЕ
+    const GITHUB_USERNAME = "buildingmove-source";
+    const REPO_NAME = "BuildPhysics";
+    const BRANCH = "main";
 
     const searchInput = document.getElementById('searchInput');
     const docsContainer = document.getElementById('docsContainer');
     const totalSpan = document.getElementById('totalCount');
 
-    let allHtmlFiles = []; // массив { name, path, url }
+    let allHtmlFiles = [];
 
-    // Функция получения списка файлов через GitHub API
     async function fetchHtmlFiles() {
         const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/git/trees/${BRANCH}?recursive=1`;
         
@@ -238,17 +234,15 @@
             }
             const data = await response.json();
             
-            // Фильтруем только .html файлы (включая index.html, но index.html будем пропускать позже)
             const htmlFiles = data.tree.filter(item => 
                 item.type === 'blob' && 
                 item.path.toLowerCase().endsWith('.html')
             );
             
-            // Преобразуем в нужный формат, сортируем по имени
             return htmlFiles.map(file => ({
-                name: file.path.split('/').pop(), // имя файла
+                name: file.path.split('/').pop(),
                 fullPath: file.path,
-                url: `https://${GITHUB_USERNAME}.github.io/${REPO_NAME}/${file.path}`
+                url: `https://${GITHUB_USERNAME}.github.io/${REPO_NAME}/${encodeURIComponent(file.path)}`
             })).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
             
         } catch (error) {
@@ -257,7 +251,6 @@
         }
     }
 
-    // Функция отрисовки карточек с учётом фильтра
     function renderDocs(filterText = '') {
         const lowerFilter = filterText.toLowerCase();
         const filtered = allHtmlFiles.filter(file => 
@@ -272,7 +265,6 @@
         }
         
         docsContainer.innerHTML = filtered.map(file => {
-            // Иконка в зависимости от типа документа
             let icon = "📄";
             const lowerName = file.name.toLowerCase();
             if (lowerName.includes('протокол')) icon = "📋";
@@ -280,13 +272,11 @@
             else if (lowerName.includes('распределительная')) icon = "📑";
             else if (lowerName.includes('счета')) icon = "💰";
             else if (lowerName.includes('огни')) icon = "🔥";
-            else icon = "📄";
             
-            // Делаем красивое отображение имени (без .html)
             const displayName = file.name.replace(/\.html$/i, '');
             
             return `
-                <div class="doc-card" data-filename="${file.name.toLowerCase()}">
+                <div class="doc-card">
                     <a href="${file.url}" class="card-link" target="_blank" rel="noopener noreferrer">
                         <div class="doc-icon">${icon}</div>
                         <div class="doc-name">
@@ -303,7 +293,6 @@
         }).join('');
     }
     
-    // простая защита от XSS
     function escapeHtml(str) {
         return str.replace(/[&<>]/g, function(m) {
             if (m === '&') return '&amp;';
@@ -313,7 +302,6 @@
         });
     }
 
-    // Загрузка и инициализация
     async function init() {
         docsContainer.innerHTML = '<div class="empty-message">⏳ Загрузка списка страниц из GitHub...</div>';
         
@@ -323,9 +311,8 @@
                 <div class="empty-message">
                     ❌ Не удалось загрузить список файлов.<br><br>
                     <strong>Возможные причины:</strong><br>
-                    1. Неверные настройки: username = "${GITHUB_USERNAME}", repo = "${REPO_NAME}"<br>
-                    2. Репозиторий приватный (нужен публичный для GitHub Pages)<br>
-                    3. Нет ни одного .html файла в ветке ${BRANCH}<br><br>
+                    1. Репозиторий приватный (нужен публичный)<br>
+                    2. Нет ни одного .html файла в ветке ${BRANCH}<br><br>
                     📌 <a href="https://github.com/${GITHUB_USERNAME}/${REPO_NAME}" target="_blank" style="color:#6b8cff;">Открыть репозиторий</a>
                 </div>
             `;
@@ -333,7 +320,6 @@
             return;
         }
         
-        // Исключаем саму index.html из списка (чтобы не ссылаться саму на себя)
         allHtmlFiles = files.filter(f => f.name !== 'index.html');
         
         if (allHtmlFiles.length === 0) {
@@ -344,7 +330,6 @@
         
         renderDocs();
         
-        // Добавляем поиск с debounce
         let debounceTimer;
         searchInput.addEventListener('input', (e) => {
             clearTimeout(debounceTimer);
@@ -354,7 +339,6 @@
         });
     }
     
-    // Запускаем
     init();
 </script>
 </body>

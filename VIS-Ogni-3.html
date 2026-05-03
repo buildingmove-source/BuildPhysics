@@ -16,7 +16,7 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
         }
 
         body {
@@ -49,25 +49,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* Текстовая иконка вместо эмодзи */
-        .header-icon {
-            font-size: clamp(1.8rem, 9vw, 2.5rem);
-            color: #34a853;
-            display: inline-block;
-            margin-right: 0.3rem;
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: #34a853;
-        }
-
-        .header h1 span {
-            background: linear-gradient(135deg, #ffffff, #6b8cff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
         .header p {
             text-align: center;
             color: #8a9bdf;
@@ -81,17 +62,16 @@
             justify-content: center;
             gap: 0.5rem;
             flex-wrap: wrap;
-            margin-top: 0.7rem;
+            margin-top: 0.5rem;
         }
 
         .badge {
             background: #1a2448;
-            padding: 0.3rem 0.8rem;
+            padding: 0.2rem 0.7rem;
             border-radius: 40px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             border: 1px solid #2a3a6e;
             color: #cfdeff;
-            font-weight: 500;
         }
 
         .badge-green {
@@ -100,25 +80,19 @@
             color: #6fcf97;
         }
 
-        .badge-blue {
-            background: rgba(107, 140, 255, 0.2);
-            border-color: #6b8cff;
-            color: #6b8cff;
-        }
-
         /* Контейнер для таблицы — на весь экран */
         .sheet-container {
             flex: 1;
             width: 100%;
             background: #ffffff;
             position: relative;
-            min-height: calc(100vh - 160px);
+            min-height: calc(100vh - 130px);
         }
 
         .sheet-frame {
             width: 100%;
             height: 100%;
-            min-height: calc(100vh - 160px);
+            min-height: calc(100vh - 130px);
             border: none;
             background: #ffffff;
             display: block;
@@ -223,41 +197,25 @@
                 padding: 0.5rem 0.8rem;
                 font-size: 0.6rem;
             }
-            .badge {
-                padding: 0.2rem 0.6rem;
-                font-size: 0.65rem;
-            }
         }
 
-        /* Загрузка */
-        .loading-overlay {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #0a0f2a;
-            padding: 1rem 1.5rem;
-            border-radius: 60px;
-            color: white;
-            z-index: 1001;
-            border: 1px solid #34a853;
-            font-size: 0.9rem;
-            display: none;
+        /* Для очень высоких экранов */
+        @media (min-height: 800px) {
+            .sheet-frame {
+                min-height: calc(100vh - 140px);
+            }
         }
     </style>
 </head>
 <body>
-    <!-- ШАПКА С КРУПНЫМ НАЗВАНИЕМ (без эмодзи) -->
+    <!-- ШАПКА С КРУПНЫМ НАЗВАНИЕМ (БЕЗ ЭМОДЗИ) -->
     <div class="header">
-        <h1>
-            <span class="header-icon">📊</span>
-            <span>ВИС Огни 3</span>
-        </h1>
+        <h1>ВИС Огни 3</h1>
         <p>Информационная система · ЖК «Огни 3»</p>
         <div class="badge-row">
-            <span class="badge">АКТУАЛЬНЫЕ ДАННЫЕ</span>
+            <span class="badge">Актуальные данные</span>
             <span class="badge badge-green">Обновление: ежедневно</span>
-            <span class="badge badge-blue">ЗОМ | СС | ОВ | ВК</span>
+            <span class="badge">ЗОМ СС ОВ ВК</span>
         </div>
     </div>
 
@@ -272,8 +230,8 @@
 
     <!-- ИНФОРМАЦИОННАЯ ПАНЕЛЬ -->
     <div class="info-bar">
-        <div>📌 Данные актуальны на момент открытия</div>
-        <div>🔗 <a href="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing" target="_blank">Открыть в полном окне →</a></div>
+        <div>Данные актуальны на момент открытия</div>
+        <div><a href="https://docs.google.com/spreadsheets/d/1qk82fexjMJVuzs4caGcpdoPMGXKccXmE2lSc4LUlEw0/edit?usp=sharing" target="_blank">Открыть в полном окне →</a></div>
     </div>
 
     <!-- КНОПКА "НА ГЛАВНУЮ" -->
@@ -281,14 +239,9 @@
         <span class="home-icon-global">🏠</span>
     </a>
 
-    <div class="loading-overlay" id="loadingOverlay">
-        ⏳ Загрузка таблицы...
-    </div>
-
     <script>
         // Оптимизация для iOS и Android
         const iframe = document.querySelector('.sheet-frame');
-        const loadingOverlay = document.getElementById('loadingOverlay');
         
         // Фикс для корректного отображения на мобильных устройствах
         function resizeIframe() {
@@ -303,28 +256,13 @@
         window.addEventListener('load', resizeIframe);
         window.addEventListener('resize', resizeIframe);
         
-        // Показываем загрузку
-        iframe.addEventListener('loadstart', function() {
-            loadingOverlay.style.display = 'block';
-        });
-        
-        iframe.addEventListener('load', function() {
-            loadingOverlay.style.display = 'none';
-        });
-        
         // Перезагрузка iframe при ошибке
         iframe.addEventListener('error', function() {
             console.log('Перезагрузка таблицы...');
-            loadingOverlay.style.display = 'block';
             setTimeout(() => {
                 iframe.src = iframe.src;
             }, 1000);
         });
-        
-        // Дополнительно: если iframe грузится слишком долго
-        setTimeout(() => {
-            loadingOverlay.style.display = 'none';
-        }, 5000);
     </script>
 </body>
 </html>

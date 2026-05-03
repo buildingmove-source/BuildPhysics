@@ -284,6 +284,348 @@
 
 <script>
     // =============================================
+    // РУЧНОЙ СПИСОК ВСЕХ СТРАНИЦ
+    // =============================================
+    const pages = [
+        {
+            name: "Протокол №46 · 22 апреля 2026 · 09:30",
+            file: "протокол_46_огни_3_от_22_04_2026.html",
+            icon: "📋"
+        },
+        {
+            name: "Протокол №1 · 28 апреля 2026 · 12:30",
+            file: "протокол 28.04.2026.html",
+            icon: "📋"
+        },
+        {
+            name: "Протокол №47 · 29 апреля 2026 · 09:30",
+            file: "протокол 47 от 29.04.2026.html",
+            icon: "📋"
+        },
+        {
+            name: "РСР Реестр отделочных работ",
+            file: "PCP COP.html",
+            icon: "🪚"
+        },
+        {
+            name: "Сводка оплат",
+            file: "Сводка оплат.html",
+            icon: "₽"
+        },
+        {
+            name: "Реестр для чек-листа ИНЭКО",
+            file: "реестр для ЧЛ.html",
+            icon: "🔧"
+        }
+    ];
+
+    // ===== КОД РАБОТЫ СПИСКА =====
+    const searchInput = document.getElementById('searchInput');
+    const docsContainer = document.getElementById('docsContainer');
+    const totalSpan = document.getElementById('totalCount');
+
+    function renderDocs(filterText = '') {
+        const lowerFilter = filterText.toLowerCase();
+        const filtered = pages.filter(page => 
+            page.name.toLowerCase().includes(lowerFilter)
+        );
+        
+        totalSpan.textContent = filtered.length;
+        
+        if (filtered.length === 0) {
+            docsContainer.innerHTML = `<div class="empty-message">📭 Ничего не найдено. Попробуйте другой запрос.</div>`;
+            return;
+        }
+        
+        docsContainer.innerHTML = filtered.map((page, index) => `
+            <div class="doc-card" style="animation-delay: ${index * 0.05}s">
+                <a href="${page.file}" class="card-link" target="_blank" rel="noopener noreferrer">
+                    <div class="doc-icon">${page.icon}</div>
+                    <div class="doc-name">
+                        ${escapeHtml(page.name)}
+                        <span>HTML</span>
+                    </div>
+                    <div class="doc-meta">
+                        <span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
+                        <span>🔗 Открыть →</span>
+                    </div>
+                </a>
+            </div>
+        `).join('');
+    }
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Запуск
+    renderDocs();
+    
+    // Поиск
+    let debounceTimer;
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            renderDocs(e.target.value);
+        }, 200);
+    });
+</script>
+</body>
+</html>            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #8a9bdf;
+            font-size: 1rem;
+        }
+
+        .badge-repo {
+            display: inline-block;
+            background: #1a2448;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+            border: 1px solid #33416e;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(10, 20, 45, 0.85);
+            border: 1px solid #2a3a6e;
+            border-radius: 60px;
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #e31b23;
+            background: rgba(10, 20, 45, 0.95);
+        }
+
+        .search-input::placeholder {
+            color: #6a7bb5;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .count {
+            background: #e31b23;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .doc-card {
+            background: rgba(6, 12, 28, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 1.2rem;
+            border: 1px solid rgba(227, 27, 35, 0.25);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #e31b23;
+            background: rgba(10, 20, 45, 0.95);
+            box-shadow: 0 20px 40px -12px rgba(227, 27, 35, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .doc-card:hover .doc-icon {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .card-link {
+            display: block;
+            padding: 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .doc-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.7rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .doc-name {
+            font-weight: 700;
+            font-size: 1rem;
+            word-break: break-word;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .doc-name span {
+            background: #e31b23;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .doc-meta {
+            font-size: 0.7rem;
+            color: #8a9bdf;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(6, 12, 28, 0.6);
+            border-radius: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: #5a6ba0;
+            border-top: 1px solid #1e2748;
+            padding-top: 1.5rem;
+        }
+
+        .google-card {
+            background: rgba(52, 168, 83, 0.1);
+            border: 1px solid #34a853;
+            border-radius: 1.2rem;
+            margin-bottom: 1.8rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .google-card:hover {
+            background: rgba(52, 168, 83, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -8px rgba(52, 168, 83, 0.3);
+        }
+        
+        .google-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .google-icon {
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .google-card:hover .google-icon {
+            transform: scale(1.1);
+        }
+        
+        .google-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #eef2ff;
+        }
+        
+        .google-subtitle {
+            font-size: 0.7rem;
+            color: #8a9bdf;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🏗️ Огни 3</h1>
+        <p>Штаб строительства · Протоколы · Реестры · Документация</p>
+        <div class="badge-repo">📁 Огни 3 · Актуальная информация</div>
+    </div>
+
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Фильтр документов по названию...">
+    </div>
+
+    <div class="stats">
+        <div>📄 Всего документов: <span id="totalCount" class="count">0</span></div>
+        <div>🏗️ Строительная документация</div>
+    </div>
+
+    <!-- Google Таблица ВИС Огни 3 -->
+    <div class="google-card">
+        <a href="VIS-Ogni-3.html" class="google-link">
+            <div class="google-icon">📊</div>
+            <div>
+                <div class="google-title">ВИС Огни 3</div>
+                <div class="google-subtitle">Google Таблица · Открыть →</div>
+            </div>
+        </a>
+    </div>
+
+    <div id="docsContainer" class="docs-grid">
+        <div class="empty-message">⏳ Загрузка списка...</div>
+    </div>
+
+    <div class="footer">
+        Огни 3 · Штаб строительства
+    </div>
+</div>
+
+<script>
+    // =============================================
     // РУЧНОЙ СПИСОК ВСЕХ СТРАНИЦ (ДОБАВЛЯЙТЕ НОВЫЕ СЮДА)
     // =============================================
     const pages = [

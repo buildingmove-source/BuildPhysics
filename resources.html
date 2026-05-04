@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="#F5F7FA">
-    <title>Ресурсы · Огни 3 | Управление трудовыми ресурсами</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Ресурсы · Огни 3 | Трудовые ресурсы</title>
     <style>
         * {
             margin: 0;
@@ -16,38 +13,22 @@
 
         body {
             background: #F5F7FA;
-            font-family: Arial, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
             color: #1A1A2E;
             padding: 1rem;
-            font-size: 16px;
+            line-height: 1.5;
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Плавная анимация между страницами */
-        .fade-enter {
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Шапка */
+        /* Шапка - светлая, без эмодзи */
         .header {
             background: #FFFFFF;
-            border-bottom: 2px solid #E2E8F0;
-            padding: 0.75rem 1.5rem;
+            border-bottom: 2px solid #E8ECF0;
+            padding: 1rem 1.5rem;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
@@ -61,30 +42,26 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .logo:hover {
-            transform: scale(1.02);
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, #FFA500, #FF6B35);
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            background: #2D6AFF;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.2rem;
+            color: white;
         }
 
         .logo-text {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #1A1A2E;
+            color: #2D6AFF;
         }
 
         .title {
@@ -93,27 +70,34 @@
             color: #1A1A2E;
         }
 
+        .date-badge {
+            background: #E8ECF0;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #1A1A2E;
+        }
+
         .back-btn {
-            background: #F0F2F5;
-            border: 1px solid #E2E8F0;
+            background: #2D6AFF;
+            border: none;
             padding: 0.5rem 1.2rem;
             border-radius: 40px;
-            color: #1A1A2E;
+            color: white;
             text-decoration: none;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .back-btn:hover {
-            background: #2D6AFF;
-            color: white;
-            border-color: #2D6AFF;
+            background: #00B4D8;
+            transform: scale(1.02);
         }
 
-        /* Панель управления */
+        /* Панель управления - скрывается при печати */
         .admin-panel {
             background: #FFFFFF;
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 1rem;
             margin-bottom: 1.5rem;
             display: flex;
@@ -122,58 +106,56 @@
             flex-wrap: wrap;
             gap: 1rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border: 1px solid #E2E8F0;
+            border: 1px solid #E8ECF0;
         }
 
         .admin-badge {
-            background: #FFA500;
+            background: #2D6AFF;
             padding: 0.3rem 0.8rem;
             border-radius: 40px;
             font-size: 0.75rem;
             font-weight: 600;
-            color: #1A1A2E;
+            color: white;
         }
 
-        .save-btn, .pdf-btn {
-            background: #2D6AFF;
+        .save-btn, .pdf-btn, .reset-btn {
             border: none;
-            padding: 0.6rem 1.5rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 40px;
-            color: white;
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .save-btn:hover, .pdf-btn:hover {
-            background: #1A4FD0;
+        .save-btn {
+            background: #2D6AFF;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #00B4D8;
+            transform: scale(1.02);
+        }
+
+        .pdf-btn {
+            background: #34a853;
+            color: white;
+        }
+
+        .pdf-btn:hover {
+            background: #2c8e47;
             transform: scale(1.02);
         }
 
         .reset-btn {
-            background: #EF4444;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 40px;
+            background: #dc3545;
             color: white;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
         }
 
         .reset-btn:hover {
-            background: #DC2626;
+            background: #b02a37;
             transform: scale(1.02);
-        }
-
-        .date-badge {
-            font-size: 0.8rem;
-            color: #6B7280;
-            background: #F0F2F5;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
         }
 
         /* Toast уведомление */
@@ -183,73 +165,84 @@
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: #1A1A2E;
-            border-left: 4px solid #34a853;
+            color: white;
             padding: 0.6rem 1.2rem;
             border-radius: 50px;
-            color: white;
             font-size: 0.8rem;
             z-index: 2000;
             transition: transform 0.3s ease, opacity 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            white-space: nowrap;
         }
 
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Таблица ресурсов */
+        /* Таблица ресурсов - светлая тема */
         .table-wrapper {
             overflow-x: auto;
-            border-radius: 16px;
+            border-radius: 12px;
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #E8ECF0;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .resources-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 16px;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
             min-width: 800px;
         }
 
         .resources-table th {
-            background: #F0F2F5;
-            padding: 1rem 0.8rem;
+            background: #2D6AFF;
+            color: white;
+            padding: 0.8rem;
             text-align: left;
-            font-weight: 700;
-            color: #1A1A2E;
-            border-bottom: 2px solid #E2E8F0;
+            font-weight: 600;
             font-size: 16px;
+            border-bottom: 2px solid #E8ECF0;
         }
 
         .resources-table td {
-            padding: 0.8rem;
-            border-bottom: 1px solid #E2E8F0;
+            padding: 0.7rem 0.8rem;
+            border-bottom: 1px solid #E8ECF0;
             vertical-align: top;
             color: #1A1A2E;
-            font-size: 15px;
+            font-size: 16px;
         }
 
         .resources-table tr:hover {
-            background: #F8FAFE;
+            background: #F0F4F8;
         }
 
         .editable-cell {
-            background: #F0F2F5;
+            background: #F0F4F8;
             border-radius: 8px;
-            padding: 0.4rem 0.6rem;
+            padding: 0.3rem 0.6rem;
             min-width: 60px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
             display: inline-block;
-            font-weight: 600;
+            transition: all 0.2s;
+            color: #1A1A2E;
         }
 
         .editable-cell:hover {
-            background: #FFA500;
+            background: #2D6AFF;
             color: white;
         }
 
@@ -258,84 +251,152 @@
             background: white;
             border: 1px solid #2D6AFF;
             border-radius: 6px;
-            padding: 0.4rem;
-            color: #1A1A2E;
+            padding: 0.3rem;
             text-align: center;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-
-        .section-header {
-            background: #E8EDF5;
-            font-weight: 700;
+            font-size: 16px;
+            font-family: 'Arial', Helvetica, sans-serif;
         }
 
         .section-header td {
-            background: #E8EDF5;
-            padding: 0.8rem;
+            background: #E8ECF0;
             font-weight: 700;
-            font-size: 17px;
+            font-size: 18px;
+            color: #1A1A2E;
+            padding: 0.8rem;
         }
 
         .sub-total {
-            background: #FEF3C7;
+            background: #F0F4F8;
             font-weight: 600;
         }
 
         .grand-total {
-            background: #DCFCE7;
+            background: #2D6AFF;
             font-weight: 700;
+            color: white;
+        }
+
+        .grand-total td {
+            color: white;
         }
 
         .footer {
             text-align: center;
             margin-top: 2rem;
             padding: 1rem;
-            font-size: 0.75rem;
-            color: #6B7280;
+            font-size: 0.7rem;
+            color: #8A9BDF;
         }
 
         @media (max-width: 768px) {
-            body { padding: 0.5rem; font-size: 14px; }
-            .header { flex-direction: column; text-align: center; }
-            .resources-table th, .resources-table td { padding: 0.5rem; font-size: 13px; }
+            body {
+                padding: 0.5rem;
+            }
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .resources-table th, .resources-table td {
+                padding: 0.5rem;
+                font-size: 14px;
+            }
+            .editable-cell input {
+                width: 50px;
+                font-size: 14px;
+            }
         }
 
-        /* Для PDF */
+        /* Стили для печати/PDF */
         @media print {
-            body { background: white; padding: 0; }
-            .admin-panel, .back-btn, .toast { display: none; }
-            .resources-table th { background: #E8EDF5; }
-            .resources-table td { border: 1px solid #ccc; }
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .admin-panel, .back-btn, .save-btn, .pdf-btn, .reset-btn, .toast, .logo, .date-badge {
+                display: none !important;
+            }
+            .header {
+                background: white;
+                border-bottom: 2px solid #ddd;
+                margin-bottom: 1rem;
+                padding: 0.5rem;
+                box-shadow: none;
+            }
+            .title {
+                color: #1A1A2E;
+            }
+            .resources-table th {
+                background: #2D6AFF;
+                color: white;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .grand-total td {
+                background: #2D6AFF;
+                color: white;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .section-header td {
+                background: #E8ECF0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .editable-cell {
+                background: none;
+                cursor: default;
+            }
+            .editable-cell input {
+                display: none;
+            }
+            .table-wrapper {
+                overflow: visible;
+                box-shadow: none;
+            }
+        }
+
+        /* Анимация перехода между страницами */
+        .fade-out {
+            animation: fadeOut 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container fade-enter" id="pdfContent">
+<div class="container" id="pageContainer">
     <!-- Шапка -->
     <div class="header">
-        <div class="logo" onclick="window.location.href='index.html'">
-            <div class="logo-icon">🪖</div>
+        <div class="logo" onclick="animateAndNavigate('index.html')">
+            <div class="logo-icon">👷</div>
             <span class="logo-text">Огни 3</span>
         </div>
-        <div class="title">📋 Ресурсы · Трудовые ресурсы</div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-            <div class="date-badge" id="dateBadge"></div>
-            <a href="index.html" class="back-btn">← На главную</a>
-        </div>
+        <div class="title">Ресурсы · Трудовые ресурсы</div>
+        <div class="date-badge" id="dateBadge"></div>
+        <button class="back-btn" onclick="animateAndNavigate('index.html')">На главную</button>
     </div>
 
-    <!-- Панель администратора -->
-    <div class="admin-panel">
+    <!-- Панель управления -->
+    <div class="admin-panel" id="adminPanel">
         <div>
-            <span class="admin-badge">👑 Режим администратора</span>
-            <span style="margin-left: 1rem; font-size: 0.75rem; color: #6B7280;">Редактирование доступно только вам</span>
+            <span class="admin-badge">Режим редактирования</span>
+            <span style="margin-left: 1rem; font-size: 0.7rem; color: #5A6BA0;">Нажмите на число для изменения</span>
         </div>
         <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-            <button class="save-btn" id="saveBtn">💾 Сохранить изменения</button>
-            <button class="pdf-btn" id="pdfBtn">📄 Сохранить в PDF</button>
-            <button class="reset-btn" id="resetBtn">⟳ Сбросить к исходным</button>
+            <button class="save-btn" id="saveBtn">Сохранить изменения</button>
+            <button class="pdf-btn" id="pdfBtn">Сохранить в PDF</button>
+            <button class="reset-btn" id="resetBtn">Сбросить к исходным</button>
         </div>
     </div>
 
@@ -358,21 +419,22 @@
     </div>
 
     <div class="footer">
-        Данные сохраняются в вашем браузере. При смене устройства данные могут быть утеряны.
+        Данные актуальны на момент формирования
     </div>
 </div>
 
 <!-- Toast уведомление -->
-<div id="toast" class="toast">✅ Сохранено</div>
+<div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ =====
+    // ===== ДАННЫЕ ИЗ ФАЙЛА (полные, без ошибок) =====
     const initialData = [
-        // Секция 1
+        // Секция 1 - ЭОМ
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", responsible: "ООО \"ИНЭКО\"", people: 3 },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", responsible: "", people: 2 },
         { section: "Секция 1", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", responsible: "", people: 2 },
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж лотков", responsible: "", people: 3 },
+        // Секция 1 - СС
         { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ ВП МГН", responsible: "ООО \"ИНЭКО\"", people: 2 },
         { section: "Секция 1", subsys: "СС", work: "Вызывные панели МГН", responsible: "", people: 2 },
         { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ АПС, СПА, включая оконечные устройства", responsible: "", people: 2 },
@@ -385,21 +447,27 @@
         { section: "Секция 1", subsys: "СС", work: "Видеокамеры в МОП", responsible: "", people: 2 },
         { section: "Секция 1", subsys: "СС", work: "КЛ на СОТС в нишах", responsible: "", people: 2 },
         { section: "Секция 1", subsys: "СС", work: "КЛ ДС лифтов", responsible: "", people: 2 },
+        // Секция 1 - Отопление
         { section: "Секция 1", subsys: "Отопление", work: "Стояки", responsible: "ООО \"ПСК-28\"", people: 4 },
         { section: "Секция 1", subsys: "Отопление", work: "Гребенки", responsible: "", people: 3 },
         { section: "Секция 1", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", responsible: "", people: 4 },
         { section: "Секция 1", subsys: "Отопление", work: "Гидравлические испытания", responsible: "", people: 2 },
         { section: "Секция 1", subsys: "Отопление", work: "Изоляция", responsible: "", people: 3 },
+        // Секция 1 - Вентиляция
         { section: "Секция 1", subsys: "Вентиляция", work: "Монтаж воздуховодов и врезок под клапана", responsible: "ООО \"ПСК-28\"", people: 3 },
         { section: "Секция 1", subsys: "Вентиляция", work: "Монтаж клапанов и вентоборудования", responsible: "", people: 3 },
+        // Секция 1 - ВК
         { section: "Секция 1", subsys: "ВК", work: "Стояки", responsible: "ООО \"ПСК-28\"", people: 4 },
         { section: "Секция 1", subsys: "ВК", work: "Гребенки", responsible: "", people: 3 },
         { section: "Секция 1", subsys: "ВК", work: "КПК", responsible: "", people: 3 },
         { section: "Секция 1", subsys: "ВК", work: "Гидравлика", responsible: "", people: 2 },
         { section: "Секция 1", subsys: "ВК", work: "Изоляция", responsible: "", people: 3 },
+        // Секция 1 - Пожаротушение
         { section: "Секция 1", subsys: "Пожаротушение", work: "Монтаж сплинкеров и ДППК", responsible: "ООО \"ПСК-28\"", people: 4 },
         { section: "Секция 1", subsys: "Пожаротушение", work: "Гидравлика", responsible: "", people: 2 },
+        // Секция 1 - ИТП
         { section: "Секция 1", subsys: "ИТП", work: "Монтаж ИТП под ключ", responsible: "ИП \"Снигур\"", people: 3 },
+        // Секция 1 - ПНР
         { section: "Секция 1", subsys: "ПНР", work: "Диспетчеризация лифтов", responsible: "ООО \"Листех\"", people: 2 },
         { section: "Секция 1", subsys: "ПНР", work: "АСКУЭ", responsible: "ООО \"Призмер\"", people: 1 },
         { section: "Секция 1", subsys: "ПНР", work: "АСКУВТ", responsible: "", people: 1 },
@@ -418,14 +486,14 @@
         { section: "Секция 2", subsys: "СС", work: "Подключение СПЖ", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "Подключение приводов ПД/ВД МОП и ЛХ", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУЭ", responsible: "", people: 2 },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУВТ", responsible: "", people: 2 },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ СОТ", responsible: "", people: 2 },
+        { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУВТ", responsible: "", people: 3 },
+        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ СОТ", responsible: "", people: 3 },
         { section: "Секция 2", subsys: "СС", work: "Видеокамеры в МОП", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "КЛ на СОТС в нишах", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "КЛ ДС лифтов", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "Отопление", work: "Стояки", responsible: "ООО \"ПСК-28\"", people: 2 },
         { section: "Секция 2", subsys: "Отопление", work: "Гребенки", responsible: "", people: 4 },
-        { section: "Секция 2", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", responsible: "", people: 4 },
+        { section: "Секция 2", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", responsible: "", people: 3 },
         { section: "Секция 2", subsys: "Отопление", work: "Гидравлические испытания", responsible: "", people: 4 },
         { section: "Секция 2", subsys: "Отопление", work: "Изоляция", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "Вентиляция", work: "Монтаж воздуховодов и врезок под клапана", responsible: "ООО \"ПСК-28\"", people: 3 },
@@ -439,8 +507,8 @@
         { section: "Секция 2", subsys: "Пожаротушение", work: "Гидравлика", responsible: "", people: 4 },
         { section: "Секция 2", subsys: "ПНР", work: "Диспетчеризация лифтов", responsible: "ООО \"Листех\"", people: 2 },
         { section: "Секция 2", subsys: "ПНР", work: "АСКУЭ", responsible: "ООО \"Призмер\"", people: 2 },
-        { section: "Секция 2", subsys: "ПНР", work: "АСКУВТ", responsible: "", people: 2 },
-        { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", responsible: "", people: 2 },
+        { section: "Секция 2", subsys: "ПНР", work: "АСКУВТ", responsible: "", people: 3 },
+        { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", responsible: "", people: 3 },
         { section: "Секция 2", subsys: "ПНР", work: "АОВ", responsible: "ООО \"СИДРЭ\"", people: 3 },
 
         // Паркинг
@@ -486,10 +554,16 @@
     // Форматирование даты
     function formatDate() {
         const now = new Date();
-        return now.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' });
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${day}.${month}.${year} ${hours}:${minutes}`;
     }
 
-    // Загрузка данных
+    document.getElementById('dateBadge').textContent = `Дата формирования: ${formatDate()}`;
+
     function loadData() {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -498,44 +572,22 @@
             resourcesData = JSON.parse(JSON.stringify(initialData));
         }
         renderTable();
-        document.getElementById('dateBadge').textContent = `📅 ${formatDate()}`;
     }
 
-    // Сохранение
     function saveData() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(resourcesData));
-        showToast('💾 Все изменения сохранены!');
+        showToast('Изменения сохранены');
     }
 
-    // Сброс
     function resetData() {
-        if (confirm('Вы уверены, что хотите сбросить все изменения к исходным значениям?')) {
+        if (confirm('Сбросить все изменения к исходным значениям?')) {
             resourcesData = JSON.parse(JSON.stringify(initialData));
             renderTable();
             saveData();
-            showToast('⟳ Данные сброшены к исходным');
+            showToast('Данные сброшены к исходным');
         }
     }
 
-    // Сохранение в PDF
-    function saveToPDF() {
-        showToast('📄 Подготовка PDF...');
-        const element = document.getElementById('pdfContent');
-        const opt = {
-            margin: [0.5, 0.5, 0.5, 0.5],
-            filename: `Ресурсы_Огни3_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
-        };
-        html2pdf().set(opt).from(element).save().then(() => {
-            showToast('✅ PDF сохранён!');
-        }).catch(() => {
-            showToast('❌ Ошибка при сохранении PDF');
-        });
-    }
-
-    // Отрисовка таблицы
     function renderTable() {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = '';
@@ -547,20 +599,20 @@
                 currentSection = item.section;
                 const sectionRow = document.createElement('tr');
                 sectionRow.className = 'section-header';
-                sectionRow.innerHTML = `<td colspan="5"><strong>🪖 ${item.section}</strong></td>`;
+                sectionRow.innerHTML = `<td colspan="5"><strong>${item.section}</strong></td>`;
                 tbody.appendChild(sectionRow);
             }
             
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td style="padding-left: 1rem;">${escapeHtml(item.subsys)}</td>
+                <td style="padding-left: 1.5rem;">${escapeHtml(item.subsys)}</td>
                 <td>${escapeHtml(item.work)}</td>
                 <td>${escapeHtml(item.responsible) || '—'}</td>
                 <td style="text-align: center;">
                     <span class="editable-cell" onclick="editPeople(${index}, this)">
                         ${item.people}
                     </span>
-                </td>
+                </table>
             `;
             tbody.appendChild(row);
         });
@@ -569,7 +621,7 @@
         totalRow.className = 'grand-total';
         const totalPeople = resourcesData.reduce((sum, item) => sum + (item.people || 0), 0);
         totalRow.innerHTML = `
-            <td colspan="3"><strong>📊 ИТОГО ЧЕЛОВЕК</strong></td>
+            <td colspan="3"><strong>ВСЕГО ЧЕЛОВЕК</strong></td>
             <td style="text-align: center;"><strong>${totalPeople}</strong></td>
         `;
         tbody.appendChild(totalRow);
@@ -596,12 +648,14 @@
             resourcesData[index].people = newValue;
             container.innerHTML = newValue;
             renderTable();
-            showToast('✏️ Значение изменено. Не забудьте сохранить!');
+            showToast('Значение изменено. Нажмите "Сохранить изменения"');
         };
         
         input.addEventListener('blur', saveEdit);
         input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') saveEdit();
+            if (e.key === 'Enter') {
+                saveEdit();
+            }
         });
     };
     
@@ -624,7 +678,33 @@
         }, 2000);
     }
     
-    // Инициализация
+    // Анимация перехода между страницами
+    function animateAndNavigate(url) {
+        const container = document.getElementById('pageContainer');
+        container.classList.add('fade-out');
+        setTimeout(() => {
+            window.location.href = url;
+        }, 400);
+    }
+    
+    // Сохранение в PDF
+    function saveToPDF() {
+        const adminPanel = document.getElementById('adminPanel');
+        const originalDisplay = adminPanel.style.display;
+        adminPanel.style.display = 'none';
+        
+        const originalTitle = document.title;
+        document.title = `Ресурсы_Огни3_${formatDate().replace(/[:\s]/g, '_')}`;
+        
+        showToast('Подготовка PDF...');
+        
+        setTimeout(() => {
+            window.print();
+            adminPanel.style.display = originalDisplay;
+            document.title = originalTitle;
+        }, 100);
+    }
+    
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
     document.getElementById('pdfBtn').addEventListener('click', saveToPDF);

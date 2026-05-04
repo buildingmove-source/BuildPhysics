@@ -17,6 +17,7 @@
             color: #1a1a2e;
             padding: 0.5rem;
             min-height: 100vh;
+            overflow-y: auto;
         }
 
         .container {
@@ -117,17 +118,18 @@
         }
 
         .btn-save { background: #2C6B2F; color: white; }
+        .btn-export { background: #D32F2F; color: white; }
         .btn-reset { background: #F5F5F5; color: #5A6E7A; border: 1px solid #D0D7DE; }
-        .btn-reset:hover { background: #EEEEEE; }
 
+        /* ===== ИСПРАВЛЕНА ВЫСОТА ДЛЯ СКРОЛЛА ===== */
         .table-wrapper {
             background: white;
             border: 1px solid #D0D7DE;
             border-radius: 8px;
             overflow-y: auto;
             overflow-x: auto;
-            max-height: calc(100vh - 120px);
-            position: relative;
+            max-height: 65vh;
+            min-height: 300px;
         }
 
         .resources-table {
@@ -358,13 +360,31 @@
             visibility: visible;
         }
 
+        /* Стили для экспорта PDF */
+        @media print {
+            .admin-panel, .home-button, .back-btn {
+                display: none !important;
+            }
+            .table-wrapper {
+                overflow: visible !important;
+                max-height: none !important;
+            }
+            .resources-table th {
+                background: #2C3E50 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
         @media (max-width: 1024px) {
             .header { display: none !important; }
+            .table-wrapper { max-height: 55vh; }
             .home-button { width: 44px; height: 44px; bottom: 20px; right: 20px; }
         }
 
         @media (max-width: 768px) {
             body { padding: 0.3rem; }
+            .table-wrapper { max-height: 50vh; }
             .home-button { width: 40px; height: 40px; bottom: 15px; right: 15px; }
             .people-value { min-width: 30px; font-size: 11px; }
         }
@@ -383,10 +403,12 @@
         <button class="back-btn" id="backBtn">← На главную</button>
     </div>
 
+    <!-- Панель с кнопкой экспорта -->
     <div class="admin-panel">
         <div><span class="admin-badge">Режим редактирования</span></div>
         <div style="display: flex; gap: 0.4rem;">
             <button class="btn btn-save" id="saveBtn">Сохранить</button>
+            <button class="btn btn-export" id="exportBtn">📄 Экспорт HTML</button>
             <button class="btn btn-reset" id="resetBtn">Сбросить</button>
         </div>
     </div>
@@ -416,7 +438,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ =====
+    // ===== ДАННЫЕ =====
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -545,7 +567,7 @@
 
     function saveData() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(resourcesData));
-        showToast('Данные сохранены');
+        showToast('✅ Данные сохранены');
     }
 
     function resetData() {
@@ -553,7 +575,7 @@
             resourcesData = JSON.parse(JSON.stringify(initialDataRaw));
             renderTable();
             saveData();
-            showToast('Сброшено к исходным');
+            showToast('🔄 Сброшено к исходным');
         }
     }
 
@@ -577,23 +599,23 @@
 
     function addContractor(rowIndex) {
         if (resourcesData[rowIndex].contractors.length >= 3) {
-            showToast('Максимум 3 подрядчика');
+            showToast('⚠️ Максимум 3 подрядчика');
             return;
         }
         resourcesData[rowIndex].contractors.push({ name: 'Новый подрядчик', people: 0 });
         renderTable();
-        showToast('Добавлен подрядчик');
+        showToast('➕ Добавлен подрядчик');
     }
 
     function removeContractor(rowIndex, contractorIndex) {
         if (resourcesData[rowIndex].contractors.length === 1) {
             resourcesData[rowIndex].contractors[0] = { name: '—', people: 0 };
             renderTable();
-            showToast('Подрядчик очищен');
+            showToast('🗑️ Подрядчик очищен');
         } else {
             resourcesData[rowIndex].contractors.splice(contractorIndex, 1);
             renderTable();
-            showToast('Подрядчик удалён');
+            showToast('🗑️ Подрядчик удалён');
         }
     }
 
@@ -610,6 +632,7 @@
         input.style.fontSize = '11px';
         
         const container = element;
+        const originalText = container.innerHTML;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
@@ -619,7 +642,7 @@
             if (newName === '') newName = '—';
             contractor.name = newName;
             container.innerHTML = escapeHtml(newName);
-            showToast('Название изменено');
+            showToast('✏️ Название изменено');
         };
         
         input.addEventListener('blur', saveEdit);
@@ -639,6 +662,7 @@
         input.style.fontSize = '11px';
         
         const container = element;
+        const originalText = container.innerHTML;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
@@ -648,7 +672,7 @@
             if (newWork === '') newWork = currentWork;
             resourcesData[rowIndex].work = newWork;
             container.innerHTML = escapeHtml(newWork);
-            showToast('Наименование работ изменено');
+            showToast('✏️ Наименование работ изменено');
             renderTable();
         };
         
@@ -671,7 +695,6 @@
                 tbody.appendChild(sectionRow);
             }
             
-            // Формируем список подрядчиков
             let contractorsHtml = '<div class="contractors-list">';
             
             item.contractors.forEach((contractor, cIndex) => {
@@ -688,7 +711,6 @@
                 `;
             });
             
-            // Кнопка добавления подрядчика — ТОЛЬКО ЕСЛИ МЕНЕЕ 3
             if (item.contractors.length < 3) {
                 contractorsHtml += `<div class="add-contractor-btn" onclick="addContractor(${rowIndex})">+ Добавить подрядчика</div>`;
             }
@@ -725,6 +747,131 @@
         toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
     
+    // ===== ЭКСПОРТ HTML =====
+    function exportToHTML() {
+        const now = new Date();
+        const dateStr = `${now.getDate().toString().padStart(2,'0')}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getFullYear()}`;
+        const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        
+        let exportRows = [];
+        let currentSection = '';
+        
+        resourcesData.forEach((item) => {
+            if (currentSection !== item.section) {
+                currentSection = item.section;
+                exportRows.push({ type: 'section', section: item.section });
+            }
+            const contractorsList = item.contractors.map(c => `${c.name}: ${c.people}`).join('; ');
+            exportRows.push({
+                type: 'row',
+                section: item.section,
+                subsys: item.subsys,
+                work: item.work,
+                contractors: contractorsList,
+                total: getRowTotal(item.contractors)
+            });
+        });
+        
+        const totalPeople = getTotalPeople();
+        
+        const exportHtml = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ресурсы Огни 3 от ${dateStr}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: white;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2C6B2F;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { color: #666; font-size: 12px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        th {
+            background: #2C3E50;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        .section-header td { background: #E8EDF2; font-weight: bold; }
+        .grand-total td { background: #2C6B2F; color: white; font-weight: bold; }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Трудовые ресурсы</h1>
+        <p>ЖК «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Объект / Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
+        </thead>
+        <tbody>
+            ${exportRows.map(row => {
+                if (row.type === 'section') {
+                    return `<tr class="section-header"><td colspan="5"><strong>${row.section}</strong></td></tr>`;
+                } else {
+                    return `<tr>
+                        <td>${escapeHtml(row.section)}</td>
+                        <td>${escapeHtml(row.subsys)}</td>
+                        <td>${escapeHtml(row.work)}</td>
+                        <td>${escapeHtml(row.contractors)}</td>
+                        <td style="text-align: center;">${row.total}</td>
+                    </tr>`;
+                }
+            }).join('')}
+            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align: center;"><strong>${totalPeople}</strong></td></tr>
+        </tbody>
+    </table>
+    <div class="footer">Данные актуальны на момент формирования · ЖК «Огни 3»</div>
+</div>
+</body>
+</html>`;
+        
+        // Скачивание файла
+        const blob = new Blob([exportHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Ресурсы_Огни3_${dateStr.replace(/\./g, '-')}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showToast('📄 HTML файл сохранён');
+    }
+    
     function navigateToHome() {
         document.getElementById('pageContainer').classList.add('page-slide-out-left');
         setTimeout(() => { window.location.href = 'index.html'; }, 350);
@@ -732,6 +879,7 @@
     
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
+    document.getElementById('exportBtn').addEventListener('click', exportToHTML);
     document.getElementById('backBtn')?.addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });
     document.getElementById('backLogo')?.addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });
     document.getElementById('homeBtn').addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });

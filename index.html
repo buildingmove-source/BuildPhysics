@@ -191,23 +191,6 @@
             margin-bottom: 0.5rem;
         }
 
-        .hero-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255,255,255,0.05);
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-        }
-
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -498,10 +481,10 @@
                 <span class="sidebar-icon">📊</span>Реестры
             </div>
             <div class="sidebar-item" onclick="filterDocs('finance')">
-                <span class="sidebar-icon">💰</span>Финансы
+                <span class="sidebar-icon">₽</span>Финансы
             </div>
             <div class="sidebar-item" onclick="filterDocs('tech')">
-                <span class="sidebar-icon">🔧</span>Техническая часть
+                <span class="sidebar-icon">💼</span>Техническая часть
             </div>
         </div>
         
@@ -525,11 +508,6 @@
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
             <p style="color: #8A9BDF; margin-bottom: 1rem;">Актуальная документация и ход работ</p>
-            <div class="hero-stats">
-                <div class="stat">📄 6 документов</div>
-                <div class="stat">🔄 Обновлено сегодня</div>
-                <div class="stat">👥 4 активных участника</div>
-            </div>
         </div>
 
         <div class="google-card">
@@ -591,8 +569,8 @@
         { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📋", date: "28.04.2026", category: "protocol" },
         { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📋", date: "29.04.2026", category: "protocol" },
         { name: "РСР Реестр отделочных работ", file: "PCP COP.html", icon: "🪚", date: "03.05.2026", category: "registry" },
-        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "💰", date: "02.05.2026", category: "finance" },
-        { name: "Реестр для чек-листа ИНЭКО", file: "реестр для ЧЛ.html", icon: "🔧", date: "01.05.2026", category: "registry" }
+        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "₽", date: "02.05.2026", category: "finance" },
+        { name: "Реестр для чек-листа ИНЭКО", file: "реестр для ЧЛ.html", icon: "💼", date: "01.05.2026", category: "registry" }
     ];
 
     let currentFilter = 'all';
@@ -737,96 +715,5 @@
     // ЗАПУСК
     renderDocs();
 </script>
-</body>
-</html>            <span>● История сообщений сохраняется навсегда</span>
-        </div>
-        <div style="flex:1"></div>
-        <button class="clear-btn" onclick="clearChat()">🗑 Очистить историю</button>
-    </div>
-    <div class="messages-container" id="messagesContainer"></div>
-    <div class="input-area">
-        <textarea class="message-input" id="messageInput" placeholder="Напишите сообщение..." rows="1"></textarea>
-        <button class="send-btn" onclick="sendMessage()">📤</button>
-    </div>
-
-    <script>
-        const STORAGE_KEY = 'ogni3_chat_messages';
-        
-        function loadMessages() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            return stored ? JSON.parse(stored) : [];
-        }
-
-        function saveMessages(messages) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-            return messages;
-        }
-
-        function addMessage(text, isOutgoing = true) {
-            const messages = loadMessages();
-            messages.push({
-                id: Date.now(),
-                text: text,
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' }),
-                date: new Date().toISOString(),
-                isOutgoing: isOutgoing
-            });
-            saveMessages(messages);
-            renderMessages();
-        }
-
-        function renderMessages() {
-            const container = document.getElementById('messagesContainer');
-            const messages = loadMessages();
-            if (messages.length === 0) {
-                container.innerHTML = '<div style="text-align:center; color:#8A9BDF; padding:2rem;">✨ Нет сообщений. Напишите первое сообщение команде!</div>';
-                return;
-            }
-            container.innerHTML = messages.map(msg => `
-                <div class="message ${msg.isOutgoing ? 'outgoing' : ''}">
-                    <div class="message-avatar">${msg.isOutgoing ? '👤' : '🏗️'}</div>
-                    <div class="message-bubble">
-                        <div class="message-text">${escapeHtml(msg.text)}</div>
-                        <div class="message-time">${msg.time}</div>
-                    </div>
-                </div>
-            `).join('');
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const text = input.value.trim();
-            if (!text) return;
-            addMessage(text, true);
-            input.value = '';
-            input.style.height = 'auto';
-        }
-
-        function clearChat() {
-            if (confirm('⚠️ Вы уверены? Вся история переписки будет удалена без возможности восстановления.')) {
-                localStorage.removeItem(STORAGE_KEY);
-                renderMessages();
-            }
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
-        document.getElementById('messageInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-
-        renderMessages();
-    </script>
 </body>
 </html>

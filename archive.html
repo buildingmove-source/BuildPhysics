@@ -140,7 +140,6 @@
             font-size: 0.9rem;
         }
 
-        /* Статистика */
         .stats-row {
             display: flex;
             gap: 1rem;
@@ -169,7 +168,6 @@
             margin-top: 0.3rem;
         }
 
-        /* Сетка файлов */
         .files-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -239,18 +237,6 @@
             flex-wrap: wrap;
         }
 
-        .file-date {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .file-size {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -269,12 +255,12 @@
             color: #5A6BA0;
         }
 
-        /* Анимация загрузки */
         .skeleton {
             background: linear-gradient(90deg, #16213E 25%, #1A2A4A 50%, #16213E 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
             border-radius: 12px;
+            height: 150px;
         }
 
         @keyframes shimmer {
@@ -313,6 +299,13 @@
             }
             .files-grid {
                 grid-template-columns: 1fr;
+            }
+            .stat-card {
+                min-width: 120px;
+                padding: 0.8rem 1rem;
+            }
+            .stat-number {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -358,9 +351,9 @@
     </div>
 
     <div id="filesContainer" class="files-grid">
-        <div class="skeleton" style="height: 150px; border-radius: 20px;"></div>
-        <div class="skeleton" style="height: 150px; border-radius: 20px;"></div>
-        <div class="skeleton" style="height: 150px; border-radius: 20px;"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
     </div>
 </div>
 
@@ -372,10 +365,8 @@
     const GITHUB_USERNAME = "buildingmove-source";
     const GITHUB_REPO = "BuildPhysics";
 
-    let allFiles = [];
-
     function formatFileSize(bytes) {
-        if (bytes === 0) return '0 B';
+        if (bytes === 0 || !bytes) return '0 B';
         const k = 1024;
         const sizes = ['B', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -383,6 +374,7 @@
     }
 
     function formatDate(dateString) {
+        if (!dateString) return '—';
         const date = new Date(dateString);
         return date.toLocaleDateString('ru-RU', {
             day: '2-digit',
@@ -402,17 +394,6 @@
         return null;
     }
 
-    function sortFilesByDate(files) {
-        return files.sort((a, b) => {
-            const dateA = a.commitDate ? new Date(a.commitDate) : extractDateFromName(a.name);
-            const dateB = b.commitDate ? new Date(b.commitDate) : extractDateFromName(b.name);
-            if (!dateA && !dateB) return 0;
-            if (!dateA) return 1;
-            if (!dateB) return -1;
-            return dateB - dateA;
-        });
-    }
-
     async function loadArchiveFiles() {
         const container = document.getElementById('filesContainer');
         const totalSpan = document.getElementById('totalFiles');
@@ -420,15 +401,18 @@
         const lastUpdateSpan = document.getElementById('lastUpdate');
         
         try {
-            // Получаем список файлов через GitHub API
-            const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/`);
+            // Используем прокси-сервис для обхода CORS
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const targetUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`;
+            
+            const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
             if (!response.ok) throw new Error('Не удалось загрузить список файлов');
             
             const files = await response.json();
             
             // Фильтруем только файлы ресурсов
             const resourceFiles = files.filter(file => 
-                file.name.startsWith('Ресурсы_Огни3_') && 
+                file.name && file.name.startsWith('Ресурсы_Огни3_') && 
                 file.name.endsWith('.html')
             );
             
@@ -440,14 +424,17 @@
                 return;
             }
             
-            // Получаем дополнительную информацию о каждом файле (дата коммита)
+            // Получаем информацию о каждом файле
             const filesWithDetails = await Promise.all(
                 resourceFiles.map(async (file) => {
                     try {
-                        const commitsResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits?path=${encodeURIComponent(file.name)}&per_page=1`);
-                        if (commitsResponse.ok) {
-                            const commits = await commitsResponse.json();
-                            if (commits.length > 0) {
+                        // Получаем информацию о коммите через прокси
+                        const commitProxyUrl = 'https://api.allorigins.win/raw?url=';
+                        const commitTargetUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits?path=${encodeURIComponent(file.name)}&per_page=1`;
+                        const commitResponse = await fetch(commitProxyUrl + encodeURIComponent(commitTargetUrl));
+                        if (commitResponse.ok) {
+                            const commits = await commitResponse.json();
+                            if (commits && commits.length > 0 && commits[0].commit) {
                                 file.commitDate = commits[0].commit.committer.date;
                                 file.commitMessage = commits[0].commit.message;
                             }
@@ -460,13 +447,18 @@
             );
             
             // Сортировка по дате (новые сверху)
-            const sortedFiles = sortFilesByDate(filesWithDetails);
+            const sortedFiles = filesWithDetails.sort((a, b) => {
+                const dateA = a.commitDate ? new Date(a.commitDate) : extractDateFromName(a.name) || new Date(0);
+                const dateB = b.commitDate ? new Date(b.commitDate) : extractDateFromName(b.name) || new Date(0);
+                return dateB - dateA;
+            });
             
             // Подсчёт статистики
             const totalFilesCount = sortedFiles.length;
             const totalBytes = sortedFiles.reduce((sum, file) => sum + (file.size || 0), 0);
             const lastFile = sortedFiles[0];
-            const lastUpdateDate = lastFile?.commitDate ? formatDate(lastFile.commitDate) : '—';
+            const lastUpdateDate = lastFile?.commitDate ? formatDate(lastFile.commitDate) : 
+                                  (lastFile ? extractDateFromName(lastFile.name)?.toLocaleDateString('ru-RU') || '—' : '—');
             
             totalSpan.textContent = totalFilesCount;
             sizeSpan.textContent = formatFileSize(totalBytes);
@@ -474,22 +466,19 @@
             
             // Отображаем файлы
             container.innerHTML = sortedFiles.map((file, index) => {
-                const fileName = file.name;
-                const fileSize = formatFileSize(file.size || 0);
-                const fileDate = file.commitDate ? formatDate(file.commitDate) : 'дата неизвестна';
-                
-                // Извлекаем дату из имени файла для отображения
-                const dateMatch = fileName.match(/(\d{4}-\d{2}-\d{2})/);
+                const dateMatch = file.name.match(/(\d{4}-\d{2}-\d{2})/);
                 let displayDate = dateMatch ? dateMatch[1].replace(/-/g, '.') : 'дата неизвестна';
+                const fileDate = file.commitDate ? formatDate(file.commitDate) : displayDate;
+                const fileUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${file.name}`;
                 
                 return `
                     <div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
-                        <a href="${file.download_url}" class="file-link" target="_blank" rel="noopener noreferrer">
+                        <a href="${fileUrl}" class="file-link" target="_blank" rel="noopener noreferrer">
                             <div class="file-icon">📊</div>
                             <div class="file-name">Экспорт ресурсов от ${displayDate}</div>
                             <div class="file-meta">
                                 <span class="file-date">📅 ${fileDate}</span>
-                                <span class="file-size">💾 ${fileSize}</span>
+                                <span class="file-size">💾 ${formatFileSize(file.size || 0)}</span>
                             </div>
                         </a>
                     </div>
@@ -498,7 +487,7 @@
             
         } catch (error) {
             console.error('Ошибка загрузки архива:', error);
-            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива: ${error.message}</div>`;
+            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива. Проверьте подключение к интернету.</div>`;
             totalSpan.textContent = '0';
             sizeSpan.textContent = '0 KB';
             lastUpdateSpan.textContent = '—';
@@ -522,12 +511,14 @@
             }
             
             try {
-                const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`);
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const targetUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`;
+                const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
                 if (!response.ok) throw new Error('Ошибка загрузки');
                 
                 const files = await response.json();
                 const resourceFiles = files.filter(file => 
-                    file.name.startsWith('Ресурсы_Огни3_') && 
+                    file.name && file.name.startsWith('Ресурсы_Огни3_') && 
                     file.name.endsWith('.html') &&
                     file.name.toLowerCase().includes(searchTerm)
                 );
@@ -541,10 +532,11 @@
                 container.innerHTML = resourceFiles.map((file, index) => {
                     const dateMatch = file.name.match(/(\d{4}-\d{2}-\d{2})/);
                     let displayDate = dateMatch ? dateMatch[1].replace(/-/g, '.') : 'дата неизвестна';
+                    const fileUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${file.name}`;
                     
                     return `
                         <div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
-                            <a href="${file.download_url}" class="file-link" target="_blank" rel="noopener noreferrer">
+                            <a href="${fileUrl}" class="file-link" target="_blank" rel="noopener noreferrer">
                                 <div class="file-icon">📊</div>
                                 <div class="file-name">Экспорт ресурсов от ${displayDate}</div>
                                 <div class="file-meta">

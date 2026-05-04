@@ -24,7 +24,7 @@
             margin: 0 auto;
         }
 
-        /* Шапка - светлая, без эмодзи */
+        /* Шапка */
         .header {
             background: #FFFFFF;
             border-bottom: 2px solid #E8ECF0;
@@ -44,6 +44,7 @@
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
+            text-decoration: none;
         }
 
         .logo-icon {
@@ -87,6 +88,8 @@
             text-decoration: none;
             transition: all 0.3s;
             font-size: 0.85rem;
+            cursor: pointer;
+            font-family: inherit;
         }
 
         .back-btn:hover {
@@ -94,7 +97,7 @@
             transform: scale(1.02);
         }
 
-        /* Панель управления - скрывается при печати */
+        /* Панель управления */
         .admin-panel {
             background: #FFFFFF;
             border-radius: 12px;
@@ -126,6 +129,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            font-family: inherit;
         }
 
         .save-btn {
@@ -179,7 +183,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Таблица ресурсов - светлая тема */
+        /* Таблица */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 12px;
@@ -265,11 +269,6 @@
             padding: 0.8rem;
         }
 
-        .sub-total {
-            background: #F0F4F8;
-            font-weight: 600;
-        }
-
         .grand-total {
             background: #2D6AFF;
             font-weight: 700;
@@ -313,7 +312,7 @@
                 padding: 0;
                 margin: 0;
             }
-            .admin-panel, .back-btn, .save-btn, .pdf-btn, .reset-btn, .toast, .logo, .date-badge {
+            .admin-panel, .back-btn, .save-btn, .pdf-btn, .reset-btn, .toast, .date-badge {
                 display: none !important;
             }
             .header {
@@ -322,9 +321,6 @@
                 margin-bottom: 1rem;
                 padding: 0.5rem;
                 box-shadow: none;
-            }
-            .title {
-                color: #1A1A2E;
             }
             .resources-table th {
                 background: #2D6AFF;
@@ -356,7 +352,7 @@
             }
         }
 
-        /* Анимация перехода между страницами */
+        /* Анимация перехода */
         .fade-out {
             animation: fadeOut 0.4s ease-out forwards;
         }
@@ -427,7 +423,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ДАННЫЕ ИЗ ФАЙЛА (полные, без ошибок) =====
+    // ===== ДАННЫЕ ИЗ ФАЙЛА =====
     const initialData = [
         // Секция 1 - ЭОМ
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", responsible: "ООО \"ИНЭКО\"", people: 3 },
@@ -562,7 +558,11 @@
         return `${day}.${month}.${year} ${hours}:${minutes}`;
     }
 
-    document.getElementById('dateBadge').textContent = `Дата формирования: ${formatDate()}`;
+    // Установка даты
+    const dateBadge = document.getElementById('dateBadge');
+    if (dateBadge) {
+        dateBadge.textContent = `Дата формирования: ${formatDate()}`;
+    }
 
     function loadData() {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -590,6 +590,7 @@
 
     function renderTable() {
         const tbody = document.getElementById('tableBody');
+        if (!tbody) return;
         tbody.innerHTML = '';
         
         let currentSection = '';
@@ -599,7 +600,7 @@
                 currentSection = item.section;
                 const sectionRow = document.createElement('tr');
                 sectionRow.className = 'section-header';
-                sectionRow.innerHTML = `<td colspan="5"><strong>${item.section}</strong></td>`;
+                sectionRow.innerHTML = `<td colspan="5"><strong>${escapeHtml(item.section)}</strong></td>`;
                 tbody.appendChild(sectionRow);
             }
             
@@ -612,7 +613,7 @@
                     <span class="editable-cell" onclick="editPeople(${index}, this)">
                         ${item.people}
                     </span>
-                </table>
+                </td>
             `;
             tbody.appendChild(row);
         });
@@ -671,6 +672,7 @@
     
     function showToast(message) {
         const toast = document.getElementById('toast');
+        if (!toast) return;
         toast.textContent = message;
         toast.classList.add('show');
         setTimeout(() => {
@@ -678,36 +680,46 @@
         }, 2000);
     }
     
-    // Анимация перехода между страницами
-    function animateAndNavigate(url) {
+    // Анимация перехода
+    window.animateAndNavigate = function(url) {
         const container = document.getElementById('pageContainer');
+        if (!container) {
+            window.location.href = url;
+            return;
+        }
         container.classList.add('fade-out');
         setTimeout(() => {
             window.location.href = url;
         }, 400);
-    }
+    };
     
     // Сохранение в PDF
     function saveToPDF() {
         const adminPanel = document.getElementById('adminPanel');
-        const originalDisplay = adminPanel.style.display;
-        adminPanel.style.display = 'none';
-        
-        const originalTitle = document.title;
-        document.title = `Ресурсы_Огни3_${formatDate().replace(/[:\s]/g, '_')}`;
+        if (adminPanel) {
+            adminPanel.style.display = 'none';
+        }
         
         showToast('Подготовка PDF...');
         
         setTimeout(() => {
             window.print();
-            adminPanel.style.display = originalDisplay;
-            document.title = originalTitle;
+            setTimeout(() => {
+                if (adminPanel) {
+                    adminPanel.style.display = 'flex';
+                }
+            }, 500);
         }, 100);
     }
     
-    document.getElementById('saveBtn').addEventListener('click', saveData);
-    document.getElementById('resetBtn').addEventListener('click', resetData);
-    document.getElementById('pdfBtn').addEventListener('click', saveToPDF);
+    // Инициализация
+    const saveBtn = document.getElementById('saveBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const pdfBtn = document.getElementById('pdfBtn');
+    
+    if (saveBtn) saveBtn.addEventListener('click', saveData);
+    if (resetBtn) resetBtn.addEventListener('click', resetData);
+    if (pdfBtn) pdfBtn.addEventListener('click', saveToPDF);
     
     loadData();
 </script>

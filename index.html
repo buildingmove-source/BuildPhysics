@@ -1023,6 +1023,7 @@
         });
     }
 
+    // ===== ИСПРАВЛЕННАЯ ФУНКЦИЯ TOAST С ПЛАВНЫМ ИСЧЕЗНОВЕНИЕМ =====
     function showToastMessage(message) {
         let toast = document.getElementById('tempToast');
         if (!toast) {
@@ -1040,17 +1041,30 @@
                 color: white;
                 font-size: 0.8rem;
                 z-index: 2500;
-                transition: transform 0.3s ease;
+                transition: transform 0.3s ease, opacity 0.3s ease;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.3);
                 white-space: nowrap;
+                opacity: 1;
             `;
             document.body.appendChild(toast);
         }
+        
+        // Останавливаем предыдущий таймер, если он был
+        if (toast._timeout) clearTimeout(toast._timeout);
+        
         toast.textContent = message;
         toast.style.transform = 'translateX(-50%) translateY(0)';
-        setTimeout(() => {
-            toast.style.transform = 'translateX(-50%) translateY(100px)';
-        }, 2000);
+        toast.style.opacity = '1';
+        
+        // Плавное исчезновение через 3 секунды
+        toast._timeout = setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(20px)';
+            // Полностью скрываем после завершения анимации
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(100px)';
+            }, 300);
+        }, 3000);
     }
 
     function showModalToast() {

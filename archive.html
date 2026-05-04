@@ -379,22 +379,11 @@
         return date.toLocaleDateString('ru-RU', {
             day: '2-digit',
             month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
+            year: 'numeric'
         });
     }
 
-    function extractDateFromName(filename) {
-        const match = filename.match(/(\d{4}-\d{2}-\d{2})/);
-        if (match) {
-            const [year, month, day] = match[1].split('-');
-            return new Date(year, month - 1, day);
-        }
-        return null;
-    }
-
-    // Используем JSONP-подобный подход через GitHub API с корс-прокси
+    // Загрузка файлов напрямую через список коммитов
     async function loadArchiveFiles() {
         const container = document.getElementById('filesContainer');
         const totalSpan = document.getElementById('totalFiles');
@@ -402,36 +391,38 @@
         const lastUpdateSpan = document.getElementById('lastUpdate');
         
         try {
-            // Используем cors-anywhere для обхода CORS
-            const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-            const targetUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`;
+            // Получаем список коммитов, чтобы найти файлы ресурсов
+            const commitsResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits?per_page=100`);
+            if (!commitsResponse.ok) throw new Error('Не удалось загрузить коммиты');
+            const commits = await commitsResponse.json();
             
-            // Пробуем несколько прокси-сервисов
-            let response;
-            let files;
+            // Собираем уникальные файлы ресурсов из коммитов
+            const resourceFilesMap = new Map();
             
-            // Попытка 1: cors-anywhere
-            try {
-                response = await fetch(corsProxy + targetUrl);
-                if (response.ok) {
-                    files = await response.json();
-                } else {
-                    throw new Error('CORS proxy failed');
+            for (const commit of commits) {
+                // Получаем список файлов в коммите
+                const commitDetailResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits/${commit.sha}`);
+                if (commitDetailResponse.ok) {
+                    const commitDetail = await commitDetailResponse.json();
+                    const files = commitDetail.files || [];
+                    
+                    for (const file of files) {
+                        const fileName = file.filename.split('/').pop();
+                        if (fileName.startsWith('Ресурсы_Огни3_') && fileName.endsWith('.html')) {
+                            if (!resourceFilesMap.has(fileName)) {
+                                resourceFilesMap.set(fileName, {
+                                    name: fileName,
+                                    size: file.size || 0,
+                                    date: commit.commit.committer.date,
+                                    sha: commit.sha
+                                });
+                            }
+                        }
+                    }
                 }
-            } catch (e) {
-                // Попытка 2: allorigins
-                const altProxy = 'https://api.allorigins.win/raw?url=';
-                response = await fetch(altProxy + encodeURIComponent(targetUrl));
-                if (!response.ok) throw new Error('All proxies failed');
-                const text = await response.text();
-                files = JSON.parse(text);
             }
             
-            // Фильтруем только файлы ресурсов
-            const resourceFiles = files.filter(file => 
-                file.name && file.name.startsWith('Ресурсы_Огни3_') && 
-                file.name.endsWith('.html')
-            );
+            const resourceFiles = Array.from(resourceFilesMap.values());
             
             if (resourceFiles.length === 0) {
                 container.innerHTML = `<div class="empty-state">📭 В архиве пока нет файлов. Экспортируйте данные из раздела "Ресурсы".</div>`;
@@ -442,18 +433,13 @@
             }
             
             // Сортировка по дате (новые сверху)
-            const sortedFiles = resourceFiles.sort((a, b) => {
-                const dateA = new Date(a.commit?.committer?.date || extractDateFromName(a.name) || 0);
-                const dateB = new Date(b.commit?.committer?.date || extractDateFromName(b.name) || 0);
-                return dateB - dateA;
-            });
+            const sortedFiles = resourceFiles.sort((a, b) => new Date(b.date) - new Date(a.date));
             
             // Подсчёт статистики
             const totalFilesCount = sortedFiles.length;
             const totalBytes = sortedFiles.reduce((sum, file) => sum + (file.size || 0), 0);
             const lastFile = sortedFiles[0];
-            const lastUpdateDate = lastFile?.commit?.committer?.date ? formatDate(lastFile.commit.committer.date) : 
-                                  (lastFile ? extractDateFromName(lastFile.name)?.toLocaleDateString('ru-RU') || '—' : '—');
+            const lastUpdateDate = lastFile?.date ? formatDate(lastFile.date) : '—';
             
             totalSpan.textContent = totalFilesCount;
             sizeSpan.textContent = formatFileSize(totalBytes);
@@ -472,7 +458,7 @@
                             <div class="file-icon">📊</div>
                             <div class="file-name">Экспорт ресурсов от ${displayDate}</div>
                             <div class="file-meta">
-                                <span class="file-date">📅 ${displayDate}</span>
+                                <span class="file-date">📅 ${formatDate(file.date)}</span>
                                 <span class="file-size">💾 ${fileSize}</span>
                             </div>
                         </a>
@@ -482,7 +468,7 @@
             
         } catch (error) {
             console.error('Ошибка загрузки архива:', error);
-            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива. Проверьте подключение к интернету.</div>`;
+            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива. Попробуйте обновить страницу.</div>`;
             totalSpan.textContent = '0';
             sizeSpan.textContent = '0 KB';
             lastUpdateSpan.textContent = '—';
@@ -506,16 +492,34 @@
             }
             
             try {
-                const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-                const targetUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`;
-                const response = await fetch(corsProxy + targetUrl);
-                if (!response.ok) throw new Error('Ошибка загрузки');
-                const files = await response.json();
-                const resourceFiles = files.filter(file => 
-                    file.name && file.name.startsWith('Ресурсы_Огни3_') && 
-                    file.name.endsWith('.html') &&
-                    file.name.toLowerCase().includes(searchTerm)
-                );
+                const commitsResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits?per_page=100`);
+                if (!commitsResponse.ok) throw new Error('Ошибка загрузки');
+                const commits = await commitsResponse.json();
+                
+                const resourceFilesMap = new Map();
+                
+                for (const commit of commits) {
+                    const commitDetailResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits/${commit.sha}`);
+                    if (commitDetailResponse.ok) {
+                        const commitDetail = await commitDetailResponse.json();
+                        const files = commitDetail.files || [];
+                        
+                        for (const file of files) {
+                            const fileName = file.filename.split('/').pop();
+                            if (fileName.startsWith('Ресурсы_Огни3_') && fileName.endsWith('.html') && fileName.toLowerCase().includes(searchTerm)) {
+                                if (!resourceFilesMap.has(fileName)) {
+                                    resourceFilesMap.set(fileName, {
+                                        name: fileName,
+                                        size: file.size || 0,
+                                        date: commit.commit.committer.date
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                const resourceFiles = Array.from(resourceFilesMap.values());
                 
                 if (resourceFiles.length === 0) {
                     container.innerHTML = `<div class="empty-state">🔍 Ничего не найдено по запросу "${e.target.value}"</div>`;

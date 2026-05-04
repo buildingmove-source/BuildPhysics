@@ -15,7 +15,7 @@
             background: #E8EDF2;
             font-family: 'Segoe UI', 'Arial', sans-serif;
             color: #1a1a2e;
-            padding: 1rem;
+            padding: 0.5rem;
             min-height: 100vh;
         }
 
@@ -24,12 +24,12 @@
             margin: 0 auto;
         }
 
-        /* Шапка */
+        /* Шапка — скрывается на мобильных, показывается на десктопе */
         .header {
             background: white;
             border-bottom: 2px solid #2C6B2F;
             padding: 0.8rem 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -94,13 +94,13 @@
             background: white;
             border: 1px solid #D0D7DE;
             border-radius: 8px;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1.5rem;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .admin-badge {
@@ -119,9 +119,9 @@
 
         .btn {
             border: none;
-            padding: 0.45rem 1rem;
+            padding: 0.4rem 0.9rem;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -139,17 +139,17 @@
             border: 1px solid #D0D7DE;
             border-radius: 8px;
             overflow: auto;
-            max-height: calc(100vh - 250px);
+            max-height: calc(100vh - 160px);
         }
 
         .resources-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
-            min-width: 900px;
+            font-size: 12px;
+            min-width: 800px;
         }
 
-        /* Фиксированная шапка */
+        /* Фиксированная шапка таблицы */
         .resources-table thead tr {
             position: sticky;
             top: 0;
@@ -159,17 +159,17 @@
         .resources-table th {
             background: #2C3E50;
             color: white;
-            padding: 0.8rem;
+            padding: 0.7rem 0.6rem;
             text-align: left;
             font-weight: 500;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             border-bottom: 2px solid #2C6B2F;
         }
 
         .resources-table td {
-            padding: 0.6rem 0.8rem;
+            padding: 0.5rem 0.6rem;
             border-bottom: 1px solid #E8EDF2;
             vertical-align: top;
             background: white;
@@ -183,7 +183,7 @@
         .section-header td {
             background: #E8EDF2;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             color: #2C3E50;
         }
 
@@ -198,7 +198,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0.5rem;
+            gap: 0.4rem;
             padding: 0.2rem 0.3rem;
             background: #F8FAFC;
             border-radius: 4px;
@@ -206,10 +206,10 @@
 
         .contractor-name {
             flex: 1;
-            font-size: 12px;
+            font-size: 11px;
             color: #2C6B2F;
             cursor: pointer;
-            padding: 0.2rem;
+            padding: 0.15rem;
         }
 
         .contractor-name:hover {
@@ -221,11 +221,12 @@
             background: white;
             border: 1px solid #D0D7DE;
             border-radius: 4px;
-            padding: 0.2rem 0.5rem;
-            min-width: 55px;
+            padding: 0.15rem 0.4rem;
+            min-width: 48px;
             text-align: center;
             cursor: pointer;
             font-weight: 500;
+            font-size: 11px;
         }
 
         .contractor-people:hover {
@@ -235,23 +236,23 @@
         }
 
         .contractor-people input {
-            width: 55px;
+            width: 48px;
             background: white;
             border: 1px solid #2C6B2F;
             border-radius: 3px;
-            padding: 0.2rem;
+            padding: 0.15rem;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .add-contractor-btn {
             background: rgba(44, 107, 47, 0.08);
             border: 1px dashed #2C6B2F;
             border-radius: 4px;
-            padding: 0.25rem;
+            padding: 0.2rem;
             text-align: center;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 10px;
             color: #2C6B2F;
         }
 
@@ -264,8 +265,8 @@
             border: none;
             color: #D32F2F;
             cursor: pointer;
-            font-size: 14px;
-            padding: 0 0.2rem;
+            font-size: 13px;
+            padding: 0 0.15rem;
         }
 
         .remove-contractor:hover {
@@ -276,7 +277,7 @@
         .total-people-cell {
             text-align: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             background: #F0F7F0;
         }
 
@@ -288,19 +289,19 @@
 
         .footer {
             text-align: center;
-            margin-top: 1rem;
-            padding: 0.8rem;
-            font-size: 0.7rem;
+            margin-top: 0.8rem;
+            padding: 0.5rem;
+            font-size: 0.65rem;
             color: #8A9DA8;
         }
 
         /* Кнопка домой */
         .home-button {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 52px;
-            height: 52px;
+            bottom: 15px;
+            right: 15px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, #e31b23, #ff4d4d);
             border-radius: 50%;
             display: flex;
@@ -322,10 +323,10 @@
         .home-button::after {
             content: '';
             position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
             border-radius: 50%;
             background: rgba(46, 204, 113, 0.5);
             animation: pulseGreen 1.2s infinite;
@@ -338,28 +339,21 @@
         }
 
         .home-icon {
-            font-size: 26px;
+            font-size: 24px;
             color: white;
-        }
-
-        @media (max-width: 768px) {
-            .home-button { width: 44px; height: 44px; }
-            .home-icon { font-size: 22px; }
-            .header { flex-direction: column; text-align: center; }
-            .admin-panel { flex-direction: column; align-items: stretch; }
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 90px;
+            bottom: 75px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: #2C3E50;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             z-index: 2000;
             transition: transform 0.2s;
             white-space: nowrap;
@@ -368,96 +362,93 @@
         .toast.show { transform: translateX(-50%) translateY(0); }
 
         /* Анимации перехода */
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-16px); }
+        @keyframes slideOutLeft {
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(-100%); }
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(16px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(100%); }
+            100% { opacity: 1; transform: translateX(0); }
         }
 
-        .page-fade-out { animation: fadeOut 0.3s ease-out forwards; }
-        .page-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes slideOutRight {
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(100%); }
+        }
 
-        /* Стили для PDF с ГОСТ штампами */
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-100%); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .page-slide-out-left { animation: slideOutLeft 0.4s ease-out forwards; }
+        .page-slide-in-right { animation: slideInRight 0.4s ease-out forwards; }
+        .page-slide-out-right { animation: slideOutRight 0.4s ease-out forwards; }
+        .page-slide-in-left { animation: slideInLeft 0.4s ease-out forwards; }
+
+        /* Стили для PDF */
         @media print {
-            @page {
-                size: A4;
-                margin: 20mm 15mm 20mm 25mm;
-            }
-
-            body { background: white; padding: 0; margin: 0; }
-            
+            @page { size: A4; margin: 1.5cm; }
+            body { background: white; padding: 0; }
             .admin-panel, .back-btn, .btn, .home-button, .toast, .add-contractor-btn, .remove-contractor {
                 display: none !important;
             }
+            .header { display: flex !important; background: white; border-bottom: 1px solid black; }
+            .resources-table th { background: #E8EDF2; color: black; }
+        }
 
+        /* ===== АДАПТИВНОСТЬ: на телефонах и планшетах скрываем шапку ===== */
+        @media (max-width: 1024px) {
             .header {
-                background: white;
-                border-bottom: 1px solid black;
-                padding: 0 0 0.5rem 0;
-                margin-bottom: 1rem;
+                display: none !important;
             }
-
             .table-wrapper {
-                border: none;
-                overflow: visible;
-                max-height: none;
+                max-height: calc(100vh - 100px);
             }
+            .admin-panel {
+                padding: 0.5rem;
+            }
+            .admin-badge, .info-text {
+                font-size: 0.65rem;
+            }
+            .btn {
+                padding: 0.35rem 0.7rem;
+                font-size: 0.7rem;
+            }
+        }
 
+        @media (max-width: 768px) {
+            body {
+                padding: 0.3rem;
+            }
             .resources-table th {
-                background: #E8EDF2;
-                color: black;
-                border-bottom: 1px solid black;
+                padding: 0.5rem 0.4rem;
+                font-size: 9px;
             }
-
             .resources-table td {
-                border-bottom: 1px solid #ddd;
+                padding: 0.4rem;
+                font-size: 10px;
             }
-
-            .section-header td {
-                background: #F0F0F0;
+            .contractor-name {
+                font-size: 9px;
             }
-
-            .grand-total td {
-                background: #E8EDF2;
-                color: black;
+            .contractor-people {
+                font-size: 10px;
+                min-width: 40px;
+                padding: 0.1rem 0.3rem;
             }
-
-            /* Левый вертикальный штамп ГОСТ */
-            .gost-stamp-left {
-                position: fixed;
-                left: 10mm;
-                top: 50%;
-                transform: translateY(-50%) rotate(-90deg);
-                transform-origin: left center;
-                font-size: 8px;
-                font-family: monospace;
-                white-space: nowrap;
-                border: 1px solid black;
-                padding: 4px 8px;
-                background: white;
-                z-index: 100;
+            .total-people-cell {
+                font-size: 11px;
             }
-
-            /* Правый горизонтальный штамп */
-            .gost-stamp-right {
-                position: fixed;
-                bottom: 15mm;
-                right: 15mm;
-                font-size: 7px;
-                font-family: monospace;
-                border-top: 1px solid black;
-                padding-top: 3px;
-                text-align: right;
-                width: auto;
-                background: white;
+            .home-button {
+                width: 40px;
+                height: 40px;
+                bottom: 10px;
+                right: 10px;
             }
-
-            .gost-stamp-left::before {
-                content: "АО «Огни 3» | ВИС | Трудовые ресурсы | Лист ";
+            .home-icon {
+                font-size: 20px;
             }
         }
     </style>
@@ -465,6 +456,7 @@
 <body>
 
 <div class="container" id="pageContainer">
+    <!-- Шапка — видна только на десктопе, скрыта на мобильных -->
     <div class="header">
         <div class="logo" id="backLogo">
             <div class="logo-icon">О3</div>
@@ -478,9 +470,9 @@
     <div class="admin-panel">
         <div>
             <span class="admin-badge">Режим редактирования</span>
-            <span class="info-text">Клик по названию или числу | ▲▼ меняют значение</span>
+            <span class="info-text">Клик по числу | ▲▼ меняют значение</span>
         </div>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
             <button class="btn btn-save" id="saveBtn">Сохранить</button>
             <button class="btn btn-pdf" id="pdfBtn">Экспорт PDF</button>
             <button class="btn btn-reset" id="resetBtn">Сбросить</button>
@@ -494,7 +486,7 @@
                     <th>Объект / Секция</th>
                     <th>Раздел ВИС</th>
                     <th>Наименование работ</th>
-                    <th>Подрядная организация / количество человек</th>
+                    <th>Подрядная организация / кол-во</th>
                     <th>Всего, чел.</th>
                 </tr>
             </thead>
@@ -502,18 +494,18 @@
         </table>
     </div>
 
-    <div class="footer">Данные актуальны на момент формирования | АО «Огни 3»</div>
+    <div class="footer">АО «Огни 3» · Данные актуальны на момент открытия</div>
 </div>
 
 <!-- Кнопка домой -->
-<a href="index.html" class="home-button">
+<a href="#" class="home-button" id="homeBtn">
     <span class="home-icon">🏠</span>
 </a>
 
 <div id="toast" class="toast"></div>
 
 <script>
-    // Исходные данные
+    // Исходные данные (полные)
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -624,6 +616,7 @@
 
     const STORAGE_KEY = 'ogni3_resources_final';
     let resourcesData = [];
+    let isAnimating = false;
 
     function formatDate() {
         const now = new Date();
@@ -688,17 +681,8 @@
             showToast(`${contractor.name}: ${newValue} чел.`);
         };
         
-        const changeHandler = () => saveEdit();
-        
         input.addEventListener('blur', saveEdit);
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') saveEdit();
-        });
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-                e.stopPropagation();
-            }
-        });
+        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveEdit(); });
     }
 
     function addContractor(rowIndex) {
@@ -732,8 +716,8 @@
         input.style.background = 'white';
         input.style.border = '1px solid #2C6B2F';
         input.style.borderRadius = '3px';
-        input.style.padding = '0.2rem';
-        input.style.fontSize = '11px';
+        input.style.padding = '0.15rem';
+        input.style.fontSize = '10px';
         
         const container = element;
         container.innerHTML = '';
@@ -749,9 +733,7 @@
         };
         
         input.addEventListener('blur', saveEdit);
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') saveEdit();
-        });
+        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveEdit(); });
     }
 
     function renderTable() {
@@ -806,23 +788,64 @@
         setTimeout(() => toast.classList.remove('show'), 2000);
     }
     
-    function navigateWithAnimation(url) {
-        document.getElementById('pageContainer').classList.add('page-fade-out');
-        setTimeout(() => window.location.href = url, 300);
+    // ===== АНИМАЦИЯ ПЕРЕХОДА ТУДА И ОБРАТНО С ЗАДЕРЖКОЙ 4 СЕКУНДЫ =====
+    function navigateToHome() {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        const container = document.getElementById('pageContainer');
+        container.classList.add('page-slide-out-left');
+        
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 400);
     }
     
-    function exportToPDF() {
-        showToast('Подготовка PDF...');
-        setTimeout(() => window.print(), 200);
+    function navigateToResources() {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        const container = document.getElementById('pageContainer');
+        container.classList.add('page-slide-out-right');
+        
+        setTimeout(() => {
+            window.location.href = 'resources.html';
+        }, 400);
     }
     
+    // Обработчики с анимацией и предварительной задержкой 4 секунды
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
-    document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
-    document.getElementById('backBtn').addEventListener('click', () => navigateWithAnimation('index.html'));
-    document.getElementById('backLogo').addEventListener('click', () => navigateWithAnimation('index.html'));
+    document.getElementById('pdfBtn').addEventListener('click', () => {
+        showToast('Подготовка PDF...');
+        setTimeout(() => window.print(), 200);
+    });
     
-    document.getElementById('pageContainer').classList.add('page-fade-in');
+    // Кнопка назад с анимацией - задержка 4 секунды перед переходом
+    document.getElementById('backBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast('Переход на главную через 4 секунды...');
+        setTimeout(() => navigateToHome(), 4000);
+    });
+    
+    document.getElementById('backLogo')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast('Переход на главную через 4 секунды...');
+        setTimeout(() => navigateToHome(), 4000);
+    });
+    
+    document.getElementById('homeBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast('Переход на главную через 4 секунды...');
+        setTimeout(() => navigateToHome(), 4000);
+    });
+    
+    // Анимация появления при загрузке
+    document.getElementById('pageContainer').classList.add('page-slide-in-left');
+    setTimeout(() => {
+        document.getElementById('pageContainer').classList.remove('page-slide-in-left');
+    }, 500);
+    
     loadData();
 </script>
 </body>

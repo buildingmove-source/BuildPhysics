@@ -57,25 +57,14 @@
             border-radius: 10px;
         }
 
-        /* ===== СТИЛЬ ШАПКИ — МАТОВОЕ СТЕКЛО ===== */
         .navbar {
-            background: rgba(13, 31, 60, 0.08);
+            background: rgba(13, 31, 60, 0.98);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--border-light);
             position: sticky;
             top: 0;
             z-index: 1000;
             padding: 0.75rem 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        /* Эффект усиления при скролле */
-        .navbar.scrolled {
-            background: rgba(13, 31, 60, 0.15);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(45, 106, 255, 0.3);
         }
 
         .nav-container {
@@ -93,32 +82,23 @@
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.3rem 0.8rem 0.3rem 0.5rem;
-            border-radius: 60px;
-            transition: var(--transition);
-        }
-
-        .logo:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.02);
         }
 
         .logo-icon {
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             transition: var(--transition);
         }
 
         .logo-text {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
             background: linear-gradient(135deg, #ffffff, var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
@@ -133,18 +113,17 @@
         .nav-search input {
             width: 100%;
             padding: 0.7rem 1.2rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-light);
             border-radius: 60px;
             color: white;
             font-size: 0.9rem;
             transition: var(--transition);
-            backdrop-filter: blur(4px);
         }
 
         .nav-search input:focus {
             outline: none;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255,255,255,0.1);
             border-color: var(--accent-blue);
         }
 
@@ -165,11 +144,10 @@
             font-weight: 500;
             transition: var(--transition);
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.03);
         }
 
         .nav-link:hover {
-            background: rgba(45, 106, 255, 0.2);
+            background: rgba(45, 106, 255, 0.15);
             color: var(--accent-cyan);
         }
 
@@ -190,19 +168,12 @@
         }
 
         .sidebar-section {
-            background: rgba(13, 31, 60, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: var(--bg-card);
             border-radius: var(--radius-md);
             padding: 1rem;
             margin-bottom: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
             transition: var(--transition);
-        }
-
-        .sidebar-section:hover {
-            background: rgba(13, 31, 60, 0.7);
-            border-color: rgba(45, 106, 255, 0.3);
         }
 
         .sidebar-title {
@@ -246,9 +217,7 @@
         }
 
         .hero-card {
-            background: linear-gradient(135deg, rgba(13, 31, 60, 0.7), rgba(10, 26, 58, 0.7));
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: linear-gradient(135deg, var(--bg-card), #0A1A3A);
             border-radius: var(--radius-lg);
             padding: 1.8rem;
             margin-bottom: 1.5rem;
@@ -292,9 +261,7 @@
         }
 
         .google-card {
-            background: rgba(10, 26, 58, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: linear-gradient(135deg, #0A1A3A, var(--bg-card));
             border: 1px solid var(--accent-green);
             border-radius: var(--radius-md);
             transition: var(--transition);
@@ -303,7 +270,6 @@
         .google-card:hover {
             transform: translateX(4px);
             border-color: var(--accent-blue);
-            background: rgba(10, 26, 58, 0.8);
         }
         
         .google-link {
@@ -347,9 +313,7 @@
         }
 
         .doc-card {
-            background: rgba(13, 31, 60, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: var(--bg-card);
             border-radius: var(--radius-md);
             border: 1px solid var(--border-light);
             transition: var(--transition);
@@ -361,7 +325,6 @@
         .doc-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent-blue);
-            background: rgba(13, 31, 60, 0.8);
             box-shadow: var(--shadow-lg);
         }
 
@@ -424,7 +387,7 @@
             margin: 0 auto;
             padding: 1.5rem;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--border-light);
             font-size: 0.7rem;
             color: var(--text-muted);
         }
@@ -437,7 +400,7 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(4px);
             z-index: 3000;
             display: flex;
             align-items: center;
@@ -453,8 +416,7 @@
         }
 
         .modal-toast {
-            background: linear-gradient(135deg, rgba(13, 31, 60, 0.95), rgba(10, 26, 58, 0.95));
-            backdrop-filter: blur(12px);
+            background: linear-gradient(135deg, #0D1F3C, #0A1A3A);
             border: 1px solid var(--accent-cyan);
             border-radius: var(--radius-lg);
             padding: 1.5rem 2rem;
@@ -505,8 +467,7 @@
             right: 20px;
             width: 380px;
             height: 500px;
-            background: rgba(13, 31, 60, 0.95);
-            backdrop-filter: blur(16px);
+            background: linear-gradient(145deg, #0D1F3C, #0A1A3A);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
             z-index: 2000;
@@ -533,7 +494,7 @@
         }
         
         .popup-header {
-            background: rgba(7, 18, 42, 0.8);
+            background: #07122A;
             padding: 0.8rem 1rem;
             display: flex;
             align-items: center;
@@ -596,7 +557,7 @@
         }
         
         .popup-bubble {
-            background: rgba(7, 18, 42, 0.8);
+            background: #07122A;
             padding: 0.5rem 0.8rem;
             border-radius: 16px;
             border-top-left-radius: 4px;
@@ -632,7 +593,7 @@
         
         .popup-input-area {
             padding: 0.8rem;
-            background: rgba(7, 18, 42, 0.8);
+            background: #07122A;
             display: flex;
             gap: 0.5rem;
             border-top: 1px solid var(--border-light);
@@ -670,7 +631,6 @@
             transform: scale(1.05);
         }
 
-        /* Плавающая иконка чата */
         .chat-float-btn {
             position: fixed;
             bottom: 20px;
@@ -738,7 +698,7 @@
             .navbar { padding: 0.75rem 1rem; }
             .nav-container { flex-direction: column; align-items: stretch; }
             .nav-search { max-width: 100%; order: 3; }
-            .logo { justify-content: space-between; width: fit-content; }
+            .logo { justify-content: space-between; }
             .nav-links { justify-content: flex-end; }
             .sidebar { display: none; }
             .main-container { padding: 1rem; }
@@ -769,7 +729,7 @@
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
+<nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="window.location.href='index.html'">
             <div class="logo-icon">🏗️</div>
@@ -779,9 +739,8 @@
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
         </div>
         <div class="nav-links">
-    <div class="nav-link" id="chatNavBtn">Чат</div>
-    <a href="resources.html" class="nav-link">Ресурсы</a>
-</div>
+            <div class="nav-link" id="chatNavBtn">Чат</div>
+        </div>
     </div>
 </nav>
 
@@ -805,13 +764,31 @@
                 <span class="sidebar-icon">💼</span>Техническая часть
             </button>
         </div>
+
+        <!-- НОВЫЙ РАЗДЕЛ: ЧИСЛЕННОСТЬ РЕСУРСОВ -->
+        <div class="sidebar-section">
+            <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
+            <a href="resources.html" class="sidebar-item">
+                <span class="sidebar-icon">👥</span>Трудовые ресурсы
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-icon">🏗️</span>Техника и механизмы
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-icon">📦</span>Материалы
+            </a>
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.65rem; color: var(--accent-cyan);">📋 Актуальные данные по персоналу</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Обновление: ежедневно</div>
+            </div>
+        </div>
         
         <div class="sidebar-section">
             <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
             <button class="sidebar-item" id="chatSidebarBtn">
                 <span class="sidebar-icon">💬</span>Открыть чат
             </button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.15); border-radius: var(--radius-sm); backdrop-filter: blur(4px);">
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
                 <div style="font-size: 0.65rem; color: var(--accent-cyan);">⚙️ В разработке</div>
                 <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Полноценный чат появится скоро</div>
             </div>
@@ -824,7 +801,6 @@
             <div class="hero-subtitle">Актуальная документация и ход работ</div>
         </div>
 
-        <!-- Google Таблицы в одном стиле -->
         <div class="google-cards-container">
             <div class="google-card">
                 <a href="VIS-Ogni-3.html" class="google-link">
@@ -909,16 +885,6 @@
 </div>
 
 <script>
-    // ===== ЭФФЕКТ ПРОЗРАЧНОЙ ШАПКИ ПРИ СКРОЛЛЕ =====
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-
     // ===== ФУНКЦИЯ ДЛЯ АКТИВНЫХ ССЫЛОК В ЧАТЕ =====
     function linkifyAdvanced(text) {
         if (!text) return text;
@@ -1017,8 +983,7 @@
                 bottom: 90px;
                 left: 50%;
                 transform: translateX(-50%) translateY(100px);
-                background: rgba(13, 31, 60, 0.95);
-                backdrop-filter: blur(8px);
+                background: #0D1F3C;
                 border-left: 4px solid #2D6AFF;
                 padding: 0.6rem 1.2rem;
                 border-radius: 50px;
@@ -1083,6 +1048,17 @@
     function closeChatPopup() {
         const popup = document.getElementById('chatPopup');
         if (popup) popup.classList.remove('show');
+        showToastMessage('💬 Чат закрыт');
+    }
+    
+    function toggleChatPopup() {
+        const popup = document.getElementById('chatPopup');
+        if (!popup) return;
+        if (popup.classList.contains('show')) {
+            popup.classList.remove('show');
+        } else {
+            popup.classList.add('show');
+        }
     }
     
     function sendPopupMessage() {
@@ -1110,7 +1086,7 @@
             replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено. Чат в разработке.<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
             container.appendChild(replyDiv);
             container.scrollTop = container.scrollHeight;
-        }, 500);
+        }, 800);
     }
     
     const messageInput = document.getElementById('popupMessageInput');
@@ -1130,7 +1106,7 @@
     });
     
     document.getElementById('chatSidebarBtn')?.addEventListener('click', function() {
-        showModalToast();
+        openChatPopup();
     });
     
     document.getElementById('chatFloatBtn')?.addEventListener('click', function() {

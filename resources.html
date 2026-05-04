@@ -11,13 +11,12 @@
             box-sizing: border-box;
         }
 
-        /* Базовые стили */
         body {
-            background: #F0F2F5;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: #2C3E50;
-            line-height: 1.5;
+            background: #E8EDF2;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            color: #1a1a2e;
             padding: 1rem;
+            min-height: 100vh;
         }
 
         .container {
@@ -27,16 +26,16 @@
 
         /* Шапка */
         .header {
-            background: #FFFFFF;
-            border-bottom: 2px solid #CCD5E0;
-            padding: 1rem 1.5rem;
+            background: white;
+            border-bottom: 2px solid #2C6B2F;
+            padding: 0.8rem 1.5rem;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border-radius: 8px 8px 0 0;
         }
 
         .logo {
@@ -44,7 +43,6 @@
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
-            text-decoration: none;
         }
 
         .logo-icon {
@@ -66,7 +64,7 @@
         }
 
         .title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 500;
             color: #2C3E50;
         }
@@ -76,7 +74,6 @@
             padding: 0.3rem 1rem;
             border-radius: 4px;
             font-size: 0.75rem;
-            color: #5A6E7A;
             font-family: monospace;
         }
 
@@ -86,22 +83,18 @@
             padding: 0.5rem 1.2rem;
             border-radius: 4px;
             color: white;
-            text-decoration: none;
-            font-size: 0.8rem;
             cursor: pointer;
-            transition: background 0.2s;
+            font-size: 0.8rem;
         }
 
-        .back-btn:hover {
-            background: #1E4A21;
-        }
+        .back-btn:hover { background: #1E4A21; }
 
         /* Панель управления */
         .admin-panel {
-            background: #FFFFFF;
-            border: 1px solid #E0E6EC;
+            background: white;
+            border: 1px solid #D0D7DE;
             border-radius: 8px;
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
@@ -115,71 +108,48 @@
             padding: 0.3rem 0.8rem;
             border-radius: 4px;
             font-size: 0.7rem;
-            font-weight: 500;
             color: #2C6B2F;
         }
 
         .info-text {
             font-size: 0.7rem;
-            color: #7A8D9A;
-            margin-left: 0.8rem;
+            color: #6c7a89;
+            margin-left: 0.5rem;
         }
 
-        .save-btn, .pdf-btn, .reset-btn {
+        .btn {
             border: none;
-            padding: 0.5rem 1.2rem;
+            padding: 0.45rem 1rem;
             border-radius: 4px;
             font-size: 0.8rem;
-            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .save-btn { background: #2C6B2F; color: white; }
-        .save-btn:hover { background: #1E4A21; }
-
-        .pdf-btn { background: #D32F2F; color: white; }
-        .pdf-btn:hover { background: #B71C1C; }
-
-        .reset-btn { background: #F5F5F5; color: #5A6E7A; border: 1px solid #E0E6EC; }
-        .reset-btn:hover { background: #EEEEEE; }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #2C3E50;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            z-index: 2000;
-            transition: transform 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        .btn-save { background: #2C6B2F; color: white; }
+        .btn-save:hover { background: #1E4A21; }
+        .btn-pdf { background: #D32F2F; color: white; }
+        .btn-pdf:hover { background: #B71C1C; }
+        .btn-reset { background: #F5F5F5; color: #5A6E7A; border: 1px solid #D0D7DE; }
+        .btn-reset:hover { background: #EEEEEE; }
 
         /* Таблица */
         .table-wrapper {
-            background: #FFFFFF;
-            border: 1px solid #E0E6EC;
+            background: white;
+            border: 1px solid #D0D7DE;
             border-radius: 8px;
             overflow: auto;
-            position: relative;
-            max-height: calc(100vh - 280px);
+            max-height: calc(100vh - 250px);
         }
 
         .resources-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-width: 900px;
         }
 
-        /* ФИКСИРОВАННАЯ ШАПКА */
+        /* Фиксированная шапка */
         .resources-table thead tr {
             position: sticky;
             top: 0;
@@ -189,20 +159,19 @@
         .resources-table th {
             background: #2C3E50;
             color: white;
-            padding: 0.9rem 0.8rem;
+            padding: 0.8rem;
             text-align: left;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 2px solid #E0E6EC;
+            border-bottom: 2px solid #2C6B2F;
         }
 
         .resources-table td {
-            padding: 0.8rem;
+            padding: 0.6rem 0.8rem;
             border-bottom: 1px solid #E8EDF2;
             vertical-align: top;
-            color: #2C3E50;
             background: white;
         }
 
@@ -213,17 +182,16 @@
         /* Секционные заголовки */
         .section-header td {
             background: #E8EDF2;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
             color: #2C3E50;
-            padding: 0.6rem 0.8rem;
         }
 
         /* Подрядчики */
         .contractors-list {
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.3rem;
         }
 
         .contractor-item {
@@ -231,14 +199,9 @@
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
-            padding: 0.3rem 0.4rem;
+            padding: 0.2rem 0.3rem;
             background: #F8FAFC;
             border-radius: 4px;
-            transition: all 0.2s;
-        }
-
-        .contractor-item:hover {
-            background: #E8EDF2;
         }
 
         .contractor-name {
@@ -247,21 +210,11 @@
             color: #2C6B2F;
             cursor: pointer;
             padding: 0.2rem;
-            border-radius: 3px;
         }
 
         .contractor-name:hover {
             background: #E8EDF2;
-        }
-
-        .contractor-name input {
-            width: 100%;
-            background: white;
-            border: 1px solid #2C6B2F;
             border-radius: 3px;
-            padding: 0.2rem;
-            font-size: 12px;
-            font-family: inherit;
         }
 
         .contractor-people {
@@ -273,7 +226,6 @@
             text-align: center;
             cursor: pointer;
             font-weight: 500;
-            transition: all 0.2s;
         }
 
         .contractor-people:hover {
@@ -290,30 +242,17 @@
             padding: 0.2rem;
             text-align: center;
             font-size: 12px;
-            font-family: inherit;
-        }
-
-        /* Анимация изменения числа */
-        .people-changing {
-            animation: pulse-green 0.3s ease-in-out;
-        }
-
-        @keyframes pulse-green {
-            0% { transform: scale(1); background: white; }
-            50% { transform: scale(1.1); background: #2C6B2F; color: white; }
-            100% { transform: scale(1); background: white; color: #2C3E50; }
         }
 
         .add-contractor-btn {
             background: rgba(44, 107, 47, 0.08);
             border: 1px dashed #2C6B2F;
             border-radius: 4px;
-            padding: 0.3rem;
+            padding: 0.25rem;
             text-align: center;
             cursor: pointer;
             font-size: 11px;
             color: #2C6B2F;
-            transition: all 0.2s;
         }
 
         .add-contractor-btn:hover {
@@ -327,39 +266,108 @@
             cursor: pointer;
             font-size: 14px;
             padding: 0 0.2rem;
-            border-radius: 3px;
         }
 
         .remove-contractor:hover {
             background: rgba(211, 47, 47, 0.1);
+            border-radius: 3px;
         }
 
-        /* Общее количество человек */
         .total-people-cell {
             text-align: center;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
-            vertical-align: middle;
+            background: #F0F7F0;
         }
 
-        /* Итоговая строка */
         .grand-total td {
             background: #2C6B2F;
             color: white;
-            font-weight: 600;
-            border-bottom: none;
+            font-weight: 700;
         }
 
         .footer {
             text-align: center;
-            margin-top: 1.5rem;
-            padding: 1rem;
+            margin-top: 1rem;
+            padding: 0.8rem;
             font-size: 0.7rem;
             color: #8A9DA8;
-            border-top: 1px solid #E0E6EC;
         }
 
-        /* Анимации перехода между страницами */
+        /* Кнопка домой */
+        .home-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #e31b23, #ff4d4d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(227, 27, 35, 0.4);
+            z-index: 1000;
+            text-decoration: none;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(227, 27, 35, 0.6);
+        }
+
+        .home-button::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 50%;
+            background: rgba(46, 204, 113, 0.5);
+            animation: pulseGreen 1.2s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulseGreen {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        .home-icon {
+            font-size: 26px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .home-button { width: 44px; height: 44px; }
+            .home-icon { font-size: 22px; }
+            .header { flex-direction: column; text-align: center; }
+            .admin-panel { flex-direction: column; align-items: stretch; }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #2C3E50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 2000;
+            transition: transform 0.2s;
+            white-space: nowrap;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* Анимации перехода */
         @keyframes fadeOut {
             0% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-16px); }
@@ -370,51 +378,93 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        .page-fade-out {
-            animation: fadeOut 0.3s ease-out forwards;
-        }
+        .page-fade-out { animation: fadeOut 0.3s ease-out forwards; }
+        .page-fade-in { animation: fadeIn 0.3s ease-out forwards; }
 
-        .page-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 1024px) {
-            body { padding: 0.8rem; }
-            .resources-table th, .resources-table td { padding: 0.6rem; font-size: 12px; }
-        }
-
-        @media (max-width: 768px) {
-            .header { flex-direction: column; text-align: center; }
-            .admin-panel { flex-direction: column; align-items: stretch; }
-            .contractor-item { flex-wrap: wrap; }
-        }
-
-        @media (max-width: 480px) {
-            body { padding: 0.5rem; }
-            .resources-table th, .resources-table td { padding: 0.5rem; font-size: 11px; }
-        }
-
-        /* Стили для PDF */
+        /* Стили для PDF с ГОСТ штампами */
         @media print {
-            @page { size: A4; margin: 1.5cm 1cm; }
-            body { background: white; padding: 0; margin: 0; font-size: 11pt; }
-            .admin-panel, .back-btn, .save-btn, .pdf-btn, .reset-btn, .toast, .logo-icon { display: none !important; }
-            .header { background: white; border-bottom: 1px solid #CCD5E0; margin-bottom: 1rem; padding: 0 0 0.5rem 0; box-shadow: none; }
-            .resources-table th { background: #E8EDF2; color: #2C3E50; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .section-header td { background: #F0F2F5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .grand-total td { background: #E8EDF2; color: #2C3E50; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .contractor-item { background: none; border: none; padding: 0; margin: 0; }
-            .add-contractor-btn, .remove-contractor { display: none; }
-            .contractor-people input { display: none; }
-            .table-wrapper { overflow: visible; max-height: none; }
+            @page {
+                size: A4;
+                margin: 20mm 15mm 20mm 25mm;
+            }
+
+            body { background: white; padding: 0; margin: 0; }
+            
+            .admin-panel, .back-btn, .btn, .home-button, .toast, .add-contractor-btn, .remove-contractor {
+                display: none !important;
+            }
+
+            .header {
+                background: white;
+                border-bottom: 1px solid black;
+                padding: 0 0 0.5rem 0;
+                margin-bottom: 1rem;
+            }
+
+            .table-wrapper {
+                border: none;
+                overflow: visible;
+                max-height: none;
+            }
+
+            .resources-table th {
+                background: #E8EDF2;
+                color: black;
+                border-bottom: 1px solid black;
+            }
+
+            .resources-table td {
+                border-bottom: 1px solid #ddd;
+            }
+
+            .section-header td {
+                background: #F0F0F0;
+            }
+
+            .grand-total td {
+                background: #E8EDF2;
+                color: black;
+            }
+
+            /* Левый вертикальный штамп ГОСТ */
+            .gost-stamp-left {
+                position: fixed;
+                left: 10mm;
+                top: 50%;
+                transform: translateY(-50%) rotate(-90deg);
+                transform-origin: left center;
+                font-size: 8px;
+                font-family: monospace;
+                white-space: nowrap;
+                border: 1px solid black;
+                padding: 4px 8px;
+                background: white;
+                z-index: 100;
+            }
+
+            /* Правый горизонтальный штамп */
+            .gost-stamp-right {
+                position: fixed;
+                bottom: 15mm;
+                right: 15mm;
+                font-size: 7px;
+                font-family: monospace;
+                border-top: 1px solid black;
+                padding-top: 3px;
+                text-align: right;
+                width: auto;
+                background: white;
+            }
+
+            .gost-stamp-left::before {
+                content: "АО «Огни 3» | ВИС | Трудовые ресурсы | Лист ";
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="container" id="pageContainer">
-    <!-- Шапка -->
     <div class="header">
         <div class="logo" id="backLogo">
             <div class="logo-icon">О3</div>
@@ -425,20 +475,18 @@
         <button class="back-btn" id="backBtn">← На главную</button>
     </div>
 
-    <!-- Панель управления -->
-    <div class="admin-panel" id="adminPanel">
+    <div class="admin-panel">
         <div>
             <span class="admin-badge">Режим редактирования</span>
-            <span class="info-text">Клик по названию или числу — изменение | Max 3 подрядчика</span>
+            <span class="info-text">Клик по названию или числу | ▲▼ меняют значение</span>
         </div>
-        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-            <button class="save-btn" id="saveBtn">Сохранить</button>
-            <button class="pdf-btn" id="pdfBtn">Экспорт PDF</button>
-            <button class="reset-btn" id="resetBtn">Сбросить</button>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-save" id="saveBtn">Сохранить</button>
+            <button class="btn btn-pdf" id="pdfBtn">Экспорт PDF</button>
+            <button class="btn btn-reset" id="resetBtn">Сбросить</button>
         </div>
     </div>
 
-    <!-- Таблица -->
     <div class="table-wrapper">
         <table class="resources-table" id="resourcesTable">
             <thead>
@@ -447,7 +495,7 @@
                     <th>Раздел ВИС</th>
                     <th>Наименование работ</th>
                     <th>Подрядная организация / количество человек</th>
-                    <th>Общее количество человек</th>
+                    <th>Всего, чел.</th>
                 </tr>
             </thead>
             <tbody id="tableBody"></tbody>
@@ -457,12 +505,15 @@
     <div class="footer">Данные актуальны на момент формирования | АО «Огни 3»</div>
 </div>
 
+<!-- Кнопка домой -->
+<a href="index.html" class="home-button">
+    <span class="home-icon">🏠</span>
+</a>
+
 <div id="toast" class="toast"></div>
 
 <script>
     // Исходные данные
-    let resourcesData = [];
-
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -571,7 +622,8 @@
         { section: "Паркинг", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 3}] }
     ];
 
-    const STORAGE_KEY = 'ogni3_resources_fixed';
+    const STORAGE_KEY = 'ogni3_resources_final';
+    let resourcesData = [];
 
     function formatDate() {
         const now = new Date();
@@ -582,25 +634,22 @@
 
     function loadData() {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            resourcesData = JSON.parse(saved);
-        } else {
-            resourcesData = JSON.parse(JSON.stringify(initialDataRaw));
-        }
+        if (saved) resourcesData = JSON.parse(saved);
+        else resourcesData = JSON.parse(JSON.stringify(initialDataRaw));
         renderTable();
     }
 
     function saveData() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(resourcesData));
-        showToast('✓ Данные сохранены');
+        showToast('Данные сохранены');
     }
 
     function resetData() {
-        if (confirm('Сбросить все изменения к исходным значениям?')) {
+        if (confirm('Сбросить все изменения?')) {
             resourcesData = JSON.parse(JSON.stringify(initialDataRaw));
             renderTable();
             saveData();
-            showToast('⟳ Сброшено к исходным');
+            showToast('Сброшено к исходным');
         }
     }
 
@@ -612,7 +661,6 @@
         return resourcesData.reduce((sum, item) => sum + getRowTotal(item.contractors), 0);
     }
 
-    // Функция редактирования количества с поддержкой клавиш Up/Down
     function editContractor(rowIndex, contractorIndex, element) {
         const contractor = resourcesData[rowIndex].contractors[contractorIndex];
         const currentValue = contractor.people;
@@ -625,12 +673,9 @@
         input.step = 1;
         
         const container = element;
-        const originalHTML = container.innerHTML;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
-        
-        // Выделяем текст для удобства замены
         input.select();
         
         const saveEdit = () => {
@@ -638,51 +683,32 @@
             if (isNaN(newValue)) newValue = 0;
             if (newValue < 0) newValue = 0;
             if (newValue > 999) newValue = 999;
-            
-            if (newValue !== contractor.people) {
-                contractor.people = newValue;
-                // Анимация изменения
-                element.classList.add('people-changing');
-                setTimeout(() => element.classList.remove('people-changing'), 300);
-                
-                renderTable();
-                showToast(`Изменено: ${contractor.name || '—'} → ${newValue} чел.`);
-            } else {
-                renderTable();
-            }
+            contractor.people = newValue;
+            renderTable();
+            showToast(`${contractor.name}: ${newValue} чел.`);
         };
+        
+        const changeHandler = () => saveEdit();
         
         input.addEventListener('blur', saveEdit);
         input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                saveEdit();
-            }
+            if (e.key === 'Enter') saveEdit();
         });
-        // Поддержка клавиш Up/Down для быстрого изменения
         input.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                let val = parseInt(input.value, 10);
-                if (isNaN(val)) val = 0;
-                input.value = val + 1;
-            } else if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                let val = parseInt(input.value, 10);
-                if (isNaN(val)) val = 0;
-                input.value = Math.max(0, val - 1);
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.stopPropagation();
             }
         });
     }
 
     function addContractor(rowIndex) {
         if (resourcesData[rowIndex].contractors.length >= 3) {
-            showToast('Максимум 3 подрядчика на одну работу');
+            showToast('Максимум 3 подрядчика');
             return;
         }
         resourcesData[rowIndex].contractors.push({ name: 'Новый подрядчик', people: 0 });
         renderTable();
-        showToast('+ Подрядчик добавлен');
+        showToast('Добавлен подрядчик');
     }
 
     function removeContractor(rowIndex, contractorIndex) {
@@ -699,34 +725,32 @@
 
     function editContractorName(rowIndex, contractorIndex, element) {
         const contractor = resourcesData[rowIndex].contractors[contractorIndex];
-        const currentName = contractor.name;
-        
         const input = document.createElement('input');
         input.type = 'text';
-        input.value = currentName === '—' ? '' : currentName;
-        input.placeholder = 'Название организации';
+        input.value = contractor.name === '—' ? '' : contractor.name;
+        input.style.width = '100%';
+        input.style.background = 'white';
+        input.style.border = '1px solid #2C6B2F';
+        input.style.borderRadius = '3px';
+        input.style.padding = '0.2rem';
+        input.style.fontSize = '11px';
         
         const container = element;
-        const originalHTML = container.innerHTML;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
-        input.select();
         
         const saveEdit = () => {
             let newName = input.value.trim();
             if (newName === '') newName = '—';
             contractor.name = newName;
-            renderTable();
-            showToast(`Название изменено: ${newName}`);
+            container.innerHTML = escapeHtml(newName);
+            showToast('Название изменено');
         };
         
         input.addEventListener('blur', saveEdit);
         input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                saveEdit();
-            }
+            if (e.key === 'Enter') saveEdit();
         });
     }
 
@@ -745,54 +769,34 @@
                 tbody.appendChild(sectionRow);
             }
             
+            const contractorsHtml = `<div class="contractors-list">${item.contractors.map((contractor, cIndex) => `
+                <div class="contractor-item">
+                    <span class="contractor-name" onclick="editContractorName(${rowIndex}, ${cIndex}, this)">${escapeHtml(contractor.name)}</span>
+                    <span class="contractor-people" onclick="editContractor(${rowIndex}, ${cIndex}, this)">${contractor.people}</span>
+                    <button class="remove-contractor" onclick="event.stopPropagation(); removeContractor(${rowIndex}, ${cIndex})">×</button>
+                </div>
+            `).join('')}${item.contractors.length < 3 ? `<div class="add-contractor-btn" onclick="addContractor(${rowIndex})">+ Добавить подрядчика</div>` : ''}</div>`;
+            
             const row = document.createElement('tr');
-            
-            let contractorsHtml = '<div class="contractors-list">';
-            item.contractors.forEach((contractor, cIndex) => {
-                contractorsHtml += `
-                    <div class="contractor-item">
-                        <span class="contractor-name" onclick="editContractorName(${rowIndex}, ${cIndex}, this)">${escapeHtml(contractor.name)}</span>
-                        <span class="contractor-people" onclick="editContractor(${rowIndex}, ${cIndex}, this)">${contractor.people}</span>
-                        <button class="remove-contractor" onclick="event.stopPropagation(); removeContractor(${rowIndex}, ${cIndex})">✕</button>
-                    </div>
-                `;
-            });
-            if (item.contractors.length < 3) {
-                contractorsHtml += `<div class="add-contractor-btn" onclick="addContractor(${rowIndex})">+ Добавить подрядчика</div>`;
-            }
-            contractorsHtml += '</div>';
-            
-            const rowTotal = getRowTotal(item.contractors);
-            
             row.innerHTML = `
                 <td>${escapeHtml(item.section)}</td>
                 <td>${escapeHtml(item.subsys)}</td>
                 <td>${escapeHtml(item.work)}</td>
                 <td>${contractorsHtml}</td>
-                <td class="total-people-cell">${rowTotal}</td>
+                <td class="total-people-cell">${getRowTotal(item.contractors)}</td>
             `;
             tbody.appendChild(row);
         });
         
-        // Итоговая строка
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
-        const totalPeople = getTotalPeople();
-        totalRow.innerHTML = `
-            <td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td>
-            <td class="total-people-cell" style="text-align: center;"><strong>${totalPeople}</strong></td>
-        `;
+        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
         tbody.appendChild(totalRow);
     }
     
     function escapeHtml(str) {
         if (!str) return '';
-        return String(str).replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
+        return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
     }
     
     function showToast(msg) {
@@ -802,13 +806,9 @@
         setTimeout(() => toast.classList.remove('show'), 2000);
     }
     
-    // Плавная анимация перехода
     function navigateWithAnimation(url) {
-        const container = document.getElementById('pageContainer');
-        container.classList.add('page-fade-out');
-        setTimeout(() => {
-            window.location.href = url;
-        }, 300);
+        document.getElementById('pageContainer').classList.add('page-fade-out');
+        setTimeout(() => window.location.href = url, 300);
     }
     
     function exportToPDF() {
@@ -816,23 +816,14 @@
         setTimeout(() => window.print(), 200);
     }
     
-    // Обработчики
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
     document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
     document.getElementById('backBtn').addEventListener('click', () => navigateWithAnimation('index.html'));
     document.getElementById('backLogo').addEventListener('click', () => navigateWithAnimation('index.html'));
     
-    // Анимация появления
     document.getElementById('pageContainer').classList.add('page-fade-in');
-    
     loadData();
-    
-    // Делаем функции глобальными для onclick
-    window.editContractor = editContractor;
-    window.addContractor = addContractor;
-    window.removeContractor = removeContractor;
-    window.editContractorName = editContractorName;
 </script>
 </body>
 </html>

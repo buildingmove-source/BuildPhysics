@@ -25,6 +25,26 @@
             margin: 0 auto;
         }
 
+        /* Анимации */
+        @keyframes slideOutLeft {
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(-100%); }
+        }
+
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(100%); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulseGreen {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.35); opacity: 0; }
+        }
+
+        .page-slide-out-left {
+            animation: slideOutLeft 0.35s ease-out forwards;
+        }
+
         .header {
             background: white;
             border-bottom: 2px solid #2C6B2F;
@@ -232,10 +252,12 @@
             padding: 0.2rem 0.3rem;
             background: #F8FAFC;
             border-radius: 4px;
+            flex-wrap: wrap;
         }
 
         .contractor-name {
-            flex: 1;
+            flex: 2;
+            min-width: 100px;
             font-size: 11px;
             color: #2C6B2F;
             cursor: pointer;
@@ -258,7 +280,7 @@
         }
 
         .people-value {
-            min-width: 40px;
+            min-width: 35px;
             text-align: center;
             font-weight: 500;
             font-size: 12px;
@@ -363,11 +385,6 @@
             z-index: -1;
         }
 
-        @keyframes pulseGreen {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.35); opacity: 0; }
-        }
-
         .home-icon {
             font-size: 26px;
             color: white;
@@ -377,29 +394,27 @@
             position: fixed;
             bottom: 90px;
             left: 50%;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%) translateY(100px);
             background: #2C3E50;
             color: white;
             padding: 0.6rem 1.2rem;
             border-radius: 8px;
             font-size: 0.8rem;
             z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.3s ease;
             white-space: nowrap;
+            opacity: 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             pointer-events: none;
         }
 
         .toast.show {
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
-            visibility: visible;
         }
 
-        /* Стили для печати */
         @media print {
-            .admin-panel, .home-button, .back-btn {
+            .admin-panel, .home-button, .back-btn, .add-contractor-btn, .remove-contractor, .people-btn {
                 display: none !important;
             }
             .table-wrapper {
@@ -424,6 +439,7 @@
             .table-wrapper { max-height: 50vh; }
             .home-button { width: 40px; height: 40px; bottom: 15px; right: 15px; }
             .people-value { min-width: 30px; font-size: 11px; }
+            .contractor-name { min-width: 80px; }
         }
     </style>
 </head>
@@ -474,12 +490,14 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ =====
+    // ===== ОПТИМИЗИРОВАННЫЕ ДАННЫЕ (без дублирования) =====
     const initialDataRaw = [
+        // Секция 1 - ЭОМ
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж лотков", contractors: [{name: "—", people: 3}] },
+        // Секция 1 - СС
         { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ ВП МГН", contractors: [{name: "ООО \"ИНЭКО\"", people: 2}] },
         { section: "Секция 1", subsys: "СС", work: "Вызывные панели МГН", contractors: [{name: "—", people: 2}] },
         { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ АПС, СПА, включая оконечные устройства", contractors: [{name: "—", people: 2}] },
@@ -492,27 +510,34 @@
         { section: "Секция 1", subsys: "СС", work: "Видеокамеры в МОП", contractors: [{name: "—", people: 2}] },
         { section: "Секция 1", subsys: "СС", work: "КЛ на СОТС в нишах", contractors: [{name: "—", people: 2}] },
         { section: "Секция 1", subsys: "СС", work: "КЛ ДС лифтов", contractors: [{name: "—", people: 2}] },
+        // Секция 1 - Отопление
         { section: "Секция 1", subsys: "Отопление", work: "Стояки", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
         { section: "Секция 1", subsys: "Отопление", work: "Гребенки", contractors: [{name: "—", people: 3}] },
         { section: "Секция 1", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", contractors: [{name: "—", people: 4}] },
         { section: "Секция 1", subsys: "Отопление", work: "Гидравлические испытания", contractors: [{name: "—", people: 2}] },
         { section: "Секция 1", subsys: "Отопление", work: "Изоляция", contractors: [{name: "—", people: 3}] },
+        // Секция 1 - Вентиляция
         { section: "Секция 1", subsys: "Вентиляция", work: "Монтаж воздуховодов и врезок под клапана", contractors: [{name: "ООО \"ПСК-28\"", people: 3}] },
         { section: "Секция 1", subsys: "Вентиляция", work: "Монтаж клапанов и вентоборудования", contractors: [{name: "—", people: 3}] },
+        // Секция 1 - ВК
         { section: "Секция 1", subsys: "ВК", work: "Стояки", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
         { section: "Секция 1", subsys: "ВК", work: "Гребенки", contractors: [{name: "—", people: 3}] },
         { section: "Секция 1", subsys: "ВК", work: "КПК", contractors: [{name: "—", people: 3}] },
         { section: "Секция 1", subsys: "ВК", work: "Гидравлика", contractors: [{name: "—", people: 2}] },
         { section: "Секция 1", subsys: "ВК", work: "Изоляция", contractors: [{name: "—", people: 3}] },
+        // Секция 1 - Пожаротушение
         { section: "Секция 1", subsys: "Пожаротушение", work: "Монтаж сплинкеров и ДППК", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
         { section: "Секция 1", subsys: "Пожаротушение", work: "Гидравлика", contractors: [{name: "—", people: 2}] },
+        // Секция 1 - ИТП
         { section: "Секция 1", subsys: "ИТП", work: "Монтаж ИТП под ключ", contractors: [{name: "ИП \"Снигур\"", people: 3}] },
+        // Секция 1 - ПНР
         { section: "Секция 1", subsys: "ПНР", work: "Диспетчеризация лифтов", contractors: [{name: "ООО \"Листех\"", people: 2}] },
         { section: "Секция 1", subsys: "ПНР", work: "АСКУЭ", contractors: [{name: "ООО \"Призмер\"", people: 1}] },
         { section: "Секция 1", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 1}] },
         { section: "Секция 1", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 1}] },
         { section: "Секция 1", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 1}] },
 
+        // Секция 2
         { section: "Секция 2", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 2", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
@@ -549,6 +574,7 @@
         { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 3}] },
 
+        // Паркинг
         { section: "Паркинг", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
@@ -598,8 +624,15 @@
 
     function loadData() {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) resourcesData = JSON.parse(saved);
-        else resourcesData = JSON.parse(JSON.stringify(initialDataRaw));
+        if (saved) {
+            try {
+                resourcesData = JSON.parse(saved);
+            } catch(e) {
+                resourcesData = JSON.parse(JSON.stringify(initialDataRaw));
+            }
+        } else {
+            resourcesData = JSON.parse(JSON.stringify(initialDataRaw));
+        }
         renderTable();
     }
 
@@ -666,7 +699,7 @@
         input.style.background = 'white';
         input.style.border = '1px solid #2C6B2F';
         input.style.borderRadius = '3px';
-        input.style.padding = '0.15rem';
+        input.style.padding = '0.2rem';
         input.style.fontSize = '11px';
         
         const container = element;
@@ -679,6 +712,7 @@
             if (newName === '') newName = '—';
             contractor.name = newName;
             container.innerHTML = escapeHtml(newName);
+            container.classList.add('contractor-name');
             showToast('✏️ Название изменено');
         };
         
@@ -708,6 +742,7 @@
             if (newWork === '') newWork = currentWork;
             resourcesData[rowIndex].work = newWork;
             container.innerHTML = escapeHtml(newWork);
+            container.classList.add('editable-work-cell');
             showToast('✏️ Наименование работ изменено');
             renderTable();
         };
@@ -727,7 +762,7 @@
                 currentSection = item.section;
                 const sectionRow = document.createElement('tr');
                 sectionRow.className = 'section-header';
-                sectionRow.innerHTML = `<td colspan="5"><strong>${item.section}</strong></td>`;
+                sectionRow.innerHTML = `<td colspan="5"><strong>${escapeHtml(item.section)}</strong></td>`;
                 tbody.appendChild(sectionRow);
             }
             
@@ -766,7 +801,8 @@
         
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
-        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
+        const totalPeople = getTotalPeople();
+        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${totalPeople}</strong></td>`;
         tbody.appendChild(totalRow);
     }
     
@@ -780,10 +816,11 @@
         if (toastTimeout) clearTimeout(toastTimeout);
         toast.textContent = message;
         toast.classList.add('show');
-        toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
     }
     
-    // ===== ЭКСПОРТ HTML =====
     function exportToHTML() {
         const now = new Date();
         const dateStr = `${now.getDate().toString().padStart(2,'0')}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getFullYear()}`;
@@ -817,49 +854,17 @@
     <title>Ресурсы Огни 3 от ${dateStr}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', 'Arial', sans-serif;
-            background: white;
-            padding: 20px;
-            color: #1a1a2e;
-        }
+        body { font-family: 'Segoe UI', 'Arial', sans-serif; background: white; padding: 20px; color: #1a1a2e; }
         .container { max-width: 1200px; margin: 0 auto; }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #2C6B2F;
-        }
+        .header { text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #2C6B2F; }
         .header h1 { font-size: 24px; margin-bottom: 5px; }
         .header p { color: #666; font-size: 12px; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 12px;
-        }
-        th {
-            background: #2C3E50;
-            color: white;
-            padding: 10px 8px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+        th { background: #2C3E50; color: white; padding: 10px 8px; text-align: left; border: 1px solid #ddd; }
+        td { padding: 8px; border: 1px solid #ddd; vertical-align: top; }
         .section-header td { background: #E8EDF2; font-weight: bold; }
         .grand-total td { background: #2C6B2F; color: white; font-weight: bold; }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #ddd;
-            font-size: 10px;
-            color: #666;
-        }
+        .footer { text-align: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 10px; color: #666; }
     </style>
 </head>
 <body>
@@ -875,7 +880,7 @@
         <tbody>
             ${exportRows.map(row => {
                 if (row.type === 'section') {
-                    return `<tr class="section-header"><td colspan="5"><strong>${row.section}</strong></td></tr>`;
+                    return `<tr class="section-header"><td colspan="5"><strong>${escapeHtml(row.section)}</strong></td></tr>`;
                 } else {
                     return `<tr>
                         <td>${escapeHtml(row.section)}</td>
@@ -886,7 +891,7 @@
                     </tr>`;
                 }
             }).join('')}
-            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong><td><td style="text-align: center;"><strong>${totalPeople}</strong></td></tr>
+            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align: center;"><strong>${totalPeople}</strong></td></tr>
         </tbody>
     </table>
     <div class="footer">Данные актуальны на момент формирования · ЖК «Огни 3»</div>
@@ -894,7 +899,6 @@
 </body>
 </html>`;
         
-        // Скачивание файла
         const blob = new Blob([exportHtml], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -910,7 +914,9 @@
     
     function navigateToHome() {
         document.getElementById('pageContainer').classList.add('page-slide-out-left');
-        setTimeout(() => { window.location.href = 'index.html'; }, 350);
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 350);
     }
     
     document.getElementById('saveBtn').addEventListener('click', saveData);

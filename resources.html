@@ -350,24 +350,38 @@
             color: white;
         }
 
+        /* ===== TOAST С АНИМАЦИЕЙ РАСТВОРЕНИЯ ЗА 1 СЕКУНДУ ===== */
         .toast {
             position: fixed;
             bottom: 90px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
+            transform: translateX(-50%) translateY(0);
             background: #2C3E50;
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
             z-index: 2000;
-            transition: transform 0.2s;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
             white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            pointer-events: none;
         }
 
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
 
-        /* Анимации перехода */
+        .toast.hide {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Анимации перехода между страницами */
         @keyframes slideOutLeft {
             0% { opacity: 1; transform: translateX(0); }
             100% { opacity: 0; transform: translateX(-100%); }
@@ -406,6 +420,7 @@
             .home-icon { font-size: 20px; }
             .people-value { min-width: 30px; font-size: 11px; }
             .people-btn { width: 20px; height: 20px; font-size: 12px; }
+            .toast { font-size: 0.7rem; padding: 0.4rem 0.8rem; white-space: normal; text-align: center; max-width: 90vw; }
         }
     </style>
 </head>
@@ -570,6 +585,7 @@
     const STORAGE_KEY = 'ogni3_resources_final';
     let resourcesData = [];
     let navigateTimeout = null;
+    let toastTimeout = null;
 
     function formatDate() {
         const now = new Date();
@@ -607,7 +623,6 @@
         return resourcesData.reduce((sum, item) => sum + getRowTotal(item.contractors), 0);
     }
 
-    // Изменение численности кликами (+ / -)
     function changePeople(rowIndex, contractorIndex, delta) {
         const contractor = resourcesData[rowIndex].contractors[contractorIndex];
         let newValue = contractor.people + delta;
@@ -718,11 +733,45 @@
         return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
     }
     
-    function showToast(msg) {
+    // ===== TOAST С АНИМАЦИЕЙ РАСТВОРЕНИЯ ЗА 1 СЕКУНДУ =====
+    function showToast(message) {
         const toast = document.getElementById('toast');
-        toast.textContent = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
+        
+        // Останавливаем предыдущий таймер
+        if (toastTimeout) {
+            clearTimeout(toastTimeout);
+        }
+        
+        // Если тост уже виден, убираем класс show
+        if (toast.classList.contains('show')) {
+            toast.classList.remove('show');
+            // Небольшая задержка перед показом нового сообщения
+            setTimeout(() => {
+                toast.textContent = message;
+                toast.classList.add('show');
+                startHideTimer(toast);
+            }, 200);
+        } else {
+            toast.textContent = message;
+            toast.classList.add('show');
+            startHideTimer(toast);
+        }
+    }
+    
+    function startHideTimer(toast) {
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+            // После исчезновения очищаем таймер
+            toastTimeout = null;
+        }, 1000); // 1 секунда до начала исчезновения
+        // Сама анимация исчезновения занимает 0.3s
+        setTimeout(() => {
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
+                toastTimeout = null;
+            }
+            toast.classList.remove('show');
+        }, 1300);
     }
     
     // ===== ПЕРЕХОД НА ГЛАВНУЮ ЧЕРЕЗ 1 СЕКУНДУ =====
@@ -737,7 +786,7 @@
                 window.location.href = 'index.html';
             }, 350);
             navigateTimeout = null;
-        }, 1000); // Задержка 1 секунда
+        }, 1000);
     }
     
     function cancelNavigation() {

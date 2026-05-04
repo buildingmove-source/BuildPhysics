@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <meta name="theme-color" content="#1A1A2E">
     <title>Ресурсы · Огни 3 | Управление трудовыми ресурсами</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,11 +12,25 @@
             box-sizing: border-box;
         }
 
+        /* Плавный переход между страницами */
         body {
-            background: #0A1628;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0A1628 0%, #0D1F3C 100%);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            font-size: 16px;
             color: #EEEEEE;
             padding: 1rem;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .container {
@@ -25,21 +38,19 @@
             margin: 0 auto;
         }
 
-        /* Шапка */
+        /* Шапка — комплементарные цвета */
         .header {
-            background: rgba(13, 31, 60, 0.98);
+            background: rgba(13, 31, 60, 0.85);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding: 0.75rem 1.5rem;
+            border-radius: 24px;
+            padding: 0.8rem 1.5rem;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border: 1px solid rgba(45, 106, 255, 0.3);
         }
 
         .logo {
@@ -47,21 +58,26 @@
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
         }
 
         .logo-icon {
             background: linear-gradient(135deg, #2D6AFF, #00B4D8);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
         }
 
         .logo-text {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             background: linear-gradient(135deg, #ffffff, #00B4D8);
             -webkit-background-clip: text;
@@ -69,10 +85,20 @@
             color: transparent;
         }
 
-        .title {
+        .title-block {
+            text-align: center;
+        }
+
+        .title-block h1 {
             font-size: 1.5rem;
             font-weight: 700;
             color: #ffffff;
+        }
+
+        .title-block .date {
+            font-size: 0.75rem;
+            color: #8A9BDF;
+            margin-top: 0.2rem;
         }
 
         .back-btn {
@@ -82,6 +108,7 @@
             border-radius: 40px;
             color: #EEEEEE;
             text-decoration: none;
+            font-size: 0.85rem;
             transition: all 0.3s;
         }
 
@@ -90,18 +117,19 @@
             transform: scale(1.02);
         }
 
-        /* Панель управления */
+        /* Панель администратора */
         .admin-panel {
             background: rgba(13, 31, 60, 0.6);
             backdrop-filter: blur(8px);
-            border-radius: 16px;
-            padding: 1rem;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+            border: 1px solid rgba(45, 106, 255, 0.2);
         }
 
         .admin-badge {
@@ -112,40 +140,148 @@
             font-weight: 600;
         }
 
-        .save-btn {
-            background: #2D6AFF;
+        .admin-note {
+            font-size: 0.7rem;
+            color: #8A9BDF;
+            margin-left: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn {
             border: none;
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 40px;
-            color: white;
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .save-btn:hover {
+        .btn-primary {
+            background: #2D6AFF;
+            color: white;
+        }
+
+        .btn-primary:hover {
             background: #00B4D8;
             transform: scale(1.02);
         }
 
-        .reset-btn {
+        .btn-secondary {
             background: rgba(227, 27, 35, 0.8);
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 40px;
             color: white;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
         }
 
-        .reset-btn:hover {
+        .btn-secondary:hover {
             background: #e31b23;
             transform: scale(1.02);
         }
 
+        .btn-success {
+            background: #34a853;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #2d8e47;
+            transform: scale(1.02);
+        }
+
+        /* Таблица ресурсов */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            background: rgba(13, 31, 60, 0.4);
+        }
+
+        .resources-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            min-width: 700px;
+        }
+
+        .resources-table th {
+            background: #07122A;
+            padding: 0.9rem 0.8rem;
+            text-align: left;
+            font-weight: 700;
+            color: #8A9BDF;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .resources-table td {
+            padding: 0.7rem 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            vertical-align: top;
+            font-size: 15px;
+        }
+
+        .resources-table tr:hover {
+            background: rgba(45, 106, 255, 0.08);
+        }
+
+        .section-header td {
+            background: #0A1A3A;
+            padding: 0.8rem;
+            font-weight: 700;
+            font-size: 1rem;
+            border-bottom: 1px solid #2D6AFF;
+        }
+
+        .editable-cell {
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 0.3rem 0.6rem;
+            min-width: 70px;
+            text-align: center;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .editable-cell:hover {
+            background: rgba(45, 106, 255, 0.4);
+            transform: scale(1.02);
+        }
+
+        .editable-cell input {
+            width: 65px;
+            background: #0D1F3C;
+            border: 1px solid #2D6AFF;
+            border-radius: 8px;
+            padding: 0.3rem;
+            color: white;
+            text-align: center;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        .grand-total {
+            background: rgba(52, 168, 83, 0.15);
+            font-weight: 700;
+        }
+
+        .grand-total td {
+            font-size: 16px;
+            padding: 1rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: 0.7rem;
+            color: #5A6BA0;
+        }
+
+        /* Toast уведомление */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -167,108 +303,24 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Таблица ресурсов */
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 16px;
-            background: rgba(13, 31, 60, 0.4);
-            padding: 0;
-        }
-
-        .resources-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            min-width: 800px;
-        }
-
-        .resources-table th {
-            background: #07122A;
-            padding: 0.8rem;
-            text-align: left;
-            font-weight: 600;
-            color: #8A9BDF;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            position: sticky;
-            top: 70px;
-        }
-
-        .resources-table td {
-            padding: 0.7rem 0.8rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            vertical-align: top;
-        }
-
-        .resources-table tr:hover {
-            background: rgba(45, 106, 255, 0.1);
-        }
-
-        .editable-cell {
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            padding: 0.3rem 0.6rem;
-            min-width: 60px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .editable-cell:hover {
-            background: rgba(45, 106, 255, 0.3);
-        }
-
-        .editable-cell input {
-            width: 60px;
-            background: #0D1F3C;
-            border: 1px solid #2D6AFF;
-            border-radius: 6px;
-            padding: 0.3rem;
-            color: white;
-            text-align: center;
-            font-size: 0.8rem;
-        }
-
-        .section-header {
-            background: #0A1A3A;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .section-header td {
-            background: #0A1A3A;
-            padding: 0.8rem;
-        }
-
-        .sub-total {
-            background: rgba(45, 106, 255, 0.15);
-            font-weight: 600;
-        }
-
-        .grand-total {
-            background: rgba(52, 168, 83, 0.15);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            font-size: 0.7rem;
-            color: #5A6BA0;
-        }
-
         @media (max-width: 768px) {
+            body {
+                padding: 0.8rem;
+            }
             .header {
                 flex-direction: column;
                 text-align: center;
             }
             .resources-table th, .resources-table td {
                 padding: 0.5rem;
-                font-size: 0.7rem;
+                font-size: 13px;
             }
             .editable-cell input {
                 width: 50px;
+            }
+            .btn-group {
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
     </style>
@@ -279,10 +331,13 @@
     <!-- Шапка -->
     <div class="header">
         <div class="logo" onclick="window.location.href='index.html'">
-            <div class="logo-icon">🏗️</div>
+            <div class="logo-icon">👷‍♂️</div>
             <span class="logo-text">Огни 3</span>
         </div>
-        <div class="title">📊 Ресурсы · Трудовые ресурсы</div>
+        <div class="title-block">
+            <h1>📋 Ресурсы · Трудовые ресурсы</h1>
+            <div class="date" id="currentDate"></div>
+        </div>
         <a href="index.html" class="back-btn">← На главную</a>
     </div>
 
@@ -290,11 +345,12 @@
     <div class="admin-panel">
         <div>
             <span class="admin-badge">👑 Режим администратора</span>
-            <span style="margin-left: 1rem; font-size: 0.7rem; color: #8A9BDF;">Редактирование доступно только вам</span>
+            <span class="admin-note">Редактирование доступно только вам</span>
         </div>
-        <div style="display: flex; gap: 0.8rem;">
-            <button class="save-btn" id="saveBtn">💾 Сохранить все изменения</button>
-            <button class="reset-btn" id="resetBtn">⟳ Сбросить к исходным</button>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="saveBtn">💾 Сохранить изменения</button>
+            <button class="btn btn-success" id="exportBtn">📎 Экспорт в JSON</button>
+            <button class="btn btn-secondary" id="resetBtn">⟳ Сбросить</button>
         </div>
     </div>
 
@@ -303,11 +359,10 @@
         <table class="resources-table" id="resourcesTable">
             <thead>
                 <tr>
-                    <th>Объект / Секция</th>
                     <th>Раздел ВИС</th>
-                    <th>Наименование работ</th>
+                    <th style="min-width: 250px;">Наименование работ</th>
                     <th>Ответственный</th>
-                    <th style="text-align: center;">Кол-во чел.</th>
+                    <th style="text-align: center; width: 100px;">Кол-во чел.</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -317,7 +372,7 @@
     </div>
 
     <div class="footer">
-        Данные сохраняются в вашем браузере. При смене устройства или очистке кеша данные могут быть утеряны.
+        Данные сохраняются в вашем браузере. Используйте «Экспорт в JSON» для сохранения на компьютер.
     </div>
 </div>
 
@@ -325,7 +380,7 @@
 <div id="toast" class="toast">✅ Сохранено</div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ ИЗ ФАЙЛА =====
+    // ===== ИСХОДНЫЕ ДАННЫЕ =====
     const initialData = [
         // Секция 1
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", responsible: "ООО \"ИНЭКО\"", people: 3 },
@@ -439,11 +494,19 @@
         { section: "Паркинг", subsys: "ПНР", work: "АОВ", responsible: "ООО \"СИДРЭ\"", people: 3 }
     ];
 
-    // Ключ для localStorage
     const STORAGE_KEY = 'ogni3_resources_data';
-
-    // Загрузка данных (из localStorage или исходных)
     let resourcesData = [];
+
+    // Установка текущей даты
+    function setCurrentDate() {
+        const now = new Date();
+        const formatted = now.toLocaleDateString('ru-RU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        document.getElementById('currentDate').innerHTML = `📅 Данные на: ${formatted}`;
+    }
 
     function loadData() {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -455,13 +518,11 @@
         renderTable();
     }
 
-    // Сохранение данных
     function saveData() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(resourcesData));
-        showToast('💾 Все изменения сохранены!');
+        showToast('💾 Все изменения сохранены в браузере!');
     }
 
-    // Сброс к исходным
     function resetData() {
         if (confirm('Вы уверены, что хотите сбросить все изменения к исходным значениям?')) {
             resourcesData = JSON.parse(JSON.stringify(initialData));
@@ -471,7 +532,33 @@
         }
     }
 
-    // Отображение таблицы
+    // Экспорт в JSON с сохранением на компьютер в папку /Users/Vladimir/Documents/Ресурсы Огни 3
+    function exportToJSON() {
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0, 19).replace(/:/g, '-');
+        const fileName = `Ресурсы_Огни3_${dateStr}.json`;
+        
+        const exportData = {
+            exportDate: now.toLocaleString('ru-RU'),
+            data: resourcesData,
+            totalPeople: resourcesData.reduce((sum, item) => sum + (item.people || 0), 0)
+        };
+        
+        const jsonStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showToast(`📎 Файл "${fileName}" сохранён на компьютер`);
+    }
+
     function renderTable() {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = '';
@@ -479,12 +566,11 @@
         let currentSection = '';
         
         resourcesData.forEach((item, index) => {
-            // Добавляем разделитель при смене секции
             if (currentSection !== item.section) {
                 currentSection = item.section;
                 const sectionRow = document.createElement('tr');
                 sectionRow.className = 'section-header';
-                sectionRow.innerHTML = `<td colspan="5"><strong>🏗️ ${item.section}</strong></td>`;
+                sectionRow.innerHTML = `<td colspan="4"><strong>🏗️ ${item.section}</strong></td>`;
                 tbody.appendChild(sectionRow);
             }
             
@@ -502,18 +588,17 @@
             tbody.appendChild(row);
         });
         
-        // Добавляем итоговую строку
+        // Итоговая строка
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
         const totalPeople = resourcesData.reduce((sum, item) => sum + (item.people || 0), 0);
         totalRow.innerHTML = `
             <td colspan="3"><strong>📊 ИТОГО ЧЕЛОВЕК</strong></td>
-            <td style="text-align: center;"><strong>${totalPeople}</strong></td>
+            <td style="text-align: center;"><strong style="font-size: 1.2rem;">${totalPeople}</strong></td>
         `;
         tbody.appendChild(totalRow);
     }
     
-    // Редактирование значения
     window.editPeople = function(index, element) {
         const currentValue = resourcesData[index].people;
         const input = document.createElement('input');
@@ -521,7 +606,7 @@
         input.value = currentValue;
         input.min = 0;
         input.max = 99;
-        input.style.width = '60px';
+        input.style.width = '65px';
         
         const container = element;
         container.innerHTML = '';
@@ -535,8 +620,8 @@
             if (newValue > 99) newValue = 99;
             resourcesData[index].people = newValue;
             container.innerHTML = newValue;
-            renderTable(); // Перерисовываем для обновления итогов
-            showToast('✏️ Значение изменено. Не забудьте сохранить!');
+            renderTable();
+            showToast('✏️ Значение изменено. Нажмите «Сохранить»');
         };
         
         input.addEventListener('blur', saveEdit);
@@ -566,10 +651,12 @@
         }, 2000);
     }
     
-    // Инициализация и кнопки
+    // Инициализация
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
+    document.getElementById('exportBtn').addEventListener('click', exportToJSON);
     
+    setCurrentDate();
     loadData();
 </script>
 </body>

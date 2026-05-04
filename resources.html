@@ -24,7 +24,7 @@
             margin: 0 auto;
         }
 
-        /* Шапка — скрывается на мобильных, показывается на десктопе */
+        /* Шапка — скрывается на мобильных */
         .header {
             background: white;
             border-bottom: 2px solid #2C6B2F;
@@ -785,10 +785,10 @@
         const toast = document.getElementById('toast');
         toast.textContent = msg;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
+        setTimeout(() => toast.classList.remove('show'), 3000);
     }
     
-    // ===== АНИМАЦИЯ ПЕРЕХОДА ТУДА И ОБРАТНО С ЗАДЕРЖКОЙ 4 СЕКУНДЫ =====
+    // ===== АНИМАЦИЯ ПЕРЕХОДА НА ГЛАВНУЮ С ЗАДЕРЖКОЙ 3 СЕКУНДЫ =====
     function navigateToHome() {
         if (isAnimating) return;
         isAnimating = true;
@@ -801,19 +801,7 @@
         }, 400);
     }
     
-    function navigateToResources() {
-        if (isAnimating) return;
-        isAnimating = true;
-        
-        const container = document.getElementById('pageContainer');
-        container.classList.add('page-slide-out-right');
-        
-        setTimeout(() => {
-            window.location.href = 'resources.html';
-        }, 400);
-    }
-    
-    // Обработчики с анимацией и предварительной задержкой 4 секунды
+    // Обработчики
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
     document.getElementById('pdfBtn').addEventListener('click', () => {
@@ -821,23 +809,23 @@
         setTimeout(() => window.print(), 200);
     });
     
-    // Кнопка назад с анимацией - задержка 4 секунды перед переходом
+    // Кнопки перехода на главную с задержкой 3 секунды
     document.getElementById('backBtn')?.addEventListener('click', (e) => {
         e.preventDefault();
-        showToast('Переход на главную через 4 секунды...');
-        setTimeout(() => navigateToHome(), 4000);
+        showToast('Переход на главную через 3 секунды...');
+        setTimeout(() => navigateToHome(), 3000);
     });
     
     document.getElementById('backLogo')?.addEventListener('click', (e) => {
         e.preventDefault();
-        showToast('Переход на главную через 4 секунды...');
-        setTimeout(() => navigateToHome(), 4000);
+        showToast('Переход на главную через 3 секунды...');
+        setTimeout(() => navigateToHome(), 3000);
     });
     
     document.getElementById('homeBtn').addEventListener('click', (e) => {
         e.preventDefault();
-        showToast('Переход на главную через 4 секунды...');
-        setTimeout(() => navigateToHome(), 4000);
+        showToast('Переход на главную через 3 секунды...');
+        setTimeout(() => navigateToHome(), 3000);
     });
     
     // Анимация появления при загрузке

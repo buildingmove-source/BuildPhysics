@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="#1A1A2E">
+    <meta name="theme-color" content="#0A1628">
     <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
     <title>Огни 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -57,15 +57,22 @@
             border-radius: 10px;
         }
 
-        /* ===== ПРОЗРАЧНАЯ ШАПКА (70% прозрачности) ===== */
+        /* ===== ПРОЗРАЧНАЯ ШАПКА (99% прозрачности) ===== */
         .navbar {
-            background: rgba(13, 31, 60, 0.7);
+            background: rgba(13, 31, 60, 0.01);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
             padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Эффект при скролле — можно добавить лёгкое затемнение */
+        .navbar.scrolled {
+            background: rgba(13, 31, 60, 0.03);
+            border-bottom-color: rgba(255,255,255,0.1);
         }
 
         .nav-container {
@@ -95,6 +102,10 @@
             justify-content: center;
             font-size: 1.6rem;
             transition: var(--transition);
+        }
+
+        .logo-icon:hover {
+            transform: scale(1.05);
         }
 
         .logo-text {
@@ -727,7 +738,7 @@
 </head>
 <body>
 
-<nav class="navbar">
+<nav class="navbar" id="navbar">
     <div class="nav-container">
         <div class="logo" onclick="window.location.href='index.html'">
             <div class="logo-icon">🏗️</div>
@@ -1073,6 +1084,16 @@
     
     document.getElementById('chatFloatBtn')?.addEventListener('click', function() {
         openChatPopup();
+    });
+
+    // Эффект при скролле для шапки
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
     });
 
     const style = document.createElement('style');

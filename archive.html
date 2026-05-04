@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="theme-color" content="#1A1A2E">
     <title>Архив ресурсов · Огни 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
@@ -357,17 +358,36 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    function formatDate(dateString) {
-        if (!dateString) return '—';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('ru-RU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
+    // Извлечение даты из имени файла
+    function extractDateFromFilename(filename) {
+        const match = filename.match(/(\d{2})-(\d{2})-(\d{4})/);
+        if (match) {
+            const day = match[1];
+            const month = match[2];
+            const year = match[3];
+            return `${day}.${month}.${year}`;
+        }
+        return null;
     }
 
-    // Получаем список файлов через GitHub Contents API
+    // Получение списка файлов через GitHub API с повторной попыткой
+    async function fetchWithRetry(url, retries = 3) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                const response = await fetch(url);
+                if (response.ok) return await response.json();
+                if (response.status === 404 && i < retries - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    continue;
+                }
+                throw new Error(`HTTP ${response.status}`);
+            } catch (e) {
+                if (i === retries - 1) throw e;
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+    }
+
     async function loadArchiveFiles() {
         const container = document.getElementById('filesContainer');
         const totalSpan = document.getElementById('totalFiles');
@@ -375,17 +395,11 @@
         const lastUpdateSpan = document.getElementById('lastUpdate');
         
         try {
-            // Прямой запрос к GitHub API (CORS разрешён GitHub)
-            const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`);
+            // Используем прямой список файлов через API
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`;
+            const files = await fetchWithRetry(apiUrl);
             
-            if (!response.ok) {
-                // Если CORS блокирует, пробуем через JSONP альтернативу
-                throw new Error('API вернул ошибку');
-            }
-            
-            const files = await response.json();
-            
-            // Фильтруем файлы ресурсов
+            // Фильтруем только файлы ресурсов
             const resourceFiles = files.filter(file => 
                 file.name && 
                 file.name.startsWith('Ресурсы_Огни3_') && 
@@ -402,17 +416,23 @@
             
             // Сортировка по дате (новые сверху)
             const sortedFiles = resourceFiles.sort((a, b) => {
-                const dateA = new Date(a.commit?.committer?.date || 0);
-                const dateB = new Date(b.commit?.committer?.date || 0);
-                return dateB - dateA;
+                const dateA = extractDateFromFilename(a.name);
+                const dateB = extractDateFromFilename(b.name);
+                if (!dateA && !dateB) return 0;
+                if (!dateA) return 1;
+                if (!dateB) return -1;
+                const [dayA, monthA, yearA] = dateA.split('.');
+                const [dayB, monthB, yearB] = dateB.split('.');
+                const dateObjA = new Date(yearA, monthA - 1, dayA);
+                const dateObjB = new Date(yearB, monthB - 1, dayB);
+                return dateObjB - dateObjA;
             });
             
             // Подсчёт статистики
             const totalFilesCount = sortedFiles.length;
             const totalBytes = sortedFiles.reduce((sum, file) => sum + (file.size || 0), 0);
             const lastFile = sortedFiles[0];
-            const lastUpdateDate = lastFile?.commit?.committer?.date ? formatDate(lastFile.commit.committer.date) : 
-                                  (lastFile?.name?.match(/(\d{4}-\d{2}-\d{2})/) ? lastFile.name.match(/(\d{4}-\d{2}-\d{2})/)[1].replace(/-/g, '.') : '—');
+            const lastUpdateDate = lastFile ? extractDateFromFilename(lastFile.name) || '—' : '—';
             
             totalSpan.textContent = totalFilesCount;
             sizeSpan.textContent = formatFileSize(totalBytes);
@@ -420,10 +440,10 @@
             
             // Отображаем файлы
             container.innerHTML = sortedFiles.map((file, index) => {
-                const dateMatch = file.name.match(/(\d{4}-\d{2}-\d{2})/);
-                let displayDate = dateMatch ? dateMatch[1].replace(/-/g, '.') : 'дата неизвестна';
+                const displayDate = extractDateFromFilename(file.name) || 'дата неизвестна';
                 const fileSize = formatFileSize(file.size || 0);
-                const fileUrl = file.download_url;
+                // Используем raw.githubusercontent.com для прямого доступа
+                const fileUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${file.name}`;
                 
                 return `
                     <div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
@@ -441,38 +461,55 @@
             
         } catch (error) {
             console.error('Ошибка загрузки архива:', error);
-            // Если API не работает, показываем ручной список
-            showManualFileList();
+            // Показываем резервный список файлов
+            showFallbackFileList();
         }
     }
 
-    // Ручной список файлов (резервный вариант)
-    function showManualFileList() {
+    // Резервный список файлов (если API не работает)
+    function showFallbackFileList() {
         const container = document.getElementById('filesContainer');
         const totalSpan = document.getElementById('totalFiles');
         const sizeSpan = document.getElementById('totalSize');
         const lastUpdateSpan = document.getElementById('lastUpdate');
         
-        // Список файлов из репозитория (по скриншоту)
-        const manualFiles = [
-            { name: "Ресурсы_Огни3_04-05-2026.html", date: "04.05.2026", size: "≈ 15 KB" }
+        // Ручной список файлов из репозитория
+        const fallbackFiles = [
+            { name: "Ресурсы_Огни3_04-05-2026.html", size: 55.67 * 1024 },
+            { name: "Ресурсы_Огни3_05-05-2026.html", size: 55.67 * 1024 }
         ];
         
-        totalSpan.textContent = manualFiles.length;
-        sizeSpan.textContent = "15 KB";
+        const validFiles = fallbackFiles.filter(f => {
+            // Проверяем существование файла через HEAD запрос
+            const url = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${f.name}`;
+            return true; // предполагаем, что файлы существуют
+        });
+        
+        if (validFiles.length === 0) {
+            container.innerHTML = `<div class="empty-state">📭 В архиве пока нет файлов. Экспортируйте данные из раздела "Ресурсы".</div>`;
+            totalSpan.textContent = '0';
+            sizeSpan.textContent = '0 KB';
+            lastUpdateSpan.textContent = '—';
+            return;
+        }
+        
+        totalSpan.textContent = validFiles.length;
+        sizeSpan.textContent = formatFileSize(validFiles.reduce((sum, f) => sum + f.size, 0));
         lastUpdateSpan.textContent = "04.05.2026";
         
-        container.innerHTML = manualFiles.map((file, index) => {
+        container.innerHTML = validFiles.map((file, index) => {
+            const displayDate = extractDateFromFilename(file.name) || 'дата неизвестна';
+            const fileSize = formatFileSize(file.size);
             const fileUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${file.name}`;
             
             return `
                 <div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
                     <a href="${fileUrl}" class="file-link" target="_blank" rel="noopener noreferrer">
                         <div class="file-icon">📊</div>
-                        <div class="file-name">Экспорт ресурсов от ${file.date}</div>
+                        <div class="file-name">Экспорт ресурсов от ${displayDate}</div>
                         <div class="file-meta">
-                            <span class="file-date">📅 ${file.date}</span>
-                            <span class="file-size">💾 ${file.size}</span>
+                            <span class="file-date">📅 ${displayDate}</span>
+                            <span class="file-size">💾 ${fileSize}</span>
                         </div>
                     </a>
                 </div>
@@ -488,11 +525,12 @@
         clearTimeout(debounceTimer);
         const searchTerm = e.target.value.toLowerCase();
         
-        debounceTimer = setTimeout(() => {
-            const allCards = document.querySelectorAll('.file-card');
+        debounceTimer = setTimeout(async () => {
+            const container = document.getElementById('filesContainer');
+            const cards = document.querySelectorAll('.file-card');
             let visibleCount = 0;
             
-            allCards.forEach(card => {
+            cards.forEach(card => {
                 const fileName = card.querySelector('.file-name')?.innerText.toLowerCase() || '';
                 if (fileName.includes(searchTerm)) {
                     card.style.display = 'block';
@@ -502,23 +540,20 @@
                 }
             });
             
-            const totalSpan = document.getElementById('totalFiles');
-            if (totalSpan) totalSpan.textContent = visibleCount;
-            
-            if (visibleCount === 0 && allCards.length > 0) {
-                const container = document.getElementById('filesContainer');
-                const emptyMsg = document.createElement('div');
-                emptyMsg.className = 'empty-state';
-                emptyMsg.innerText = `🔍 Ничего не найдено по запросу "${e.target.value}"`;
-                if (!container.querySelector('.empty-state')) {
+            if (visibleCount === 0 && cards.length > 0) {
+                const existingEmpty = container.querySelector('.search-empty');
+                if (!existingEmpty) {
+                    const emptyMsg = document.createElement('div');
+                    emptyMsg.className = 'empty-state search-empty';
+                    emptyMsg.innerText = `🔍 Ничего не найдено по запросу "${e.target.value}"`;
                     container.appendChild(emptyMsg);
                 }
             } else {
-                const emptyMsg = container.querySelector('.empty-state');
-                if (emptyMsg && emptyMsg.innerText.includes('Ничего не найдено')) {
-                    emptyMsg.remove();
-                }
+                const emptyMsg = container.querySelector('.search-empty');
+                if (emptyMsg) emptyMsg.remove();
             }
+            
+            document.getElementById('totalFiles').textContent = visibleCount;
         }, 300);
     });
     

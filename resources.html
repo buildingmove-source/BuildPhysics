@@ -85,6 +85,11 @@
             color: white;
             cursor: pointer;
             font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #1E4A21;
         }
 
         .admin-panel {
@@ -117,11 +122,34 @@
             transition: all 0.2s;
         }
 
-        .btn-save { background: #2C6B2F; color: white; }
-        .btn-export { background: #D32F2F; color: white; }
-        .btn-reset { background: #F5F5F5; color: #5A6E7A; border: 1px solid #D0D7DE; }
+        .btn-save {
+            background: #2C6B2F;
+            color: white;
+        }
 
-        /* ===== ИСПРАВЛЕНА ВЫСОТА ДЛЯ СКРОЛЛА ===== */
+        .btn-save:hover {
+            background: #1E4A21;
+        }
+
+        .btn-export {
+            background: #D32F2F;
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #B71C1C;
+        }
+
+        .btn-reset {
+            background: #F5F5F5;
+            color: #5A6E7A;
+            border: 1px solid #D0D7DE;
+        }
+
+        .btn-reset:hover {
+            background: #EEEEEE;
+        }
+
         .table-wrapper {
             background: white;
             border: 1px solid #D0D7DE;
@@ -168,6 +196,10 @@
             background: white;
         }
 
+        .resources-table tr:hover td {
+            background: #F8FAFC;
+        }
+
         .section-header td {
             background: #E8EDF2;
             font-weight: 700;
@@ -208,6 +240,11 @@
             color: #2C6B2F;
             cursor: pointer;
             padding: 0.15rem;
+        }
+
+        .contractor-name:hover {
+            background: #E8EDF2;
+            border-radius: 3px;
         }
 
         .people-control {
@@ -360,7 +397,7 @@
             visibility: visible;
         }
 
-        /* Стили для экспорта PDF */
+        /* Стили для печати */
         @media print {
             .admin-panel, .home-button, .back-btn {
                 display: none !important;
@@ -398,18 +435,17 @@
             <div class="logo-icon">О3</div>
             <span class="logo-text">Огни 3</span>
         </div>
-        <div class="title">Трудовые ресурсы</div>
+        <div class="title">Ресурсы · Трудовые ресурсы</div>
         <div class="date-badge" id="dateBadge"></div>
         <button class="back-btn" id="backBtn">← На главную</button>
     </div>
 
-    <!-- Панель с кнопкой экспорта -->
     <div class="admin-panel">
         <div><span class="admin-badge">Режим редактирования</span></div>
         <div style="display: flex; gap: 0.4rem;">
-            <button class="btn btn-save" id="saveBtn">Сохранить</button>
+            <button class="btn btn-save" id="saveBtn">💾 Сохранить</button>
             <button class="btn btn-export" id="exportBtn">📄 Экспорт HTML</button>
-            <button class="btn btn-reset" id="resetBtn">Сбросить</button>
+            <button class="btn btn-reset" id="resetBtn">⟳ Сбросить</button>
         </div>
     </div>
 
@@ -428,7 +464,7 @@
         </table>
     </div>
 
-    <div class="footer">ЖК «Огни 3» · Данные актуальны на момент открытия</div>
+    <div class="footer">АО «Огни 3» · Данные актуальны на момент открытия</div>
 </div>
 
 <a href="#" class="home-button" id="homeBtn">
@@ -438,7 +474,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ДАННЫЕ =====
+    // ===== ИСХОДНЫЕ ДАННЫЕ =====
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -476,6 +512,7 @@
         { section: "Секция 1", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 1}] },
         { section: "Секция 1", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 1}] },
         { section: "Секция 1", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 1}] },
+
         { section: "Секция 2", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 2", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
@@ -511,6 +548,7 @@
         { section: "Секция 2", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 3}] },
+
         { section: "Паркинг", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
@@ -632,7 +670,6 @@
         input.style.fontSize = '11px';
         
         const container = element;
-        const originalText = container.innerHTML;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
@@ -662,7 +699,6 @@
         input.style.fontSize = '11px';
         
         const container = element;
-        const originalText = container.innerHTML;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
@@ -829,8 +865,8 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>Трудовые ресурсы</h1>
-        <p>ЖК «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
+        <h1>Ресурсы · Трудовые ресурсы</h1>
+        <p>АО «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
     </div>
     <table>
         <thead>
@@ -850,10 +886,10 @@
                     </tr>`;
                 }
             }).join('')}
-            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align: center;"><strong>${totalPeople}</strong></td></tr>
+            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong><td><td style="text-align: center;"><strong>${totalPeople}</strong></td></tr>
         </tbody>
     </table>
-    <div class="footer">Данные актуальны на момент формирования · ЖК «Огни 3»</div>
+    <div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div>
 </div>
 </body>
 </html>`;
@@ -869,7 +905,7 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        showToast('📄 HTML файл сохранён');
+        showToast('📄 HTML файл сохранён на компьютер');
     }
     
     function navigateToHome() {

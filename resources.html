@@ -479,7 +479,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ДАННЫЕ =====
+    // ===== ИСХОДНЫЕ ДАННЫЕ =====
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -817,6 +817,167 @@
         panel.style.display = 'block';
     }
     
+    // Функция для создания HTML с кнопкой "Домой" и адаптивной версткой
+    function generateExportHTML(exportRows, totalPeople, dateStr, timeStr) {
+        let tableRows = '';
+        exportRows.forEach(row => {
+            if (row.type === 'section') {
+                tableRows += `<tr class="section-header"><td colspan="5"><strong>${escapeHtml(row.section)}</strong></td></tr>`;
+            } else {
+                tableRows += `<tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.section)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.subsys)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.work)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.contractors)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.total}</td>
+                </tr>`;
+            }
+        });
+        
+        return `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Ресурсы Огни 3 от ${dateStr}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: white;
+            padding: 15px;
+            color: #1a1a2e;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2C6B2F;
+        }
+        .header h1 { font-size: 22px; margin-bottom: 5px; }
+        .header p { color: #666; font-size: 12px; }
+        .table-wrapper { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 13px;
+            min-width: 700px;
+        }
+        th {
+            background: #2C3E50;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        .section-header td {
+            background: #E8EDF2;
+            font-weight: bold;
+        }
+        .grand-total td {
+            background: #2C6B2F;
+            color: white;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 10px;
+            color: #666;
+        }
+        .home-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #e31b23, #ff4d4d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(227, 27, 35, 0.4);
+            z-index: 1000;
+            text-decoration: none;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+        .home-button:hover {
+            transform: scale(1.08);
+        }
+        .home-button::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 50%;
+            background: rgba(46, 204, 113, 0.4);
+            animation: pulseGreen 1.2s infinite;
+            z-index: -1;
+        }
+        @keyframes pulseGreen {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.35); opacity: 0; }
+        }
+        .home-icon {
+            font-size: 26px;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header h1 { font-size: 18px; }
+            th, td { padding: 6px; font-size: 11px; }
+            .home-button { width: 44px; height: 44px; bottom: 15px; right: 15px; }
+            .home-icon { font-size: 22px; }
+        }
+        @media (max-width: 480px) {
+            th, td { padding: 4px; font-size: 10px; }
+            .header h1 { font-size: 16px; }
+        }
+        @media print {
+            .home-button { display: none; }
+            body { padding: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Ресурсы · Трудовые ресурсы</h1>
+        <p>АО «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
+    </div>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
+            </thead>
+            <tbody>
+                ${tableRows}
+                <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div>
+</div>
+<a href="https://buildingmove-source.github.io/BuildPhysics/" class="home-button">
+    <span class="home-icon">🏠</span>
+</a>
+</body>
+</html>`;
+    }
+    
     async function exportToRepository() {
         loadGitHubToken();
         if (!githubToken) {
@@ -842,29 +1003,7 @@
         });
         const totalPeople = getTotalPeople();
         
-        let tableRows = '';
-        exportRows.forEach(row => {
-            if (row.type === 'section') {
-                tableRows += `<tr class="section-header"><td colspan="5"><strong>${escapeHtml(row.section)}</strong></td></tr>`;
-            } else {
-                tableRows += `<tr>
-                    <td>${escapeHtml(row.section)}</td>
-                    <td>${escapeHtml(row.subsys)}</td>
-                    <td>${escapeHtml(row.work)}</td>
-                    <td>${escapeHtml(row.contractors)}</td>
-                    <td style="text-align:center">${row.total}</td>
-                </tr>`;
-            }
-        });
-        
-        const exportHtml = `<!DOCTYPE html>
-<html lang="ru">
-<head><meta charset="UTF-8"><title>Ресурсы Огни 3 от ${dateStr}</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI','Arial',sans-serif;background:white;padding:20px}.container{max-width:1200px;margin:0 auto}.header{text-align:center;margin-bottom:20px;border-bottom:2px solid #2C6B2F}.header h1{font-size:24px}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#2C3E50;color:white;padding:10px;border:1px solid #ddd}td{padding:8px;border:1px solid #ddd}.section-header td{background:#E8EDF2;font-weight:bold}.grand-total td{background:#2C6B2F;color:white;font-weight:bold}</style>
-</head><body><div class="container"><div class="header"><h1>Ресурсы · Трудовые ресурсы</h1><p>АО «Огни 3» · ${dateStr} ${timeStr}</p></div>
-<table><thead><tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr></thead>
-<tbody>${tableRows}<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
-</tbody></table><div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div></div></body></html>`;
+        const exportHtml = generateExportHTML(exportRows, totalPeople, dateStr, timeStr);
         
         showToast('📤 Сохранение...');
         try {

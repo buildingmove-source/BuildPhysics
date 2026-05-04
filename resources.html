@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="#1A1A2E">
+    <meta name="theme-color" content="#F5F7FA">
     <title>Ресурсы · Огни 3 | Управление трудовыми ресурсами</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         * {
             margin: 0;
@@ -12,13 +14,21 @@
             box-sizing: border-box;
         }
 
-        /* Плавный переход между страницами */
         body {
-            background: linear-gradient(135deg, #0A1628 0%, #0D1F3C 100%);
-            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
-            font-size: 16px;
-            color: #EEEEEE;
+            background: #F5F7FA;
+            font-family: Arial, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1A1A2E;
             padding: 1rem;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Плавная анимация между страницами */
+        .fade-enter {
             animation: fadeIn 0.4s ease-out;
         }
 
@@ -33,24 +43,19 @@
             }
         }
 
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        /* Шапка — комплементарные цвета */
+        /* Шапка */
         .header {
-            background: rgba(13, 31, 60, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 0.8rem 1.5rem;
+            background: #FFFFFF;
+            border-bottom: 2px solid #E2E8F0;
+            padding: 0.75rem 1.5rem;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            border: 1px solid rgba(45, 106, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .logo {
@@ -66,10 +71,10 @@
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
+            background: linear-gradient(135deg, #FFA500, #FF6B35);
             width: 44px;
             height: 44px;
-            border-radius: 50%;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -79,206 +84,96 @@
         .logo-text {
             font-size: 1.3rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #ffffff, #00B4D8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: #1A1A2E;
         }
 
-        .title-block {
-            text-align: center;
-        }
-
-        .title-block h1 {
-            font-size: 1.5rem;
+        .title {
+            font-size: 1.4rem;
             font-weight: 700;
-            color: #ffffff;
-        }
-
-        .title-block .date {
-            font-size: 0.75rem;
-            color: #8A9BDF;
-            margin-top: 0.2rem;
+            color: #1A1A2E;
         }
 
         .back-btn {
-            background: rgba(45, 106, 255, 0.2);
-            border: 1px solid #2D6AFF;
+            background: #F0F2F5;
+            border: 1px solid #E2E8F0;
             padding: 0.5rem 1.2rem;
             border-radius: 40px;
-            color: #EEEEEE;
+            color: #1A1A2E;
             text-decoration: none;
-            font-size: 0.85rem;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
 
         .back-btn:hover {
             background: #2D6AFF;
-            transform: scale(1.02);
+            color: white;
+            border-color: #2D6AFF;
         }
 
-        /* Панель администратора */
+        /* Панель управления */
         .admin-panel {
-            background: rgba(13, 31, 60, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 1rem 1.5rem;
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 1rem;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            border: 1px solid rgba(45, 106, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #E2E8F0;
         }
 
         .admin-badge {
-            background: #34a853;
+            background: #FFA500;
             padding: 0.3rem 0.8rem;
             border-radius: 40px;
             font-size: 0.75rem;
             font-weight: 600;
+            color: #1A1A2E;
         }
 
-        .admin-note {
-            font-size: 0.7rem;
-            color: #8A9BDF;
-            margin-left: 1rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .btn {
+        .save-btn, .pdf-btn {
+            background: #2D6AFF;
             border: none;
-            padding: 0.5rem 1.2rem;
+            padding: 0.6rem 1.5rem;
             border-radius: 40px;
+            color: white;
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
 
-        .btn-primary {
-            background: #2D6AFF;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #00B4D8;
+        .save-btn:hover, .pdf-btn:hover {
+            background: #1A4FD0;
             transform: scale(1.02);
         }
 
-        .btn-secondary {
-            background: rgba(227, 27, 35, 0.8);
+        .reset-btn {
+            background: #EF4444;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
             color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #e31b23;
-            transform: scale(1.02);
-        }
-
-        .btn-success {
-            background: #34a853;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #2d8e47;
-            transform: scale(1.02);
-        }
-
-        /* Таблица ресурсов */
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 20px;
-            background: rgba(13, 31, 60, 0.4);
-        }
-
-        .resources-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 15px;
-            min-width: 700px;
-        }
-
-        .resources-table th {
-            background: #07122A;
-            padding: 0.9rem 0.8rem;
-            text-align: left;
-            font-weight: 700;
-            color: #8A9BDF;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
-            letter-spacing: 0.5px;
-        }
-
-        .resources-table td {
-            padding: 0.7rem 0.8rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            vertical-align: top;
-            font-size: 15px;
-        }
-
-        .resources-table tr:hover {
-            background: rgba(45, 106, 255, 0.08);
-        }
-
-        .section-header td {
-            background: #0A1A3A;
-            padding: 0.8rem;
-            font-weight: 700;
-            font-size: 1rem;
-            border-bottom: 1px solid #2D6AFF;
-        }
-
-        .editable-cell {
-            background: rgba(255,255,255,0.06);
-            border-radius: 8px;
-            padding: 0.3rem 0.6rem;
-            min-width: 70px;
-            text-align: center;
-            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
 
-        .editable-cell:hover {
-            background: rgba(45, 106, 255, 0.4);
+        .reset-btn:hover {
+            background: #DC2626;
             transform: scale(1.02);
         }
 
-        .editable-cell input {
-            width: 65px;
-            background: #0D1F3C;
-            border: 1px solid #2D6AFF;
-            border-radius: 8px;
-            padding: 0.3rem;
-            color: white;
-            text-align: center;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-
-        .grand-total {
-            background: rgba(52, 168, 83, 0.15);
-            font-weight: 700;
-        }
-
-        .grand-total td {
-            font-size: 16px;
-            padding: 1rem;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            font-size: 0.7rem;
-            color: #5A6BA0;
+        .date-badge {
+            font-size: 0.8rem;
+            color: #6B7280;
+            background: #F0F2F5;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
         }
 
         /* Toast уведомление */
@@ -287,7 +182,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: #0D1F3C;
+            background: #1A1A2E;
             border-left: 4px solid #34a853;
             padding: 0.6rem 1.2rem;
             border-radius: 50px;
@@ -296,61 +191,151 @@
             z-index: 2000;
             transition: transform 0.3s ease, opacity 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            white-space: nowrap;
         }
 
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Таблица ресурсов */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .resources-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            min-width: 800px;
+        }
+
+        .resources-table th {
+            background: #F0F2F5;
+            padding: 1rem 0.8rem;
+            text-align: left;
+            font-weight: 700;
+            color: #1A1A2E;
+            border-bottom: 2px solid #E2E8F0;
+            font-size: 16px;
+        }
+
+        .resources-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #E2E8F0;
+            vertical-align: top;
+            color: #1A1A2E;
+            font-size: 15px;
+        }
+
+        .resources-table tr:hover {
+            background: #F8FAFE;
+        }
+
+        .editable-cell {
+            background: #F0F2F5;
+            border-radius: 8px;
+            padding: 0.4rem 0.6rem;
+            min-width: 60px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .editable-cell:hover {
+            background: #FFA500;
+            color: white;
+        }
+
+        .editable-cell input {
+            width: 60px;
+            background: white;
+            border: 1px solid #2D6AFF;
+            border-radius: 6px;
+            padding: 0.4rem;
+            color: #1A1A2E;
+            text-align: center;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        .section-header {
+            background: #E8EDF5;
+            font-weight: 700;
+        }
+
+        .section-header td {
+            background: #E8EDF5;
+            padding: 0.8rem;
+            font-weight: 700;
+            font-size: 17px;
+        }
+
+        .sub-total {
+            background: #FEF3C7;
+            font-weight: 600;
+        }
+
+        .grand-total {
+            background: #DCFCE7;
+            font-weight: 700;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+
         @media (max-width: 768px) {
-            body {
-                padding: 0.8rem;
-            }
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .resources-table th, .resources-table td {
-                padding: 0.5rem;
-                font-size: 13px;
-            }
-            .editable-cell input {
-                width: 50px;
-            }
-            .btn-group {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+            body { padding: 0.5rem; font-size: 14px; }
+            .header { flex-direction: column; text-align: center; }
+            .resources-table th, .resources-table td { padding: 0.5rem; font-size: 13px; }
+        }
+
+        /* Для PDF */
+        @media print {
+            body { background: white; padding: 0; }
+            .admin-panel, .back-btn, .toast { display: none; }
+            .resources-table th { background: #E8EDF5; }
+            .resources-table td { border: 1px solid #ccc; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container fade-enter" id="pdfContent">
     <!-- Шапка -->
     <div class="header">
         <div class="logo" onclick="window.location.href='index.html'">
-            <div class="logo-icon">👷‍♂️</div>
+            <div class="logo-icon">🪖</div>
             <span class="logo-text">Огни 3</span>
         </div>
-        <div class="title-block">
-            <h1>📋 Ресурсы · Трудовые ресурсы</h1>
-            <div class="date" id="currentDate"></div>
+        <div class="title">📋 Ресурсы · Трудовые ресурсы</div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="date-badge" id="dateBadge"></div>
+            <a href="index.html" class="back-btn">← На главную</a>
         </div>
-        <a href="index.html" class="back-btn">← На главную</a>
     </div>
 
     <!-- Панель администратора -->
     <div class="admin-panel">
         <div>
             <span class="admin-badge">👑 Режим администратора</span>
-            <span class="admin-note">Редактирование доступно только вам</span>
+            <span style="margin-left: 1rem; font-size: 0.75rem; color: #6B7280;">Редактирование доступно только вам</span>
         </div>
-        <div class="btn-group">
-            <button class="btn btn-primary" id="saveBtn">💾 Сохранить изменения</button>
-            <button class="btn btn-success" id="exportBtn">📎 Экспорт в JSON</button>
-            <button class="btn btn-secondary" id="resetBtn">⟳ Сбросить</button>
+        <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+            <button class="save-btn" id="saveBtn">💾 Сохранить изменения</button>
+            <button class="pdf-btn" id="pdfBtn">📄 Сохранить в PDF</button>
+            <button class="reset-btn" id="resetBtn">⟳ Сбросить к исходным</button>
         </div>
     </div>
 
@@ -359,10 +344,11 @@
         <table class="resources-table" id="resourcesTable">
             <thead>
                 <tr>
+                    <th>Объект / Секция</th>
                     <th>Раздел ВИС</th>
-                    <th style="min-width: 250px;">Наименование работ</th>
+                    <th>Наименование работ</th>
                     <th>Ответственный</th>
-                    <th style="text-align: center; width: 100px;">Кол-во чел.</th>
+                    <th style="text-align: center;">Кол-во чел.</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -372,7 +358,7 @@
     </div>
 
     <div class="footer">
-        Данные сохраняются в вашем браузере. Используйте «Экспорт в JSON» для сохранения на компьютер.
+        Данные сохраняются в вашем браузере. При смене устройства данные могут быть утеряны.
     </div>
 </div>
 
@@ -432,14 +418,14 @@
         { section: "Секция 2", subsys: "СС", work: "Подключение СПЖ", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "Подключение приводов ПД/ВД МОП и ЛХ", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУЭ", responsible: "", people: 2 },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУВТ", responsible: "", people: 3 },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ СОТ", responsible: "", people: 3 },
+        { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУВТ", responsible: "", people: 2 },
+        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ СОТ", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "Видеокамеры в МОП", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "КЛ на СОТС в нишах", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "СС", work: "КЛ ДС лифтов", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "Отопление", work: "Стояки", responsible: "ООО \"ПСК-28\"", people: 2 },
         { section: "Секция 2", subsys: "Отопление", work: "Гребенки", responsible: "", people: 4 },
-        { section: "Секция 2", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", responsible: "", people: 3 },
+        { section: "Секция 2", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", responsible: "", people: 4 },
         { section: "Секция 2", subsys: "Отопление", work: "Гидравлические испытания", responsible: "", people: 4 },
         { section: "Секция 2", subsys: "Отопление", work: "Изоляция", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "Вентиляция", work: "Монтаж воздуховодов и врезок под клапана", responsible: "ООО \"ПСК-28\"", people: 3 },
@@ -453,8 +439,8 @@
         { section: "Секция 2", subsys: "Пожаротушение", work: "Гидравлика", responsible: "", people: 4 },
         { section: "Секция 2", subsys: "ПНР", work: "Диспетчеризация лифтов", responsible: "ООО \"Листех\"", people: 2 },
         { section: "Секция 2", subsys: "ПНР", work: "АСКУЭ", responsible: "ООО \"Призмер\"", people: 2 },
-        { section: "Секция 2", subsys: "ПНР", work: "АСКУВТ", responsible: "", people: 3 },
-        { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", responsible: "", people: 3 },
+        { section: "Секция 2", subsys: "ПНР", work: "АСКУВТ", responsible: "", people: 2 },
+        { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", responsible: "", people: 2 },
         { section: "Секция 2", subsys: "ПНР", work: "АОВ", responsible: "ООО \"СИДРЭ\"", people: 3 },
 
         // Паркинг
@@ -497,17 +483,13 @@
     const STORAGE_KEY = 'ogni3_resources_data';
     let resourcesData = [];
 
-    // Установка текущей даты
-    function setCurrentDate() {
+    // Форматирование даты
+    function formatDate() {
         const now = new Date();
-        const formatted = now.toLocaleDateString('ru-RU', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        document.getElementById('currentDate').innerHTML = `📅 Данные на: ${formatted}`;
+        return now.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' });
     }
 
+    // Загрузка данных
     function loadData() {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -516,13 +498,16 @@
             resourcesData = JSON.parse(JSON.stringify(initialData));
         }
         renderTable();
+        document.getElementById('dateBadge').textContent = `📅 ${formatDate()}`;
     }
 
+    // Сохранение
     function saveData() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(resourcesData));
-        showToast('💾 Все изменения сохранены в браузере!');
+        showToast('💾 Все изменения сохранены!');
     }
 
+    // Сброс
     function resetData() {
         if (confirm('Вы уверены, что хотите сбросить все изменения к исходным значениям?')) {
             resourcesData = JSON.parse(JSON.stringify(initialData));
@@ -532,33 +517,25 @@
         }
     }
 
-    // Экспорт в JSON с сохранением на компьютер в папку /Users/Vladimir/Documents/Ресурсы Огни 3
-    function exportToJSON() {
-        const now = new Date();
-        const dateStr = now.toISOString().slice(0, 19).replace(/:/g, '-');
-        const fileName = `Ресурсы_Огни3_${dateStr}.json`;
-        
-        const exportData = {
-            exportDate: now.toLocaleString('ru-RU'),
-            data: resourcesData,
-            totalPeople: resourcesData.reduce((sum, item) => sum + (item.people || 0), 0)
+    // Сохранение в PDF
+    function saveToPDF() {
+        showToast('📄 Подготовка PDF...');
+        const element = document.getElementById('pdfContent');
+        const opt = {
+            margin: [0.5, 0.5, 0.5, 0.5],
+            filename: `Ресурсы_Огни3_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
         };
-        
-        const jsonStr = JSON.stringify(exportData, null, 2);
-        const blob = new Blob([jsonStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        showToast(`📎 Файл "${fileName}" сохранён на компьютер`);
+        html2pdf().set(opt).from(element).save().then(() => {
+            showToast('✅ PDF сохранён!');
+        }).catch(() => {
+            showToast('❌ Ошибка при сохранении PDF');
+        });
     }
 
+    // Отрисовка таблицы
     function renderTable() {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = '';
@@ -570,13 +547,13 @@
                 currentSection = item.section;
                 const sectionRow = document.createElement('tr');
                 sectionRow.className = 'section-header';
-                sectionRow.innerHTML = `<td colspan="4"><strong>🏗️ ${item.section}</strong></td>`;
+                sectionRow.innerHTML = `<td colspan="5"><strong>🪖 ${item.section}</strong></td>`;
                 tbody.appendChild(sectionRow);
             }
             
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td style="padding-left: 1.5rem;">${escapeHtml(item.subsys)}</td>
+                <td style="padding-left: 1rem;">${escapeHtml(item.subsys)}</td>
                 <td>${escapeHtml(item.work)}</td>
                 <td>${escapeHtml(item.responsible) || '—'}</td>
                 <td style="text-align: center;">
@@ -588,13 +565,12 @@
             tbody.appendChild(row);
         });
         
-        // Итоговая строка
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
         const totalPeople = resourcesData.reduce((sum, item) => sum + (item.people || 0), 0);
         totalRow.innerHTML = `
             <td colspan="3"><strong>📊 ИТОГО ЧЕЛОВЕК</strong></td>
-            <td style="text-align: center;"><strong style="font-size: 1.2rem;">${totalPeople}</strong></td>
+            <td style="text-align: center;"><strong>${totalPeople}</strong></td>
         `;
         tbody.appendChild(totalRow);
     }
@@ -606,7 +582,6 @@
         input.value = currentValue;
         input.min = 0;
         input.max = 99;
-        input.style.width = '65px';
         
         const container = element;
         container.innerHTML = '';
@@ -621,14 +596,12 @@
             resourcesData[index].people = newValue;
             container.innerHTML = newValue;
             renderTable();
-            showToast('✏️ Значение изменено. Нажмите «Сохранить»');
+            showToast('✏️ Значение изменено. Не забудьте сохранить!');
         };
         
         input.addEventListener('blur', saveEdit);
         input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                saveEdit();
-            }
+            if (e.key === 'Enter') saveEdit();
         });
     };
     
@@ -654,9 +627,8 @@
     // Инициализация
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
-    document.getElementById('exportBtn').addEventListener('click', exportToJSON);
+    document.getElementById('pdfBtn').addEventListener('click', saveToPDF);
     
-    setCurrentDate();
     loadData();
 </script>
 </body>

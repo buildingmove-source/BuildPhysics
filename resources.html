@@ -25,7 +25,6 @@
             margin: 0 auto;
         }
 
-        /* Анимации */
         @keyframes slideOutLeft {
             0% { opacity: 1; transform: translateX(0); }
             100% { opacity: 0; transform: translateX(-100%); }
@@ -480,7 +479,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ =====
+    // ===== ДАННЫЕ =====
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -518,7 +517,6 @@
         { section: "Секция 1", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 1}] },
         { section: "Секция 1", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 1}] },
         { section: "Секция 1", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 1}] },
-
         { section: "Секция 2", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 2", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
@@ -554,7 +552,6 @@
         { section: "Секция 2", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 3}] },
-
         { section: "Паркинг", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
@@ -595,7 +592,6 @@
     let resourcesData = [];
     let toastTimeout = null;
 
-    // GitHub настройки
     const GITHUB_USERNAME = "buildingmove-source";
     const GITHUB_REPO = "BuildPhysics";
     let githubToken = null;
@@ -777,7 +773,6 @@
         toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
     
-    // ===== ЭКСПОРТ В РЕПОЗИТОРИЙ =====
     function loadGitHubToken() {
         const saved = localStorage.getItem('github_pat_token');
         if (saved) githubToken = saved;
@@ -802,7 +797,7 @@
                     <button id="saveTokenBtn" class="btn btn-save">Сохранить токен</button>
                 </div>
                 <div style="font-size:0.65rem; color:#666; margin-top:0.5rem;">
-                    ⚠️ Токен нужен для сохранения файла в репозиторий. 
+                    ⚠️ Токен нужен для сохранения файла в репозиторий.
                     <a href="https://github.com/settings/tokens" target="_blank">Создать токен</a> (нужны права: repo)
                 </div>
             `;
@@ -864,45 +859,14 @@
         
         const exportHtml = `<!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Ресурсы Огни 3 от ${dateStr}</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', 'Arial', sans-serif; background: white; padding: 20px; color: #1a1a2e; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #2C6B2F; }
-        .header h1 { font-size: 24px; margin-bottom: 5px; }
-        .header p { color: #666; font-size: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
-        th { background: #2C3E50; color: white; padding: 10px; text-align: left; border: 1px solid #ddd; }
-        td { padding: 8px; border: 1px solid #ddd; vertical-align: top; }
-        .section-header td { background: #E8EDF2; font-weight: bold; }
-        .grand-total td { background: #2C6B2F; color: white; font-weight: bold; }
-        .footer { text-align: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 10px; color: #666; }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="header">
-        <h1>Ресурсы · Трудовые ресурсы</h1>
-        <p>АО «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
-    </div>
-    <table>
-        <thead>
-            <tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
-        </thead>
-        <tbody>
-            ${tableRows}
-            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
-        </tbody>
-    </table>
-    <div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div>
-</div>
-</body>
-</html>`;
+<head><meta charset="UTF-8"><title>Ресурсы Огни 3 от ${dateStr}</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI','Arial',sans-serif;background:white;padding:20px}.container{max-width:1200px;margin:0 auto}.header{text-align:center;margin-bottom:20px;border-bottom:2px solid #2C6B2F}.header h1{font-size:24px}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#2C3E50;color:white;padding:10px;border:1px solid #ddd}td{padding:8px;border:1px solid #ddd}.section-header td{background:#E8EDF2;font-weight:bold}.grand-total td{background:#2C6B2F;color:white;font-weight:bold}</style>
+</head><body><div class="container"><div class="header"><h1>Ресурсы · Трудовые ресурсы</h1><p>АО «Огни 3» · ${dateStr} ${timeStr}</p></div>
+<table><thead><tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr></thead>
+<tbody>${tableRows}<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
+</tbody></table><div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div></div></body></html>`;
         
-        showToast('📤 Сохранение в репозиторий...');
+        showToast('📤 Сохранение...');
         try {
             let sha = null;
             const getRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${fileName}`, {
@@ -912,20 +876,11 @@
                 const data = await getRes.json();
                 sha = data.sha;
             }
-            
             const uploadRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${fileName}`, {
                 method: 'PUT',
-                headers: {
-                    'Authorization': `token ${githubToken}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `Экспорт ресурсов от ${dateStr} ${timeStr}`,
-                    content: btoa(unescape(encodeURIComponent(exportHtml))),
-                    sha: sha
-                })
+                headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: `Экспорт ресурсов от ${dateStr} ${timeStr}`, content: btoa(unescape(encodeURIComponent(exportHtml))), sha: sha })
             });
-            
             if (uploadRes.ok) {
                 showToast('✅ Файл сохранён в репозиторий!');
                 localStorage.setItem('needRefreshFiles', 'true');
@@ -933,9 +888,7 @@
                 const err = await uploadRes.json();
                 showToast(`❌ Ошибка: ${err.message || 'Неизвестная ошибка'}`);
             }
-        } catch(e) {
-            showToast(`❌ Ошибка соединения: ${e.message}`);
-        }
+        } catch(e) { showToast(`❌ Ошибка: ${e.message}`); }
     }
     
     function navigateToHome() {

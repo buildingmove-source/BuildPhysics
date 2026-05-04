@@ -854,34 +854,6 @@
 <!-- Плавающая иконка чата (как у Твиттер) -->
 <div class="chat-float-btn" id="chatFloatBtn">
     📩
-    .chat-float-btn {
-    position: relative;
-}
-
-/* Кольцо пульсации */
-.chat-float-btn::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border-radius: 50%;
-    background: rgba(45, 106, 255, 0.4);
-    animation: ringPulse 1.5s ease-out infinite;
-    z-index: -1;
-}
-
-@keyframes ringPulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.6;
-    }
-    100% {
-        transform: scale(1.5);
-        opacity: 0;
-    }
-}
 </div>
 
 <script>

@@ -8,7 +8,6 @@
     <title>Огни 3 | Штаб строительства</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
-        /* ===== CSS Variables ===== */
         :root {
             --bg-dark: #1A1A2E;
             --bg-card: #16213E;
@@ -44,7 +43,6 @@
             overflow-x: hidden;
         }
 
-        /* ===== Scrollbar ===== */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -58,7 +56,6 @@
             border-radius: 10px;
         }
 
-        /* ===== Navigation ===== */
         .navbar {
             background: rgba(22, 30, 42, 0.98);
             backdrop-filter: blur(12px);
@@ -156,7 +153,6 @@
             color: var(--accent-red);
         }
 
-        /* ===== Main Layout ===== */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -165,7 +161,6 @@
             gap: 1.5rem;
         }
 
-        /* ===== Sidebar ===== */
         .sidebar {
             width: 280px;
             flex-shrink: 0;
@@ -218,28 +213,11 @@
             width: 28px;
         }
 
-        .online-badge {
-            margin-left: auto;
-            background: var(--accent-green);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .chat-status {
-            margin-top: 0.8rem;
-            padding: 0.6rem;
-            background: rgba(233, 69, 96, 0.1);
-            border-radius: var(--radius-sm);
-        }
-
-        /* ===== Content ===== */
         .content {
             flex: 1;
             min-width: 0;
         }
 
-        /* Hero Card */
         .hero-card {
             background: linear-gradient(135deg, var(--bg-card), #0F3460);
             border-radius: var(--radius-lg);
@@ -277,7 +255,6 @@
             font-size: 0.9rem;
         }
 
-        /* Google Card */
         .google-card {
             background: linear-gradient(135deg, #0F3460, var(--bg-card));
             border: 1px solid var(--accent-green);
@@ -300,7 +277,6 @@
             color: inherit;
         }
 
-        /* Documents Grid */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -394,7 +370,6 @@
             flex-wrap: wrap;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -403,7 +378,6 @@
             color: var(--text-secondary);
         }
 
-        /* Footer */
         .footer {
             max-width: 1440px;
             margin: 0 auto;
@@ -454,6 +428,7 @@
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
+            border-bottom: 1px solid var(--border-light);
         }
         
         .popup-title {
@@ -462,6 +437,15 @@
             gap: 0.5rem;
             font-weight: 600;
             font-size: 0.9rem;
+        }
+        
+        .development-badge {
+            background: rgba(233, 69, 96, 0.2);
+            color: #ffaa33;
+            font-size: 0.55rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 40px;
+            margin-left: 0.5rem;
         }
         
         .close-popup {
@@ -488,31 +472,36 @@
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
+            align-items: center;
+            justify-content: center;
         }
         
-        .popup-message {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 85%;
+        .development-message {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--accent-red);
         }
         
-        .popup-message.outgoing {
-            align-self: flex-end;
-            flex-direction: row-reverse;
+        .development-message h3 {
+            color: var(--accent-red);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
         }
         
-        .popup-bubble {
-            background: var(--bg-sidebar);
-            padding: 0.5rem 0.8rem;
-            border-radius: 16px;
-            border-top-left-radius: 4px;
+        .development-message p {
+            color: var(--text-secondary);
             font-size: 0.8rem;
         }
         
-        .popup-message.outgoing .popup-bubble {
-            background: var(--accent-red);
-            border-top-right-radius: 4px;
-            border-top-left-radius: 16px;
+        .demo-message {
+            background: var(--bg-sidebar);
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
         }
         
         .popup-input-area {
@@ -520,6 +509,7 @@
             background: var(--bg-sidebar);
             display: flex;
             gap: 0.5rem;
+            border-top: 1px solid var(--border-light);
         }
         
         .popup-input {
@@ -530,6 +520,11 @@
             padding: 0.5rem 0.8rem;
             color: white;
             font-size: 0.8rem;
+        }
+        
+        .popup-input:focus {
+            outline: none;
+            border-color: var(--accent-red);
         }
         
         .popup-send {
@@ -546,7 +541,6 @@
             transform: scale(1.05);
         }
 
-        /* Toast */
         .toast-notification {
             position: fixed;
             bottom: 30px;
@@ -569,7 +563,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -581,7 +574,6 @@
             }
         }
 
-        /* ===== Responsive Design ===== */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 260px;
@@ -629,7 +621,7 @@
                 right: 10px;
                 left: 10px;
                 bottom: 10px;
-                height: 65vh;
+                height: 60vh;
             }
         }
 
@@ -647,21 +639,10 @@
                 flex-wrap: wrap;
             }
         }
-
-        /* Tablet landscape */
-        @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
-            .sidebar {
-                width: 220px;
-            }
-            .docs-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
     </style>
 </head>
 <body>
 
-<!-- Navigation -->
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="window.location.href='index.html'">
@@ -672,14 +653,12 @@
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам... (Ctrl+K)">
         </div>
         <div class="nav-links">
-            <a href="chat.html" class="nav-link">Чат</a>
+            <a href="#" class="nav-link" onclick="showDevelopmentToast(); return false;">Чат</a>
         </div>
     </div>
 </nav>
 
-<!-- Main Content -->
 <div class="main-container">
-    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-title">📁 БЫСТРЫЙ ДОСТУП</div>
@@ -704,19 +683,14 @@
             <div class="sidebar-title">💬 ЧАТ КОМАНДЫ</div>
             <button class="sidebar-item" onclick="openChatPopup()">
                 <span class="sidebar-icon">💬</span>Открыть чат
-                <span class="online-badge"></span>
             </button>
-            <a href="chat.html" class="sidebar-item">
-                <span class="sidebar-icon">🖥️</span>Полная версия чата
-            </a>
-            <div class="chat-status">
-                <div style="font-size: 0.7rem; color: var(--accent-red);">● 4 онлайн</div>
-                <div style="font-size: 0.6rem; color: var(--text-secondary); margin-top: 0.2rem;">Гончаров А.С., Кривоносов В.В., Кудлай Н.Н., Вы</div>
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(233,69,96,0.1); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.65rem; color: #ffaa33;">⚙️ В разработке</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим · Тестовые сообщения</div>
             </div>
         </div>
     </aside>
 
-    <!-- Content -->
     <main class="content">
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
@@ -749,17 +723,22 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
-<!-- Chat Popup -->
+<!-- Chat Popup (Working Demo) -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header" onclick="toggleChatPopup()">
         <div class="popup-title">
             <span>💬</span>
             <span>Чат · Огни 3</span>
-            <span style="background: var(--accent-green); width: 8px; height: 8px; border-radius: 50%;"></span>
+            <span class="development-badge">Demo</span>
         </div>
         <button class="close-popup" onclick="event.stopPropagation(); closeChatPopup()">✕</button>
     </div>
     <div class="popup-messages" id="popupMessages">
+        <div class="development-message">
+            <h3>⚙️ Чат в разработке</h3>
+            <p>Функция полноценного чата появится в ближайшее время</p>
+            <div class="demo-message">💬 Демо-режим: вы можете отправлять тестовые сообщения</div>
+        </div>
         <div class="popup-message">
             <div class="popup-bubble">Доброе утро, коллеги! 📢</div>
         </div>
@@ -771,12 +750,11 @@
         </div>
     </div>
     <div class="popup-input-area">
-        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение..." enterkeyhint="send">
+        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите тестовое сообщение...">
         <button class="popup-send" onclick="sendPopupMessage()">📤</button>
     </div>
 </div>
 
-<!-- Toast -->
 <div id="toast" class="toast-notification">
     <span>✅</span>
     <span id="toastMessage">Документ открыт</span>
@@ -796,7 +774,6 @@
     let currentFilter = 'all';
     let currentSearch = '';
 
-    // ===== RENDER FUNCTIONS =====
     function renderDocs() {
         const container = document.getElementById('docsContainer');
         let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
@@ -851,7 +828,6 @@
         });
     }
 
-    // ===== TOAST =====
     function showToast(message) {
         const toast = document.getElementById('toast');
         const msgSpan = document.getElementById('toastMessage');
@@ -862,8 +838,11 @@
             toast.classList.remove('show');
         }, 2000);
     }
+    
+    function showDevelopmentToast() {
+        showToast('⚙️ Чат в разработке · Функция появится скоро');
+    }
 
-    // ===== SEARCH =====
     const searchInput = document.getElementById('globalSearch');
     let debounceTimer;
     if (searchInput) {
@@ -876,7 +855,6 @@
         });
     }
 
-    // ===== HOTKEY Ctrl+K =====
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
@@ -887,12 +865,11 @@
         }
     });
 
-    // ===== CHAT FUNCTIONS =====
+    // ===== CHAT FUNCTIONS (Working Demo) =====
     function openChatPopup() {
         const popup = document.getElementById('chatPopup');
         if (popup) {
             popup.classList.add('show');
-            showToast('💬 Чат открыт');
         }
     }
     
@@ -920,21 +897,28 @@
         const now = new Date();
         const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
         
+        // Удаляем development-message если есть
+        const devMsg = container.querySelector('.development-message');
+        if (devMsg && container.children.length <= 4) {
+            devMsg.remove();
+        }
+        
         const messageDiv = document.createElement('div');
         messageDiv.className = 'popup-message outgoing';
-        messageDiv.innerHTML = `<div class="popup-bubble">${escapeHtml(text)}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time}</div></div>`;
+        messageDiv.innerHTML = `<div class="popup-bubble">${escapeHtml(text)}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Вы</div></div>`;
         container.appendChild(messageDiv);
         
         input.value = '';
         container.scrollTop = container.scrollHeight;
         
+        // Автоответ (демо-режим)
         setTimeout(() => {
             const replyDiv = document.createElement('div');
             replyDiv.className = 'popup-message';
-            replyDiv.innerHTML = `<div class="popup-bubble">✅ Принято! Сообщение доставлено<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time}</div></div>`;
+            replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено. Чат в разработке.<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
             container.appendChild(replyDiv);
             container.scrollTop = container.scrollHeight;
-        }, 800);
+        }, 500);
     }
     
     const messageInput = document.getElementById('popupMessageInput');
@@ -947,7 +931,6 @@
         });
     }
 
-    // ===== INIT =====
     renderDocs();
 </script>
 </body>

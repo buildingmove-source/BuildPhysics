@@ -120,17 +120,20 @@
 
         .btn-save { background: #2C6B2F; color: white; }
         .btn-save:hover { background: #1E4A21; }
-        .btn-html { background: #2C6B2F; color: white; }
-        .btn-html:hover { background: #1E4A21; }
+        .btn-pdf { background: #D32F2F; color: white; }
+        .btn-pdf:hover { background: #B71C1C; }
         .btn-reset { background: #F5F5F5; color: #5A6E7A; border: 1px solid #D0D7DE; }
         .btn-reset:hover { background: #EEEEEE; }
 
+        /* Таблица - исправлен sticky */
         .table-wrapper {
             background: white;
             border: 1px solid #D0D7DE;
             border-radius: 8px;
-            overflow: auto;
+            overflow-y: auto;
+            overflow-x: auto;
             max-height: calc(100vh - 120px);
+            position: relative;
         }
 
         .resources-table {
@@ -140,10 +143,12 @@
             min-width: 800px;
         }
 
+        /* Правильная фиксация заголовков */
         .resources-table thead tr {
             position: sticky;
             top: 0;
-            z-index: 20;
+            z-index: 30;
+            background: white;
         }
 
         .resources-table th {
@@ -156,6 +161,9 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
             border-bottom: 2px solid #2C6B2F;
+            position: sticky;
+            top: 0;
+            z-index: 31;
         }
 
         .resources-table td {
@@ -163,6 +171,10 @@
             border-bottom: 1px solid #E8EDF2;
             vertical-align: top;
             background: white;
+        }
+
+        .resources-table tr:hover td {
+            background: #F8FAFC;
         }
 
         .section-header td {
@@ -399,7 +411,7 @@
         </div>
         <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
             <button class="btn btn-save" id="saveBtn">Сохранить</button>
-            <button class="btn btn-html" id="htmlBtn">Экспорт HTML</button>
+            <button class="btn btn-pdf" id="pdfBtn">Экспорт PDF</button>
             <button class="btn btn-reset" id="resetBtn">Сбросить</button>
         </div>
     </div>
@@ -429,7 +441,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСПРАВЛЕННЫЕ ДАННЫЕ (без дублирования и ошибок) =====
+    // ===== ДАННЫЕ =====
     const initialDataRaw = [
         // Секция 1
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
@@ -506,7 +518,7 @@
         { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 3}] },
         { section: "Секция 2", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 3}] },
 
-        // Паркинг - исправленные данные
+        // Паркинг
         { section: "Паркинг", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
         { section: "Паркинг", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
@@ -660,7 +672,6 @@
                 tbody.appendChild(sectionRow);
             }
             
-            // Формируем строку с подрядчиками
             const contractorsHtml = `<div class="contractors-list">${item.contractors.map((contractor, cIndex) => `
                 <div class="contractor-item">
                     <span class="contractor-name" onclick="editContractorName(${rowIndex}, ${cIndex}, this)">${escapeHtml(contractor.name)}</span>
@@ -745,137 +756,14 @@
         }
     }
     
-    function exportToHTML() {
-        const now = new Date();
-        const dateStr = `${now.getDate().toString().padStart(2,'0')}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getFullYear()}`;
-        const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        
-        let exportRows = [];
-        let currentSection = '';
-        
-        resourcesData.forEach((item) => {
-            if (currentSection !== item.section) {
-                currentSection = item.section;
-                exportRows.push({ type: 'section', section: item.section });
-            }
-            
-            const contractorsList = item.contractors.map(c => `${c.name}: ${c.people}`).join(', ');
-            const total = getRowTotal(item.contractors);
-            
-            exportRows.push({
-                type: 'row',
-                section: item.section,
-                subsys: item.subsys,
-                work: item.work,
-                contractors: contractorsList || '—',
-                total: total
-            });
-        });
-        
-        const totalPeople = getTotalPeople();
-        
-        const exportHtml = `<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Ресурсы Огни 3 от ${dateStr}</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', 'Arial', sans-serif;
-            background: white;
-            padding: 20px;
-            color: #1a1a2e;
-        }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #2C6B2F;
-        }
-        .header h1 { font-size: 24px; margin-bottom: 5px; }
-        .header p { color: #666; font-size: 12px; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 12px;
-        }
-        th {
-            background: #2C3E50;
-            color: white;
-            padding: 10px 8px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        .section-header td { background: #E8EDF2; font-weight: bold; }
-        .grand-total td { background: #2C6B2F; color: white; font-weight: bold; }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #ddd;
-            font-size: 10px;
-            color: #666;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="header">
-        <h1>Трудовые ресурсы</h1>
-        <p>ЖК «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
-    </div>
-    
-    <table>
-        <thead>
-            <tr><th>Объект / Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
-        </thead>
-        <tbody>
-            ${exportRows.map(row => {
-                if (row.type === 'section') {
-                    return `<tr class="section-header"><td colspan="5"><strong>${row.section}</strong></td></tr>`;
-                } else {
-                    return `<tr>
-                        <td>${escapeHtml(row.section)}</td>
-                        <td>${escapeHtml(row.subsys)}</td>
-                        <td>${escapeHtml(row.work)}</td>
-                        <td>${escapeHtml(row.contractors)}</td>
-                        <td style="text-align: center;">${row.total}</td>
-                    </tr>`;
-                }
-            }).join('')}
-            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align: center;"><strong>${totalPeople}</strong></td></tr>
-        </tbody>
-    </table>
-    
-    <div class="footer">Данные актуальны на момент формирования · ЖК «Огни 3»</div>
-</div>
-</body>
-</html>`;
-        
-        const blob = new Blob([exportHtml], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Ресурсы_Огни3_${dateStr.replace(/\./g, '-')}.html`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        showToast('HTML файл сохранён');
+    function exportToPDF() {
+        showToast('Подготовка PDF...');
+        setTimeout(() => { window.print(); }, 300);
     }
     
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
-    document.getElementById('htmlBtn').addEventListener('click', exportToHTML);
+    document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
     
     document.getElementById('backBtn')?.addEventListener('click', (e) => {
         e.preventDefault();

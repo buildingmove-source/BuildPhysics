@@ -24,7 +24,7 @@
             margin: 0 auto;
         }
 
-        /* Шапка — скрывается на мобильных, показывается на десктопе */
+        /* Шапка — скрывается на мобильных */
         .header {
             background: white;
             border-bottom: 2px solid #2C6B2F;
@@ -143,7 +143,6 @@
             min-width: 800px;
         }
 
-        /* Фиксированная шапка таблицы */
         .resources-table thead tr {
             position: sticky;
             top: 0;
@@ -173,7 +172,6 @@
             background: #F8FAFC;
         }
 
-        /* Секционные заголовки */
         .section-header td {
             background: #E8EDF2;
             font-weight: 700;
@@ -211,32 +209,48 @@
             border-radius: 3px;
         }
 
-        .contractor-people {
+        /* Контролы изменения численности */
+        .people-control {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
             background: white;
             border: 1px solid #D0D7DE;
             border-radius: 4px;
-            padding: 0.15rem 0.4rem;
-            min-width: 48px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 11px;
+            padding: 0.05rem;
         }
 
-        .contractor-people:hover {
+        .people-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 12px;
+            padding: 0.1rem 0;
+        }
+
+        .people-btn {
+            background: none;
+            border: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #2C6B2F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+
+        .people-btn:hover {
             background: #2C6B2F;
             color: white;
-            border-color: #2C6B2F;
         }
 
-        .contractor-people input {
-            width: 48px;
-            background: white;
-            border: 1px solid #2C6B2F;
-            border-radius: 3px;
-            padding: 0.15rem;
-            text-align: center;
-            font-size: 11px;
+        .people-btn:active {
+            transform: scale(0.95);
         }
 
         .add-contractor-btn {
@@ -261,11 +275,11 @@
             cursor: pointer;
             font-size: 13px;
             padding: 0 0.15rem;
+            border-radius: 3px;
         }
 
         .remove-contractor:hover {
             background: rgba(211, 47, 47, 0.1);
-            border-radius: 3px;
         }
 
         .total-people-cell {
@@ -289,7 +303,7 @@
             color: #8A9DA8;
         }
 
-        /* Кнопка домой — отступ от края увеличен */
+        /* Кнопка домой */
         .home-button {
             position: fixed;
             bottom: 25px;
@@ -311,7 +325,6 @@
 
         .home-button:hover {
             transform: scale(1.08);
-            box-shadow: 0 6px 20px rgba(227, 27, 35, 0.5);
         }
 
         .home-button::after {
@@ -337,7 +350,6 @@
             color: white;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 90px;
@@ -351,7 +363,6 @@
             z-index: 2000;
             transition: transform 0.2s;
             white-space: nowrap;
-            font-weight: normal;
         }
 
         .toast.show { transform: translateX(-50%) translateY(0); }
@@ -367,79 +378,40 @@
             100% { opacity: 1; transform: translateX(0); }
         }
 
-        @keyframes slideOutRight {
-            0% { opacity: 1; transform: translateX(0); }
-            100% { opacity: 0; transform: translateX(100%); }
-        }
-
-        @keyframes slideInLeft {
-            0% { opacity: 0; transform: translateX(-100%); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-
         .page-slide-out-left { animation: slideOutLeft 0.35s ease-out forwards; }
         .page-slide-in-right { animation: slideInRight 0.35s ease-out forwards; }
-        .page-slide-out-right { animation: slideOutRight 0.35s ease-out forwards; }
-        .page-slide-in-left { animation: slideInLeft 0.35s ease-out forwards; }
 
-        /* Стили для PDF */
         @media print {
             @page { size: A4; margin: 1.5cm; }
             body { background: white; padding: 0; }
-            .admin-panel, .back-btn, .btn, .home-button, .toast, .add-contractor-btn, .remove-contractor {
+            .admin-panel, .back-btn, .btn, .home-button, .toast, .add-contractor-btn, .remove-contractor, .people-btn {
                 display: none !important;
             }
             .header { display: flex !important; background: white; border-bottom: 1px solid black; }
             .resources-table th { background: #E8EDF2; color: black; }
         }
 
-        /* ===== АДАПТИВНОСТЬ: на телефонах и планшетах скрываем шапку ===== */
         @media (max-width: 1024px) {
-            .header {
-                display: none !important;
-            }
-            .table-wrapper {
-                max-height: calc(100vh - 100px);
-            }
-            .home-button {
-                width: 44px;
-                height: 44px;
-                bottom: 20px;
-                right: 20px;
-            }
-            .home-icon {
-                font-size: 22px;
-            }
+            .header { display: none !important; }
+            .table-wrapper { max-height: calc(100vh - 100px); }
+            .home-button { width: 44px; height: 44px; bottom: 20px; right: 20px; }
+            .home-icon { font-size: 22px; }
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 0.3rem;
-            }
-            .resources-table th {
-                padding: 0.5rem 0.4rem;
-                font-size: 9px;
-            }
-            .resources-table td {
-                padding: 0.4rem;
-                font-size: 10px;
-            }
-            .home-button {
-                width: 40px;
-                height: 40px;
-                bottom: 15px;
-                right: 15px;
-            }
-            .home-icon {
-                font-size: 20px;
-            }
+            body { padding: 0.3rem; }
+            .resources-table th { padding: 0.5rem 0.4rem; font-size: 9px; }
+            .resources-table td { padding: 0.4rem; font-size: 10px; }
+            .home-button { width: 40px; height: 40px; bottom: 15px; right: 15px; }
+            .home-icon { font-size: 20px; }
+            .people-value { min-width: 30px; font-size: 11px; }
+            .people-btn { width: 20px; height: 20px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
 
 <div class="container" id="pageContainer">
-    <!-- Шапка — видна только на десктопе, скрыта на мобильных -->
     <div class="header">
         <div class="logo" id="backLogo">
             <div class="logo-icon">О3</div>
@@ -479,7 +451,6 @@
     <div class="footer">АО «Огни 3» · Данные актуальны на момент открытия</div>
 </div>
 
-<!-- Кнопка домой -->
 <a href="#" class="home-button" id="homeBtn">
     <span class="home-icon">🏠</span>
 </a>
@@ -487,7 +458,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ (полные) =====
+    // ===== ИСХОДНЫЕ ДАННЫЕ =====
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -636,35 +607,15 @@
         return resourcesData.reduce((sum, item) => sum + getRowTotal(item.contractors), 0);
     }
 
-    function editContractor(rowIndex, contractorIndex, element) {
+    // Изменение численности кликами (+ / -)
+    function changePeople(rowIndex, contractorIndex, delta) {
         const contractor = resourcesData[rowIndex].contractors[contractorIndex];
-        const currentValue = contractor.people;
-        
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.value = currentValue;
-        input.min = 0;
-        input.max = 999;
-        input.step = 1;
-        
-        const container = element;
-        container.innerHTML = '';
-        container.appendChild(input);
-        input.focus();
-        input.select();
-        
-        const saveEdit = () => {
-            let newValue = parseInt(input.value, 10);
-            if (isNaN(newValue)) newValue = 0;
-            if (newValue < 0) newValue = 0;
-            if (newValue > 999) newValue = 999;
-            contractor.people = newValue;
-            renderTable();
-            showToast(`${contractor.name}: ${newValue} чел.`);
-        };
-        
-        input.addEventListener('blur', saveEdit);
-        input.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveEdit(); });
+        let newValue = contractor.people + delta;
+        if (newValue < 0) newValue = 0;
+        if (newValue > 999) newValue = 999;
+        contractor.people = newValue;
+        renderTable();
+        showToast(`${contractor.name}: ${newValue} чел.`);
     }
 
     function addContractor(rowIndex) {
@@ -699,7 +650,7 @@
         input.style.border = '1px solid #2C6B2F';
         input.style.borderRadius = '3px';
         input.style.padding = '0.15rem';
-        input.style.fontSize = '10px';
+        input.style.fontSize = '11px';
         
         const container = element;
         container.innerHTML = '';
@@ -736,7 +687,11 @@
             const contractorsHtml = `<div class="contractors-list">${item.contractors.map((contractor, cIndex) => `
                 <div class="contractor-item">
                     <span class="contractor-name" onclick="editContractorName(${rowIndex}, ${cIndex}, this)">${escapeHtml(contractor.name)}</span>
-                    <span class="contractor-people" onclick="editContractor(${rowIndex}, ${cIndex}, this)">${contractor.people}</span>
+                    <div class="people-control">
+                        <button class="people-btn" onclick="event.stopPropagation(); changePeople(${rowIndex}, ${cIndex}, -1)">−</button>
+                        <span class="people-value">${contractor.people}</span>
+                        <button class="people-btn" onclick="event.stopPropagation(); changePeople(${rowIndex}, ${cIndex}, 1)">+</button>
+                    </div>
                     <button class="remove-contractor" onclick="event.stopPropagation(); removeContractor(${rowIndex}, ${cIndex})">×</button>
                 </div>
             `).join('')}${item.contractors.length < 3 ? `<div class="add-contractor-btn" onclick="addContractor(${rowIndex})">+ Добавить подрядчика</div>` : ''}</div>`;
@@ -770,7 +725,7 @@
         setTimeout(() => toast.classList.remove('show'), 2000);
     }
     
-    // ===== АНИМАЦИЯ ПЕРЕХОДА НА ГЛАВНУЮ (задержка 2 секунды) =====
+    // ===== ПЕРЕХОД НА ГЛАВНУЮ ЧЕРЕЗ 1 СЕКУНДУ =====
     function navigateToHome() {
         if (navigateTimeout) return;
         
@@ -782,7 +737,7 @@
                 window.location.href = 'index.html';
             }, 350);
             navigateTimeout = null;
-        }, 2000); // Задержка 2 секунды
+        }, 1000); // Задержка 1 секунда
     }
     
     function cancelNavigation() {
@@ -792,7 +747,7 @@
         }
     }
     
-    // Обработчики с задержкой 2 секунды
+    // Обработчики
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
     document.getElementById('pdfBtn').addEventListener('click', () => {
@@ -800,38 +755,32 @@
         setTimeout(() => window.print(), 200);
     });
     
-    // Кнопка назад
     document.getElementById('backBtn')?.addEventListener('click', (e) => {
         e.preventDefault();
-        showToast('Переход на главную через 2 секунды...');
+        showToast('Переход на главную через 1 секунду...');
         navigateToHome();
     });
     
     document.getElementById('backLogo')?.addEventListener('click', (e) => {
         e.preventDefault();
-        showToast('Переход на главную через 2 секунды...');
+        showToast('Переход на главную через 1 секунду...');
         navigateToHome();
     });
     
     document.getElementById('homeBtn').addEventListener('click', (e) => {
         e.preventDefault();
-        showToast('Переход на главную через 2 секунды...');
+        showToast('Переход на главную через 1 секунду...');
         navigateToHome();
     });
     
-    // Отмена навигации при взаимодействии с таблицей
-    document.querySelector('.table-wrapper')?.addEventListener('click', () => {
-        cancelNavigation();
-    });
+    // Отмена навигации при взаимодействии
+    document.querySelector('.table-wrapper')?.addEventListener('click', cancelNavigation);
+    document.querySelector('.admin-panel')?.addEventListener('click', cancelNavigation);
     
-    document.querySelector('.admin-panel')?.addEventListener('click', () => {
-        cancelNavigation();
-    });
-    
-    // Анимация появления при загрузке
-    document.getElementById('pageContainer').classList.add('page-slide-in-left');
+    // Анимация появления
+    document.getElementById('pageContainer').classList.add('page-slide-in-right');
     setTimeout(() => {
-        document.getElementById('pageContainer').classList.remove('page-slide-in-left');
+        document.getElementById('pageContainer').classList.remove('page-slide-in-right');
     }, 500);
     
     loadData();

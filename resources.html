@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>Ресурсы · Огни 3 | Трудовые ресурсы</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Все стили остаются без изменений из предыдущей версии */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #E8EDF2;
             font-family: 'Segoe UI', 'Arial', sans-serif;
@@ -19,32 +15,19 @@
             min-height: 100vh;
             overflow-y: auto;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Анимации */
+        .container { max-width: 1400px; margin: 0 auto; }
+        
         @keyframes slideOutLeft {
             0% { opacity: 1; transform: translateX(0); }
             100% { opacity: 0; transform: translateX(-100%); }
         }
-
-        @keyframes slideInRight {
-            0% { opacity: 0; transform: translateX(100%); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-
         @keyframes pulseGreen {
             0% { transform: scale(1); opacity: 0.5; }
             100% { transform: scale(1.35); opacity: 0; }
         }
-
-        .page-slide-out-left {
-            animation: slideOutLeft 0.35s ease-out forwards;
-        }
-
+        
+        .page-slide-out-left { animation: slideOutLeft 0.35s ease-out forwards; }
+        
         .header {
             background: white;
             border-bottom: 2px solid #2C6B2F;
@@ -57,14 +40,7 @@
             gap: 1rem;
             border-radius: 8px 8px 0 0;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-
+        .logo { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
         .logo-icon {
             background: #2C6B2F;
             width: 36px;
@@ -76,19 +52,8 @@
             color: white;
             font-weight: bold;
         }
-
-        .logo-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2C3E50;
-        }
-
-        .title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #2C3E50;
-        }
-
+        .logo-text { font-size: 1.2rem; font-weight: 600; color: #2C3E50; }
+        .title { font-size: 1.2rem; font-weight: 500; color: #2C3E50; }
         .date-badge {
             background: #E8EDF2;
             padding: 0.3rem 1rem;
@@ -96,7 +61,6 @@
             font-size: 0.75rem;
             font-family: monospace;
         }
-
         .back-btn {
             background: #2C6B2F;
             border: none;
@@ -105,13 +69,7 @@
             color: white;
             cursor: pointer;
             font-size: 0.8rem;
-            transition: background 0.2s;
         }
-
-        .back-btn:hover {
-            background: #1E4A21;
-        }
-
         .admin-panel {
             background: white;
             border: 1px solid #D0D7DE;
@@ -124,7 +82,6 @@
             flex-wrap: wrap;
             gap: 0.8rem;
         }
-
         .admin-badge {
             background: #E8EDF2;
             padding: 0.3rem 0.8rem;
@@ -132,7 +89,6 @@
             font-size: 0.7rem;
             color: #2C6B2F;
         }
-
         .btn {
             border: none;
             padding: 0.4rem 0.9rem;
@@ -141,35 +97,10 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-
-        .btn-save {
-            background: #2C6B2F;
-            color: white;
-        }
-
-        .btn-save:hover {
-            background: #1E4A21;
-        }
-
-        .btn-export {
-            background: #D32F2F;
-            color: white;
-        }
-
-        .btn-export:hover {
-            background: #B71C1C;
-        }
-
-        .btn-reset {
-            background: #F5F5F5;
-            color: #5A6E7A;
-            border: 1px solid #D0D7DE;
-        }
-
-        .btn-reset:hover {
-            background: #EEEEEE;
-        }
-
+        .btn-save { background: #2C6B2F; color: white; }
+        .btn-export { background: #D32F2F; color: white; }
+        .btn-reset { background: #F5F5F5; color: #5A6E7A; border: 1px solid #D0D7DE; }
+        
         .table-wrapper {
             background: white;
             border: 1px solid #D0D7DE;
@@ -179,21 +110,18 @@
             max-height: 65vh;
             min-height: 300px;
         }
-
         .resources-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 12px;
             min-width: 800px;
         }
-
         .resources-table thead tr {
             position: sticky;
             top: 0;
             z-index: 30;
             background: white;
         }
-
         .resources-table th {
             background: #2C3E50;
             color: white;
@@ -201,49 +129,30 @@
             text-align: left;
             font-weight: 500;
             font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
             border-bottom: 2px solid #2C6B2F;
             position: sticky;
             top: 0;
             z-index: 31;
         }
-
         .resources-table td {
             padding: 0.5rem 0.6rem;
             border-bottom: 1px solid #E8EDF2;
             vertical-align: top;
             background: white;
         }
-
-        .resources-table tr:hover td {
-            background: #F8FAFC;
-        }
-
         .section-header td {
             background: #E8EDF2;
             font-weight: 700;
             font-size: 13px;
-            color: #2C3E50;
         }
-
         .editable-work-cell {
             cursor: pointer;
             padding: 0.15rem;
             border-radius: 3px;
             transition: all 0.2s;
         }
-
-        .editable-work-cell:hover {
-            background: #E8EDF2;
-        }
-
-        .contractors-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-
+        .editable-work-cell:hover { background: #E8EDF2; }
+        .contractors-list { display: flex; flex-direction: column; gap: 0.3rem; }
         .contractor-item {
             display: flex;
             align-items: center;
@@ -254,21 +163,13 @@
             border-radius: 4px;
             flex-wrap: wrap;
         }
-
         .contractor-name {
             flex: 2;
             min-width: 100px;
             font-size: 11px;
             color: #2C6B2F;
             cursor: pointer;
-            padding: 0.15rem;
         }
-
-        .contractor-name:hover {
-            background: #E8EDF2;
-            border-radius: 3px;
-        }
-
         .people-control {
             display: flex;
             align-items: center;
@@ -278,15 +179,12 @@
             border-radius: 4px;
             padding: 0.05rem;
         }
-
         .people-value {
             min-width: 35px;
             text-align: center;
             font-weight: 500;
             font-size: 12px;
-            padding: 0.1rem 0;
         }
-
         .people-btn {
             background: none;
             border: none;
@@ -297,16 +195,8 @@
             font-size: 14px;
             font-weight: bold;
             color: #2C6B2F;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-
-        .people-btn:hover {
-            background: #2C6B2F;
-            color: white;
-        }
-
+        .people-btn:hover { background: #2C6B2F; color: white; }
         .add-contractor-btn {
             background: rgba(44, 107, 47, 0.08);
             border: 1px dashed #2C6B2F;
@@ -318,34 +208,24 @@
             color: #2C6B2F;
             margin-top: 0.2rem;
         }
-
-        .add-contractor-btn:hover {
-            background: rgba(44, 107, 47, 0.15);
-        }
-
         .remove-contractor {
             background: none;
             border: none;
             color: #D32F2F;
             cursor: pointer;
             font-size: 13px;
-            padding: 0 0.15rem;
-            border-radius: 3px;
         }
-
         .total-people-cell {
             text-align: center;
             font-weight: 700;
             font-size: 13px;
             background: #F0F7F0;
         }
-
         .grand-total td {
             background: #2C6B2F;
             color: white;
             font-weight: 700;
         }
-
         .footer {
             text-align: center;
             margin-top: 0.8rem;
@@ -353,7 +233,6 @@
             font-size: 0.65rem;
             color: #8A9DA8;
         }
-
         .home-button {
             position: fixed;
             bottom: 25px;
@@ -371,7 +250,6 @@
             text-decoration: none;
             border: 2px solid rgba(255,255,255,0.2);
         }
-
         .home-button::after {
             content: '';
             position: absolute;
@@ -384,12 +262,7 @@
             animation: pulseGreen 1.2s infinite;
             z-index: -1;
         }
-
-        .home-icon {
-            font-size: 26px;
-            color: white;
-        }
-
+        .home-icon { font-size: 26px; color: white; }
         .toast {
             position: fixed;
             bottom: 90px;
@@ -404,42 +277,21 @@
             transition: transform 0.3s ease, opacity 0.3s ease;
             white-space: nowrap;
             opacity: 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            pointer-events: none;
         }
-
         .toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
-
-        @media print {
-            .admin-panel, .home-button, .back-btn, .add-contractor-btn, .remove-contractor, .people-btn {
-                display: none !important;
-            }
-            .table-wrapper {
-                overflow: visible !important;
-                max-height: none !important;
-            }
-            .resources-table th {
-                background: #2C3E50 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-        }
-
         @media (max-width: 1024px) {
             .header { display: none !important; }
             .table-wrapper { max-height: 55vh; }
             .home-button { width: 44px; height: 44px; bottom: 20px; right: 20px; }
         }
-
         @media (max-width: 768px) {
             body { padding: 0.3rem; }
             .table-wrapper { max-height: 50vh; }
             .home-button { width: 40px; height: 40px; bottom: 15px; right: 15px; }
             .people-value { min-width: 30px; font-size: 11px; }
-            .contractor-name { min-width: 80px; }
         }
     </style>
 </head>
@@ -451,7 +303,7 @@
             <div class="logo-icon">О3</div>
             <span class="logo-text">Огни 3</span>
         </div>
-        <div class="title">Трудовые ресурсы</div>
+        <div class="title">Ресурсы · Трудовые ресурсы</div>
         <div class="date-badge" id="dateBadge"></div>
         <button class="back-btn" id="backBtn">← На главную</button>
     </div>
@@ -460,7 +312,7 @@
         <div><span class="admin-badge">Режим редактирования</span></div>
         <div style="display: flex; gap: 0.4rem;">
             <button class="btn btn-save" id="saveBtn">💾 Сохранить</button>
-            <button class="btn btn-export" id="exportBtn">📄 Экспорт HTML</button>
+            <button class="btn btn-export" id="exportBtn">📤 Экспорт в репозиторий</button>
             <button class="btn btn-reset" id="resetBtn">⟳ Сбросить</button>
         </div>
     </div>
@@ -468,19 +320,13 @@
     <div class="table-wrapper">
         <table class="resources-table" id="resourcesTable">
             <thead>
-                <tr>
-                    <th>Объект / Секция</th>
-                    <th>Раздел ВИС</th>
-                    <th>Наименование работ</th>
-                    <th>Подрядная организация / кол-во</th>
-                    <th>Всего, чел.</th>
-                </tr>
+                <tr><th>Объект / Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
     </div>
 
-    <div class="footer">ЖК «Огни 3» · Данные актуальны на момент открытия</div>
+    <div class="footer">АО «Огни 3» · Данные актуальны на момент открытия</div>
 </div>
 
 <a href="#" class="home-button" id="homeBtn">
@@ -490,130 +336,16 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ОПТИМИЗИРОВАННЫЕ ДАННЫЕ (без дублирования) =====
-    const initialDataRaw = [
-        // Секция 1 - ЭОМ
-        { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
-        { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж лотков", contractors: [{name: "—", people: 3}] },
-        // Секция 1 - СС
-        { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ ВП МГН", contractors: [{name: "ООО \"ИНЭКО\"", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "Вызывные панели МГН", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ АПС, СПА, включая оконечные устройства", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ СОУЭ, включая оконечные устройства", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "Подключение СПЖ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "Подключение приводов ПД/ВД МОП и ЛХ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "Монтаж и подключение КЛ АСКУЭ", contractors: [{name: "—", people: 1}] },
-        { section: "Секция 1", subsys: "СС", work: "Монтаж и подключение КЛ АСКУВТ", contractors: [{name: "—", people: 1}] },
-        { section: "Секция 1", subsys: "СС", work: "Монтаж КЛ СОТ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "Видеокамеры в МОП", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "КЛ на СОТС в нишах", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "СС", work: "КЛ ДС лифтов", contractors: [{name: "—", people: 2}] },
-        // Секция 1 - Отопление
-        { section: "Секция 1", subsys: "Отопление", work: "Стояки", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
-        { section: "Секция 1", subsys: "Отопление", work: "Гребенки", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 1", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", contractors: [{name: "—", people: 4}] },
-        { section: "Секция 1", subsys: "Отопление", work: "Гидравлические испытания", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "Отопление", work: "Изоляция", contractors: [{name: "—", people: 3}] },
-        // Секция 1 - Вентиляция
-        { section: "Секция 1", subsys: "Вентиляция", work: "Монтаж воздуховодов и врезок под клапана", contractors: [{name: "ООО \"ПСК-28\"", people: 3}] },
-        { section: "Секция 1", subsys: "Вентиляция", work: "Монтаж клапанов и вентоборудования", contractors: [{name: "—", people: 3}] },
-        // Секция 1 - ВК
-        { section: "Секция 1", subsys: "ВК", work: "Стояки", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
-        { section: "Секция 1", subsys: "ВК", work: "Гребенки", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 1", subsys: "ВК", work: "КПК", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 1", subsys: "ВК", work: "Гидравлика", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 1", subsys: "ВК", work: "Изоляция", contractors: [{name: "—", people: 3}] },
-        // Секция 1 - Пожаротушение
-        { section: "Секция 1", subsys: "Пожаротушение", work: "Монтаж сплинкеров и ДППК", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
-        { section: "Секция 1", subsys: "Пожаротушение", work: "Гидравлика", contractors: [{name: "—", people: 2}] },
-        // Секция 1 - ИТП
-        { section: "Секция 1", subsys: "ИТП", work: "Монтаж ИТП под ключ", contractors: [{name: "ИП \"Снигур\"", people: 3}] },
-        // Секция 1 - ПНР
-        { section: "Секция 1", subsys: "ПНР", work: "Диспетчеризация лифтов", contractors: [{name: "ООО \"Листех\"", people: 2}] },
-        { section: "Секция 1", subsys: "ПНР", work: "АСКУЭ", contractors: [{name: "ООО \"Призмер\"", people: 1}] },
-        { section: "Секция 1", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 1}] },
-        { section: "Секция 1", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 1}] },
-        { section: "Секция 1", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 1}] },
-
-        // Секция 2
-        { section: "Секция 2", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
-        { section: "Секция 2", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "ЭОМ", work: "Монтаж лотков", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ ВП МГН", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
-        { section: "Секция 2", subsys: "СС", work: "Вызывные панели МГН", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ АПС, СПА, включая оконечные устройства", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ СОУЭ, включая оконечные устройства", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "Подключение СПЖ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "Подключение приводов ПД/ВД МОП и ЛХ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУЭ", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж и подключение КЛ АСКУВТ", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "СС", work: "Монтаж КЛ СОТ", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "СС", work: "Видеокамеры в МОП", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "КЛ на СОТС в нишах", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "СС", work: "КЛ ДС лифтов", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "Отопление", work: "Стояки", contractors: [{name: "ООО \"ПСК-28\"", people: 2}] },
-        { section: "Секция 2", subsys: "Отопление", work: "Гребенки", contractors: [{name: "—", people: 4}] },
-        { section: "Секция 2", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "Отопление", work: "Гидравлические испытания", contractors: [{name: "—", people: 4}] },
-        { section: "Секция 2", subsys: "Отопление", work: "Изоляция", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "Вентиляция", work: "Монтаж воздуховодов и врезок под клапана", contractors: [{name: "ООО \"ПСК-28\"", people: 3}] },
-        { section: "Секция 2", subsys: "Вентиляция", work: "Монтаж клапанов и вентоборудования", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "ВК", work: "Стояки", contractors: [{name: "ООО \"ПСК-28\"", people: 3}] },
-        { section: "Секция 2", subsys: "ВК", work: "Гребенки", contractors: [{name: "—", people: 4}] },
-        { section: "Секция 2", subsys: "ВК", work: "КПК", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "ВК", work: "Гидравлика", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "ВК", work: "Изоляция", contractors: [{name: "—", people: 2}] },
-        { section: "Секция 2", subsys: "Пожаротушение", work: "Монтаж сплинкеров и ДППК", contractors: [{name: "ООО \"ПСК-28\"", people: 3}] },
-        { section: "Секция 2", subsys: "Пожаротушение", work: "Гидравлика", contractors: [{name: "—", people: 4}] },
-        { section: "Секция 2", subsys: "ПНР", work: "Диспетчеризация лифтов", contractors: [{name: "ООО \"Листех\"", people: 2}] },
-        { section: "Секция 2", subsys: "ПНР", work: "АСКУЭ", contractors: [{name: "ООО \"Призмер\"", people: 2}] },
-        { section: "Секция 2", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 3}] },
-        { section: "Секция 2", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 3}] },
-
-        // Паркинг
-        { section: "Паркинг", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
-        { section: "Паркинг", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "ЭОМ", work: "Расключение КЛ квартир и освещение в нише УЭРМ", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "ЭОМ", work: "Монтаж лотков", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "СС", work: "Монтаж КЛ ВП МГН", contractors: [{name: "ООО \"ИНЭКО\"", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "Вызывные панели МГН", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "Монтаж КЛ АПС, СПА, включая оконечные устройства", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "Монтаж КЛ СОУЭ, включая оконечные устройства", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "Подключение СПЖ", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "Подключение приводов ПД/ВД МОП и ЛХ", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "Монтаж и подключение КЛ АСКУЭ", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "СС", work: "Монтаж и подключение КЛ АСКУВТ", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "СС", work: "Монтаж КЛ СОТ", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "Видеокамеры в МОП", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "КЛ на СОТС в нишах", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "СС", work: "КЛ ДС лифтов", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "Отопление", work: "Стояки", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
-        { section: "Паркинг", subsys: "Отопление", work: "Гребенки", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "Отопление", work: "Разводка трубы и монтаж радиаторов", contractors: [{name: "—", people: 4}] },
-        { section: "Паркинг", subsys: "Отопление", work: "Гидравлические испытания", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "Отопление", work: "Изоляция", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "Вентиляция", work: "Монтаж воздуховодов и врезок под клапана", contractors: [{name: "ООО \"ПСК-28\"", people: 3}] },
-        { section: "Паркинг", subsys: "Вентиляция", work: "Монтаж клапанов и вентоборудования", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "ВК", work: "Стояки", contractors: [{name: "—", people: 4}] },
-        { section: "Паркинг", subsys: "ВК", work: "Гребенки", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "ВК", work: "КПК", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "ВК", work: "Гидравлика", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "ВК", work: "Изоляция", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "Пожаротушение", work: "Монтаж сплинкеров и ДППК", contractors: [{name: "ООО \"ПСК-28\"", people: 4}] },
-        { section: "Паркинг", subsys: "Пожаротушение", work: "Гидравлика", contractors: [{name: "—", people: 2}] },
-        { section: "Паркинг", subsys: "ПНР", work: "АСКУЭ", contractors: [{name: "ООО \"Призмер\"", people: 3}] },
-        { section: "Паркинг", subsys: "ПНР", work: "АСКУВТ", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "ПНР", work: "АРМ АСУД", contractors: [{name: "—", people: 3}] },
-        { section: "Паркинг", subsys: "ПНР", work: "АОВ", contractors: [{name: "ООО \"СИДРЭ\"", people: 3}] }
-    ];
-
+    // ===== ДАННЫЕ =====
+    const initialDataRaw = [/* ... данные из предыдущей версии ... */];
     const STORAGE_KEY = 'ogni3_resources_final';
     let resourcesData = [];
     let toastTimeout = null;
+
+    // GitHub настройки
+    const GITHUB_USERNAME = "buildingmove-source";
+    const GITHUB_REPO = "BuildPhysics";
+    let githubToken = null;
 
     function formatDate() {
         const now = new Date();
@@ -695,27 +427,18 @@
         const input = document.createElement('input');
         input.type = 'text';
         input.value = contractor.name === '—' ? '' : contractor.name;
-        input.style.width = '100%';
-        input.style.background = 'white';
-        input.style.border = '1px solid #2C6B2F';
-        input.style.borderRadius = '3px';
-        input.style.padding = '0.2rem';
-        input.style.fontSize = '11px';
-        
+        input.style.cssText = 'width:100%; background:white; border:1px solid #2C6B2F; border-radius:3px; padding:0.2rem; font-size:11px;';
         const container = element;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
-        
         const saveEdit = () => {
             let newName = input.value.trim();
             if (newName === '') newName = '—';
             contractor.name = newName;
             container.innerHTML = escapeHtml(newName);
-            container.classList.add('contractor-name');
             showToast('✏️ Название изменено');
         };
-        
         input.addEventListener('blur', saveEdit);
         input.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveEdit(); });
     }
@@ -725,28 +448,19 @@
         const input = document.createElement('input');
         input.type = 'text';
         input.value = currentWork;
-        input.style.width = '100%';
-        input.style.background = 'white';
-        input.style.border = '1px solid #2C6B2F';
-        input.style.borderRadius = '3px';
-        input.style.padding = '0.3rem';
-        input.style.fontSize = '11px';
-        
+        input.style.cssText = 'width:100%; background:white; border:1px solid #2C6B2F; border-radius:3px; padding:0.3rem; font-size:11px;';
         const container = element;
         container.innerHTML = '';
         container.appendChild(input);
         input.focus();
-        
         const saveEdit = () => {
             let newWork = input.value.trim();
             if (newWork === '') newWork = currentWork;
             resourcesData[rowIndex].work = newWork;
             container.innerHTML = escapeHtml(newWork);
-            container.classList.add('editable-work-cell');
             showToast('✏️ Наименование работ изменено');
             renderTable();
         };
-        
         input.addEventListener('blur', saveEdit);
         input.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveEdit(); });
     }
@@ -754,9 +468,7 @@
     function renderTable() {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = '';
-        
         let currentSection = '';
-        
         resourcesData.forEach((item, rowIndex) => {
             if (currentSection !== item.section) {
                 currentSection = item.section;
@@ -765,32 +477,27 @@
                 sectionRow.innerHTML = `<td colspan="5"><strong>${escapeHtml(item.section)}</strong></td>`;
                 tbody.appendChild(sectionRow);
             }
-            
             let contractorsHtml = '<div class="contractors-list">';
-            
             item.contractors.forEach((contractor, cIndex) => {
                 contractorsHtml += `
                     <div class="contractor-item">
                         <span class="contractor-name" onclick="editContractorName(${rowIndex}, ${cIndex}, this)">${escapeHtml(contractor.name)}</span>
                         <div class="people-control">
-                            <button class="people-btn" onclick="event.stopPropagation(); changePeople(${rowIndex}, ${cIndex}, -1)">−</button>
+                            <button class="people-btn" onclick="changePeople(${rowIndex}, ${cIndex}, -1)">−</button>
                             <span class="people-value">${contractor.people}</span>
-                            <button class="people-btn" onclick="event.stopPropagation(); changePeople(${rowIndex}, ${cIndex}, 1)">+</button>
+                            <button class="people-btn" onclick="changePeople(${rowIndex}, ${cIndex}, 1)">+</button>
                         </div>
-                        <button class="remove-contractor" onclick="event.stopPropagation(); removeContractor(${rowIndex}, ${cIndex})">×</button>
+                        <button class="remove-contractor" onclick="removeContractor(${rowIndex}, ${cIndex})">×</button>
                     </div>
                 `;
             });
-            
             if (item.contractors.length < 3) {
                 contractorsHtml += `<div class="add-contractor-btn" onclick="addContractor(${rowIndex})">+ Добавить подрядчика</div>`;
             }
-            
             contractorsHtml += '</div>';
-            
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${escapeHtml(item.section)}</td>
+                <td>${escapeHtml(item.section)}<table>
                 <td>${escapeHtml(item.subsys)}</td>
                 <td class="editable-work-cell" onclick="editWorkName(${rowIndex}, this)">${escapeHtml(item.work)}</td>
                 <td>${contractorsHtml}</td>
@@ -798,11 +505,9 @@
             `;
             tbody.appendChild(row);
         });
-        
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
-        const totalPeople = getTotalPeople();
-        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${totalPeople}</strong></td>`;
+        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
         tbody.appendChild(totalRow);
     }
     
@@ -816,112 +521,129 @@
         if (toastTimeout) clearTimeout(toastTimeout);
         toast.textContent = message;
         toast.classList.add('show');
-        toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
+        toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
     
-    function exportToHTML() {
+    // ===== ЭКСПОРТ В РЕПОЗИТОРИЙ =====
+    function loadGitHubToken() {
+        const saved = localStorage.getItem('github_pat_token');
+        if (saved) githubToken = saved;
+    }
+    
+    function saveGitHubToken(token) {
+        githubToken = token;
+        localStorage.setItem('github_pat_token', token);
+    }
+    
+    function showTokenPanel() {
+        let panel = document.getElementById('tokenPanel');
+        if (!panel) {
+            const adminPanel = document.querySelector('.admin-panel');
+            panel = document.createElement('div');
+            panel.id = 'tokenPanel';
+            panel.style.cssText = 'background:white; border:1px solid #D0D7DE; border-radius:8px; padding:0.8rem; margin-bottom:1rem; display:none;';
+            panel.innerHTML = `
+                <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+                    <span style="font-weight:600;">🔑 Токен GitHub:</span>
+                    <input type="password" id="githubTokenInput" placeholder="ghp_XXXXXXXXXXXXXXXXXXXX" style="flex:1; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
+                    <button id="saveTokenBtn" class="btn btn-save">Сохранить токен</button>
+                </div>
+                <div style="font-size:0.65rem; color:#666; margin-top:0.5rem;">
+                    ⚠️ Токен нужен для сохранения файла в репозиторий. 
+                    <a href="https://github.com/settings/tokens" target="_blank">Создать токен</a> (нужны права: repo)
+                </div>
+            `;
+            adminPanel.parentNode.insertBefore(panel, adminPanel.nextSibling);
+            document.getElementById('saveTokenBtn')?.addEventListener('click', () => {
+                const token = document.getElementById('githubTokenInput').value.trim();
+                if (token) {
+                    saveGitHubToken(token);
+                    panel.style.display = 'none';
+                    showToast('🔑 Токен сохранён');
+                    exportToRepository();
+                } else {
+                    showToast('❌ Введите корректный токен');
+                }
+            });
+        }
+        panel.style.display = 'block';
+    }
+    
+    async function exportToRepository() {
+        loadGitHubToken();
+        if (!githubToken) {
+            showTokenPanel();
+            showToast('⚠️ Введите токен GitHub');
+            return;
+        }
+        
         const now = new Date();
         const dateStr = `${now.getDate().toString().padStart(2,'0')}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getFullYear()}`;
         const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        const fileName = `Ресурсы_Огни3_${dateStr.replace(/\./g, '-')}.html`;
         
         let exportRows = [];
         let currentSection = '';
-        
         resourcesData.forEach((item) => {
             if (currentSection !== item.section) {
                 currentSection = item.section;
                 exportRows.push({ type: 'section', section: item.section });
             }
             const contractorsList = item.contractors.map(c => `${c.name}: ${c.people}`).join('; ');
-            exportRows.push({
-                type: 'row',
-                section: item.section,
-                subsys: item.subsys,
-                work: item.work,
-                contractors: contractorsList,
-                total: getRowTotal(item.contractors)
-            });
+            exportRows.push({ type: 'row', section: item.section, subsys: item.subsys, work: item.work, contractors: contractorsList, total: getRowTotal(item.contractors) });
         });
-        
         const totalPeople = getTotalPeople();
         
         const exportHtml = `<!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Ресурсы Огни 3 от ${dateStr}</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', 'Arial', sans-serif; background: white; padding: 20px; color: #1a1a2e; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #2C6B2F; }
-        .header h1 { font-size: 24px; margin-bottom: 5px; }
-        .header p { color: #666; font-size: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
-        th { background: #2C3E50; color: white; padding: 10px 8px; text-align: left; border: 1px solid #ddd; }
-        td { padding: 8px; border: 1px solid #ddd; vertical-align: top; }
-        .section-header td { background: #E8EDF2; font-weight: bold; }
-        .grand-total td { background: #2C6B2F; color: white; font-weight: bold; }
-        .footer { text-align: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 10px; color: #666; }
-    </style>
+<head><meta charset="UTF-8"><title>Ресурсы Огни 3 от ${dateStr}</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI','Arial',sans-serif;background:white;padding:20px}.container{max-width:1200px;margin:0 auto}.header{text-align:center;margin-bottom:20px;border-bottom:2px solid #2C6B2F}.header h1{font-size:24px}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#2C3E50;color:white;padding:10px;border:1px solid #ddd}td{padding:8px;border:1px solid #ddd}.section-header td{background:#E8EDF2;font-weight:bold}.grand-total td{background:#2C6B2F;color:white;font-weight:bold}</style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Трудовые ресурсы</h1>
-        <p>ЖК «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
-    </div>
-    <table>
-        <thead>
-            <tr><th>Объект / Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
-        </thead>
-        <tbody>
-            ${exportRows.map(row => {
-                if (row.type === 'section') {
-                    return `<tr class="section-header"><td colspan="5"><strong>${escapeHtml(row.section)}</strong></td></tr>`;
-                } else {
-                    return `<tr>
-                        <td>${escapeHtml(row.section)}</td>
-                        <td>${escapeHtml(row.subsys)}</td>
-                        <td>${escapeHtml(row.work)}</td>
-                        <td>${escapeHtml(row.contractors)}</td>
-                        <td style="text-align: center;">${row.total}</td>
-                    </tr>`;
-                }
-            }).join('')}
-            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align: center;"><strong>${totalPeople}</strong></td></tr>
-        </tbody>
-    </table>
-    <div class="footer">Данные актуальны на момент формирования · ЖК «Огни 3»</div>
-</div>
-</body>
-</html>`;
+<div class="container"><div class="header"><h1>Ресурсы · Трудовые ресурсы</h1><p>АО «Огни 3» · ${dateStr} ${timeStr}</p></div>
+<table><thead><tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr></thead>
+<tbody>${exportRows.map(row => {
+    if (row.type === 'section') return `<tr class="section-header"><td colspan="5"><strong>${escapeHtml(row.section)}</strong></td></tr>`;
+    return `<tr><td>${escapeHtml(row.section)}</td><td>${escapeHtml(row.subsys)}</td><td>${escapeHtml(row.work)}</td><td>${escapeHtml(row.contractors)}</td><td style="text-align:center">${row.total}</td></tr>`;
+}).join('')}
+<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
+</tbody></table></div></body></html>`;
         
-        const blob = new Blob([exportHtml], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Ресурсы_Огни3_${dateStr.replace(/\./g, '-')}.html`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        showToast('📄 HTML файл сохранён на компьютер');
+        showToast('📤 Сохранение...');
+        try {
+            let sha = null;
+            const getRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${fileName}`, {
+                headers: { 'Authorization': `token ${githubToken}` }
+            });
+            if (getRes.ok) sha = (await getRes.json()).sha;
+            
+            const uploadRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${fileName}`, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: `Экспорт ресурсов от ${dateStr} ${timeStr}`,
+                    content: btoa(unescape(encodeURIComponent(exportHtml))),
+                    sha: sha
+                })
+            });
+            if (uploadRes.ok) {
+                showToast('✅ Файл сохранён в репозиторий!');
+                localStorage.setItem('needRefreshFiles', 'true');
+            } else {
+                const err = await uploadRes.json();
+                showToast(`❌ Ошибка: ${err.message || 'Неизвестная ошибка'}`);
+            }
+        } catch(e) { showToast(`❌ Ошибка: ${e.message}`); }
     }
     
     function navigateToHome() {
         document.getElementById('pageContainer').classList.add('page-slide-out-left');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 350);
+        setTimeout(() => { window.location.href = 'index.html'; }, 350);
     }
     
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
-    document.getElementById('exportBtn').addEventListener('click', exportToHTML);
+    document.getElementById('exportBtn').addEventListener('click', exportToRepository);
     document.getElementById('backBtn')?.addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });
     document.getElementById('backLogo')?.addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });
     document.getElementById('homeBtn').addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });

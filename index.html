@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="#0A1628">
+    <meta name="theme-color" content="#1A1A2E">
     <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
     <title>Огни 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -57,11 +57,12 @@
             border-radius: 10px;
         }
 
-        /* ===== ПРОЗРАЧНАЯ ШАПКА (99% прозрачности) ===== */
+        /* ===== СТИЛЬ ШАПКИ — МАТОВОЕ СТЕКЛО ===== */
         .navbar {
-            background: rgba(13, 31, 60, 0.01);
+            background: rgba(13, 31, 60, 0.08);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -69,10 +70,12 @@
             transition: all 0.3s ease;
         }
 
-        /* Эффект при скролле — можно добавить лёгкое затемнение */
+        /* Эффект усиления при скролле */
         .navbar.scrolled {
-            background: rgba(13, 31, 60, 0.03);
-            border-bottom-color: rgba(255,255,255,0.1);
+            background: rgba(13, 31, 60, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(45, 106, 255, 0.3);
         }
 
         .nav-container {
@@ -90,27 +93,32 @@
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.8rem 0.3rem 0.5rem;
+            border-radius: 60px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
         }
 
         .logo-icon {
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-sm);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             transition: var(--transition);
         }
 
-        .logo-icon:hover {
-            transform: scale(1.05);
-        }
-
         .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
+            font-size: 1.2rem;
+            font-weight: 700;
             background: linear-gradient(135deg, #ffffff, var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
@@ -125,17 +133,18 @@
         .nav-search input {
             width: 100%;
             padding: 0.7rem 1.2rem;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 60px;
             color: white;
             font-size: 0.9rem;
             transition: var(--transition);
+            backdrop-filter: blur(4px);
         }
 
         .nav-search input:focus {
             outline: none;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.12);
             border-color: var(--accent-blue);
         }
 
@@ -156,10 +165,11 @@
             font-weight: 500;
             transition: var(--transition);
             cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .nav-link:hover {
-            background: rgba(45, 106, 255, 0.15);
+            background: rgba(45, 106, 255, 0.2);
             color: var(--accent-cyan);
         }
 
@@ -180,12 +190,19 @@
         }
 
         .sidebar-section {
-            background: var(--bg-card);
+            background: rgba(13, 31, 60, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-radius: var(--radius-md);
             padding: 1rem;
             margin-bottom: 1rem;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: var(--transition);
+        }
+
+        .sidebar-section:hover {
+            background: rgba(13, 31, 60, 0.7);
+            border-color: rgba(45, 106, 255, 0.3);
         }
 
         .sidebar-title {
@@ -229,7 +246,9 @@
         }
 
         .hero-card {
-            background: linear-gradient(135deg, var(--bg-card), #0A1A3A);
+            background: linear-gradient(135deg, rgba(13, 31, 60, 0.7), rgba(10, 26, 58, 0.7));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-radius: var(--radius-lg);
             padding: 1.8rem;
             margin-bottom: 1.5rem;
@@ -273,7 +292,9 @@
         }
 
         .google-card {
-            background: linear-gradient(135deg, #0A1A3A, var(--bg-card));
+            background: rgba(10, 26, 58, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border: 1px solid var(--accent-green);
             border-radius: var(--radius-md);
             transition: var(--transition);
@@ -282,6 +303,7 @@
         .google-card:hover {
             transform: translateX(4px);
             border-color: var(--accent-blue);
+            background: rgba(10, 26, 58, 0.8);
         }
         
         .google-link {
@@ -325,7 +347,9 @@
         }
 
         .doc-card {
-            background: var(--bg-card);
+            background: rgba(13, 31, 60, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border-radius: var(--radius-md);
             border: 1px solid var(--border-light);
             transition: var(--transition);
@@ -337,6 +361,7 @@
         .doc-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent-blue);
+            background: rgba(13, 31, 60, 0.8);
             box-shadow: var(--shadow-lg);
         }
 
@@ -399,11 +424,12 @@
             margin: 0 auto;
             padding: 1.5rem;
             text-align: center;
-            border-top: 1px solid var(--border-light);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 0.7rem;
             color: var(--text-muted);
         }
 
+        /* Модальное окно "Чат в разработке" */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -411,7 +437,7 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
             z-index: 3000;
             display: flex;
             align-items: center;
@@ -427,7 +453,8 @@
         }
 
         .modal-toast {
-            background: linear-gradient(135deg, #0D1F3C, #0A1A3A);
+            background: linear-gradient(135deg, rgba(13, 31, 60, 0.95), rgba(10, 26, 58, 0.95));
+            backdrop-filter: blur(12px);
             border: 1px solid var(--accent-cyan);
             border-radius: var(--radius-lg);
             padding: 1.5rem 2rem;
@@ -471,13 +498,15 @@
             transform: scale(1.02);
         }
 
+        /* Chat Popup */
         .chat-popup {
             position: fixed;
             bottom: 80px;
             right: 20px;
             width: 380px;
             height: 500px;
-            background: linear-gradient(145deg, #0D1F3C, #0A1A3A);
+            background: rgba(13, 31, 60, 0.95);
+            backdrop-filter: blur(16px);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
             z-index: 2000;
@@ -504,7 +533,7 @@
         }
         
         .popup-header {
-            background: #07122A;
+            background: rgba(7, 18, 42, 0.8);
             padding: 0.8rem 1rem;
             display: flex;
             align-items: center;
@@ -567,7 +596,7 @@
         }
         
         .popup-bubble {
-            background: #07122A;
+            background: rgba(7, 18, 42, 0.8);
             padding: 0.5rem 0.8rem;
             border-radius: 16px;
             border-top-left-radius: 4px;
@@ -603,7 +632,7 @@
         
         .popup-input-area {
             padding: 0.8rem;
-            background: #07122A;
+            background: rgba(7, 18, 42, 0.8);
             display: flex;
             gap: 0.5rem;
             border-top: 1px solid var(--border-light);
@@ -641,6 +670,7 @@
             transform: scale(1.05);
         }
 
+        /* Плавающая иконка чата */
         .chat-float-btn {
             position: fixed;
             bottom: 20px;
@@ -698,6 +728,7 @@
             animation: none;
         }
 
+        /* Адаптация */
         @media (max-width: 1024px) {
             .sidebar { width: 260px; }
             .nav-search { max-width: 280px; }
@@ -707,7 +738,7 @@
             .navbar { padding: 0.75rem 1rem; }
             .nav-container { flex-direction: column; align-items: stretch; }
             .nav-search { max-width: 100%; order: 3; }
-            .logo { justify-content: space-between; }
+            .logo { justify-content: space-between; width: fit-content; }
             .nav-links { justify-content: flex-end; }
             .sidebar { display: none; }
             .main-container { padding: 1rem; }
@@ -779,7 +810,7 @@
             <button class="sidebar-item" id="chatSidebarBtn">
                 <span class="sidebar-icon">💬</span>Открыть чат
             </button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.15); border-radius: var(--radius-sm); backdrop-filter: blur(4px);">
                 <div style="font-size: 0.65rem; color: var(--accent-cyan);">⚙️ В разработке</div>
                 <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Полноценный чат появится скоро</div>
             </div>
@@ -792,6 +823,7 @@
             <div class="hero-subtitle">Актуальная документация и ход работ</div>
         </div>
 
+        <!-- Google Таблицы в одном стиле -->
         <div class="google-cards-container">
             <div class="google-card">
                 <a href="VIS-Ogni-3.html" class="google-link">
@@ -831,6 +863,7 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
+<!-- Модальное окно "Чат в разработке" -->
 <div id="modalOverlay" class="modal-overlay">
     <div class="modal-toast">
         <h3>💬 Чат в разработке</h3>
@@ -839,6 +872,7 @@
     </div>
 </div>
 
+<!-- Всплывающее окно чата -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header">
         <div class="popup-title">
@@ -868,11 +902,23 @@
     </div>
 </div>
 
+<!-- Плавающая иконка чата -->
 <div class="chat-float-btn" id="chatFloatBtn">
     🗨️
 </div>
 
 <script>
+    // ===== ЭФФЕКТ ПРОЗРАЧНОЙ ШАПКИ ПРИ СКРОЛЛЕ =====
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // ===== ФУНКЦИЯ ДЛЯ АКТИВНЫХ ССЫЛОК В ЧАТЕ =====
     function linkifyAdvanced(text) {
         if (!text) return text;
         
@@ -893,6 +939,7 @@
         return result;
     }
 
+    // ===== DOCUMENTS DATA =====
     const pages = [
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
         { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
@@ -969,7 +1016,8 @@
                 bottom: 90px;
                 left: 50%;
                 transform: translateX(-50%) translateY(100px);
-                background: #0D1F3C;
+                background: rgba(13, 31, 60, 0.95);
+                backdrop-filter: blur(8px);
                 border-left: 4px solid #2D6AFF;
                 padding: 0.6rem 1.2rem;
                 border-radius: 50px;
@@ -1025,6 +1073,7 @@
         });
     }
 
+    // ===== CHAT FUNCTIONS =====
     function openChatPopup() {
         const popup = document.getElementById('chatPopup');
         if (popup) popup.classList.add('show');
@@ -1073,6 +1122,7 @@
         });
     }
 
+    // ===== НАСТРОЙКА КНОПОК ЧАТА =====
     document.getElementById('chatNavBtn')?.addEventListener('click', function(e) {
         e.preventDefault();
         showModalToast();
@@ -1084,16 +1134,6 @@
     
     document.getElementById('chatFloatBtn')?.addEventListener('click', function() {
         openChatPopup();
-    });
-
-    // Эффект при скролле для шапки
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
     });
 
     const style = document.createElement('style');

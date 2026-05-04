@@ -1,16 +1,4 @@
-┌─────────────────────────────────────────────────────────────┐
-│  Огни 3              Ресурсы · Трудовые ресурсы    04.05.2026│
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌───────────────────────────────────────────────────────┐ │
-│  │ Объект/Секция │ Раздел ВИС │ Наименование │ Подрядная  │Всего│
-│  ├───────────────┼────────────┼──────────────┼────────────┼─────┤
-│  │ Секция 1      │ ЭОМ        │ Монтаж КЛ... │ ООО "ИНЭКО"│  3  │
-│  │               │            │              │    3 чел.  │     │
-│  └───────────────────────────────────────────────────────┘ │
-│                                                             │
-│  АО «Огни 3» · Данные актуальны на момент открытия          │
-└─────────────────────────────────────────────────────────────┘<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -36,7 +24,7 @@
             margin: 0 auto;
         }
 
-        /* Шапка — скрывается на мобильных */
+        /* Шапка */
         .header {
             background: white;
             border-bottom: 2px solid #2C6B2F;
@@ -180,10 +168,6 @@
             background: white;
         }
 
-        .resources-table tr:hover td {
-            background: #F8FAFC;
-        }
-
         .section-header td {
             background: #E8EDF2;
             font-weight: 700;
@@ -191,7 +175,6 @@
             color: #2C3E50;
         }
 
-        /* Подрядчики */
         .contractors-list {
             display: flex;
             flex-direction: column;
@@ -216,12 +199,6 @@
             padding: 0.15rem;
         }
 
-        .contractor-name:hover {
-            background: #E8EDF2;
-            border-radius: 3px;
-        }
-
-        /* Контролы изменения численности */
         .people-control {
             display: flex;
             align-items: center;
@@ -253,16 +230,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.15s;
         }
 
         .people-btn:hover {
             background: #2C6B2F;
             color: white;
-        }
-
-        .people-btn:active {
-            transform: scale(0.95);
         }
 
         .add-contractor-btn {
@@ -276,10 +248,6 @@
             color: #2C6B2F;
         }
 
-        .add-contractor-btn:hover {
-            background: rgba(44, 107, 47, 0.15);
-        }
-
         .remove-contractor {
             background: none;
             border: none;
@@ -288,10 +256,6 @@
             font-size: 13px;
             padding: 0 0.15rem;
             border-radius: 3px;
-        }
-
-        .remove-contractor:hover {
-            background: rgba(211, 47, 47, 0.1);
         }
 
         .total-people-cell {
@@ -315,7 +279,6 @@
             color: #8A9DA8;
         }
 
-        /* Кнопка домой */
         .home-button {
             position: fixed;
             bottom: 25px;
@@ -332,7 +295,6 @@
             z-index: 1000;
             text-decoration: none;
             border: 2px solid rgba(255,255,255,0.2);
-            transition: all 0.3s;
         }
 
         .home-button:hover {
@@ -362,7 +324,6 @@
             color: white;
         }
 
-        /* ===== TOAST С АНИМАЦИЕЙ РАСТВОРЕНИЯ ЗА 1 СЕКУНДУ ===== */
         .toast {
             position: fixed;
             bottom: 90px;
@@ -376,7 +337,7 @@
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease;
             white-space: nowrap;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             pointer-events: none;
@@ -387,13 +348,9 @@
             visibility: visible;
         }
 
-        .toast.hide {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
+        .page-slide-out-left { animation: slideOutLeft 0.35s ease-out forwards; }
+        .page-slide-in-right { animation: slideInRight 0.35s ease-out forwards; }
 
-        /* Анимации перехода между страницами */
         @keyframes slideOutLeft {
             0% { opacity: 1; transform: translateX(0); }
             100% { opacity: 0; transform: translateX(-100%); }
@@ -404,17 +361,124 @@
             100% { opacity: 1; transform: translateX(0); }
         }
 
-        .page-slide-out-left { animation: slideOutLeft 0.35s ease-out forwards; }
-        .page-slide-in-right { animation: slideInRight 0.35s ease-out forwards; }
-
+        /* ===== ПРАВИЛЬНЫЕ СТИЛИ ДЛЯ PDF (А4, ТЕХНИЧЕСКИЙ СТИЛЬ) ===== */
         @media print {
-            @page { size: A4; margin: 1.5cm; }
-            body { background: white; padding: 0; }
-            .admin-panel, .back-btn, .btn, .home-button, .toast, .add-contractor-btn, .remove-contractor, .people-btn {
+            @page {
+                size: A4;
+                margin: 2cm 1.5cm 2cm 1.5cm;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            
+            /* Скрываем все элементы интерфейса */
+            .admin-panel,
+            .back-btn,
+            .btn,
+            .home-button,
+            .toast,
+            .add-contractor-btn,
+            .remove-contractor,
+            .people-btn,
+            .logo {
                 display: none !important;
             }
-            .header { display: flex !important; background: white; border-bottom: 1px solid black; }
-            .resources-table th { background: #E8EDF2; color: black; }
+            
+            /* Шапка для печати */
+            .header {
+                display: flex !important;
+                background: white;
+                border-bottom: 1px solid #000;
+                padding: 0 0 0.5rem 0;
+                margin-bottom: 1rem;
+                box-shadow: none;
+            }
+            
+            .logo-text, .title, .date-badge {
+                color: #000;
+            }
+            
+            /* Таблица для печати */
+            .table-wrapper {
+                overflow: visible !important;
+                max-height: none !important;
+                border: 1px solid #000;
+                box-shadow: none;
+            }
+            
+            .resources-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            
+            .resources-table th {
+                background: #E8EDF2 !important;
+                color: #000 !important;
+                border-bottom: 1px solid #000 !important;
+                border-right: 1px solid #ccc;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .resources-table td {
+                border-bottom: 1px solid #ccc;
+                border-right: 1px solid #eee;
+                background: white !important;
+            }
+            
+            .section-header td {
+                background: #F0F4F8 !important;
+                font-weight: bold;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .grand-total td {
+                background: #E8EDF2 !important;
+                color: #000 !important;
+                font-weight: bold;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            /* Запрещаем разрыв строк */
+            .contractor-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .people-control {
+                border: 1px solid #ccc;
+                background: white;
+            }
+            
+            .people-value {
+                color: #000;
+            }
+            
+            .contractor-name {
+                cursor: default;
+                color: #000;
+            }
+            
+            .total-people-cell {
+                background: #F0F7F0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .footer {
+                margin-top: 1rem;
+                color: #666;
+            }
+            
+            /* Запрещаем дублирование содержимого */
+            .resources-table tbody tr {
+                page-break-inside: avoid;
+            }
         }
 
         @media (max-width: 1024px) {
@@ -431,8 +495,6 @@
             .home-button { width: 40px; height: 40px; bottom: 15px; right: 15px; }
             .home-icon { font-size: 20px; }
             .people-value { min-width: 30px; font-size: 11px; }
-            .people-btn { width: 20px; height: 20px; font-size: 12px; }
-            .toast { font-size: 0.7rem; padding: 0.4rem 0.8rem; white-space: normal; text-align: center; max-width: 90vw; }
         }
     </style>
 </head>
@@ -485,7 +547,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ =====
+    // ===== ПОЛНЫЕ И КОРРЕКТНЫЕ ДАННЫЕ =====
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -745,19 +807,13 @@
         return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
     }
     
-    // ===== TOAST С АНИМАЦИЕЙ РАСТВОРЕНИЯ ЗА 1 СЕКУНДУ =====
     function showToast(message) {
         const toast = document.getElementById('toast');
         
-        // Останавливаем предыдущий таймер
-        if (toastTimeout) {
-            clearTimeout(toastTimeout);
-        }
+        if (toastTimeout) clearTimeout(toastTimeout);
         
-        // Если тост уже виден, убираем класс show
         if (toast.classList.contains('show')) {
             toast.classList.remove('show');
-            // Небольшая задержка перед показом нового сообщения
             setTimeout(() => {
                 toast.textContent = message;
                 toast.classList.add('show');
@@ -773,10 +829,8 @@
     function startHideTimer(toast) {
         toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
-            // После исчезновения очищаем таймер
             toastTimeout = null;
-        }, 1000); // 1 секунда до начала исчезновения
-        // Сама анимация исчезновения занимает 0.3s
+        }, 1000);
         setTimeout(() => {
             if (toastTimeout) {
                 clearTimeout(toastTimeout);
@@ -786,17 +840,12 @@
         }, 1300);
     }
     
-    // ===== ПЕРЕХОД НА ГЛАВНУЮ ЧЕРЕЗ 1 СЕКУНДУ =====
     function navigateToHome() {
         if (navigateTimeout) return;
-        
         const container = document.getElementById('pageContainer');
-        
         navigateTimeout = setTimeout(() => {
             container.classList.add('page-slide-out-left');
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 350);
+            setTimeout(() => { window.location.href = 'index.html'; }, 350);
             navigateTimeout = null;
         }, 1000);
     }
@@ -808,13 +857,14 @@
         }
     }
     
-    // Обработчики
+    function exportToPDF() {
+        showToast('Подготовка PDF...');
+        setTimeout(() => { window.print(); }, 300);
+    }
+    
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
-    document.getElementById('pdfBtn').addEventListener('click', () => {
-        showToast('Подготовка PDF...');
-        setTimeout(() => window.print(), 200);
-    });
+    document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
     
     document.getElementById('backBtn')?.addEventListener('click', (e) => {
         e.preventDefault();
@@ -834,11 +884,9 @@
         navigateToHome();
     });
     
-    // Отмена навигации при взаимодействии
     document.querySelector('.table-wrapper')?.addEventListener('click', cancelNavigation);
     document.querySelector('.admin-panel')?.addEventListener('click', cancelNavigation);
     
-    // Анимация появления
     document.getElementById('pageContainer').classList.add('page-slide-in-right');
     setTimeout(() => {
         document.getElementById('pageContainer').classList.remove('page-slide-in-right');

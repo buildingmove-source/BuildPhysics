@@ -2,27 +2,67 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="theme-color" content="#1A1A2E">
+    <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры, чат команды">
     <title>Огни 3 | Штаб строительства</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
+        /* ===== CSS Variables ===== */
+        :root {
+            --bg-dark: #1A1A2E;
+            --bg-card: #16213E;
+            --bg-sidebar: #0F0F1A;
+            --accent-red: #E94560;
+            --accent-green: #34a853;
+            --accent-blue: #6b8cff;
+            --text-primary: #EEEEEE;
+            --text-secondary: #8A9BDF;
+            --text-muted: #5A6BA0;
+            --border-light: rgba(255,255,255,0.05);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.2);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 24px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: #1A1A2E;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            color: #EEEEEE;
+            background: var(--bg-dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
             line-height: 1.5;
+            overflow-x: hidden;
         }
 
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-sidebar);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-red);
+            border-radius: 10px;
+        }
+
+        /* ===== Navigation ===== */
         .navbar {
-            background: rgba(22, 30, 42, 0.95);
+            background: rgba(22, 30, 42, 0.98);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--border-light);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -30,106 +70,126 @@
         }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
             gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--accent-red), #533483);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            transition: var(--transition);
+        }
+
+        .logo-icon:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #6b8cff);
+            background: linear-gradient(135deg, #ffffff, var(--accent-blue));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .logo-icon {
-            background: linear-gradient(135deg, #E94560, #533483);
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
         .nav-search {
             flex: 1;
-            max-width: 400px;
+            max-width: 360px;
         }
 
         .nav-search input {
             width: 100%;
             padding: 0.7rem 1.2rem;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 40px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-light);
+            border-radius: 60px;
             color: white;
             font-size: 0.9rem;
+            transition: var(--transition);
         }
 
         .nav-search input:focus {
             outline: none;
-            border-color: #E94560;
+            background: rgba(255,255,255,0.1);
+            border-color: var(--accent-red);
+        }
+
+        .nav-search input::placeholder {
+            color: var(--text-muted);
         }
 
         .nav-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
         .nav-link {
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            color: #AAAAAA;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: all 0.2s;
+            font-weight: 500;
+            transition: var(--transition);
         }
 
         .nav-link:hover {
             background: rgba(233, 69, 96, 0.15);
-            color: #E94560;
+            color: var(--accent-red);
         }
 
+        /* ===== Main Layout ===== */
         .main-container {
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
             padding: 1.5rem;
             display: flex;
             gap: 1.5rem;
-            flex-wrap: wrap;
         }
 
+        /* ===== Sidebar ===== */
         .sidebar {
             width: 280px;
+            flex-shrink: 0;
             position: sticky;
             top: 80px;
             height: fit-content;
         }
 
         .sidebar-section {
-            background: #16213E;
-            border-radius: 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
             padding: 1rem;
             margin-bottom: 1rem;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid var(--border-light);
+            transition: var(--transition);
         }
 
         .sidebar-title {
             font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #8A9BDF;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
             margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .sidebar-item {
@@ -137,12 +197,15 @@
             align-items: center;
             gap: 0.75rem;
             padding: 0.7rem;
-            border-radius: 12px;
-            color: #EEEEEE;
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
             text-decoration: none;
-            transition: all 0.2s;
-            margin-bottom: 0.2rem;
+            transition: var(--transition);
             cursor: pointer;
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
         }
 
         .sidebar-item:hover {
@@ -155,15 +218,32 @@
             width: 28px;
         }
 
-        .content {
-            flex: 1;
-            min-width: 280px;
+        .online-badge {
+            margin-left: auto;
+            background: var(--accent-green);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
         }
 
+        .chat-status {
+            margin-top: 0.8rem;
+            padding: 0.6rem;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: var(--radius-sm);
+        }
+
+        /* ===== Content ===== */
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Hero Card */
         .hero-card {
-            background: linear-gradient(135deg, #16213E, #0F3460);
-            border-radius: 24px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--bg-card), #0F3460);
+            border-radius: var(--radius-lg);
+            padding: 1.8rem;
             margin-bottom: 1.5rem;
             border: 1px solid rgba(233, 69, 96, 0.2);
             position: relative;
@@ -173,22 +253,77 @@
         .hero-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(233,69,96,0.15), transparent);
+            top: -30%;
+            right: -10%;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.15), transparent);
             border-radius: 50%;
         }
 
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, #E94560);
+            background: linear-gradient(135deg, #FFFFFF, var(--accent-red));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Google Card */
+        .google-card {
+            background: linear-gradient(135deg, #0F3460, var(--bg-card));
+            border: 1px solid var(--accent-green);
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .google-card:hover {
+            transform: translateX(4px);
+            border-color: var(--accent-red);
+        }
+        
+        .google-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Documents Grid */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .docs-count {
+            background: var(--accent-red);
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
 
         .docs-grid {
@@ -198,10 +333,10 @@
         }
 
         .doc-card {
-            background: #16213E;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            transition: var(--transition);
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -209,8 +344,8 @@
 
         .doc-card:hover {
             transform: translateY(-4px);
-            border-color: #E94560;
-            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.5);
+            border-color: var(--accent-red);
+            box-shadow: var(--shadow-lg);
         }
 
         .doc-card::after {
@@ -220,7 +355,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, #E94560, #533483);
+            background: linear-gradient(90deg, var(--accent-red), #533483);
             transform: scaleX(0);
             transition: transform 0.3s;
         }
@@ -238,82 +373,62 @@
 
         .doc-icon {
             font-size: 2rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             display: inline-block;
         }
 
         .doc-name {
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #ffffff;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
         }
 
         .doc-meta {
             display: flex;
             gap: 1rem;
             font-size: 0.65rem;
-            color: #8A9BDF;
+            color: var(--text-secondary);
             margin-top: 0.5rem;
+            flex-wrap: wrap;
         }
 
-        .google-card {
-            background: linear-gradient(135deg, #0F3460, #16213E);
-            border: 1px solid #34a853;
-            border-radius: 20px;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s;
-        }
-        
-        .google-card:hover {
-            transform: translateX(4px);
-            border-color: #E94560;
-        }
-        
-        .google-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.2rem;
-            text-decoration: none;
-            color: inherit;
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
         }
 
-        .toast-notification {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #16213E;
-            border-left: 4px solid #E94560;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            z-index: 2000;
-            transition: transform 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        /* Footer */
+        .footer {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.7rem;
+            color: var(--text-muted);
         }
 
-        .toast-notification.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
+        /* Chat Popup */
         .chat-popup {
             position: fixed;
             bottom: 20px;
             right: 20px;
             width: 380px;
             height: 500px;
-            background: #16213E;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
             z-index: 2000;
             display: none;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid rgba(233,69,96,0.3);
+            border: 1px solid rgba(233, 69, 96, 0.3);
             animation: slideUp 0.3s ease;
         }
         
@@ -333,7 +448,7 @@
         }
         
         .popup-header {
-            background: #0F0F1A;
+            background: var(--bg-sidebar);
             padding: 0.8rem 1rem;
             display: flex;
             align-items: center;
@@ -352,17 +467,18 @@
         .close-popup {
             background: none;
             border: none;
-            color: #8A9BDF;
+            color: var(--text-secondary);
             font-size: 1.2rem;
             cursor: pointer;
             width: 30px;
             height: 30px;
             border-radius: 50%;
+            transition: var(--transition);
         }
         
         .close-popup:hover {
-            background: rgba(233,69,96,0.2);
-            color: #E94560;
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--accent-red);
         }
         
         .popup-messages {
@@ -386,7 +502,7 @@
         }
         
         .popup-bubble {
-            background: #0F0F1A;
+            background: var(--bg-sidebar);
             padding: 0.5rem 0.8rem;
             border-radius: 16px;
             border-top-left-radius: 4px;
@@ -394,14 +510,14 @@
         }
         
         .popup-message.outgoing .popup-bubble {
-            background: #E94560;
+            background: var(--accent-red);
             border-top-right-radius: 4px;
             border-top-left-radius: 16px;
         }
         
         .popup-input-area {
             padding: 0.8rem;
-            background: #0F0F1A;
+            background: var(--bg-sidebar);
             display: flex;
             gap: 0.5rem;
         }
@@ -409,7 +525,7 @@
         .popup-input {
             flex: 1;
             background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--border-light);
             border-radius: 24px;
             padding: 0.5rem 0.8rem;
             color: white;
@@ -417,49 +533,143 @@
         }
         
         .popup-send {
-            background: #E94560;
+            background: var(--accent-red);
             border: none;
             width: 36px;
             height: 36px;
             border-radius: 50%;
             cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .popup-send:hover {
+            transform: scale(1.05);
         }
 
-        .footer {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.75rem;
-            color: #5A6BA0;
+        /* Toast */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent-red);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            z-index: 2000;
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-md);
+            font-size: 0.85rem;
         }
 
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Animations */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 260px;
+            }
+            .nav-search {
+                max-width: 280px;
+            }
         }
 
         @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .nav-container { flex-direction: column; }
-            .nav-search { max-width: 100%; width: 100%; }
-            .hero-title { font-size: 1.3rem; }
-            .main-container { padding: 1rem; }
-            .chat-popup { width: calc(100% - 20px); right: 10px; left: 10px; bottom: 10px; height: 70vh; }
+            .navbar {
+                padding: 0.75rem 1rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nav-search {
+                max-width: 100%;
+                order: 3;
+            }
+            .logo {
+                justify-content: space-between;
+            }
+            .nav-links {
+                justify-content: flex-end;
+            }
+            .sidebar {
+                display: none;
+            }
+            .main-container {
+                padding: 1rem;
+            }
+            .hero-title {
+                font-size: 1.3rem;
+            }
+            .hero-card {
+                padding: 1.2rem;
+            }
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+            .chat-popup {
+                width: calc(100% - 20px);
+                right: 10px;
+                left: 10px;
+                bottom: 10px;
+                height: 65vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.2rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .doc-name {
+                font-size: 0.85rem;
+            }
+            .google-link {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Tablet landscape */
+        @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+            .sidebar {
+                width: 220px;
+            }
+            .docs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
 
+<!-- Navigation -->
 <nav class="navbar">
     <div class="nav-container">
-        <div class="logo">
+        <div class="logo" onclick="window.location.href='index.html'">
             <div class="logo-icon">🏗️</div>
-            <span>Огни 3</span>
+            <span class="logo-text">Огни 3</span>
         </div>
         <div class="nav-search">
-            <input type="text" id="globalSearch" placeholder="Поиск по документам... (Ctrl+K)">
+            <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам... (Ctrl+K)">
         </div>
         <div class="nav-links">
             <a href="chat.html" class="nav-link">Чат</a>
@@ -467,47 +677,50 @@
     </div>
 </nav>
 
+<!-- Main Content -->
 <div class="main-container">
+    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-section">
-            <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-            <div class="sidebar-item" onclick="filterDocs('all')">
+            <div class="sidebar-title">📁 БЫСТРЫЙ ДОСТУП</div>
+            <button class="sidebar-item" onclick="filterDocs('all')">
                 <span class="sidebar-icon">📋</span>Все документы
-            </div>
-            <div class="sidebar-item" onclick="filterDocs('protocol')">
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('protocol')">
                 <span class="sidebar-icon">🔥</span>Протоколы
-            </div>
-            <div class="sidebar-item" onclick="filterDocs('registry')">
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('registry')">
                 <span class="sidebar-icon">📊</span>Реестры
-            </div>
-            <div class="sidebar-item" onclick="filterDocs('finance')">
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('finance')">
                 <span class="sidebar-icon">₽</span>Финансы
-            </div>
-            <div class="sidebar-item" onclick="filterDocs('tech')">
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('tech')">
                 <span class="sidebar-icon">💼</span>Техническая часть
-            </div>
+            </button>
         </div>
         
         <div class="sidebar-section">
             <div class="sidebar-title">💬 ЧАТ КОМАНДЫ</div>
-            <div class="sidebar-item" onclick="openChatPopup()">
+            <button class="sidebar-item" onclick="openChatPopup()">
                 <span class="sidebar-icon">💬</span>Открыть чат
-                <span style="margin-left: auto; background: #E94560; padding: 0.1rem 0.5rem; border-radius: 20px; font-size: 0.65rem;">3</span>
-            </div>
+                <span class="online-badge"></span>
+            </button>
             <a href="chat.html" class="sidebar-item">
                 <span class="sidebar-icon">🖥️</span>Полная версия чата
             </a>
-            <div style="margin-top: 0.8rem; padding: 0.5rem; background: rgba(233,69,96,0.1); border-radius: 12px;">
-                <div style="font-size: 0.7rem; color: #E94560;">● Активность: 4 онлайн</div>
-                <div style="font-size: 0.6rem; color: #8A9BDF; margin-top: 0.3rem;">Гончаров А.С., Кривоносов В.В., Кудлай Н.Н., Вы</div>
+            <div class="chat-status">
+                <div style="font-size: 0.7rem; color: var(--accent-red);">● 4 онлайн</div>
+                <div style="font-size: 0.6rem; color: var(--text-secondary); margin-top: 0.2rem;">Гончаров А.С., Кривоносов В.В., Кудлай Н.Н., Вы</div>
             </div>
         </div>
     </aside>
 
+    <!-- Content -->
     <main class="content">
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
-            <p style="color: #8A9BDF; margin-bottom: 1rem;">Актуальная документация и ход работ</p>
+            <div class="hero-subtitle">Актуальная документация и ход работ</div>
         </div>
 
         <div class="google-card">
@@ -515,28 +728,34 @@
                 <div style="font-size: 2rem;">📊</div>
                 <div style="flex: 1;">
                     <div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div>
-                    <div style="font-size: 0.7rem; color: #34a853;">Google Таблица · Актуальные данные</div>
+                    <div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div>
                 </div>
-                <div style="font-size: 0.8rem; color: #8A9BDF;">Открыть →</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
             </a>
         </div>
 
-        <div id="docsContainer" class="docs-grid">
-            <!-- Документы загрузятся через JS -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>📄 Документы</span>
+                <span class="docs-count" id="docsCount">6</span>
+            </div>
         </div>
+
+        <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<div class="footer">
+<footer class="footer">
     Огни 3 · Строительный портал · © 2026
-</div>
+</footer>
 
+<!-- Chat Popup -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header" onclick="toggleChatPopup()">
         <div class="popup-title">
             <span>💬</span>
             <span>Чат · Огни 3</span>
-            <span style="background: #34a853; width: 8px; height: 8px; border-radius: 50%;"></span>
+            <span style="background: var(--accent-green); width: 8px; height: 8px; border-radius: 50%;"></span>
         </div>
         <button class="close-popup" onclick="event.stopPropagation(); closeChatPopup()">✕</button>
     </div>
@@ -552,18 +771,19 @@
         </div>
     </div>
     <div class="popup-input-area">
-        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение...">
+        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение..." enterkeyhint="send">
         <button class="popup-send" onclick="sendPopupMessage()">📤</button>
     </div>
 </div>
 
+<!-- Toast -->
 <div id="toast" class="toast-notification">
     <span>✅</span>
     <span id="toastMessage">Документ открыт</span>
 </div>
 
 <script>
-    // ДАННЫЕ ДОКУМЕНТОВ
+    // ===== DOCUMENTS DATA =====
     const pages = [
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📋", date: "22.04.2026", category: "protocol" },
         { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📋", date: "28.04.2026", category: "protocol" },
@@ -574,22 +794,27 @@
     ];
 
     let currentFilter = 'all';
+    let currentSearch = '';
 
-    function renderDocs(filterText = '', category = currentFilter) {
+    // ===== RENDER FUNCTIONS =====
+    function renderDocs() {
         const container = document.getElementById('docsContainer');
-        let filtered = pages.filter(p => p.name.toLowerCase().includes(filterText.toLowerCase()));
+        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
         
-        if (category !== 'all') {
-            filtered = filtered.filter(p => p.category === category);
+        if (currentFilter !== 'all') {
+            filtered = filtered.filter(p => p.category === currentFilter);
         }
         
+        const countSpan = document.getElementById('docsCount');
+        if (countSpan) countSpan.textContent = filtered.length;
+        
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="text-align: center; padding: 3rem; background: #16213E; border-radius: 20px;">📭 Ничего не найдено</div>`;
+            container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`;
             return;
         }
         
         container.innerHTML = filtered.map((page, index) => `
-            <div class="doc-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s both">
+            <div class="doc-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
                 <a href="${page.file}" class="card-link" rel="noopener noreferrer">
                     <div class="doc-icon">${page.icon}</div>
                     <div class="doc-name">${escapeHtml(page.name)}</div>
@@ -604,20 +829,17 @@
     
     function filterDocs(category) {
         currentFilter = category;
-        const searchValue = document.getElementById('globalSearch').value;
-        renderDocs(searchValue, category);
-        showToast(`Показаны: ${getCategoryName(category)}`);
-    }
-    
-    function getCategoryName(category) {
-        const names = {
+        renderDocs();
+        
+        let categoryName = {
             'all': 'все документы',
             'protocol': 'протоколы',
             'registry': 'реестры',
             'finance': 'финансы',
-            'tech': 'техническая часть'
-        };
-        return names[category] || 'документы';
+            'tech': 'техническую часть'
+        }[category] || 'документы';
+        
+        showToast(`📁 Показаны: ${categoryName}`);
     }
     
     function escapeHtml(str) {
@@ -629,9 +851,11 @@
         });
     }
 
+    // ===== TOAST =====
     function showToast(message) {
         const toast = document.getElementById('toast');
         const msgSpan = document.getElementById('toastMessage');
+        if (!toast) return;
         msgSpan.textContent = message;
         toast.classList.add('show');
         setTimeout(() => {
@@ -639,39 +863,47 @@
         }, 2000);
     }
 
-    // ПОИСК
+    // ===== SEARCH =====
     const searchInput = document.getElementById('globalSearch');
     let debounceTimer;
-    searchInput.addEventListener('input', (e) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            renderDocs(e.target.value, currentFilter);
-        }, 200);
-    });
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                currentSearch = e.target.value;
+                renderDocs();
+            }, 300);
+        });
+    }
 
-    // HOTKEY Ctrl+K
+    // ===== HOTKEY Ctrl+K =====
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
-            searchInput.focus();
-            showToast('🔍 Введите текст поиска');
+            if (searchInput) {
+                searchInput.focus();
+                showToast('🔍 Введите текст поиска');
+            }
         }
     });
 
-    // ФУНКЦИИ ЧАТА
+    // ===== CHAT FUNCTIONS =====
     function openChatPopup() {
         const popup = document.getElementById('chatPopup');
-        popup.classList.add('show');
-        showToast('💬 Чат открыт');
+        if (popup) {
+            popup.classList.add('show');
+            showToast('💬 Чат открыт');
+        }
     }
     
     function closeChatPopup() {
         const popup = document.getElementById('chatPopup');
-        popup.classList.remove('show');
+        if (popup) popup.classList.remove('show');
     }
     
     function toggleChatPopup() {
         const popup = document.getElementById('chatPopup');
+        if (!popup) return;
         if (popup.classList.contains('show')) {
             popup.classList.remove('show');
         } else {
@@ -705,14 +937,17 @@
         }, 800);
     }
     
-    document.getElementById('popupMessageInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            sendPopupMessage();
-        }
-    });
+    const messageInput = document.getElementById('popupMessageInput');
+    if (messageInput) {
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendPopupMessage();
+            }
+        });
+    }
 
-    // ЗАПУСК
+    // ===== INIT =====
     renderDocs();
 </script>
 </body>

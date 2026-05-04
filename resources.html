@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>Ресурсы · Огни 3 | Трудовые ресурсы</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Стили остаются без изменений (как в предыдущей версии) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #E8EDF2;
             font-family: 'Segoe UI', 'Arial', sans-serif;
@@ -18,12 +14,7 @@
             padding: 0.5rem;
             min-height: 100vh;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 1400px; margin: 0 auto; }
         .header {
             background: white;
             border-bottom: 2px solid #2C6B2F;
@@ -36,14 +27,12 @@
             gap: 1rem;
             border-radius: 8px 8px 0 0;
         }
-
         .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
         }
-
         .logo-icon {
             background: #2C6B2F;
             width: 36px;
@@ -55,19 +44,16 @@
             color: white;
             font-weight: bold;
         }
-
         .logo-text {
             font-size: 1.2rem;
             font-weight: 600;
             color: #2C3E50;
         }
-
         .title {
             font-size: 1.2rem;
             font-weight: 500;
             color: #2C3E50;
         }
-
         .date-badge {
             background: #E8EDF2;
             padding: 0.3rem 1rem;
@@ -75,7 +61,6 @@
             font-size: 0.75rem;
             font-family: monospace;
         }
-
         .back-btn {
             background: #2C6B2F;
             border: none;
@@ -85,9 +70,7 @@
             cursor: pointer;
             font-size: 0.8rem;
         }
-
         .back-btn:hover { background: #1E4A21; }
-
         .admin-panel {
             background: white;
             border: 1px solid #D0D7DE;
@@ -100,7 +83,6 @@
             flex-wrap: wrap;
             gap: 0.8rem;
         }
-
         .admin-badge {
             background: #E8EDF2;
             padding: 0.3rem 0.8rem;
@@ -108,7 +90,6 @@
             font-size: 0.7rem;
             color: #2C6B2F;
         }
-
         .btn {
             border: none;
             padding: 0.4rem 0.9rem;
@@ -117,14 +98,12 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-
         .btn-save { background: #2C6B2F; color: white; }
         .btn-save:hover { background: #1E4A21; }
-        .btn-pdf { background: #D32F2F; color: white; }
-        .btn-pdf:hover { background: #B71C1C; }
+        .btn-repo { background: #D32F2F; color: white; }
+        .btn-repo:hover { background: #B71C1C; }
         .btn-reset { background: #F5F5F5; color: #5A6E7A; border: 1px solid #D0D7DE; }
         .btn-reset:hover { background: #EEEEEE; }
-
         .table-wrapper {
             background: white;
             border: 1px solid #D0D7DE;
@@ -134,21 +113,18 @@
             max-height: calc(100vh - 120px);
             position: relative;
         }
-
         .resources-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 12px;
             min-width: 800px;
         }
-
         .resources-table thead tr {
             position: sticky;
             top: 0;
             z-index: 30;
             background: white;
         }
-
         .resources-table th {
             background: #2C3E50;
             color: white;
@@ -163,37 +139,26 @@
             top: 0;
             z-index: 31;
         }
-
         .resources-table td {
             padding: 0.5rem 0.6rem;
             border-bottom: 1px solid #E8EDF2;
             vertical-align: top;
             background: white;
         }
-
-        .resources-table tr:hover td {
-            background: #F8FAFC;
-        }
-
+        .resources-table tr:hover td { background: #F8FAFC; }
         .section-header td {
             background: #E8EDF2;
             font-weight: 700;
             font-size: 13px;
             color: #2C3E50;
         }
-
-        /* Редактируемая ячейка наименования работ */
         .editable-work-cell {
             cursor: pointer;
             padding: 0.15rem;
             border-radius: 3px;
             transition: all 0.2s;
         }
-
-        .editable-work-cell:hover {
-            background: #E8EDF2;
-        }
-
+        .editable-work-cell:hover { background: #E8EDF2; }
         .editable-work-cell input {
             width: 100%;
             background: white;
@@ -203,13 +168,11 @@
             font-size: 11px;
             font-family: 'Segoe UI', 'Arial', sans-serif;
         }
-
         .contractors-list {
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
         }
-
         .contractor-item {
             display: flex;
             align-items: center;
@@ -219,7 +182,6 @@
             background: #F8FAFC;
             border-radius: 4px;
         }
-
         .contractor-name {
             flex: 1;
             font-size: 11px;
@@ -227,12 +189,10 @@
             cursor: pointer;
             padding: 0.15rem;
         }
-
         .contractor-name:hover {
             background: #E8EDF2;
             border-radius: 3px;
         }
-
         .people-control {
             display: flex;
             align-items: center;
@@ -242,7 +202,6 @@
             border-radius: 4px;
             padding: 0.05rem;
         }
-
         .people-value {
             min-width: 40px;
             text-align: center;
@@ -250,7 +209,6 @@
             font-size: 12px;
             padding: 0.1rem 0;
         }
-
         .people-btn {
             background: none;
             border: none;
@@ -265,12 +223,10 @@
             align-items: center;
             justify-content: center;
         }
-
         .people-btn:hover {
             background: #2C6B2F;
             color: white;
         }
-
         .add-contractor-btn {
             background: rgba(44, 107, 47, 0.08);
             border: 1px dashed #2C6B2F;
@@ -281,7 +237,6 @@
             font-size: 10px;
             color: #2C6B2F;
         }
-
         .remove-contractor {
             background: none;
             border: none;
@@ -291,20 +246,17 @@
             padding: 0 0.15rem;
             border-radius: 3px;
         }
-
         .total-people-cell {
             text-align: center;
             font-weight: 700;
             font-size: 13px;
             background: #F0F7F0;
         }
-
         .grand-total td {
             background: #2C6B2F;
             color: white;
             font-weight: 700;
         }
-
         .footer {
             text-align: center;
             margin-top: 0.8rem;
@@ -312,7 +264,6 @@
             font-size: 0.65rem;
             color: #8A9DA8;
         }
-
         .home-button {
             position: fixed;
             bottom: 25px;
@@ -330,11 +281,7 @@
             text-decoration: none;
             border: 2px solid rgba(255,255,255,0.2);
         }
-
-        .home-button:hover {
-            transform: scale(1.08);
-        }
-
+        .home-button:hover { transform: scale(1.08); }
         .home-button::after {
             content: '';
             position: absolute;
@@ -347,17 +294,11 @@
             animation: pulseGreen 1.2s infinite;
             z-index: -1;
         }
-
         @keyframes pulseGreen {
             0% { transform: scale(1); opacity: 0.5; }
             100% { transform: scale(1.35); opacity: 0; }
         }
-
-        .home-icon {
-            font-size: 26px;
-            color: white;
-        }
-
+        .home-icon { font-size: 26px; color: white; }
         .toast {
             position: fixed;
             bottom: 90px;
@@ -376,32 +317,23 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             pointer-events: none;
         }
-
-        .toast.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .toast.show { opacity: 1; visibility: visible; }
         .page-slide-out-left { animation: slideOutLeft 0.35s ease-out forwards; }
         .page-slide-in-right { animation: slideInRight 0.35s ease-out forwards; }
-
         @keyframes slideOutLeft {
             0% { opacity: 1; transform: translateX(0); }
             100% { opacity: 0; transform: translateX(-100%); }
         }
-
         @keyframes slideInRight {
             0% { opacity: 0; transform: translateX(100%); }
             100% { opacity: 1; transform: translateX(0); }
         }
-
         @media (max-width: 1024px) {
             .header { display: none !important; }
             .table-wrapper { max-height: calc(100vh - 100px); }
             .home-button { width: 44px; height: 44px; bottom: 20px; right: 20px; }
             .home-icon { font-size: 22px; }
         }
-
         @media (max-width: 768px) {
             body { padding: 0.3rem; }
             .resources-table th { padding: 0.5rem 0.4rem; font-size: 9px; }
@@ -425,14 +357,28 @@
         <button class="back-btn" id="backBtn">← На главную</button>
     </div>
 
+    <!-- Панель с кнопкой экспорта в репозиторий -->
     <div class="admin-panel">
         <div>
             <span class="admin-badge">Режим редактирования</span>
         </div>
         <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
             <button class="btn btn-save" id="saveBtn">Сохранить</button>
-            <button class="btn btn-pdf" id="pdfBtn">Экспорт PDF</button>
+            <button class="btn btn-repo" id="repoBtn">📁 Экспорт в репозиторий</button>
             <button class="btn btn-reset" id="resetBtn">Сбросить</button>
+        </div>
+    </div>
+
+    <!-- Панель для ввода токена GitHub (показывается при первом экспорте) -->
+    <div id="tokenPanel" style="display: none; background: white; border: 1px solid #D0D7DE; border-radius: 8px; padding: 0.8rem; margin-bottom: 1rem;">
+        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <span style="font-weight: 600;">🔑 Токен GitHub:</span>
+            <input type="password" id="githubToken" placeholder="ghp_XXXXXXXXXXXXXXXXXXXX" style="flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+            <button id="saveTokenBtn" class="btn btn-save">Сохранить токен</button>
+        </div>
+        <div style="font-size: 0.65rem; color: #666; margin-top: 0.5rem;">
+            ⚠️ Токен нужен для сохранения файла в репозиторий. 
+            <a href="https://github.com/settings/tokens" target="_blank">Создать токен</a> (нужны права: repo)
         </div>
     </div>
 
@@ -573,9 +519,15 @@
     ];
 
     const STORAGE_KEY = 'ogni3_resources_final';
+    const TOKEN_KEY = 'github_pat_ogni3';
     let resourcesData = [];
     let navigateTimeout = null;
     let toastTimeout = null;
+
+    // GitHub репозиторий
+    const GITHUB_USERNAME = "buildingmove-source";
+    const GITHUB_REPO = "BuildPhysics";
+    const FILE_PATH = "resources_data_export.html";
 
     function formatDate() {
         const now = new Date();
@@ -593,7 +545,7 @@
 
     function saveData() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(resourcesData));
-        showToast('Данные сохранены');
+        showToast('Данные сохранены в браузере');
     }
 
     function resetData() {
@@ -674,7 +626,6 @@
         input.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveEdit(); });
     }
 
-    // ===== НОВАЯ ФУНКЦИЯ: Редактирование наименования работ =====
     function editWorkName(rowIndex, element) {
         const currentWork = resourcesData[rowIndex].work;
         const input = document.createElement('input');
@@ -698,7 +649,7 @@
             resourcesData[rowIndex].work = newWork;
             container.innerHTML = escapeHtml(newWork);
             showToast('Наименование работ изменено');
-            renderTable(); // Обновляем таблицу
+            renderTable();
         };
         
         input.addEventListener('blur', saveEdit);
@@ -756,88 +707,209 @@
     
     function showToast(message) {
         const toast = document.getElementById('toast');
-        
         if (toastTimeout) clearTimeout(toastTimeout);
+        toast.textContent = message;
+        toast.classList.add('show');
+        toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    }
+    
+    // ===== ЭКСПОРТ В РЕПОЗИТОРИЙ =====
+    function getGitHubToken() {
+        return localStorage.getItem(TOKEN_KEY);
+    }
+    
+    function saveGitHubToken(token) {
+        localStorage.setItem(TOKEN_KEY, token);
+    }
+    
+    function showTokenPanel() {
+        document.getElementById('tokenPanel').style.display = 'block';
+    }
+    
+    function hideTokenPanel() {
+        document.getElementById('tokenPanel').style.display = 'none';
+    }
+    
+    async function exportToRepository() {
+        let token = getGitHubToken();
         
-        if (toast.classList.contains('show')) {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                toast.textContent = message;
-                toast.classList.add('show');
-                startHideTimer(toast);
-            }, 200);
-        } else {
-            toast.textContent = message;
-            toast.classList.add('show');
-            startHideTimer(toast);
+        if (!token) {
+            showTokenPanel();
+            showToast('Введите токен GitHub для сохранения в репозиторий');
+            return;
+        }
+        
+        showToast('Подготовка файла...');
+        
+        // Формируем HTML для экспорта
+        const now = new Date();
+        const dateStr = `${now.getDate().toString().padStart(2,'0')}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getFullYear()}`;
+        const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        
+        let exportRows = [];
+        let currentSection = '';
+        
+        resourcesData.forEach((item) => {
+            if (currentSection !== item.section) {
+                currentSection = item.section;
+                exportRows.push({ type: 'section', section: item.section });
+            }
+            const contractorsList = item.contractors.map(c => `${c.name}: ${c.people}`).join(', ');
+            exportRows.push({ type: 'row', section: item.section, subsys: item.subsys, work: item.work, contractors: contractorsList, total: getRowTotal(item.contractors) });
+        });
+        
+        const totalPeople = getTotalPeople();
+        
+        const exportHtml = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ресурсы Огни 3 от ${dateStr}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: white;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2C6B2F;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { color: #666; font-size: 12px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        th {
+            background: #2C3E50;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        .section-header td { background: #E8EDF2; font-weight: bold; }
+        .grand-total td { background: #2C6B2F; color: white; font-weight: bold; }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Трудовые ресурсы</h1>
+        <p>ЖК «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Объект / Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
+        </thead>
+        <tbody>
+            ${exportRows.map(row => {
+                if (row.type === 'section') {
+                    return `<tr class="section-header"><td colspan="5"><strong>${row.section}</strong><td></tr>`;
+                } else {
+                    return `<tr><td>${escapeHtml(row.section)}</td><td>${escapeHtml(row.subsys)}</td><td>${escapeHtml(row.work)}</td><td>${escapeHtml(row.contractors)}</td><td style="text-align: center;">${row.total}</td></tr>`;
+                }
+            }).join('')}
+            <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align: center;"><strong>${totalPeople}</strong></td><tr>
+        </tbody>
+    </table>
+    <div class="footer">Данные актуальны на момент формирования · ЖК «Огни 3»</div>
+</div>
+</body>
+</html>`;
+        
+        try {
+            // Получаем текущий файл (если существует)
+            let sha = null;
+            try {
+                const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                if (getResponse.ok) {
+                    const data = await getResponse.json();
+                    sha = data.sha;
+                }
+            } catch(e) { /* Файла нет, создаём новый */ }
+            
+            // Отправляем файл
+            const uploadResponse = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `Экспорт ресурсов от ${dateStr} ${timeStr}`,
+                    content: btoa(unescape(encodeURIComponent(exportHtml))),
+                    sha: sha
+                })
+            });
+            
+            if (uploadResponse.ok) {
+                showToast(`✅ Файл сохранён в репозиторий!\nhttps://github.com/${GITHUB_USERNAME}/${GITHUB_REPO}/blob/main/${FILE_PATH}`);
+                hideTokenPanel();
+            } else {
+                const error = await uploadResponse.json();
+                showToast(`❌ Ошибка: ${error.message || 'Неизвестная ошибка'}`);
+            }
+        } catch(error) {
+            showToast(`❌ Ошибка соединения: ${error.message}`);
         }
     }
     
-    function startHideTimer(toast) {
-        toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-            toastTimeout = null;
-        }, 1000);
-        setTimeout(() => {
-            if (toastTimeout) {
-                clearTimeout(toastTimeout);
-                toastTimeout = null;
-            }
-            toast.classList.remove('show');
-        }, 1300);
+    function saveToken() {
+        const tokenInput = document.getElementById('githubToken');
+        const token = tokenInput.value.trim();
+        if (token) {
+            saveGitHubToken(token);
+            hideTokenPanel();
+            showToast('Токен сохранён');
+            exportToRepository();
+        } else {
+            showToast('Введите корректный токен');
+        }
     }
     
     function navigateToHome() {
         if (navigateTimeout) return;
-        const container = document.getElementById('pageContainer');
         navigateTimeout = setTimeout(() => {
-            container.classList.add('page-slide-out-left');
+            document.getElementById('pageContainer').classList.add('page-slide-out-left');
             setTimeout(() => { window.location.href = 'index.html'; }, 350);
             navigateTimeout = null;
         }, 1000);
     }
     
-    function cancelNavigation() {
-        if (navigateTimeout) {
-            clearTimeout(navigateTimeout);
-            navigateTimeout = null;
-        }
-    }
-    
-    function exportToPDF() {
-        showToast('Подготовка PDF...');
-        setTimeout(() => { window.print(); }, 300);
-    }
-    
     document.getElementById('saveBtn').addEventListener('click', saveData);
     document.getElementById('resetBtn').addEventListener('click', resetData);
-    document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
+    document.getElementById('repoBtn').addEventListener('click', exportToRepository);
+    document.getElementById('saveTokenBtn').addEventListener('click', saveToken);
     
-    document.getElementById('backBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast('Переход на главную через 1 секунду...');
-        navigateToHome();
-    });
-    
-    document.getElementById('backLogo')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast('Переход на главную через 1 секунду...');
-        navigateToHome();
-    });
-    
-    document.getElementById('homeBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast('Переход на главную через 1 секунду...');
-        navigateToHome();
-    });
-    
-    document.querySelector('.table-wrapper')?.addEventListener('click', cancelNavigation);
-    document.querySelector('.admin-panel')?.addEventListener('click', cancelNavigation);
+    document.getElementById('backBtn')?.addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });
+    document.getElementById('backLogo')?.addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });
+    document.getElementById('homeBtn').addEventListener('click', (e) => { e.preventDefault(); navigateToHome(); });
     
     document.getElementById('pageContainer').classList.add('page-slide-in-right');
-    setTimeout(() => {
-        document.getElementById('pageContainer').classList.remove('page-slide-in-right');
-    }, 500);
+    setTimeout(() => { document.getElementById('pageContainer').classList.remove('page-slide-in-right'); }, 500);
     
     loadData();
 </script>

@@ -146,7 +146,6 @@
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
-            cursor: pointer;
         }
 
         .nav-link:hover {
@@ -389,27 +388,220 @@
             color: var(--text-muted);
         }
 
-        .toast-notification {
+        /* Chat Popup */
+        .chat-popup {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
+            right: 20px;
+            width: 380px;
+            height: 500px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        
+        .chat-popup.show {
+            display: flex;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .popup-header {
+            background: var(--bg-sidebar);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .popup-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .development-badge {
+            background: rgba(233, 69, 96, 0.2);
+            color: #ffaa33;
+            font-size: 0.55rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 40px;
+            margin-left: 0.5rem;
+        }
+        
+        .close-popup {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .close-popup:hover {
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--accent-red);
+        }
+        
+        .popup-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .development-message {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--accent-red);
+            margin-bottom: 1rem;
+        }
+        
+        .development-message h3 {
+            color: var(--accent-red);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .development-message p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        .demo-message {
+            background: var(--bg-sidebar);
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .popup-message {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 85%;
+        }
+        
+        .popup-message.outgoing {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .popup-bubble {
+            background: var(--bg-sidebar);
+            padding: 0.5rem 0.8rem;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .popup-message.outgoing .popup-bubble {
+            background: var(--accent-red);
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+        
+        .popup-input-area {
+            padding: 0.8rem;
+            background: var(--bg-sidebar);
+            display: flex;
+            gap: 0.5rem;
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .popup-input {
+            flex: 1;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 0.5rem 0.8rem;
+            color: white;
+            font-size: 0.8rem;
+        }
+        
+        .popup-input:focus {
+            outline: none;
+            border-color: var(--accent-red);
+        }
+        
+        .popup-send {
+            background: var(--accent-red);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .popup-send:hover {
+            transform: scale(1.05);
+        }
+
+        /* Центрированный тост для мобильных */
+        .center-toast {
+            position: fixed;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
+            transform: translate(-50%, -50%) scale(0.9);
             background: var(--bg-card);
             border-left: 4px solid var(--accent-red);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            padding: 1rem 1.8rem;
+            border-radius: 60px;
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            z-index: 2000;
-            transition: transform 0.3s ease;
-            box-shadow: var(--shadow-md);
-            font-size: 0.85rem;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            font-size: 0.9rem;
+            text-align: center;
             white-space: nowrap;
         }
-
-        .toast-notification.show {
-            transform: translateX(-50%) translateY(0);
+        
+        .center-toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        @media (max-width: 480px) {
+            .center-toast {
+                font-size: 0.8rem;
+                padding: 0.8rem 1.2rem;
+                white-space: normal;
+                max-width: 85vw;
+                text-align: center;
+            }
         }
 
         @keyframes fadeInUp {
@@ -423,17 +615,13 @@
             }
         }
 
-        /* ===== АДАПТАЦИЯ ПЛАНШЕТЫ ===== */
-        @media (max-width: 1024px) and (min-width: 769px) {
+        /* Адаптивность */
+        @media (max-width: 1024px) {
             .sidebar {
                 width: 240px;
             }
-            .docs-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
-        /* ===== ТЕЛЕФОН ПОРТРЕТ ===== */
         @media (max-width: 768px) {
             .navbar {
                 padding: 0.75rem 1rem;
@@ -448,6 +636,9 @@
             }
             .logo {
                 justify-content: space-between;
+            }
+            .nav-links {
+                justify-content: flex-end;
             }
             .sidebar {
                 display: none;
@@ -464,33 +655,31 @@
             .docs-grid {
                 grid-template-columns: 1fr;
             }
-            .toast-notification {
-                white-space: normal;
-                text-align: center;
-                max-width: 90%;
+            .chat-popup {
+                width: calc(100% - 20px);
+                right: 10px;
+                left: 10px;
+                bottom: 10px;
+                height: 60vh;
             }
         }
 
-        /* ===== ТЕЛЕФОН ЛАНДШАФТ (2 колонки) ===== */
-        @media (max-width: 896px) and (orientation: landscape) {
+        /* Ландшафтная ориентация на телефонах и планшетах — 2 колонки */
+        @media (min-width: 560px) and (max-width: 900px) and (orientation: landscape) {
             .docs-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .sidebar {
+                display: none;
+            }
             .hero-title {
-                font-size: 1.1rem;
-            }
-            .hero-card {
-                padding: 0.8rem;
-            }
-            .main-container {
-                padding: 0.8rem;
+                font-size: 1.2rem;
             }
         }
 
-        /* ===== ПЛАНШЕТ ЛАНДШАФТ ===== */
-        @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
             .docs-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -522,7 +711,7 @@
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
         </div>
         <div class="nav-links">
-            <div class="nav-link" onclick="showChatDevelopmentToast()">Чат</div>
+            <a href="#" class="nav-link" onclick="showCenterToast(); return false;">Взаимодействие</a>
         </div>
     </div>
 </nav>
@@ -550,12 +739,12 @@
         
         <div class="sidebar-section">
             <div class="sidebar-title">🤝 ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" onclick="showChatDevelopmentToast()">
-                <span class="sidebar-icon">💬</span>Чат команды
+            <button class="sidebar-item" onclick="openChatPopup()">
+                <span class="sidebar-icon">💬</span>Открыть чат
             </button>
             <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(233,69,96,0.1); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: #ffaa33;">⚙️ В разработке</div>
-                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Скоро появится</div>
+                <div style="font-size: 0.65rem; color: #ffaa33;">⚙️ Демо-режим</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Тестовые сообщения</div>
             </div>
         </div>
     </aside>
@@ -592,9 +781,42 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
-<div id="toast" class="toast-notification">
-    <span>💬</span>
-    <span id="toastMessage">Сообщение</span>
+<!-- Chat Popup (Working Demo) -->
+<div id="chatPopup" class="chat-popup">
+    <div class="popup-header" onclick="toggleChatPopup()">
+        <div class="popup-title">
+            <span>💬</span>
+            <span>Чат · Огни 3</span>
+            <span class="development-badge">Demo</span>
+        </div>
+        <button class="close-popup" onclick="event.stopPropagation(); closeChatPopup()">✕</button>
+    </div>
+    <div class="popup-messages" id="popupMessages">
+        <div class="development-message">
+            <h3>💬 Чат в разработке</h3>
+            <p>Полноценный чат появится в ближайшее время</p>
+            <div class="demo-message">Демо-режим: вы можете отправлять тестовые сообщения</div>
+        </div>
+        <div class="popup-message">
+            <div class="popup-bubble">Доброе утро, коллеги! 📢</div>
+        </div>
+        <div class="popup-message outgoing">
+            <div class="popup-bubble">Здравствуйте! Готовим протоколы</div>
+        </div>
+        <div class="popup-message">
+            <div class="popup-bubble">Отлично, ждём от вас данные по ВИС</div>
+        </div>
+    </div>
+    <div class="popup-input-area">
+        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите тестовое сообщение...">
+        <button class="popup-send" onclick="sendPopupMessage()">📤</button>
+    </div>
+</div>
+
+<!-- Центрированный тост для мобильных -->
+<div id="centerToast" class="center-toast">
+    <span>⚙️</span>
+    <span>Чат в разработке · Функция появится скоро</span>
 </div>
 
 <script>
@@ -610,7 +832,6 @@
 
     let currentFilter = 'all';
     let currentSearch = '';
-    let toastTimeout = null;
 
     function renderDocs() {
         const container = document.getElementById('docsContainer');
@@ -654,7 +875,7 @@
             'tech': 'техническую часть'
         }[category] || 'документы';
         
-        showToast(`📁 Показаны: ${categoryName}`, 1500);
+        showBottomToast(`📁 Показаны: ${categoryName}`);
     }
     
     function escapeHtml(str) {
@@ -666,26 +887,54 @@
         });
     }
 
-    function showToast(message, duration = 2000) {
-        const toast = document.getElementById('toast');
-        const msgSpan = document.getElementById('toastMessage');
-        if (!toast) return;
-        
-        if (toastTimeout) clearTimeout(toastTimeout);
-        
-        msgSpan.textContent = message;
-        toast.classList.add('show');
-        
-        toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-        }, duration);
-    }
-    
-    function showChatDevelopmentToast() {
-        showToast('💬 Чат в разработке · Функция появится скоро', 2500);
+    // Нижний тост (для обратной связи)
+    let bottomToastTimeout;
+    function showBottomToast(message) {
+        let toast = document.getElementById('bottomToast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'bottomToast';
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%) translateY(100px);
+                background: var(--bg-card);
+                border-left: 4px solid var(--accent-red);
+                padding: 0.8rem 1.5rem;
+                border-radius: 50px;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                z-index: 2000;
+                transition: transform 0.3s ease;
+                box-shadow: var(--shadow-md);
+                font-size: 0.85rem;
+                white-space: nowrap;
+            `;
+            document.body.appendChild(toast);
+        }
+        toast.innerHTML = `<span>✅</span><span>${message}</span>`;
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        clearTimeout(bottomToastTimeout);
+        bottomToastTimeout = setTimeout(() => {
+            toast.style.transform = 'translateX(-50%) translateY(100px)';
+        }, 2000);
     }
 
-    // ===== ПОИСК (без подсказки о сочетании клавиш) =====
+    // Центрированный тост (для кнопки "Взаимодействие")
+    let centerToastTimeout;
+    function showCenterToast() {
+        const toast = document.getElementById('centerToast');
+        if (!toast) return;
+        toast.classList.add('show');
+        clearTimeout(centerToastTimeout);
+        centerToastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
+    }
+
+    // Поиск
     const searchInput = document.getElementById('globalSearch');
     let debounceTimer;
     if (searchInput) {
@@ -698,33 +947,83 @@
         });
     }
 
-    // ===== ОТСЛЕЖИВАНИЕ ПОВОРОТА ЭКРАНА ДЛЯ АДАПТАЦИИ =====
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            const grid = document.querySelector('.docs-grid');
-            if (grid) {
-                const cards = grid.querySelectorAll('.doc-card');
-                cards.forEach((card, idx) => {
-                    card.style.animation = 'none';
-                    setTimeout(() => {
-                        card.style.animation = `fadeInUp 0.3s ease ${idx * 0.05}s forwards`;
-                    }, 10);
-                });
-            }
-        }, 200);
-    });
-
-    // ===== АДАПТАЦИЯ ДЛЯ iOS SAFARI (viewport fix) =====
-    function updateViewportHeight() {
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    // ===== CHAT FUNCTIONS =====
+    function openChatPopup() {
+        const popup = document.getElementById('chatPopup');
+        if (popup) {
+            popup.classList.add('show');
+        }
     }
     
-    window.addEventListener('resize', updateViewportHeight);
-    window.addEventListener('orientationchange', updateViewportHeight);
-    updateViewportHeight();
+    function closeChatPopup() {
+        const popup = document.getElementById('chatPopup');
+        if (popup) popup.classList.remove('show');
+    }
+    
+    function toggleChatPopup() {
+        const popup = document.getElementById('chatPopup');
+        if (!popup) return;
+        if (popup.classList.contains('show')) {
+            popup.classList.remove('show');
+        } else {
+            popup.classList.add('show');
+        }
+    }
+    
+    function sendPopupMessage() {
+        const input = document.getElementById('popupMessageInput');
+        const text = input.value.trim();
+        if (!text) return;
+        
+        const container = document.getElementById('popupMessages');
+        const now = new Date();
+        const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        
+        // Удаляем development-message если есть
+        const devMsg = container.querySelector('.development-message');
+        if (devMsg && container.children.length <= 4) {
+            devMsg.remove();
+        }
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'popup-message outgoing';
+        messageDiv.innerHTML = `<div class="popup-bubble">${escapeHtml(text)}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Вы</div></div>`;
+        container.appendChild(messageDiv);
+        
+        input.value = '';
+        container.scrollTop = container.scrollHeight;
+        
+        // Автоответ (демо-режим)
+        setTimeout(() => {
+            const replyDiv = document.createElement('div');
+            replyDiv.className = 'popup-message';
+            replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено. Чат в разработке.<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
+            container.appendChild(replyDiv);
+            container.scrollTop = container.scrollHeight;
+        }, 500);
+    }
+    
+    const messageInput = document.getElementById('popupMessageInput');
+    if (messageInput) {
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendPopupMessage();
+            }
+        });
+    }
+    
+    // Обработка изменения ориентации экрана (адаптация)
+    window.addEventListener('resize', function() {
+        // Небольшая задержка для корректного пересчёта
+        setTimeout(() => {
+            const popup = document.getElementById('chatPopup');
+            if (popup && popup.classList.contains('show')) {
+                // Пересчитываем позицию при повороте
+                popup.style.transform = 'none';
+            }
+        }, 100);
+    });
 
     renderDocs();
 </script>

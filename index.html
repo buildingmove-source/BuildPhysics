@@ -57,8 +57,9 @@
             border-radius: 10px;
         }
 
+        /* ===== ПРОЗРАЧНАЯ ШАПКА (70% прозрачности) ===== */
         .navbar {
-            background: rgba(13, 31, 60, 0.98);
+            background: rgba(13, 31, 60, 0.7);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-light);
             position: sticky;
@@ -253,7 +254,6 @@
             font-size: 0.9rem;
         }
 
-        /* Google Cards Container */
         .google-cards-container {
             display: flex;
             flex-direction: column;
@@ -393,7 +393,6 @@
             color: var(--text-muted);
         }
 
-        /* Модальное окно "Чат в разработке" */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -461,7 +460,6 @@
             transform: scale(1.02);
         }
 
-        /* Chat Popup (рабочее демо) */
         .chat-popup {
             position: fixed;
             bottom: 80px;
@@ -632,7 +630,6 @@
             transform: scale(1.05);
         }
 
-        /* ===== ПЛАВАЮЩАЯ ИКОНКА ЧАТА ===== */
         .chat-float-btn {
             position: fixed;
             bottom: 20px;
@@ -690,7 +687,6 @@
             animation: none;
         }
 
-        /* Адаптация */
         @media (max-width: 1024px) {
             .sidebar { width: 260px; }
             .nav-search { max-width: 280px; }
@@ -785,7 +781,6 @@
             <div class="hero-subtitle">Актуальная документация и ход работ</div>
         </div>
 
-        <!-- Google Таблицы в одном стиле -->
         <div class="google-cards-container">
             <div class="google-card">
                 <a href="VIS-Ogni-3.html" class="google-link">
@@ -825,7 +820,6 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
-<!-- Модальное окно "Чат в разработке" -->
 <div id="modalOverlay" class="modal-overlay">
     <div class="modal-toast">
         <h3>💬 Чат в разработке</h3>
@@ -834,7 +828,6 @@
     </div>
 </div>
 
-<!-- Всплывающее окно чата -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header">
         <div class="popup-title">
@@ -864,13 +857,11 @@
     </div>
 </div>
 
-<!-- Плавающая иконка чата -->
 <div class="chat-float-btn" id="chatFloatBtn">
     🗨️
 </div>
 
 <script>
-    // ===== ФУНКЦИЯ ДЛЯ АКТИВНЫХ ССЫЛОК В ЧАТЕ =====
     function linkifyAdvanced(text) {
         if (!text) return text;
         
@@ -891,7 +882,6 @@
         return result;
     }
 
-    // ===== DOCUMENTS DATA =====
     const pages = [
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
         { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
@@ -1024,7 +1014,6 @@
         });
     }
 
-    // ===== CHAT FUNCTIONS =====
     function openChatPopup() {
         const popup = document.getElementById('chatPopup');
         if (popup) popup.classList.add('show');
@@ -1073,7 +1062,6 @@
         });
     }
 
-    // ===== НАСТРОЙКА КНОПОК ЧАТА =====
     document.getElementById('chatNavBtn')?.addEventListener('click', function(e) {
         e.preventDefault();
         showModalToast();

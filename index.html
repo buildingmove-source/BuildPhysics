@@ -9,12 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #1A1A2E;
-            --bg-card: #16213E;
-            --bg-sidebar: #0F0F1A;
-            --accent-red: #E94560;
+            --bg-dark: #0A1628;
+            --bg-card: #0D1F3C;
+            --bg-sidebar: #07122A;
+            --accent-blue: #2D6AFF;
+            --accent-cyan: #00B4D8;
             --accent-green: #34a853;
-            --accent-blue: #6b8cff;
             --text-primary: #EEEEEE;
             --text-secondary: #8A9BDF;
             --text-muted: #5A6BA0;
@@ -41,6 +41,12 @@
             color: var(--text-primary);
             line-height: 1.5;
             overflow-x: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
         }
 
         ::-webkit-scrollbar {
@@ -52,12 +58,12 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-red);
+            background: var(--accent-blue);
             border-radius: 10px;
         }
 
         .navbar {
-            background: rgba(22, 30, 42, 0.98);
+            background: rgba(13, 31, 60, 0.98);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-light);
             position: sticky;
@@ -84,7 +90,7 @@
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, var(--accent-red), #533483);
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
             width: 44px;
             height: 44px;
             border-radius: var(--radius-sm);
@@ -102,7 +108,7 @@
         .logo-text {
             font-size: 1.4rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, var(--accent-blue));
+            background: linear-gradient(135deg, #ffffff, var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -127,7 +133,7 @@
         .nav-search input:focus {
             outline: none;
             background: rgba(255,255,255,0.1);
-            border-color: var(--accent-red);
+            border-color: var(--accent-blue);
         }
 
         .nav-search input::placeholder {
@@ -149,8 +155,8 @@
         }
 
         .nav-link:hover {
-            background: rgba(233, 69, 96, 0.15);
-            color: var(--accent-red);
+            background: rgba(45, 106, 255, 0.15);
+            color: var(--accent-cyan);
         }
 
         .main-container {
@@ -204,7 +210,7 @@
         }
 
         .sidebar-item:hover {
-            background: rgba(233, 69, 96, 0.15);
+            background: rgba(45, 106, 255, 0.15);
             transform: translateX(4px);
         }
 
@@ -219,11 +225,11 @@
         }
 
         .hero-card {
-            background: linear-gradient(135deg, var(--bg-card), #0F3460);
+            background: linear-gradient(135deg, var(--bg-card), #0A1A3A);
             border-radius: var(--radius-lg);
             padding: 1.8rem;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(233, 69, 96, 0.2);
+            border: 1px solid rgba(45, 106, 255, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -235,14 +241,14 @@
             right: -10%;
             width: 280px;
             height: 280px;
-            background: radial-gradient(circle, rgba(233, 69, 96, 0.15), transparent);
+            background: radial-gradient(circle, rgba(45, 106, 255, 0.15), transparent);
             border-radius: 50%;
         }
 
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, var(--accent-red));
+            background: linear-gradient(135deg, #FFFFFF, var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -256,7 +262,7 @@
         }
 
         .google-card {
-            background: linear-gradient(135deg, #0F3460, var(--bg-card));
+            background: linear-gradient(135deg, #0A1A3A, var(--bg-card));
             border: 1px solid var(--accent-green);
             border-radius: var(--radius-md);
             margin-bottom: 1.5rem;
@@ -265,7 +271,7 @@
         
         .google-card:hover {
             transform: translateX(4px);
-            border-color: var(--accent-red);
+            border-color: var(--accent-blue);
         }
         
         .google-link {
@@ -295,7 +301,7 @@
         }
 
         .docs-count {
-            background: var(--accent-red);
+            background: var(--accent-blue);
             padding: 0.2rem 0.6rem;
             border-radius: 40px;
             font-size: 0.7rem;
@@ -320,7 +326,7 @@
 
         .doc-card:hover {
             transform: translateY(-4px);
-            border-color: var(--accent-red);
+            border-color: var(--accent-blue);
             box-shadow: var(--shadow-lg);
         }
 
@@ -331,7 +337,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--accent-red), #533483);
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
             transform: scaleX(0);
             transition: transform 0.3s;
         }
@@ -388,49 +394,75 @@
             color: var(--text-muted);
         }
 
-        /* Центральное модальное окно */
-        .center-toast {
+        /* Modal Toast (центрированное сообщение) */
+        .modal-toast {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
-            background: var(--bg-card);
-            border-left: 4px solid var(--accent-red);
-            padding: 1rem 1.8rem;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+            background: linear-gradient(135deg, #0D1F3C, #0A1A3A);
+            border: 1px solid var(--accent-cyan);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem 2rem;
+            text-align: center;
             z-index: 3000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-lg);
-            font-size: 0.95rem;
-            white-space: nowrap;
+            min-width: 280px;
+            max-width: 90vw;
         }
 
-        .center-toast.show {
+        .modal-toast.show {
             opacity: 1;
             visibility: visible;
             transform: translate(-50%, -50%) scale(1);
         }
 
-        /* Chat Popup */
+        .modal-toast h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-toast p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .modal-toast button {
+            margin-top: 1rem;
+            background: var(--accent-blue);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-toast button:hover {
+            background: var(--accent-cyan);
+            transform: scale(1.02);
+        }
+
+        /* Chat Popup - комплементарные цвета (без красного) */
         .chat-popup {
             position: fixed;
             bottom: 20px;
             right: 20px;
             width: 380px;
             height: 500px;
-            background: var(--bg-card);
+            background: linear-gradient(145deg, #0D1F3C, #0A1A3A);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
             z-index: 2000;
             display: none;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid rgba(233, 69, 96, 0.3);
+            border: 1px solid rgba(0, 180, 216, 0.3);
             animation: slideUp 0.3s ease;
         }
         
@@ -450,7 +482,7 @@
         }
         
         .popup-header {
-            background: var(--bg-sidebar);
+            background: #07122A;
             padding: 0.8rem 1rem;
             display: flex;
             align-items: center;
@@ -468,8 +500,8 @@
         }
         
         .development-badge {
-            background: rgba(233, 69, 96, 0.2);
-            color: #ffaa33;
+            background: rgba(0, 180, 216, 0.2);
+            color: var(--accent-cyan);
             font-size: 0.55rem;
             padding: 0.2rem 0.5rem;
             border-radius: 40px;
@@ -489,8 +521,8 @@
         }
         
         .close-popup:hover {
-            background: rgba(233, 69, 96, 0.2);
-            color: var(--accent-red);
+            background: rgba(0, 180, 216, 0.2);
+            color: var(--accent-cyan);
         }
         
         .popup-messages {
@@ -514,7 +546,7 @@
         }
         
         .popup-bubble {
-            background: var(--bg-sidebar);
+            background: #07122A;
             padding: 0.5rem 0.8rem;
             border-radius: 16px;
             border-top-left-radius: 4px;
@@ -522,14 +554,14 @@
         }
         
         .popup-message.outgoing .popup-bubble {
-            background: var(--accent-red);
+            background: var(--accent-blue);
             border-top-right-radius: 4px;
             border-top-left-radius: 16px;
         }
         
         .popup-input-area {
             padding: 0.8rem;
-            background: var(--bg-sidebar);
+            background: #07122A;
             display: flex;
             gap: 0.5rem;
             border-top: 1px solid var(--border-light);
@@ -547,57 +579,39 @@
         
         .popup-input:focus {
             outline: none;
-            border-color: var(--accent-red);
+            border-color: var(--accent-cyan);
         }
         
         .popup-send {
-            background: var(--accent-red);
+            background: var(--accent-blue);
             border: none;
             width: 36px;
             height: 36px;
             border-radius: 50%;
             cursor: pointer;
             transition: var(--transition);
+            color: white;
         }
         
         .popup-send:hover {
+            background: var(--accent-cyan);
             transform: scale(1.05);
         }
 
-        .toast-notification {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--bg-card);
-            border-left: 4px solid var(--accent-red);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            z-index: 2000;
-            transition: transform 0.3s ease;
-            box-shadow: var(--shadow-md);
-            font-size: 0.85rem;
-        }
-
-        .toast-notification.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        /* Адаптация для планшетов и телефонов */
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+            .sidebar {
+                display: none;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .docs-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .chat-popup {
+                width: 350px;
+                height: 450px;
             }
         }
 
-        /* ===== АДАПТИВНАЯ ВЁРСТКА ===== */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 260px;
@@ -637,6 +651,9 @@
             .hero-card {
                 padding: 1.2rem;
             }
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
             .chat-popup {
                 width: calc(100% - 20px);
                 right: 10px;
@@ -646,26 +663,29 @@
             }
         }
 
-        /* Телефоны ландшафт (3 колонки) */
-        @media (min-width: 481px) and (max-width: 900px) and (orientation: landscape) {
+        /* Ландшафт на телефонах — 3 колонки */
+        @media (max-width: 896px) and (orientation: landscape) {
+            .sidebar {
+                display: none;
+            }
             .docs-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 0.8rem;
+            }
+            .hero-title {
+                font-size: 1.1rem;
+            }
+            .hero-card {
+                padding: 0.8rem;
             }
             .doc-name {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
             .doc-icon {
                 font-size: 1.5rem;
             }
-            .doc-meta {
-                font-size: 0.55rem;
-            }
-            .hero-title {
-                font-size: 1rem;
-            }
-            .hero-card {
-                padding: 0.8rem;
+            .chat-popup {
+                width: 320px;
+                height: 380px;
             }
         }
 
@@ -681,31 +701,6 @@
             }
             .google-link {
                 flex-wrap: wrap;
-            }
-            .docs-grid {
-                grid-template-columns: 1fr;
-            }
-            .center-toast {
-                font-size: 0.8rem;
-                padding: 0.8rem 1.2rem;
-                white-space: normal;
-                text-align: center;
-                max-width: 80%;
-                border-radius: 40px;
-            }
-        }
-
-        /* Планшеты портрет */
-        @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
-            .docs-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* Планшеты ландшафт */
-        @media (min-width: 1025px) and (max-width: 1280px) and (orientation: landscape) {
-            .docs-grid {
-                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
@@ -750,11 +745,11 @@
         
         <div class="sidebar-section">
             <div class="sidebar-title">🤝 ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" onclick="openChatPopup()">
+            <button class="sidebar-item" id="chatSidebarBtn">
                 <span class="sidebar-icon">💬</span>Открыть чат
             </button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(233,69,96,0.1); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: #ffaa33;">⚙️ В разработке</div>
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.65rem; color: var(--accent-cyan);">⚙️ В разработке</div>
                 <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим · Тестовые сообщения</div>
             </div>
         </div>
@@ -792,13 +787,14 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
-<!-- Центральное модальное окно для кнопки Чат -->
-<div id="centerToast" class="center-toast">
-    <span>⚙️</span>
-    <span>Чат в разработке · Функция появится скоро</span>
+<!-- Модальное окно (центрированное сообщение) -->
+<div id="modalToast" class="modal-toast">
+    <h3>💬 Чат в разработке</h3>
+    <p>Функция полноценного чата появится в ближайшее время</p>
+    <button onclick="closeModalToast()">Понятно</button>
 </div>
 
-<!-- Chat Popup (Working Demo) -->
+<!-- Chat Popup (комплементарные цвета) -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header" onclick="toggleChatPopup()">
         <div class="popup-title">
@@ -825,18 +821,13 @@
     </div>
 </div>
 
-<div id="toast" class="toast-notification">
-    <span>✅</span>
-    <span id="toastMessage">Документ открыт</span>
-</div>
-
 <script>
     // ===== DOCUMENTS DATA =====
     const pages = [
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📋", date: "22.04.2026", category: "protocol" },
         { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📋", date: "28.04.2026", category: "protocol" },
         { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📋", date: "29.04.2026", category: "protocol" },
-        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "🪚", date: "03.05.2026", category: "registry" },
+        { name: "РСР Реестр отделочных работ", file: "PCP COP.html", icon: "🪚", date: "03.05.2026", category: "registry" },
         { name: "Сводка оплат", file: "Сводка оплат.html", icon: "₽", date: "02.05.2026", category: "finance" },
         { name: "Реестр для чек-листа ИНЭКО", file: "реестр для ЧЛ.html", icon: "💼", date: "01.05.2026", category: "registry" }
     ];
@@ -886,7 +877,7 @@
             'tech': 'техническую часть'
         }[category] || 'документы';
         
-        showBottomToast(`📁 Показаны: ${categoryName}`);
+        showToastMessage(`📁 Показаны: ${categoryName}`);
     }
     
     function escapeHtml(str) {
@@ -898,38 +889,62 @@
         });
     }
 
-    // === Центральный тост ===
-    function showCenterToast() {
-        const toast = document.getElementById('centerToast');
-        if (!toast) return;
-        toast.classList.add('show');
+    // Всплывающее уведомление (маленькое, временное)
+    function showToastMessage(message) {
+        let toast = document.getElementById('tempToast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'tempToast';
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%) translateY(100px);
+                background: #0D1F3C;
+                border-left: 4px solid #2D6AFF;
+                padding: 0.6rem 1.2rem;
+                border-radius: 50px;
+                color: white;
+                font-size: 0.8rem;
+                z-index: 2500;
+                transition: transform 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                white-space: nowrap;
+            `;
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.transform = 'translateX(-50%) translateY(0)';
         setTimeout(() => {
-            toast.classList.remove('show');
+            toast.style.transform = 'translateX(-50%) translateY(100px)';
         }, 2000);
     }
 
-    // === Нижний тост ===
-    function showBottomToast(message) {
-        const toast = document.getElementById('toast');
-        const msgSpan = document.getElementById('toastMessage');
-        if (!toast) return;
-        msgSpan.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 2000);
+    // Модальное окно "Чат в разработке" (центрированное)
+    function showModalToast() {
+        const modal = document.getElementById('modalToast');
+        if (modal) {
+            modal.classList.add('show');
+        }
+    }
+    
+    function closeModalToast() {
+        const modal = document.getElementById('modalToast');
+        if (modal) {
+            modal.classList.remove('show');
+        }
     }
 
-    // === Кнопка чата в шапке — центральный тост ===
-    const chatNavBtn = document.getElementById('chatNavBtn');
-    if (chatNavBtn) {
-        chatNavBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            showCenterToast();
-        });
-    }
+    // Закрытие по клику вне модального окна
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('modalToast');
+        if (modal && modal.classList.contains('show')) {
+            if (!modal.contains(e.target)) {
+                closeModalToast();
+            }
+        }
+    });
 
-    // === Поиск ===
     const searchInput = document.getElementById('globalSearch');
     let debounceTimer;
     if (searchInput) {
@@ -942,7 +957,7 @@
         });
     }
 
-    // === ЧАТ ФУНКЦИИ ===
+    // ===== CHAT FUNCTIONS =====
     function openChatPopup() {
         const popup = document.getElementById('chatPopup');
         if (popup) {
@@ -1001,10 +1016,23 @@
         });
     }
 
-    // === СЛУШАТЕЛЬ ПОВОРОТА ЭКРАНА ===
+    // Обработчики для кнопок чата (показывают модальное окно)
+    document.getElementById('chatNavBtn')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        showModalToast();
+    });
+    
+    document.getElementById('chatSidebarBtn')?.addEventListener('click', function() {
+        showModalToast();
+    });
+
+    // Адаптация под размер экрана при повороте
     window.addEventListener('resize', function() {
-        // При повороте перерисовываем документы
-        renderDocs();
+        const popup = document.getElementById('chatPopup');
+        if (popup && popup.classList.contains('show')) {
+            // При повороте окно чата адаптируется через CSS медиа-запросы
+            // Дополнительная корректировка через JS не требуется
+        }
     });
 
     renderDocs();

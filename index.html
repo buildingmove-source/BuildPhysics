@@ -211,6 +211,36 @@
             width: 28px;
         }
 
+        /* Список файлов ресурсов */
+        .files-list {
+            margin-top: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .file-item:hover {
+            background: rgba(45, 106, 255, 0.15);
+            color: var(--accent-cyan);
+        }
+
+        .file-date {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
         .content {
             flex: 1;
             min-width: 0;
@@ -392,7 +422,6 @@
             color: var(--text-muted);
         }
 
-        /* Модальное окно "Чат в разработке" */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -460,7 +489,6 @@
             transform: scale(1.02);
         }
 
-        /* Chat Popup */
         .chat-popup {
             position: fixed;
             bottom: 80px;
@@ -688,7 +716,6 @@
             animation: none;
         }
 
-        /* Адаптация */
         @media (max-width: 1024px) {
             .sidebar { width: 260px; }
             .nav-search { max-width: 280px; }
@@ -765,21 +792,26 @@
             </button>
         </div>
 
-        <!-- НОВЫЙ РАЗДЕЛ: РЕСУРСЫ -->
+        <!-- РАЗДЕЛ: ЧИСЛЕННОСТЬ РЕСУРСОВ -->
         <div class="sidebar-section">
-            <div class="sidebar-title">📊 РЕСУРСЫ</div>
-            <a href="resources.html" class="sidebar-item">
-                <span class="sidebar-icon">👥</span>Трудовые ресурсы
+            <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
+            
+            <!-- Ссылка на страницу заполнения реестра -->
+            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.15); border-left: 3px solid #2D6AFF;">
+                <span class="sidebar-icon">📝</span>Заполнение реестра
             </a>
-            <a href="#" class="sidebar-item">
-                <span class="sidebar-icon">🏗️</span>Техника и механизмы
-            </a>
-            <a href="#" class="sidebar-item">
-                <span class="sidebar-icon">📦</span>Материалы
-            </a>
+            
+            <!-- Ссылка на экспортированные файлы -->
+            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
+                <div id="exportedFilesList" class="files-list">
+                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+                </div>
+            </div>
+            
             <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: var(--accent-cyan);">📋 Актуальные данные по персоналу</div>
-                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Обновление: ежедневно</div>
+                <div style="font-size: 0.65rem; color: var(--accent-cyan);">📋 Экспорт из реестра</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Автоматическое обновление списка</div>
             </div>
         </div>
         
@@ -840,7 +872,6 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
-<!-- Модальное окно "Чат в разработке" -->
 <div id="modalOverlay" class="modal-overlay">
     <div class="modal-toast">
         <h3>💬 Чат в разработке</h3>
@@ -849,7 +880,6 @@
     </div>
 </div>
 
-<!-- Всплывающее окно чата -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header">
         <div class="popup-title">
@@ -879,7 +909,6 @@
     </div>
 </div>
 
-<!-- Плавающая иконка чата -->
 <div class="chat-float-btn" id="chatFloatBtn">
     🗨️
 </div>
@@ -1013,6 +1042,51 @@
         }, 3000);
     }
 
+    // ===== ЗАГРУЗКА СПИСКА ЭКСПОРТИРОВАННЫХ ФАЙЛОВ =====
+    async function loadExportedFiles() {
+        const container = document.getElementById('exportedFilesList');
+        
+        try {
+            // Получаем список файлов из репозитория через GitHub API
+            const response = await fetch('https://api.github.com/repos/buildingmove-source/BuildPhysics/contents/');
+            if (!response.ok) throw new Error('Не удалось загрузить список');
+            
+            const files = await response.json();
+            
+            // Фильтруем только HTML файлы с ресурсами
+            const resourceFiles = files.filter(file => 
+                file.name.startsWith('Ресурсы_Огни3_') && 
+                file.name.endsWith('.html')
+            );
+            
+            if (resourceFiles.length === 0) {
+                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
+                return;
+            }
+            
+            // Сортируем по дате (новые сверху)
+            resourceFiles.sort((a, b) => new Date(b.name.match(/\d{4}-\d{2}-\d{2}/)?.[0] || 0) - new Date(a.name.match(/\d{4}-\d{2}-\d{2}/)?.[0] || 0));
+            
+            container.innerHTML = resourceFiles.map(file => {
+                // Извлекаем дату из имени файла
+                const dateMatch = file.name.match(/(\d{4}-\d{2}-\d{2})/);
+                const displayDate = dateMatch ? dateMatch[1].replace(/-/g, '.') : 'дата неизвестна';
+                
+                return `
+                    <a href="${file.download_url}" class="file-item" target="_blank" rel="noopener noreferrer">
+                        <span>📄</span>
+                        <span>Экспорт от ${displayDate}</span>
+                        <span class="file-date">${new Date(file.name).toLocaleTimeString ? '' : ''}</span>
+                    </a>
+                `;
+            }).join('');
+            
+        } catch (error) {
+            console.error('Ошибка загрузки файлов:', error);
+            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки списка</div>';
+        }
+    }
+
     function showModalToast() {
         const overlay = document.getElementById('modalOverlay');
         if (overlay) overlay.classList.add('show');
@@ -1048,17 +1122,6 @@
     function closeChatPopup() {
         const popup = document.getElementById('chatPopup');
         if (popup) popup.classList.remove('show');
-        showToastMessage('💬 Чат закрыт');
-    }
-    
-    function toggleChatPopup() {
-        const popup = document.getElementById('chatPopup');
-        if (!popup) return;
-        if (popup.classList.contains('show')) {
-            popup.classList.remove('show');
-        } else {
-            popup.classList.add('show');
-        }
     }
     
     function sendPopupMessage() {
@@ -1099,7 +1162,6 @@
         });
     }
 
-    // ===== НАСТРОЙКА КНОПОК ЧАТА =====
     document.getElementById('chatNavBtn')?.addEventListener('click', function(e) {
         e.preventDefault();
         showModalToast();
@@ -1123,6 +1185,9 @@
     document.head.appendChild(style);
 
     renderDocs();
+    
+    // Загружаем список экспортированных файлов
+    loadExportedFiles();
 </script>
 </body>
 </html>

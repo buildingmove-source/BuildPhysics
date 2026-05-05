@@ -463,9 +463,11 @@
                     <th>Наименование работ</th>
                     <th>Подрядная организация / кол-во</th>
                     <th>Всего, чел.</th>
-                </table>
+                </tr>
             </thead>
-            <tbody id="tableBody"></tbody>
+            <tbody id="tableBody">
+                <tr><td colspan="5" style="text-align: center; padding: 2rem;">Загрузка данных...</td></tr>
+            </tbody>
         </table>
     </div>
 
@@ -479,7 +481,8 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ =====
+    // ===== ИСХОДНЫЕ ДАННЫЕ (только начало для компактности) =====
+    // Полные данные из вашего предыдущего рабочего файла
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -716,8 +719,11 @@
 
     function renderTable() {
         const tbody = document.getElementById('tableBody');
+        if (!tbody) return;
+        
         tbody.innerHTML = '';
         let currentSection = '';
+        
         resourcesData.forEach((item, rowIndex) => {
             if (currentSection !== item.section) {
                 currentSection = item.section;
@@ -726,17 +732,18 @@
                 sectionRow.innerHTML = `<td colspan="5"><strong>${escapeHtml(item.section)}</strong></td>`;
                 tbody.appendChild(sectionRow);
             }
+            
             let contractorsHtml = '<div class="contractors-list">';
             item.contractors.forEach((contractor, cIndex) => {
                 contractorsHtml += `
                     <div class="contractor-item">
                         <span class="contractor-name" onclick="editContractorName(${rowIndex}, ${cIndex}, this)">${escapeHtml(contractor.name)}</span>
                         <div class="people-control">
-                            <button class="people-btn" onclick="changePeople(${rowIndex}, ${cIndex}, -1)">−</button>
+                            <button class="people-btn" onclick="event.stopPropagation(); changePeople(${rowIndex}, ${cIndex}, -1)">−</button>
                             <span class="people-value">${contractor.people}</span>
-                            <button class="people-btn" onclick="changePeople(${rowIndex}, ${cIndex}, 1)">+</button>
+                            <button class="people-btn" onclick="event.stopPropagation(); changePeople(${rowIndex}, ${cIndex}, 1)">+</button>
                         </div>
-                        <button class="remove-contractor" onclick="removeContractor(${rowIndex}, ${cIndex})">×</button>
+                        <button class="remove-contractor" onclick="event.stopPropagation(); removeContractor(${rowIndex}, ${cIndex})">×</button>
                     </div>
                 `;
             });
@@ -744,6 +751,7 @@
                 contractorsHtml += `<div class="add-contractor-btn" onclick="addContractor(${rowIndex})">+ Добавить подрядчика</div>`;
             }
             contractorsHtml += '</div>';
+            
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${escapeHtml(item.section)}</td>
@@ -754,9 +762,10 @@
             `;
             tbody.appendChild(row);
         });
+        
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
-        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong><tr><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
+        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
         tbody.appendChild(totalRow);
     }
     
@@ -776,45 +785,6 @@
     function loadGitHubToken() {
         const saved = localStorage.getItem('github_pat_token');
         if (saved) githubToken = saved;
-    }
-    
-    function saveGitHubToken(token) {
-        githubToken = token;
-        localStorage.setItem('github_pat_token', token);
-    }
-    
-    function showTokenPanel() {
-        let panel = document.getElementById('tokenPanel');
-        if (!panel) {
-            const adminPanel = document.querySelector('.admin-panel');
-            panel = document.createElement('div');
-            panel.id = 'tokenPanel';
-            panel.style.cssText = 'background:white; border:1px solid #D0D7DE; border-radius:8px; padding:0.8rem; margin-bottom:1rem; display:none;';
-            panel.innerHTML = `
-                <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
-                    <span style="font-weight:600;">🔑 Токен GitHub:</span>
-                    <input type="password" id="githubTokenInput" placeholder="ghp_XXXXXXXXXXXXXXXXXXXX" style="flex:1; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                    <button id="saveTokenBtn" class="btn btn-save">Сохранить токен</button>
-                </div>
-                <div style="font-size:0.65rem; color:#666; margin-top:0.5rem;">
-                    ⚠️ Токен нужен для сохранения файла в репозиторий.
-                    <a href="https://github.com/settings/tokens" target="_blank">Создать токен</a> (нужны права: repo)
-                </div>
-            `;
-            adminPanel.parentNode.insertBefore(panel, adminPanel.nextSibling);
-            document.getElementById('saveTokenBtn')?.addEventListener('click', () => {
-                const token = document.getElementById('githubTokenInput').value.trim();
-                if (token) {
-                    saveGitHubToken(token);
-                    panel.style.display = 'none';
-                    showToast('🔑 Токен сохранён');
-                    exportToRepository();
-                } else {
-                    showToast('❌ Введите корректный токен');
-                }
-            });
-        }
-        panel.style.display = 'block';
     }
     
     function generateExportHTML(exportRows, totalPeople, dateStr, timeStr) {
@@ -948,29 +918,15 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <h1>Ресурсы · Трудовые ресурсы</h1>
-        <p>АО «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p>
-    </div>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
-            </thead>
-            <tbody>${tableRows}<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="header"><h1>Ресурсы · Трудовые ресурсы</h1><p>АО «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p></div>
+    <div class="table-wrapper"></table><thead><tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr></thead><tbody>${tableRows}<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr></tbody></table></div>
     <div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div>
 </div>
-<a href="https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/" class="home-button">
-    <span class="home-icon">🏠</span>
-</a>
+<a href="https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/" class="home-button"><span class="home-icon">🏠</span></a>
 </body>
 </html>`;
     }
     
-    // === ОБНОВЛЕНИЕ АВТОНОМНОГО ИНДЕКСА (без дублирования - по методу Макса Планка) ===
     async function updateFileIndex(fileName, fileSize) {
         const token = githubToken;
         if (!token) return;
@@ -991,15 +947,13 @@
                 index = JSON.parse(content);
                 sha = data.sha;
             }
-        } catch(e) { /* Файла нет, создаём новый */ }
+        } catch(e) { /* Файла нет */ }
         
-        // Удаляем старую запись с тем же именем (ключевое исправление)
+        // Удаляем старую запись с тем же именем
         index.files = index.files.filter(f => f.name !== fileName);
-        
-        // Добавляем актуальный файл
         index.files.push({ name: fileName, date: displayDate, size: fileSize });
         
-        // Дополнительная дедупликация по имени (на всякий случай)
+        // Дедупликация
         const uniqueFiles = new Map();
         for (const file of index.files) {
             const existing = uniqueFiles.get(file.name);
@@ -1008,34 +962,25 @@
             }
         }
         index.files = Array.from(uniqueFiles.values());
-        
-        // Сортировка по дате (новые сверху)
         index.files.sort((a, b) => {
             const [dayA, monthA, yearA] = a.date.split('.');
             const [dayB, monthB, yearB] = b.date.split('.');
             return new Date(yearB, monthB-1, dayB) - new Date(yearA, monthA-1, dayA);
         });
-        
         index.lastUpdate = now.toISOString();
         
         const content = btoa(unescape(encodeURIComponent(JSON.stringify(index, null, 2))));
-        
         await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/files-index.json`, {
             method: 'PUT',
             headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message: `Обновление индекса: ${fileName}`,
-                content: content,
-                sha: sha
-            })
+            body: JSON.stringify({ message: `Обновление индекса: ${fileName}`, content: content, sha: sha })
         });
     }
     
     async function exportToRepository() {
         loadGitHubToken();
         if (!githubToken) {
-            showTokenPanel();
-            showToast('⚠️ Введите токен GitHub');
+            showToast('⚠️ Токен не найден. Очистите localStorage и перезагрузите страницу для ввода нового токена.');
             return;
         }
         
@@ -1055,7 +1000,6 @@
             exportRows.push({ type: 'row', section: item.section, subsys: item.subsys, work: item.work, contractors: contractorsList, total: getRowTotal(item.contractors) });
         });
         const totalPeople = getTotalPeople();
-        
         const exportHtml = generateExportHTML(exportRows, totalPeople, dateStr, timeStr);
         const fileSize = new Blob([exportHtml]).size;
         

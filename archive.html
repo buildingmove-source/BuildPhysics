@@ -7,12 +7,7 @@
     <title>Архив ресурсов · Огни 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #1A1A2E;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -20,7 +15,6 @@
             line-height: 1.5;
             min-height: 100vh;
         }
-
         .navbar {
             background: rgba(22, 30, 42, 0.95);
             backdrop-filter: blur(12px);
@@ -30,7 +24,6 @@
             z-index: 1000;
             padding: 0.75rem 1.5rem;
         }
-
         .nav-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -40,141 +33,25 @@
             gap: 1rem;
             flex-wrap: wrap;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-        }
-
-        .logo-icon {
-            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            transition: all 0.3s;
-        }
-
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #00B4D8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .nav-search {
-            flex: 1;
-            max-width: 360px;
-        }
-
-        .nav-search input {
-            width: 100%;
-            padding: 0.7rem 1.2rem;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 60px;
-            color: white;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .nav-search input:focus {
-            outline: none;
-            background: rgba(255,255,255,0.1);
-            border-color: #2D6AFF;
-        }
-
-        .nav-search input::placeholder {
-            color: #5A6BA0;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .nav-link {
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            color: #8A9BDF;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .nav-link:hover {
-            background: rgba(45, 106, 255, 0.15);
-            color: #00B4D8;
-        }
-
-        .main-container {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }
-
-        .archive-header {
-            margin-bottom: 2rem;
-        }
-
-        .archive-title {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, #2D6AFF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .archive-subtitle {
-            color: #8A9BDF;
-            font-size: 0.9rem;
-        }
-
-        .stats-row {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card {
-            background: #16213E;
-            border-radius: 16px;
-            padding: 1rem 1.5rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #2D6AFF;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            color: #8A9BDF;
-            margin-top: 0.3rem;
-        }
-
-        .files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
+        .logo { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .logo-icon { background: linear-gradient(135deg, #2D6AFF, #00B4D8); width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; transition: all 0.3s; }
+        .logo-text { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #ffffff, #00B4D8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .nav-search { flex: 1; max-width: 360px; }
+        .nav-search input { width: 100%; padding: 0.7rem 1.2rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 60px; color: white; font-size: 0.9rem; transition: all 0.2s; }
+        .nav-search input:focus { outline: none; background: rgba(255,255,255,0.1); border-color: #2D6AFF; }
+        .nav-search input::placeholder { color: #5A6BA0; }
+        .nav-links { display: flex; gap: 0.5rem; }
+        .nav-link { padding: 0.5rem 1.2rem; border-radius: 40px; color: #8A9BDF; text-decoration: none; font-weight: 500; transition: all 0.2s; cursor: pointer; }
+        .nav-link:hover { background: rgba(45, 106, 255, 0.15); color: #00B4D8; }
+        .main-container { max-width: 1440px; margin: 0 auto; padding: 1.5rem; }
+        .archive-header { margin-bottom: 2rem; }
+        .archive-title { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #FFFFFF, #2D6AFF); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.5rem; }
+        .archive-subtitle { color: #8A9BDF; font-size: 0.9rem; }
+        .stats-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .stat-card { background: #16213E; border-radius: 16px; padding: 1rem 1.5rem; border: 1px solid rgba(255,255,255,0.05); flex: 1; min-width: 150px; }
+        .stat-number { font-size: 2rem; font-weight: 800; color: #2D6AFF; }
+        .stat-label { font-size: 0.7rem; color: #8A9BDF; margin-top: 0.3rem; }
+        .files-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; margin-top: 1rem; }
         .file-card {
             background: #16213E;
             border-radius: 20px;
@@ -184,116 +61,27 @@
             position: relative;
             overflow: hidden;
         }
-
-        .file-card:hover {
-            transform: translateY(-4px);
-            border-color: #2D6AFF;
-            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.5);
-        }
-
-        .file-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #2D6AFF, #00B4D8);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .file-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .file-link {
-            display: block;
-            padding: 1.2rem;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .file-icon {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-            display: inline-block;
-        }
-
-        .file-name {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            word-break: break-word;
-        }
-
-        .file-meta {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.65rem;
-            color: #8A9BDF;
-            margin-top: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            background: #16213E;
-            border-radius: 20px;
-            color: #8A9BDF;
-        }
-
-        .footer {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.7rem;
-            color: #5A6BA0;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .file-card:hover { transform: translateY(-4px); border-color: #2D6AFF; box-shadow: 0 20px 35px -15px rgba(0,0,0,0.5); }
+        .file-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #2D6AFF, #00B4D8); transform: scaleX(0); transition: transform 0.3s; }
+        .file-card:hover::after { transform: scaleX(1); }
+        .file-link { display: block; padding: 1.2rem; text-decoration: none; color: inherit; }
+        .file-icon { font-size: 2rem; margin-bottom: 0.75rem; display: inline-block; }
+        .file-name { font-weight: 700; font-size: 0.95rem; color: #ffffff; margin-bottom: 0.5rem; word-break: break-word; }
+        .file-meta { display: flex; gap: 1rem; font-size: 0.65rem; color: #8A9BDF; margin-top: 0.5rem; flex-wrap: wrap; }
+        .empty-state { text-align: center; padding: 3rem; background: #16213E; border-radius: 20px; color: #8A9BDF; }
+        .footer { max-width: 1440px; margin: 0 auto; padding: 1.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.7rem; color: #5A6BA0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0.75rem 1rem;
-            }
-            .nav-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .nav-search {
-                max-width: 100%;
-                order: 3;
-            }
-            .logo {
-                justify-content: space-between;
-            }
-            .nav-links {
-                justify-content: flex-end;
-            }
-            .main-container {
-                padding: 1rem;
-            }
-            .archive-title {
-                font-size: 1.5rem;
-            }
-            .files-grid {
-                grid-template-columns: 1fr;
-            }
-            .stat-card {
-                min-width: 120px;
-                padding: 0.8rem 1rem;
-            }
-            .stat-number {
-                font-size: 1.5rem;
-            }
+            .navbar { padding: 0.75rem 1rem; }
+            .nav-container { flex-direction: column; align-items: stretch; }
+            .nav-search { max-width: 100%; order: 3; }
+            .logo { justify-content: space-between; }
+            .nav-links { justify-content: flex-end; }
+            .main-container { padding: 1rem; }
+            .archive-title { font-size: 1.5rem; }
+            .files-grid { grid-template-columns: 1fr; }
+            .stat-card { min-width: 120px; padding: 0.8rem 1rem; }
+            .stat-number { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -323,28 +111,15 @@
     </div>
 
     <div class="stats-row" id="statsContainer">
-        <div class="stat-card">
-            <div class="stat-number" id="totalFiles">—</div>
-            <div class="stat-label">Всего файлов</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number" id="totalSize">—</div>
-            <div class="stat-label">Общий размер</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number" id="lastUpdate">—</div>
-            <div class="stat-label">Последнее обновление</div>
-        </div>
+        <div class="stat-card"><div class="stat-number" id="totalFiles">—</div><div class="stat-label">Всего файлов</div></div>
+        <div class="stat-card"><div class="stat-number" id="totalSize">—</div><div class="stat-label">Общий размер</div></div>
+        <div class="stat-card"><div class="stat-number" id="lastUpdate">—</div><div class="stat-label">Последнее обновление</div></div>
     </div>
 
-    <div id="filesContainer" class="files-grid">
-        <div class="empty-state">⏳ Загрузка...</div>
-    </div>
+    <div id="filesContainer" class="files-grid"><div class="empty-state">⏳ Загрузка...</div></div>
 </div>
 
-<footer class="footer">
-    Огни 3 · Архив экспортированных файлов · © 2026
-</footer>
+<footer class="footer">Огни 3 · Архив экспортированных файлов · © 2026</footer>
 
 <script>
     const GITHUB_USERNAME = "buildingmove-source";
@@ -361,12 +136,7 @@
 
     function extractDateFromFilename(filename) {
         const match = filename.match(/(\d{2})-(\d{2})-(\d{4})/);
-        if (match) {
-            const day = match[1];
-            const month = match[2];
-            const year = match[3];
-            return `${day}.${month}.${year}`;
-        }
+        if (match) return `${match[1]}.${match[2]}.${match[3]}`;
         return null;
     }
 
@@ -378,90 +148,51 @@
         
         try {
             const indexUrl = BASE_URL + 'files-index.json';
-            const response = await fetch(indexUrl);
-            
-            if (!response.ok) {
-                container.innerHTML = `<div class="empty-state">📭 Архив пуст. Выполните экспорт из раздела "Ресурсы".</div>`;
-                totalSpan.textContent = '0';
-                sizeSpan.textContent = '0 KB';
-                lastUpdateSpan.textContent = '—';
-                return;
-            }
-            
+            const response = await fetch(indexUrl, { cache: 'no-store' });
+            if (!response.ok) throw new Error('Индекс не найден');
             const index = await response.json();
             let files = index.files || [];
-            
             if (files.length === 0) {
                 container.innerHTML = `<div class="empty-state">📭 В архиве пока нет файлов. Экспортируйте данные из раздела "Ресурсы".</div>`;
-                totalSpan.textContent = '0';
-                sizeSpan.textContent = '0 KB';
-                lastUpdateSpan.textContent = '—';
+                totalSpan.textContent = '0'; sizeSpan.textContent = '0 KB'; lastUpdateSpan.textContent = '—';
                 return;
             }
-            
-            // Сортировка
             files.sort((a, b) => {
                 const [dayA, monthA, yearA] = a.date.split('.');
                 const [dayB, monthB, yearB] = b.date.split('.');
                 return new Date(yearB, monthB-1, dayB) - new Date(yearA, monthA-1, dayA);
             });
-            
             totalSpan.textContent = files.length;
-            const totalBytes = files.reduce((sum, f) => sum + (f.size || 0), 0);
-            sizeSpan.textContent = formatFileSize(totalBytes);
+            sizeSpan.textContent = formatFileSize(files.reduce((sum, f) => sum + (f.size || 0), 0));
             lastUpdateSpan.textContent = files[0]?.date || '—';
-            
-            // Отображаем файлы (открываются в ТОЙ ЖЕ вкладке)
             container.innerHTML = files.map((file, index) => {
                 const displayDate = extractDateFromFilename(file.name) || file.date;
                 const fileUrl = BASE_URL + file.name;
-                
-                return `
-                    <div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
-                        <a href="${fileUrl}" class="file-link" target="_self" rel="noopener noreferrer">
-                            <div class="file-icon">📊</div>
-                            <div class="file-name">Экспорт ресурсов от ${displayDate}</div>
-                            <div class="file-meta">
-                                <span class="file-date">📅 ${displayDate}</span>
-                                <span class="file-size">💾 ${formatFileSize(file.size || 0)}</span>
-                            </div>
-                        </a>
-                    </div>
-                `;
+                return `<div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards"><a href="${fileUrl}" class="file-link" target="_self"><div class="file-icon">📊</div><div class="file-name">Экспорт ресурсов от ${displayDate}</div><div class="file-meta"><span class="file-date">📅 ${displayDate}</span><span class="file-size">💾 ${formatFileSize(file.size || 0)}</span></div></a></div>`;
             }).join('');
-            
         } catch (error) {
             console.error('Ошибка загрузки архива:', error);
-            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива. Проверьте подключение к интернету.</div>`;
+            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива. Попробуйте обновить страницу.</div>`;
+            totalSpan.textContent = '0'; sizeSpan.textContent = '0 KB'; lastUpdateSpan.textContent = '—';
         }
     }
 
-    // Поиск
     const searchInput = document.getElementById('searchInput');
     let debounceTimer;
-    
     searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
         const searchTerm = e.target.value.toLowerCase();
-        
         debounceTimer = setTimeout(() => {
             const cards = document.querySelectorAll('.file-card');
             let visibleCount = 0;
-            
             cards.forEach(card => {
                 const fileName = card.querySelector('.file-name')?.innerText.toLowerCase() || '';
-                if (fileName.includes(searchTerm)) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
+                if (fileName.includes(searchTerm)) { card.style.display = 'block'; visibleCount++; }
+                else { card.style.display = 'none'; }
             });
-            
             document.getElementById('totalFiles').textContent = visibleCount;
         }, 300);
     });
-    
     loadArchiveFiles();
 </script>
 </body>

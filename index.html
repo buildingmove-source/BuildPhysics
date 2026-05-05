@@ -226,6 +226,29 @@
             width: 28px;
         }
 
+        .files-list {
+            margin-top: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .file-item:hover {
+            background: rgba(45, 106, 255, 0.15);
+            color: var(--accent-cyan);
+        }
+
         .content {
             flex: 1;
             min-width: 0;
@@ -682,7 +705,6 @@
             </button>
         </div>
 
-        <!-- РАЗДЕЛ: ЧИСЛЕННОСТЬ РЕСУРСОВ (без вкладки Экспортированные файлы) -->
         <div class="sidebar-section">
             <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
             <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.15); border-left: 3px solid #2D6AFF;">
@@ -691,9 +713,11 @@
             <a href="archive.html" class="sidebar-item">
                 <span class="sidebar-icon">📁</span>Архив файлов
             </a>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: var(--accent-cyan);">📋 Экспорт данных из реестра</div>
-                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Автоматическое сохранение в архив</div>
+            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
+                <div id="exportedFilesList" class="files-list">
+                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+                </div>
             </div>
         </div>
         
@@ -877,6 +901,32 @@
         }, 3000);
     }
 
+    async function loadExportedFiles() {
+        const container = document.getElementById('exportedFilesList');
+        try {
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const targetUrl = `https://api.github.com/repos/buildingmove-source/BuildPhysics/contents/`;
+            const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
+            if (!response.ok) throw new Error('Не удалось загрузить');
+            const files = await response.json();
+            const resourceFiles = files.filter(file => file.name && file.name.startsWith('Ресурсы_Огни3_') && file.name.endsWith('.html'));
+            if (resourceFiles.length === 0) {
+                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
+                return;
+            }
+            resourceFiles.sort((a, b) => b.name.localeCompare(a.name));
+            container.innerHTML = resourceFiles.map(file => {
+                const dateMatch = file.name.match(/(\d{4}-\d{2}-\d{2})/);
+                const displayDate = dateMatch ? dateMatch[1].replace(/-/g, '.') : 'дата неизвестна';
+                const fileUrl = `https://raw.githubusercontent.com/buildingmove-source/BuildPhysics/main/${file.name}`;
+                return `<a href="${fileUrl}" class="file-item" target="_blank"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
+            }).join('');
+        } catch (error) {
+            console.error('Ошибка загрузки файлов:', error);
+            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
+        }
+    }
+
     function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
     function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
     document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
@@ -919,6 +969,7 @@
     document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
     document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
     
+    loadExportedFiles();
     renderDocs();
 </script>
 </body>

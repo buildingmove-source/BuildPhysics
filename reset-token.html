@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сброс токена GitHub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: #1A1A2E;
+            color: white;
+        }
+        button {
+            background: #e31b23;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover { background: #ff4d4d; }
+        .success { background: #2C6B2F; }
+        .success:hover { background: #1E4A21; }
+        a { color: #2D6AFF; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Сброс токена GitHub</h1>
+    <p>Текущий токен: <span id="tokenStatus">—</span></p>
+    <button id="deleteBtn" style="background:#e31b23;">🗑️ Удалить токен</button>
+    <button id="checkBtn" style="background:#2D6AFF;">🔍 Проверить токен</button>
+    <button id="clearAllBtn" style="background:#D32F2F;">⚠️ Очистить ВСЁ хранилище</button>
+    <br><br>
+    <a href="resources.html">📊 Перейти к странице ресурсов</a>
+    <a href="index.html" style="margin-left: 15px;">🏠 На главную</a>
+
+    <script>
+        function updateStatus() {
+            const token = localStorage.getItem('github_pat_token');
+            const statusSpan = document.getElementById('tokenStatus');
+            if (token) {
+                statusSpan.innerHTML = `✅ Токен установлен (${token.substring(0, 10)}...)`;
+                statusSpan.style.color = '#34a853';
+            } else {
+                statusSpan.innerHTML = '❌ Токен отсутствует';
+                statusSpan.style.color = '#e31b23';
+            }
+        }
+        
+        document.getElementById('deleteBtn').onclick = () => {
+            localStorage.removeItem('github_pat_token');
+            updateStatus();
+            alert('✅ Токен удалён! Теперь на странице resources.html появится окно для ввода нового токена.');
+        };
+        
+        document.getElementById('checkBtn').onclick = () => {
+            const token = localStorage.getItem('github_pat_token');
+            if (token) {
+                alert(`Токен найден: ${token.substring(0, 15)}...\nПервые символы: ${token.substring(0, 4)}`);
+            } else {
+                alert('❌ Токен не найден в хранилище');
+            }
+        };
+        
+        document.getElementById('clearAllBtn').onclick = () => {
+            if (confirm('⚠️ ВНИМАНИЕ! Это удалит ВСЕ сохранённые данные (токен, ресурсы, настройки). Продолжить?')) {
+                localStorage.clear();
+                updateStatus();
+                alert('✅ Всё хранилище очищено!');
+            }
+        };
+        
+        updateStatus();
+    </script>
+</body>
+</html>

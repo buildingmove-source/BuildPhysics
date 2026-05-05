@@ -255,6 +255,25 @@
             color: #5A6BA0;
         }
 
+        .refresh-btn {
+            background: #2D6AFF;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: #00B4D8;
+            transform: scale(1.02);
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -318,8 +337,15 @@
 
 <div class="main-container">
     <div class="archive-header">
-        <h1 class="archive-title">📁 Архив экспортированных файлов</h1>
-        <p class="archive-subtitle">Все сохранённые версии реестра трудовых ресурсов</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 class="archive-title">📁 Архив экспортированных файлов</h1>
+                <p class="archive-subtitle">Все сохранённые версии реестра трудовых ресурсов</p>
+            </div>
+            <button class="refresh-btn" onclick="loadArchiveFiles()">
+                🔄 Обновить список
+            </button>
+        </div>
     </div>
 
     <div class="stats-row" id="statsContainer">
@@ -370,7 +396,7 @@
         return null;
     }
 
-    // Проверка существования файла через HEAD-запрос к github.io
+    // Проверка существования файла
     async function fileExists(filename) {
         const url = BASE_URL + filename;
         try {
@@ -381,67 +407,32 @@
         }
     }
 
-    // Получение списка коммитов для поиска файлов (более надёжный метод)
-    async function getFilesFromCommits() {
-        const commitsUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits?per_page=100`;
-        
-        try {
-            const response = await fetch(commitsUrl);
-            if (!response.ok) throw new Error('Commit fetch failed');
-            const commits = await response.json();
-            
-            const filesMap = new Map();
-            
-            for (const commit of commits) {
-                const detailUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits/${commit.sha}`;
-                const detailResponse = await fetch(detailUrl);
-                if (detailResponse.ok) {
-                    const detail = await detailResponse.json();
-                    const files = detail.files || [];
-                    
-                    for (const file of files) {
-                        const fileName = file.filename.split('/').pop();
-                        if (fileName.startsWith('Ресурсы_Огни3_') && fileName.endsWith('.html')) {
-                            if (!filesMap.has(fileName)) {
-                                filesMap.set(fileName, {
-                                    name: fileName,
-                                    size: file.size || 0,
-                                    date: commit.commit.committer.date
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-            
-            // Проверяем существование файлов и сортируем
-            const validFiles = [];
-            for (const [name, info] of filesMap) {
-                if (await fileExists(name)) {
-                    validFiles.push(info);
-                }
-            }
-            
-            // Сортируем по дате (новые сверху)
-            validFiles.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            return validFiles;
-        } catch (error) {
-            console.error('Commit fetch error:', error);
-            return [];
-        }
-    }
-
+    // Получение списка файлов из репозитория (прямой метод)
     async function loadArchiveFiles() {
         const container = document.getElementById('filesContainer');
         const totalSpan = document.getElementById('totalFiles');
         const sizeSpan = document.getElementById('totalSize');
         const lastUpdateSpan = document.getElementById('lastUpdate');
         
+        container.innerHTML = '<div class="empty-state">⏳ Загрузка...</div>';
+        
         try {
-            const files = await getFilesFromCommits();
+            // Прямой запрос к GitHub API с обходом кеша
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/?_=${Date.now()}`;
+            const response = await fetch(apiUrl);
             
-            if (files.length === 0) {
+            if (!response.ok) throw new Error('API error');
+            
+            const files = await response.json();
+            
+            // Фильтруем файлы ресурсов
+            const resourceFiles = files.filter(file => 
+                file.name && 
+                file.name.startsWith('Ресурсы_Огни3_') && 
+                file.name.endsWith('.html')
+            );
+            
+            if (resourceFiles.length === 0) {
                 container.innerHTML = `<div class="empty-state">📭 В архиве пока нет файлов. Экспортируйте данные из раздела "Ресурсы".</div>`;
                 totalSpan.textContent = '0';
                 sizeSpan.textContent = '0 KB';
@@ -449,18 +440,47 @@
                 return;
             }
             
-            const totalFilesCount = files.length;
-            const totalBytes = files.reduce((sum, file) => sum + (file.size || 0), 0);
-            const lastFile = files[0];
-            const lastUpdateDate = lastFile?.date ? new Date(lastFile.date).toLocaleDateString('ru-RU') : '—';
+            // Проверяем существование каждого файла
+            const validFiles = [];
+            for (const file of resourceFiles) {
+                if (await fileExists(file.name)) {
+                    validFiles.push(file);
+                }
+            }
+            
+            if (validFiles.length === 0) {
+                container.innerHTML = `<div class="empty-state">📭 В архиве пока нет файлов. Экспортируйте данные из раздела "Ресурсы".</div>`;
+                totalSpan.textContent = '0';
+                sizeSpan.textContent = '0 KB';
+                lastUpdateSpan.textContent = '—';
+                return;
+            }
+            
+            // Сортировка по дате в имени файла (новые сверху)
+            validFiles.sort((a, b) => {
+                const dateA = extractDateFromFilename(a.name);
+                const dateB = extractDateFromFilename(b.name);
+                if (!dateA && !dateB) return 0;
+                if (!dateA) return 1;
+                if (!dateB) return -1;
+                const [dayA, monthA, yearA] = dateA.split('.');
+                const [dayB, monthB, yearB] = dateB.split('.');
+                return new Date(yearB, monthB - 1, dayB) - new Date(yearA, monthA - 1, dayA);
+            });
+            
+            // Подсчёт статистики
+            const totalFilesCount = validFiles.length;
+            const totalBytes = validFiles.reduce((sum, file) => sum + (file.size || 0), 0);
+            const lastFile = validFiles[0];
+            const lastUpdateDate = lastFile ? extractDateFromFilename(lastFile.name) || '—' : '—';
             
             totalSpan.textContent = totalFilesCount;
             sizeSpan.textContent = formatFileSize(totalBytes);
             lastUpdateSpan.textContent = lastUpdateDate;
             
-            container.innerHTML = files.map((file, index) => {
-                const displayDate = extractDateFromFilename(file.name) || 
-                                    new Date(file.date).toLocaleDateString('ru-RU');
+            // Отображаем файлы
+            container.innerHTML = validFiles.map((file, index) => {
+                const displayDate = extractDateFromFilename(file.name) || 'дата неизвестна';
                 const fileSize = formatFileSize(file.size || 0);
                 const fileUrl = BASE_URL + file.name;
                 
@@ -480,7 +500,16 @@
             
         } catch (error) {
             console.error('Ошибка загрузки архива:', error);
-            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива. Проверьте подключение к интернету.</div>`;
+            container.innerHTML = `
+                <div class="empty-state">
+                    ❌ Ошибка загрузки архива<br>
+                    <small>${error.message}</small><br><br>
+                    <button class="refresh-btn" onclick="loadArchiveFiles()" style="margin-top: 1rem;">🔄 Попробовать снова</button>
+                </div>
+            `;
+            totalSpan.textContent = '0';
+            sizeSpan.textContent = '0 KB';
+            lastUpdateSpan.textContent = '—';
         }
     }
 

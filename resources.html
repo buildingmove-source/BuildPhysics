@@ -481,8 +481,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ===== ИСХОДНЫЕ ДАННЫЕ (только начало для компактности) =====
-    // Полные данные из вашего предыдущего рабочего файла
+    // ===== ИСХОДНЫЕ ДАННЫЕ (полные) =====
     const initialDataRaw = [
         { section: "Секция 1", subsys: "ЭОМ", work: "Монтаж КЛ ЭОМ, ЭО", contractors: [{name: "ООО \"ИНЭКО\"", people: 3}] },
         { section: "Секция 1", subsys: "ЭОМ", work: "Вертикальные КЛ питания квартир", contractors: [{name: "—", people: 2}] },
@@ -729,7 +728,7 @@
                 currentSection = item.section;
                 const sectionRow = document.createElement('tr');
                 sectionRow.className = 'section-header';
-                sectionRow.innerHTML = `<td colspan="5"><strong>${escapeHtml(item.section)}</strong></td>`;
+                sectionRow.innerHTML = `<td colspan="5"><strong>${escapeHtml(item.section)}</strong><\/td>`;
                 tbody.appendChild(sectionRow);
             }
             
@@ -754,18 +753,18 @@
             
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${escapeHtml(item.section)}</td>
-                <td>${escapeHtml(item.subsys)}</td>
-                <td class="editable-work-cell" onclick="editWorkName(${rowIndex}, this)">${escapeHtml(item.work)}</td>
-                <td>${contractorsHtml}</td>
-                <td class="total-people-cell">${getRowTotal(item.contractors)}</td>
+                <td>${escapeHtml(item.section)}<\/td>
+                <td>${escapeHtml(item.subsys)}<\/td>
+                <td class="editable-work-cell" onclick="editWorkName(${rowIndex}, this)">${escapeHtml(item.work)}<\/td>
+                <td>${contractorsHtml}<\/td>
+                <td class="total-people-cell">${getRowTotal(item.contractors)}<\/td>
             `;
             tbody.appendChild(row);
         });
         
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
-        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
+        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong><\/td><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong><\/td>`;
         tbody.appendChild(totalRow);
     }
     
@@ -919,7 +918,7 @@
 <body>
 <div class="container">
     <div class="header"><h1>Ресурсы · Трудовые ресурсы</h1><p>АО «Огни 3» · Дата формирования: ${dateStr} ${timeStr}</p></div>
-    <div class="table-wrapper"></table><thead><tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr></thead><tbody>${tableRows}<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr></tbody></table></div>
+    <div class="table-wrapper"><table><thead><tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr></thead><tbody>${tableRows}<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong><\/td><td style="text-align:center"><strong>${totalPeople}</strong><\/td><\/tr><\/tbody></table></div>
     <div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div>
 </div>
 <a href="https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/archive.html" class="home-button"><span class="home-icon">🏠</span></a>

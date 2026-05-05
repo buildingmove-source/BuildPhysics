@@ -463,7 +463,7 @@
                     <th>Наименование работ</th>
                     <th>Подрядная организация / кол-во</th>
                     <th>Всего, чел.</th>
-                </tr>
+                </table>
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
@@ -756,7 +756,7 @@
         });
         const totalRow = document.createElement('tr');
         totalRow.className = 'grand-total';
-        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
+        totalRow.innerHTML = `<td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong><tr><td class="total-people-cell" style="text-align: center;"><strong>${getTotalPeople()}</strong></td>`;
         tbody.appendChild(totalRow);
     }
     
@@ -817,20 +817,19 @@
         panel.style.display = 'block';
     }
     
-    // Функция для генерации HTML экспорта с кнопкой "Домой"
     function generateExportHTML(exportRows, totalPeople, dateStr, timeStr) {
         let tableRows = '';
         exportRows.forEach(row => {
             if (row.type === 'section') {
-                tableRows += `<tr class="section-header"><td colspan="5"><strong>${escapeHtml(row.section)}</strong></td></tr>`;
+                tableRows += `<tr class="section-header"><td colspan="5"><strong>${escapeHtml(row.section)}</strong><\/td><\/tr>`;
             } else {
                 tableRows += `<tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.section)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.subsys)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.work)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.contractors)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.total}</td>
-                </tr>`;
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.section)}<\/td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.subsys)}<\/td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.work)}<\/td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(row.contractors)}<\/td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.total}<\/td>
+                <\/tr>`;
             }
         });
         
@@ -971,7 +970,7 @@
 </html>`;
     }
     
-    // === НОВАЯ ФУНКЦИЯ: Обновление автономного индекса ===
+    // === ОБНОВЛЕНИЕ АВТОНОМНОГО ИНДЕКСА (без дублирования - по методу Макса Планка) ===
     async function updateFileIndex(fileName, fileSize) {
         const token = githubToken;
         if (!token) return;
@@ -994,15 +993,21 @@
             }
         } catch(e) { /* Файла нет, создаём новый */ }
         
-        // Обновляем или добавляем файл
-        const existingIndex = index.files.findIndex(f => f.name === fileName);
-        const newFile = { name: fileName, date: displayDate, size: fileSize };
+        // Удаляем старую запись с тем же именем (ключевое исправление)
+        index.files = index.files.filter(f => f.name !== fileName);
         
-        if (existingIndex >= 0) {
-            index.files[existingIndex] = newFile;
-        } else {
-            index.files.push(newFile);
+        // Добавляем актуальный файл
+        index.files.push({ name: fileName, date: displayDate, size: fileSize });
+        
+        // Дополнительная дедупликация по имени (на всякий случай)
+        const uniqueFiles = new Map();
+        for (const file of index.files) {
+            const existing = uniqueFiles.get(file.name);
+            if (!existing || new Date(file.date.split('.').reverse().join('-')) > new Date(existing.date.split('.').reverse().join('-'))) {
+                uniqueFiles.set(file.name, file);
+            }
         }
+        index.files = Array.from(uniqueFiles.values());
         
         // Сортировка по дате (новые сверху)
         index.files.sort((a, b) => {
@@ -1070,7 +1075,6 @@
                 body: JSON.stringify({ message: `Экспорт ресурсов от ${dateStr} ${timeStr}`, content: btoa(unescape(encodeURIComponent(exportHtml))), sha: sha })
             });
             if (uploadRes.ok) {
-                // Обновляем автономный индекс
                 await updateFileIndex(fileName, fileSize);
                 showToast('✅ Файл сохранён в репозиторий!');
                 localStorage.setItem('needRefreshFiles', 'true');

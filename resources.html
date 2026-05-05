@@ -817,7 +817,7 @@
         panel.style.display = 'block';
     }
     
-    // Функция для создания HTML с кнопкой "Домой" и адаптивной версткой
+    // Функция для генерации HTML экспорта с кнопкой "Домой"
     function generateExportHTML(exportRows, totalPeople, dateStr, timeStr) {
         let tableRows = '';
         exportRows.forEach(row => {
@@ -912,9 +912,7 @@
             border: 2px solid rgba(255,255,255,0.2);
             transition: all 0.3s;
         }
-        .home-button:hover {
-            transform: scale(1.08);
-        }
+        .home-button:hover { transform: scale(1.08); }
         .home-button::after {
             content: '';
             position: absolute;
@@ -931,10 +929,7 @@
             0% { transform: scale(1); opacity: 0.5; }
             100% { transform: scale(1.35); opacity: 0; }
         }
-        .home-icon {
-            font-size: 26px;
-            color: white;
-        }
+        .home-icon { font-size: 26px; color: white; }
         @media (max-width: 768px) {
             body { padding: 10px; }
             .header h1 { font-size: 18px; }
@@ -963,19 +958,72 @@
             <thead>
                 <tr><th>Объект/Секция</th><th>Раздел ВИС</th><th>Наименование работ</th><th>Подрядная организация / кол-во</th><th>Всего, чел.</th></tr>
             </thead>
-            <tbody>
-                ${tableRows}
-                <tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
+            <tbody>${tableRows}<tr class="grand-total"><td colspan="4"><strong>ВСЕГО ЧЕЛОВЕК</strong></td><td style="text-align:center"><strong>${totalPeople}</strong></td></tr>
             </tbody>
         </table>
     </div>
     <div class="footer">Данные актуальны на момент формирования · АО «Огни 3»</div>
 </div>
-<a href="https://buildingmove-source.github.io/BuildPhysics/" class="home-button">
+<a href="https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/" class="home-button">
     <span class="home-icon">🏠</span>
 </a>
 </body>
 </html>`;
+    }
+    
+    // === НОВАЯ ФУНКЦИЯ: Обновление автономного индекса ===
+    async function updateFileIndex(fileName, fileSize) {
+        const token = githubToken;
+        if (!token) return;
+        
+        const now = new Date();
+        const displayDate = `${now.getDate().toString().padStart(2,'0')}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getFullYear()}`;
+        
+        let index = { files: [] };
+        let sha = null;
+        
+        try {
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/files-index.json`, {
+                headers: { 'Authorization': `token ${token}` }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                const content = atob(data.content);
+                index = JSON.parse(content);
+                sha = data.sha;
+            }
+        } catch(e) { /* Файла нет, создаём новый */ }
+        
+        // Обновляем или добавляем файл
+        const existingIndex = index.files.findIndex(f => f.name === fileName);
+        const newFile = { name: fileName, date: displayDate, size: fileSize };
+        
+        if (existingIndex >= 0) {
+            index.files[existingIndex] = newFile;
+        } else {
+            index.files.push(newFile);
+        }
+        
+        // Сортировка по дате (новые сверху)
+        index.files.sort((a, b) => {
+            const [dayA, monthA, yearA] = a.date.split('.');
+            const [dayB, monthB, yearB] = b.date.split('.');
+            return new Date(yearB, monthB-1, dayB) - new Date(yearA, monthA-1, dayA);
+        });
+        
+        index.lastUpdate = now.toISOString();
+        
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(index, null, 2))));
+        
+        await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/files-index.json`, {
+            method: 'PUT',
+            headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: `Обновление индекса: ${fileName}`,
+                content: content,
+                sha: sha
+            })
+        });
     }
     
     async function exportToRepository() {
@@ -1004,6 +1052,7 @@
         const totalPeople = getTotalPeople();
         
         const exportHtml = generateExportHTML(exportRows, totalPeople, dateStr, timeStr);
+        const fileSize = new Blob([exportHtml]).size;
         
         showToast('📤 Сохранение...');
         try {
@@ -1021,6 +1070,8 @@
                 body: JSON.stringify({ message: `Экспорт ресурсов от ${dateStr} ${timeStr}`, content: btoa(unescape(encodeURIComponent(exportHtml))), sha: sha })
             });
             if (uploadRes.ok) {
+                // Обновляем автономный индекс
+                await updateFileIndex(fileName, fileSize);
                 showToast('✅ Файл сохранён в репозиторий!');
                 localStorage.setItem('needRefreshFiles', 'true');
             } else {

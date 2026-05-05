@@ -358,7 +358,6 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // Извлечение даты из имени файла
     function extractDateFromFilename(filename) {
         const match = filename.match(/(\d{2})-(\d{2})-(\d{4})/);
         if (match) {
@@ -370,21 +369,45 @@
         return null;
     }
 
-    // Получение списка файлов через GitHub API с повторной попыткой
-    async function fetchWithRetry(url, retries = 3) {
-        for (let i = 0; i < retries; i++) {
-            try {
-                const response = await fetch(url);
-                if (response.ok) return await response.json();
-                if (response.status === 404 && i < retries - 1) {
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    continue;
+    // Проверка существования файла через HEAD-запрос
+    async function fileExists(url) {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            return response.ok;
+        } catch {
+            return false;
+        }
+    }
+
+    // Получение актуального списка файлов с проверкой существования
+    async function getValidFiles() {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`;
+        
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error('API error');
+            const files = await response.json();
+            
+            // Фильтруем потенциальные файлы
+            const candidates = files.filter(file => 
+                file.name && 
+                file.name.startsWith('Ресурсы_Огни3_') && 
+                file.name.endsWith('.html')
+            );
+            
+            // Проверяем каждый файл на существование через github.io
+            const validFiles = [];
+            for (const file of candidates) {
+                const htmlUrl = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/${file.name}`;
+                if (await fileExists(htmlUrl)) {
+                    validFiles.push(file);
                 }
-                throw new Error(`HTTP ${response.status}`);
-            } catch (e) {
-                if (i === retries - 1) throw e;
-                await new Promise(resolve => setTimeout(resolve, 1000));
             }
+            
+            return validFiles;
+        } catch (error) {
+            console.error('Ошибка получения списка:', error);
+            return [];
         }
     }
 
@@ -395,18 +418,9 @@
         const lastUpdateSpan = document.getElementById('lastUpdate');
         
         try {
-            // Используем прямой список файлов через API
-            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/`;
-            const files = await fetchWithRetry(apiUrl);
+            const validFiles = await getValidFiles();
             
-            // Фильтруем только файлы ресурсов
-            const resourceFiles = files.filter(file => 
-                file.name && 
-                file.name.startsWith('Ресурсы_Огни3_') && 
-                file.name.endsWith('.html')
-            );
-            
-            if (resourceFiles.length === 0) {
+            if (validFiles.length === 0) {
                 container.innerHTML = `<div class="empty-state">📭 В архиве пока нет файлов. Экспортируйте данные из раздела "Ресурсы".</div>`;
                 totalSpan.textContent = '0';
                 sizeSpan.textContent = '0 KB';
@@ -414,8 +428,8 @@
                 return;
             }
             
-            // Сортировка по дате (новые сверху)
-            const sortedFiles = resourceFiles.sort((a, b) => {
+            // Сортировка по дате в имени файла (новые сверху)
+            const sortedFiles = validFiles.sort((a, b) => {
                 const dateA = extractDateFromFilename(a.name);
                 const dateB = extractDateFromFilename(b.name);
                 if (!dateA && !dateB) return 0;
@@ -438,12 +452,12 @@
             sizeSpan.textContent = formatFileSize(totalBytes);
             lastUpdateSpan.textContent = lastUpdateDate;
             
-            // Отображаем файлы
+            // Отображаем файлы с правильной ссылкой на github.io
             container.innerHTML = sortedFiles.map((file, index) => {
                 const displayDate = extractDateFromFilename(file.name) || 'дата неизвестна';
                 const fileSize = formatFileSize(file.size || 0);
-                // Используем raw.githubusercontent.com для прямого доступа
-                const fileUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${file.name}`;
+                // КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: используем github.io, а не raw
+                const fileUrl = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/${file.name}`;
                 
                 return `
                     <div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
@@ -461,63 +475,14 @@
             
         } catch (error) {
             console.error('Ошибка загрузки архива:', error);
-            // Показываем резервный список файлов
-            showFallbackFileList();
-        }
-    }
-
-    // Резервный список файлов (если API не работает)
-    function showFallbackFileList() {
-        const container = document.getElementById('filesContainer');
-        const totalSpan = document.getElementById('totalFiles');
-        const sizeSpan = document.getElementById('totalSize');
-        const lastUpdateSpan = document.getElementById('lastUpdate');
-        
-        // Ручной список файлов из репозитория
-        const fallbackFiles = [
-            { name: "Ресурсы_Огни3_04-05-2026.html", size: 55.67 * 1024 },
-            { name: "Ресурсы_Огни3_05-05-2026.html", size: 55.67 * 1024 }
-        ];
-        
-        const validFiles = fallbackFiles.filter(f => {
-            // Проверяем существование файла через HEAD запрос
-            const url = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${f.name}`;
-            return true; // предполагаем, что файлы существуют
-        });
-        
-        if (validFiles.length === 0) {
-            container.innerHTML = `<div class="empty-state">📭 В архиве пока нет файлов. Экспортируйте данные из раздела "Ресурсы".</div>`;
+            container.innerHTML = `<div class="empty-state">❌ Ошибка загрузки архива. Проверьте подключение к интернету.</div>`;
             totalSpan.textContent = '0';
             sizeSpan.textContent = '0 KB';
             lastUpdateSpan.textContent = '—';
-            return;
         }
-        
-        totalSpan.textContent = validFiles.length;
-        sizeSpan.textContent = formatFileSize(validFiles.reduce((sum, f) => sum + f.size, 0));
-        lastUpdateSpan.textContent = "04.05.2026";
-        
-        container.innerHTML = validFiles.map((file, index) => {
-            const displayDate = extractDateFromFilename(file.name) || 'дата неизвестна';
-            const fileSize = formatFileSize(file.size);
-            const fileUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${file.name}`;
-            
-            return `
-                <div class="file-card" style="animation: fadeInUp 0.3s ease ${index * 0.05}s forwards">
-                    <a href="${fileUrl}" class="file-link" target="_blank" rel="noopener noreferrer">
-                        <div class="file-icon">📊</div>
-                        <div class="file-name">Экспорт ресурсов от ${displayDate}</div>
-                        <div class="file-meta">
-                            <span class="file-date">📅 ${displayDate}</span>
-                            <span class="file-size">💾 ${fileSize}</span>
-                        </div>
-                    </a>
-                </div>
-            `;
-        }).join('');
     }
 
-    // Поиск по файлам
+    // Поиск по файлам (работает с DOM после загрузки)
     const searchInput = document.getElementById('searchInput');
     let debounceTimer;
     
@@ -525,8 +490,7 @@
         clearTimeout(debounceTimer);
         const searchTerm = e.target.value.toLowerCase();
         
-        debounceTimer = setTimeout(async () => {
-            const container = document.getElementById('filesContainer');
+        debounceTimer = setTimeout(() => {
             const cards = document.querySelectorAll('.file-card');
             let visibleCount = 0;
             
@@ -540,20 +504,23 @@
                 }
             });
             
+            const totalSpan = document.getElementById('totalFiles');
+            if (totalSpan && !isNaN(visibleCount)) {
+                totalSpan.textContent = visibleCount;
+            }
+            
+            const container = document.getElementById('filesContainer');
+            const existingEmpty = container.querySelector('.search-empty');
             if (visibleCount === 0 && cards.length > 0) {
-                const existingEmpty = container.querySelector('.search-empty');
                 if (!existingEmpty) {
                     const emptyMsg = document.createElement('div');
                     emptyMsg.className = 'empty-state search-empty';
                     emptyMsg.innerText = `🔍 Ничего не найдено по запросу "${e.target.value}"`;
                     container.appendChild(emptyMsg);
                 }
-            } else {
-                const emptyMsg = container.querySelector('.search-empty');
-                if (emptyMsg) emptyMsg.remove();
+            } else if (existingEmpty) {
+                existingEmpty.remove();
             }
-            
-            document.getElementById('totalFiles').textContent = visibleCount;
         }, 300);
     });
     

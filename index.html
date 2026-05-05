@@ -832,7 +832,6 @@
     const pages = [
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
         { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
-        { name: "Протокол №2 · 05 мая 2026 · 12:30", file: "Protokol_1_ot_05.05.2026.html", icon: "📎", date: "05.05.2026", category: "protocol" },
         { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📎", date: "29.04.2026", category: "protocol" },
         { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date: "03.05.2026", category: "registry" },
         { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date: "02.05.2026", category: "finance" },
@@ -905,22 +904,20 @@
     async function loadExportedFiles() {
         const container = document.getElementById('exportedFilesList');
         try {
-            const proxyUrl = 'https://api.allorigins.win/raw?url=';
-            const targetUrl = `https://api.github.com/repos/buildingmove-source/BuildPhysics/contents/`;
-            const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
-            if (!response.ok) throw new Error('Не удалось загрузить');
-            const files = await response.json();
-            const resourceFiles = files.filter(file => file.name && file.name.startsWith('Ресурсы_Огни3_') && file.name.endsWith('.html'));
-            if (resourceFiles.length === 0) {
+            // Используем files-index.json для получения актуального списка
+            const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
+            const response = await fetch(indexUrl);
+            if (!response.ok) throw new Error('Индекс не найден');
+            const index = await response.json();
+            const files = index.files || [];
+            if (files.length === 0) {
                 container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
                 return;
             }
-            resourceFiles.sort((a, b) => b.name.localeCompare(a.name));
-            container.innerHTML = resourceFiles.map(file => {
-                const dateMatch = file.name.match(/(\d{4}-\d{2}-\d{2})/);
-                const displayDate = dateMatch ? dateMatch[1].replace(/-/g, '.') : 'дата неизвестна';
-                const fileUrl = `https://raw.githubusercontent.com/buildingmove-source/BuildPhysics/main/${file.name}`;
-                return `<a href="${fileUrl}" class="file-item" target="_blank"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
+            container.innerHTML = files.map(file => {
+                const displayDate = file.date;
+                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
+                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
             }).join('');
         } catch (error) {
             console.error('Ошибка загрузки файлов:', error);

@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="#F8FAFE">
-    <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры, видеофиксация">
-    <title>Огни 3 — Видеофиксация и документация</title>
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
+    <title>Огни 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
-        /* ===== ПРОФЕССИОНАЛЬНАЯ СГЛАЖЕННАЯ ТЕМА с комплементарными цветами ===== */
+        /* ===== СВЕТЛАЯ ТЕМА ===== */
         :root {
-            --bg-body: #F2F5F9;
+            --bg-body: #F5F7FA;
             --bg-card: #FFFFFF;
             --bg-sidebar: #FFFFFF;
             --bg-sidebar-section: #FFFFFF;
-            --accent-primary: #1B4D8F;
-            --accent-secondary: #5A9E6B;
-            --accent-tertiary: #D4A373;
-            --accent-soft: #E8F0FE;
-            --text-primary: #1E2A3E;
-            --text-secondary: #5B6E8C;
-            --text-muted: #8A9BB0;
-            --border-light: rgba(0, 0, 0, 0.06);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 30px -12px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.02);
-            --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            --radius-sm: 14px;
-            --radius-md: 22px;
-            --radius-lg: 28px;
+            --accent-blue: #2D6AFF;
+            --accent-cyan: #00B4D8;
+            --accent-green: #34a853;
+            --text-primary: #1A1A2E;
+            --text-secondary: #5A6BA0;
+            --text-muted: #8A9BDF;
+            --border-light: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 24px;
         }
 
         * {
@@ -48,37 +47,37 @@
         }
 
         ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #E6EAEF;
+            background: #E8EDF2;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-secondary);
+            background: var(--accent-blue);
             border-radius: 10px;
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(24px); filter: blur(2px);}
-            to { opacity: 1; transform: translateY(0); filter: blur(0);}
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes softGlow {
-            0% { box-shadow: 0 0 0 0 rgba(90, 158, 107, 0.2);}
-            100% { box-shadow: 0 0 0 6px rgba(90, 158, 107, 0);}
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== НАВИГАЦИЯ ===== */
         .navbar {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-light);
             position: sticky;
             top: 0;
             z-index: 1000;
-            padding: 0.7rem 1.5rem;
+            padding: 0.75rem 1.5rem;
         }
 
         .nav-container {
@@ -98,23 +97,21 @@
         }
 
         .logo-icon {
-            background: linear-gradient(145deg, var(--accent-primary), var(--accent-secondary));
-            width: 42px;
-            height: 42px;
-            border-radius: 18px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.4rem;
             transition: var(--transition);
-            box-shadow: var(--shadow-sm);
         }
 
         .logo-text {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            letter-spacing: -0.3px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -128,21 +125,26 @@
         .nav-search input {
             width: 100%;
             padding: 0.6rem 1.2rem;
-            background: #FFFFFF;
+            background: #F0F2F5;
             border: 1px solid var(--border-light);
             border-radius: 60px;
             color: var(--text-primary);
             font-size: 0.9rem;
             transition: var(--transition);
-            box-shadow: var(--shadow-sm);
         }
 
         .nav-search input:focus {
             outline: none;
-            border-color: var(--accent-secondary);
-            box-shadow: 0 0 0 4px rgba(90, 158, 107, 0.12);
+            background: #FFFFFF;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(45, 106, 255, 0.1);
         }
 
+        .nav-search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* ===== БУРГЕР-МЕНЮ (только на мобильных) ===== */
         .burger-menu {
             display: none;
             flex-direction: column;
@@ -155,13 +157,26 @@
 
         .burger-menu span {
             display: block;
-            height: 2.5px;
+            height: 3px;
             width: 100%;
             background: var(--text-primary);
-            border-radius: 4px;
+            border-radius: 3px;
             transition: var(--transition);
         }
 
+        .burger-menu.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .burger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* ===== МОБИЛЬНОЕ МЕНЮ (выдвижная панель) ===== */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -171,71 +186,128 @@
             height: 100vh;
             background: #FFFFFF;
             z-index: 1002;
-            transition: right 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: -8px 0 30px rgba(0,0,0,0.08);
+            transition: right 0.3s ease;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
             overflow-y: auto;
-            padding: 1.8rem;
+            padding: 1.5rem;
         }
 
-        .mobile-menu.open { right: 0; }
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .mobile-menu .sidebar-section {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #F8FAFE;
+            border-radius: var(--radius-md);
+        }
+
+        .mobile-menu .sidebar-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .mobile-menu .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .mobile-menu .sidebar-item:hover {
+            background: rgba(45, 106, 255, 0.1);
+        }
+
+        /* Оверлей (затемнение фона) */
         .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(3px);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1001;
             opacity: 0;
             visibility: hidden;
-            transition: 0.3s;
+            transition: var(--transition);
         }
-        .menu-overlay.active { opacity: 1; visibility: visible; }
 
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
-            padding: 1.8rem;
+            padding: 1.5rem;
             display: flex;
-            gap: 1.8rem;
+            gap: 1.5rem;
         }
 
-        /* Боковая панель — элегантная */
+        /* Десктопная боковая панель (скрывается на мобильных) */
         .sidebar {
             width: 280px;
             flex-shrink: 0;
             position: sticky;
-            top: 84px;
+            top: 80px;
             height: fit-content;
         }
+
         .sidebar-section {
             background: var(--bg-sidebar-section);
             border-radius: var(--radius-md);
-            padding: 1.2rem;
-            margin-bottom: 1.2rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
             border: 1px solid var(--border-light);
             transition: var(--transition);
             box-shadow: var(--shadow-sm);
-            backdrop-filter: blur(2px);
         }
+
         .sidebar-section:hover {
-            transform: translateY(-2px);
             box-shadow: var(--shadow-md);
-            border-color: var(--accent-tertiary);
         }
+
         .sidebar-title {
             font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1.8px;
-            color: var(--accent-secondary);
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
             margin-bottom: 1rem;
-            font-weight: 700;
+            font-weight: 600;
         }
+
         .sidebar-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.75rem;
             padding: 0.7rem;
             border-radius: var(--radius-sm);
             color: var(--text-primary);
@@ -246,276 +318,463 @@
             background: none;
             border: none;
             font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .sidebar-item:hover {
-            background: var(--accent-soft);
-            transform: translateX(5px);
-            color: var(--accent-primary);
         }
 
-        /* Hero — мягкий градиент */
+        .sidebar-item:hover {
+            background: rgba(45, 106, 255, 0.08);
+            transform: translateX(4px);
+            color: var(--accent-blue);
+        }
+
+        .sidebar-icon {
+            font-size: 1.2rem;
+            width: 28px;
+        }
+
+        .files-list {
+            margin-top: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .file-item:hover {
+            background: rgba(45, 106, 255, 0.08);
+            color: var(--accent-blue);
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Hero Card */
         .hero-card {
-            background: linear-gradient(125deg, #FFFFFF, #F7FAFE);
+            background: linear-gradient(135deg, #FFFFFF, #F0F4F8);
             border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 1.8rem;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
             border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
+
         .hero-card::before {
             content: '';
             position: absolute;
-            top: -20%;
+            top: -30%;
             right: -10%;
             width: 280px;
             height: 280px;
-            background: radial-gradient(circle, rgba(90,158,107,0.08), transparent);
+            background: radial-gradient(circle, rgba(45, 106, 255, 0.08), transparent);
             border-radius: 50%;
         }
+
         .hero-title {
-            font-size: 1.9rem;
-            font-weight: 750;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            position: relative;
         }
 
-        /* Google Cards — лаконично */
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Google Cards */
         .google-cards-container {
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
+
         .google-card {
             background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-md);
             transition: var(--transition);
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-light);
         }
+        
         .google-card:hover {
-            transform: translateX(6px);
-            border-color: var(--accent-secondary);
+            transform: translateX(4px);
+            border-color: var(--accent-blue);
             box-shadow: var(--shadow-md);
         }
+        
         .google-link {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 1.3rem;
+            padding: 1rem 1.2rem;
             text-decoration: none;
             color: inherit;
         }
 
-        /* TikTok-style scroll — горизонтальный, портретный, профессиональный */
-        .video-tiktok-section {
-            margin-bottom: 2.5rem;
-        }
-        .video-tiktok-header {
+        /* Документы */
+        .section-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 1.2rem;
+            align-items: center;
+            margin-bottom: 1rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
         }
-        .video-tiktok-header h2 {
-            font-size: 1.4rem;
-            font-weight: 650;
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
             color: var(--text-primary);
         }
-        .scroll-hint {
-            font-size: 0.7rem;
-            color: var(--accent-secondary);
-            background: rgba(90,158,107,0.1);
-            padding: 0.3rem 0.9rem;
+
+        .docs-count {
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.2rem 0.6rem;
             border-radius: 40px;
-            font-weight: 500;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
-        .horizontal-scroll {
-            overflow-x: auto;
-            overflow-y: visible;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            padding-bottom: 0.6rem;
-            margin: 0 -0.5rem;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
         }
-        .horizontal-scroll::-webkit-scrollbar { height: 4px; }
-        .videos-row {
-            display: flex;
-            gap: 1.2rem;
-            flex-direction: row;
-            width: fit-content;
-        }
-        .tiktok-card {
-            width: 280px;
-            flex-shrink: 0;
-            scroll-snap-align: start;
+
+        .doc-card {
             background: #FFFFFF;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
+            border-radius: var(--radius-md);
             border: 1px solid var(--border-light);
-        }
-        .tiktok-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent-tertiary);
-        }
-        .portrait-video {
+            transition: var(--transition);
+            cursor: pointer;
             position: relative;
-            background: #1A1C22;
-            aspect-ratio: 9 / 16;
-            width: 100%;
             overflow: hidden;
+            animation: fadeInUp 0.3s ease forwards;
+            box-shadow: var(--shadow-sm);
         }
-        .portrait-video iframe {
+
+        .doc-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .doc-card::after {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .video-duration {
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(6px);
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            font-weight: 500;
-            z-index: 2;
-        }
-        .tiktok-info {
-            padding: 0.9rem 1rem 1rem;
-        }
-        .tiktok-channel {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            margin-bottom: 0.5rem;
-        }
-        .channel-avatar {
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(145deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: white;
-        }
-        .channel-name {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .tiktok-title {
-            font-weight: 700;
-            font-size: 0.85rem;
-            line-height: 1.3;
-            margin-bottom: 0.4rem;
-            color: var(--text-primary);
-        }
-        .tiktok-stats {
-            display: flex;
-            align-items: center;
-            gap: 0.9rem;
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            margin-top: 0.4rem;
-        }
-        .trend-tag {
-            background: rgba(27,77,143,0.08);
-            color: var(--accent-primary);
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 600;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            transform: scaleX(0);
+            transition: transform 0.3s;
         }
 
-        /* Документы */
-        .docs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.2rem;
+        .doc-card:hover::after {
+            transform: scaleX(1);
         }
-        .doc-card {
-            background: #FFFFFF;
-            border-radius: 22px;
-            border: 1px solid var(--border-light);
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-        .doc-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-secondary);
-            box-shadow: var(--shadow-lg);
-        }
+
         .card-link {
             display: block;
-            padding: 1.3rem;
+            padding: 1.2rem;
             text-decoration: none;
             color: inherit;
         }
-        .doc-name {
-            font-weight: 650;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
+
+        .doc-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
         }
+
+        .doc-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: #FFFFFF;
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+        }
+
         .footer {
             max-width: 1440px;
             margin: 0 auto;
-            padding: 1.8rem;
+            padding: 1.5rem;
             text-align: center;
             border-top: 1px solid var(--border-light);
             font-size: 0.7rem;
             color: var(--text-muted);
         }
+
+        /* Модальное окно чата */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-toast {
+            background: #FFFFFF;
+            border: 1px solid var(--accent-cyan);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            max-width: 90vw;
+            width: 320px;
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-toast {
+            transform: scale(1);
+        }
+
+        .modal-toast h3 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-toast button {
+            margin-top: 1rem;
+            background: var(--accent-blue);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        /* Чат попап */
+        .chat-popup {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 380px;
+            height: 500px;
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            animation: slideUp 0.3s ease;
+        }
+        
+        .chat-popup.show {
+            display: flex;
+        }
+        
+        .popup-header {
+            background: #F8FAFE;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .popup-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        
+        .development-badge {
+            background: rgba(45, 106, 255, 0.1);
+            color: var(--accent-blue);
+            font-size: 0.55rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 40px;
+        }
+        
+        .close-popup {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        
+        .popup-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .popup-message {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 85%;
+        }
+        
+        .popup-message.outgoing {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .popup-bubble {
+            background: #F0F2F5;
+            padding: 0.5rem 0.8rem;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+        }
+        
+        .popup-message.outgoing .popup-bubble {
+            background: var(--accent-blue);
+            color: white;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+        
+        .popup-input-area {
+            padding: 0.8rem;
+            background: #F8FAFE;
+            display: flex;
+            gap: 0.5rem;
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .popup-input {
+            flex: 1;
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 0.5rem 0.8rem;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+        
+        .popup-send {
+            background: var(--accent-blue);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-size: 1rem;
+        }
+
+        /* Плавающая кнопка чата */
         .chat-float-btn {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 54px;
-            height: 54px;
-            background: linear-gradient(145deg, var(--accent-primary), var(--accent-secondary));
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            box-shadow: 0 6px 14px rgba(27,77,143,0.3);
-            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(45,106,255,0.3);
             z-index: 1500;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
         }
-        .chat-float-btn:hover { transform: scale(1.05); }
+
+        .chat-float-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(45,106,255,0.4);
+        }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 1024px) {
+            .nav-search { max-width: 280px; }
+        }
 
         @media (max-width: 768px) {
-            .main-container { padding: 1rem; }
+            .navbar { padding: 0.75rem 1rem; }
+            .nav-container { justify-content: space-between; }
+            .nav-search { max-width: none; order: 2; flex: 1; margin: 0 0.5rem; }
+            .logo { order: 1; }
+            .burger-menu { display: flex; order: 3; }
+            .nav-links { display: none; }
             .sidebar { display: none; }
-            .burger-menu { display: flex; }
-            .tiktok-card { width: 260px; }
-            .hero-title { font-size: 1.4rem; }
+            .main-container { padding: 1rem; }
+            .hero-title { font-size: 1.3rem; }
+            .hero-card { padding: 1.2rem; }
+            .docs-grid { grid-template-columns: 1fr; }
+            .chat-popup { width: calc(100% - 40px); right: 20px; left: 20px; bottom: 80px; height: 60vh; }
+            .chat-float-btn { width: 48px; height: 48px; font-size: 1.5rem; bottom: 15px; right: 15px; }
         }
-        @media (min-width: 769px) { .mobile-menu, .menu-overlay { display: none; } }
+
+        @media (min-width: 769px) {
+            .mobile-menu, .menu-overlay { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -527,175 +786,382 @@
             <span class="logo-text">Огни 3</span>
         </div>
         <div class="nav-search">
-            <input type="text" id="globalSearch" placeholder="Поиск по документам...">
+            <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
         </div>
         <div class="burger-menu" id="burgerMenu">
-            <span></span><span></span><span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links">
+            <div class="nav-link" id="chatNavBtn">Чат</div>
         </div>
     </div>
 </nav>
 
+<!-- Мобильное меню (выдвижная панель) -->
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
-    <div style="display:flex; justify-content:flex-end; margin-bottom:1.5rem"><button class="close-menu" id="closeMenuBtn" style="background:none; border:none; font-size:1.8rem;">✕</button></div>
-    <div class="sidebar-section"><div class="sidebar-title">НАВИГАЦИЯ</div>
-        <button class="sidebar-item" onclick="filterDocs('all');closeMobileMenu();">📁 Все документы</button>
-        <button class="sidebar-item" onclick="filterDocs('protocol');closeMobileMenu();">📋 Протоколы</button>
-        <button class="sidebar-item" onclick="filterDocs('registry');closeMobileMenu();">📊 Реестры</button>
+    <div class="mobile-menu-header">
+        <button class="close-menu" id="closeMenuBtn">✕</button>
     </div>
-    <div class="sidebar-section"><div class="sidebar-title">РЕСУРСЫ</div>
-        <a href="resources.html" class="sidebar-item">📝 Заполнение реестра</a>
-        <a href="archive.html" class="sidebar-item">📁 Архив файлов</a>
+    
+    <div class="sidebar-section">
+        <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
+        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">
+            <span class="sidebar-icon">📁</span>Все документы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">
+            <span class="sidebar-icon">📋</span>Протоколы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">
+            <span class="sidebar-icon">📊</span>Реестры
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">
+            <span class="sidebar-icon">₽</span>Финансы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();">
+            <span class="sidebar-icon">💼</span>Техническая часть
+        </button>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
+        <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
+            <span class="sidebar-icon">📝</span>Заполнение реестра
+        </a>
+        <a href="archive.html" class="sidebar-item">
+            <span class="sidebar-icon">📁</span>Архив файлов
+        </a>
+    </div>
+    
+    <div class="sidebar-section">
+        <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
+        <button class="sidebar-item" id="mobileChatBtn">
+            <span class="sidebar-icon">💬</span>Открыть чат
+        </button>
+        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
+            <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
+            <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
+        </div>
     </div>
 </div>
 
 <div class="main-container">
     <aside class="sidebar">
-        <div class="sidebar-section"><div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-            <button class="sidebar-item" onclick="filterDocs('all')">📁 Все документы</button>
-            <button class="sidebar-item" onclick="filterDocs('protocol')">📋 Протоколы</button>
-            <button class="sidebar-item" onclick="filterDocs('registry')">📊 Реестры</button>
-            <button class="sidebar-item" onclick="filterDocs('finance')">💰 Финансы</button>
+        <div class="sidebar-section">
+            <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
+            <button class="sidebar-item" onclick="filterDocs('all')">
+                <span class="sidebar-icon">📁</span>Все документы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('protocol')">
+                <span class="sidebar-icon">📋</span>Протоколы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('registry')">
+                <span class="sidebar-icon">📊</span>Реестры
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('finance')">
+                <span class="sidebar-icon">₽</span>Финансы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('tech')">
+                <span class="sidebar-icon">💼</span>Техническая часть
+            </button>
         </div>
-        <div class="sidebar-section"><div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" id="chatSidebarBtn">💬 Открыть чат</button>
-            <div style="margin-top:0.8rem; padding:0.3rem 0.6rem; background:var(--accent-soft); border-radius:16px;"><span style="font-size:0.65rem;">⚙️ Демо-режим</span></div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
+            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
+                <span class="sidebar-icon">📝</span>Заполнение реестра
+            </a>
+            <a href="archive.html" class="sidebar-item">
+                <span class="sidebar-icon">📁</span>Архив файлов
+            </a>
+            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid var(--border-light);">
+                <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
+                <div id="exportedFilesList" class="files-list">
+                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
+            <button class="sidebar-item" id="chatSidebarBtn">
+                <span class="sidebar-icon">💬</span>Открыть чат
+            </button>
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
+            </div>
         </div>
     </aside>
 
     <main class="content">
         <div class="hero-card">
-            <div class="hero-title">Штаб строительства</div>
-            <div class="hero-subtitle" style="color: var(--text-secondary); margin-top: 0.2rem;">Документация, видеофиксация и оперативный контроль</div>
+            <div class="hero-title">Штаб строительства Огни 3</div>
+            <div class="hero-subtitle">Актуальная документация и ход работ</div>
         </div>
 
         <div class="google-cards-container">
-            <div class="google-card"><a href="VIS-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📊</div><div><strong>ВИС Огни 3</strong><div style="font-size:0.7rem; color:var(--accent-secondary);">Таблица · Актуальные данные</div></div><div>→</div></a></div>
-            <div class="google-card"><a href="Zadachi-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📋</div><div><strong>Задачи Огни 3</strong><div style="font-size:0.7rem; color:var(--accent-secondary);">Контроль поручений</div></div><div>→</div></a></div>
-        </div>
-
-        <!-- ВИДЕО фиксация -->
-        <div class="video-tiktok-section">
-            <div class="video-tiktok-header">
-                <h2><span></span> Видеофиксация • Огни 3</h2>
-                <div class="scroll-hint"></div>
+            <div class="google-card">
+                <a href="VIS-Ogni-3.html" class="google-link">
+                    <div style="font-size: 2rem;">📊</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
+                </a>
             </div>
-            <div class="horizontal-scroll">
-                <div class="videos-row">
-                    <!-- Видео 1: АУПТ -->
-                    <div class="tiktok-card">
-                        <div class="portrait-video">
-                            <iframe src="https://vk.com/video_ext.php?oid=-226953671&id=456239017&hd=2" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" frameborder="0" allowfullscreen></iframe>
-                            <div class="video-duration">01:45</div>
-                        </div>
-                        <div class="tiktok-info">
-                            <div class="tiktok-channel"><div class="channel-avatar">🇷🇺</div><span class="channel-name">ВИС ПНР</span></div>
-                            <div class="tiktok-title">АУПТ</div>
-                            <div class="tiktok-stats"><span>❤️</span><span>💬</span><span class="trend-tag">#ВИС</span></div>
-                        </div>
+
+            <div class="google-card">
+                <a href="Zadachi-Ogni-3.html" class="google-link">
+                    <div style="font-size: 2rem;">📋</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">Задачи Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Рабочий лист · Контроль поручений</div>
                     </div>
-                    <!-- Видео 2: Дрон -->
-                    <div class="tiktok-card">
-                        <div class="portrait-video">
-                            <iframe src="https://vk.com/video_ext.php?oid=-226953671&id=456239018&hd=2" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" frameborder="0" allowfullscreen></iframe>
-                            <div class="video-duration"> 02:10</div>
-                        </div>
-                        <div class="tiktok-info">
-                            <div class="tiktok-channel"><div class="channel-avatar">⭐</div><span class="channel-name">Контрактная служба</span></div>
-                            <div class="tiktok-title">Аэрофотоплан</div>
-                            <div class="tiktok-stats"><span>❤️</span><span>💬</span><span class="trend-tag">#Дрон</span></div>
-                        </div>
-                    </div>
-                    <!-- ВИС -->
-                    <div class="tiktok-card">
-                        <div class="portrait-video">
-                            <iframe src="https://vk.com/video_ext.php?oid=-226953671&id=456239019&hd=2" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" frameborder="0" allowfullscreen></iframe>
-                            <div class="video-duration">01:58</div>
-                        </div>
-                        <div class="tiktok-info">
-                            <div class="tiktok-channel"><div class="channel-avatar">🤝</div><span class="channel-name">Окажушка</span></div>
-                            <div class="tiktok-title">Отстование от ГПР</div>
-                            <div class="tiktok-stats"><span>❤️</span><span>💬</span><span class="trend-tag">Кровля Корпус 2</span></div>
-                        </div>
-                    </div>
-                    <!-- Видео 4: ВИС -->
-                    <div class="tiktok-card">
-                        <div class="portrait-video">
-                            <iframe src="https://vk.com/video_ext.php?oid=-226953671&id=456239020&hd=2" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" frameborder="0" allowfullscreen></iframe>
-                            <div class="video-duration"> 01:32</div>
-                        </div>
-                        <div class="tiktok-info">
-                            <div class="tiktok-channel"><div class="channel-avatar">🛡️</div><span class="channel-name">ОВ</span></div>
-                            <div class="tiktok-title">Строительный контроль</div>
-                            <div class="tiktok-stats"><span>❤️</span><span>💬</span><span class="trend-tag">ВИС</span></div>
-                        </div>
-                    </div>
-                    <!-- Видео 5: ВИС -->
-                    <div class="tiktok-card">
-                        <div class="portrait-video">
-                            <iframe src="https://vk.com/video_ext.php?oid=-226953671&id=456239021&hd=2" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" frameborder="0" allowfullscreen></iframe>
-                            <div class="video-duration"> 02:25</div>
-                        </div>
-                        <div class="tiktok-info">
-                            <div class="tiktok-channel"><div class="channel-avatar">⚙️</div><span class="channel-name">Прокладка кабельныхлиний</span></div>
-                            <div class="tiktok-title">СС Корпус 2 Огни 3</div>
-                            <div class="tiktok-stats"><span>❤️</span><span>💬</span><span class="trend-tag">#ВИС</span></div>
-                        </div>
-                    </div>
-                </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
+                </a>
             </div>
         </div>
 
-        <div class="section-header" style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-            <div class="section-title">📄 Документы проекта <span class="docs-count" id="docsCount">10</span></div>
+        <div class="section-header">
+            <div class="section-title">
+                <span>📄 Документы</span>
+                <span class="docs-count" id="docsCount">10</span>
+            </div>
         </div>
+
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<footer class="footer">Огни 3 · Строительный портал · © 2026 · Видеофиксация работ и набор СВО</footer>
+<footer class="footer">
+    Огни 3 · Строительный портал · © 2026
+</footer>
 
-<div id="modalOverlay" class="modal-overlay" style="display:none;"><div class="modal-toast"><h3>💬 Чат</h3><button onclick="closeModalToast()">Ок</button></div></div>
-<div id="chatPopup" class="chat-popup" style="display:none;"><div class="popup-header">Чат</div></div>
-<div class="chat-float-btn" id="chatFloatBtn">💬</div>
+<div id="modalOverlay" class="modal-overlay">
+    <div class="modal-toast">
+        <h3>💬 Чат в разработке</h3>
+        <p>Функция полноценного чата появится в ближайшее время</p>
+        <button onclick="closeModalToast()">Понятно</button>
+    </div>
+</div>
+
+<div id="chatPopup" class="chat-popup">
+    <div class="popup-header">
+        <div class="popup-title">
+            <span>💬</span>
+            <span>Чат · Огни 3</span>
+            <span class="development-badge">Demo</span>
+        </div>
+        <button class="close-popup" onclick="closeChatPopup()">✕</button>
+    </div>
+    <div class="popup-messages" id="popupMessages">
+        <div class="popup-message">
+            <div class="popup-bubble">Доброе утро, коллеги!</div>
+        </div>
+        <div class="popup-message outgoing">
+            <div class="popup-bubble">Здравствуйте! Готовим АОН</div>
+        </div>
+        <div class="popup-message">
+            <div class="popup-bubble">Хорошо. Ждём данные по ВИС</div>
+        </div>
+    </div>
+    <div class="popup-input-area">
+        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение...">
+        <button class="popup-send" onclick="sendPopupMessage()">📤</button>
+    </div>
+</div>
+
+<div class="chat-float-btn" id="chatFloatBtn">
+    🗨️
+</div>
 
 <script>
-    // мобильное меню
-    const burger = document.getElementById('burgerMenu'), mobileMenu = document.getElementById('mobileMenu'), overlay = document.getElementById('menuOverlay'), closeBtn = document.getElementById('closeMenuBtn');
-    function openMobileMenu() { mobileMenu.classList.add('open'); overlay.classList.add('active'); burger?.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeMobileMenu() { mobileMenu.classList.remove('open'); overlay.classList.remove('active'); burger?.classList.remove('active'); document.body.style.overflow = ''; }
-    burger?.addEventListener('click', openMobileMenu);
-    closeBtn?.addEventListener('click', closeMobileMenu);
-    overlay?.addEventListener('click', closeMobileMenu);
-    
-    const pages = [
-        { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date:"06.05.2026", category:"protocol" },
-        { name: "Протокол №46 · 22 апреля 2026", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date:"22.04.2026", category:"protocol" },
-        { name: "Протокол №1 · 28 апреля 2026", file: "протокол 28.04.2026.html", icon: "📎", date:"28.04.2026", category:"protocol" },
-        { name: "Протокол №2 · 05 мая 2026", file: "Protokol_2_ot_05.05.2026.html", icon: "📎", date:"05.05.2026", category:"protocol" },
-        { name: "Протокол №47 · 29 апреля 2026", file: "протокол 47 от 29.04.2026.html", icon: "📎", date:"29.04.2026", category:"protocol" },
-        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date:"03.05.2026", category:"registry" },
-        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date:"02.05.2026", category:"finance" },
-        { name: "Реестр для чек-листа АВТ2", file: "Reesrt_cheklist_AVT2.html", icon: "📎", date:"06.05.2026", category:"registry" },
-        { name: "Реестр для чек-листа СС8", file: "Reesrt_cheklist_CC8.html", icon: "📎", date:"06.05.2026", category:"registry" },
-        { name: "Реестр для чек-листа СС5", file: "реестр для ЧЛ.html", icon: "📎", date:"01.05.2026", category:"registry" }
-    ];
-    let currentFilter = 'all', currentSearch = '';
-    function renderDocs() {
-        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
-        if(currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
-        document.getElementById('docsCount').textContent = filtered.length;
-        const container = document.getElementById('docsContainer');
-        if(!filtered.length) { container.innerHTML = '<div class="empty-state">Нет документов</div>'; return; }
-        container.innerHTML = filtered.map(p => `<div class="doc-card"><a href="${p.file}" class="card-link"><div class="doc-icon">${p.icon}</div><div class="doc-name">${p.name}</div><div class="doc-meta">📅 ${p.date}</div></a></div>`).join('');
+    // ===== МОБИЛЬНОЕ МЕНЮ =====
+    const burgerMenu = document.getElementById('burgerMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    function openMobileMenu() {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+        burgerMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
-    function filterDocs(cat){ currentFilter=cat; renderDocs(); }
-    document.getElementById('globalSearch').addEventListener('input',(e)=>{ currentSearch=e.target.value; renderDocs(); });
-    function closeModalToast(){}
-    function openChatPopup(){ alert("Демо-чат в разработке"); }
-    document.getElementById('chatFloatBtn').addEventListener('click', openChatPopup);
-    document.getElementById('chatSidebarBtn').addEventListener('click', openChatPopup);
-    window.filterDocs = filterDocs; window.closeMobileMenu = closeMobileMenu;
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.remove('active');
+        burgerMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    burgerMenu?.addEventListener('click', openMobileMenu);
+    closeMenuBtn?.addEventListener('click', closeMobileMenu);
+    menuOverlay?.addEventListener('click', closeMobileMenu);
+
+    // ===== ФУНКЦИИ ЧАТА =====
+    function linkifyAdvanced(text) {
+        if (!text) return text;
+        let result = text.replace(/(https?:\/\/[^\s]+)/g, function(url) {
+            let displayUrl = url.length > 50 ? url.substring(0, 47) + '...' : url;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #00B4D8; text-decoration: underline;">${displayUrl}</a>`;
+        });
+        result = result.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, function(email) {
+            return `<a href="mailto:${email}" style="color: #00B4D8; text-decoration: underline;">${email}</a>`;
+        });
+        return result;
+    }
+
+    // Данные документов
+    const pages = [
+        { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
+        { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
+        { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
+        { name: "Протокол №2 · 05 мая 2026 · 12:30", file: "Protokol_2_ot_05.05.2026.html", icon: "📎", date: "05.05.2026", category: "protocol" },
+        { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📎", date: "29.04.2026", category: "protocol" },
+        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date: "03.05.2026", category: "registry" },
+        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date: "02.05.2026", category: "finance" },
+        { name: "Реестр для чек-листа АВТ2 ИНЭКО", file: "Reesrt_cheklist_AVT2.html", icon: "📎", date: "06.05.2026", category: "registry" },
+        { name: "Реестр для чек-листа СС8 ИНЭКО", file: "Reesrt_cheklist_CC8.html", icon: "📎", date: "06.05.2026", category: "registry" },
+        { name: "Реестр для чек-листа СС5 ИНЭКО", file: "реестр для ЧЛ.html", icon: "📎", date: "01.05.2026", category: "registry" }
+    ];
+
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    function renderDocs() {
+        const container = document.getElementById('docsContainer');
+        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
+        if (currentFilter !== 'all') {
+            filtered = filtered.filter(p => p.category === currentFilter);
+        }
+        document.getElementById('docsCount').textContent = filtered.length;
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`;
+            return;
+        }
+        container.innerHTML = filtered.map((page, index) => `
+            <div class="doc-card" style="animation-delay: ${index * 0.05}s">
+                <a href="${page.file}" class="card-link" rel="noopener noreferrer">
+                    <div class="doc-icon">${page.icon}</div>
+                    <div class="doc-name">${escapeHtml(page.name)}</div>
+                    <div class="doc-meta">
+                        <span>📅 ${page.date}</span>
+                        <span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
+                    </div>
+                </a>
+            </div>
+        `).join('');
+    }
+    
+    function filterDocs(category) {
+        currentFilter = category;
+        renderDocs();
+        let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы';
+        showToastMessage(`📁 Показаны: ${categoryName}`);
+    }
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+    }
+
+    function showToastMessage(message) {
+        let toast = document.getElementById('tempToast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'tempToast';
+            toast.style.cssText = `
+                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
+                background: #FFFFFF; border-left: 4px solid #2D6AFF; padding: 0.6rem 1.2rem;
+                border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500;
+                transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            `;
+            document.body.appendChild(toast);
+        }
+        if (toast._timeout) clearTimeout(toast._timeout);
+        toast.textContent = message;
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        toast.style.opacity = '1';
+        toast._timeout = setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(20px)';
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(100px)'; }, 300);
+        }, 3000);
+    }
+
+    async function loadExportedFiles() {
+        const container = document.getElementById('exportedFilesList');
+        try {
+            const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
+            const response = await fetch(indexUrl);
+            if (!response.ok) throw new Error('Индекс не найден');
+            const index = await response.json();
+            const files = index.files || [];
+            if (files.length === 0) {
+                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
+                return;
+            }
+            container.innerHTML = files.map(file => {
+                const displayDate = file.date;
+                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
+                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
+            }).join('');
+        } catch (error) {
+            console.error('Ошибка загрузки файлов:', error);
+            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
+        }
+    }
+
+    function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
+    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
+    document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
+
+    const searchInput = document.getElementById('globalSearch');
+    let debounceTimer;
+    searchInput?.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
+    });
+
+    function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); closeMobileMenu(); }
+    function closeChatPopup() { document.getElementById('chatPopup').classList.remove('show'); }
+    
+    function sendPopupMessage() {
+        const input = document.getElementById('popupMessageInput');
+        const text = input.value.trim();
+        if (!text) return;
+        const container = document.getElementById('popupMessages');
+        const now = new Date();
+        const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        const linkedText = linkifyAdvanced(escapeHtml(text));
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'popup-message outgoing';
+        messageDiv.innerHTML = `<div class="popup-bubble">${linkedText}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Вы</div></div>`;
+        container.appendChild(messageDiv);
+        input.value = '';
+        container.scrollTop = container.scrollHeight;
+        setTimeout(() => {
+            const replyDiv = document.createElement('div');
+            replyDiv.className = 'popup-message';
+            replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
+            container.appendChild(replyDiv);
+            container.scrollTop = container.scrollHeight;
+        }, 500);
+    }
+    
+    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); showModalToast(); });
+    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); });
+    document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
+    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { openChatPopup(); });
+    document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
+    
+    loadExportedFiles();
     renderDocs();
 </script>
 </body>

@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="#1A1A2E">
+    <meta name="theme-color" content="#FFFFFF">
     <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
     <title>Огни 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
+        /* ===== СВЕТЛАЯ ТЕМА ===== */
         :root {
-            --bg-dark: #0A1628;
-            --bg-card: #0D1F3C;
-            --bg-sidebar: #07122A;
+            --bg-body: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --bg-sidebar: #FFFFFF;
+            --bg-sidebar-section: #FFFFFF;
             --accent-blue: #2D6AFF;
             --accent-cyan: #00B4D8;
             --accent-green: #34a853;
-            --text-primary: #EEEEEE;
-            --text-secondary: #8A9BDF;
-            --text-muted: #5A6BA0;
-            --border-light: rgba(255,255,255,0.05);
-            --shadow-sm: 0 4px 12px rgba(0,0,0,0.2);
-            --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
-            --shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
+            --text-primary: #1A1A2E;
+            --text-secondary: #5A6BA0;
+            --text-muted: #8A9BDF;
+            --border-light: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 12px;
             --radius-md: 20px;
@@ -36,7 +38,7 @@
         }
 
         body {
-            background: var(--bg-dark);
+            background: var(--bg-body);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: var(--text-primary);
             line-height: 1.5;
@@ -49,7 +51,7 @@
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--bg-sidebar);
+            background: #E8EDF2;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
@@ -67,13 +69,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulseGreen {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.35); opacity: 0; }
-        }
-
+        /* ===== НАВИГАЦИЯ ===== */
         .navbar {
-            background: rgba(13, 31, 60, 0.98);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-light);
             position: sticky;
@@ -89,7 +87,6 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            flex-wrap: wrap;
         }
 
         .logo {
@@ -101,20 +98,20 @@
 
         .logo-icon {
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             transition: var(--transition);
         }
 
         .logo-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, var(--accent-cyan));
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -127,45 +124,146 @@
 
         .nav-search input {
             width: 100%;
-            padding: 0.7rem 1.2rem;
-            background: rgba(255,255,255,0.06);
+            padding: 0.6rem 1.2rem;
+            background: #F0F2F5;
             border: 1px solid var(--border-light);
             border-radius: 60px;
-            color: white;
+            color: var(--text-primary);
             font-size: 0.9rem;
             transition: var(--transition);
         }
 
         .nav-search input:focus {
             outline: none;
-            background: rgba(255,255,255,0.1);
+            background: #FFFFFF;
             border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(45, 106, 255, 0.1);
         }
 
         .nav-search input::placeholder {
             color: var(--text-muted);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .nav-link {
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
+        /* ===== БУРГЕР-МЕНЮ (только на мобильных) ===== */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
             cursor: pointer;
+            z-index: 1001;
         }
 
-        .nav-link:hover {
-            background: rgba(45, 106, 255, 0.15);
-            color: var(--accent-cyan);
+        .burger-menu span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--text-primary);
+            border-radius: 3px;
+            transition: var(--transition);
         }
 
+        .burger-menu.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .burger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* ===== МОБИЛЬНОЕ МЕНЮ (выдвижная панель) ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: #FFFFFF;
+            z-index: 1002;
+            transition: right 0.3s ease;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .mobile-menu .sidebar-section {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #F8FAFE;
+            border-radius: var(--radius-md);
+        }
+
+        .mobile-menu .sidebar-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .mobile-menu .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .mobile-menu .sidebar-item:hover {
+            background: rgba(45, 106, 255, 0.1);
+        }
+
+        /* Оверлей (затемнение фона) */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -174,6 +272,7 @@
             gap: 1.5rem;
         }
 
+        /* Десктопная боковая панель (скрывается на мобильных) */
         .sidebar {
             width: 280px;
             flex-shrink: 0;
@@ -183,12 +282,17 @@
         }
 
         .sidebar-section {
-            background: var(--bg-card);
+            background: var(--bg-sidebar-section);
             border-radius: var(--radius-md);
             padding: 1rem;
             margin-bottom: 1rem;
             border: 1px solid var(--border-light);
             transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-section:hover {
+            box-shadow: var(--shadow-md);
         }
 
         .sidebar-title {
@@ -217,8 +321,9 @@
         }
 
         .sidebar-item:hover {
-            background: rgba(45, 106, 255, 0.15);
+            background: rgba(45, 106, 255, 0.08);
             transform: translateX(4px);
+            color: var(--accent-blue);
         }
 
         .sidebar-icon {
@@ -245,8 +350,8 @@
         }
 
         .file-item:hover {
-            background: rgba(45, 106, 255, 0.15);
-            color: var(--accent-cyan);
+            background: rgba(45, 106, 255, 0.08);
+            color: var(--accent-blue);
         }
 
         .content {
@@ -254,14 +359,16 @@
             min-width: 0;
         }
 
+        /* Hero Card */
         .hero-card {
-            background: linear-gradient(135deg, var(--bg-card), #0A1A3A);
+            background: linear-gradient(135deg, #FFFFFF, #F0F4F8);
             border-radius: var(--radius-lg);
             padding: 1.8rem;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(45, 106, 255, 0.2);
+            border: 1px solid var(--border-light);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .hero-card::before {
@@ -271,14 +378,14 @@
             right: -10%;
             width: 280px;
             height: 280px;
-            background: radial-gradient(circle, rgba(45, 106, 255, 0.15), transparent);
+            background: radial-gradient(circle, rgba(45, 106, 255, 0.08), transparent);
             border-radius: 50%;
         }
 
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, var(--accent-cyan));
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -291,6 +398,7 @@
             font-size: 0.9rem;
         }
 
+        /* Google Cards */
         .google-cards-container {
             display: flex;
             flex-direction: column;
@@ -299,15 +407,17 @@
         }
 
         .google-card {
-            background: linear-gradient(135deg, #0A1A3A, var(--bg-card));
-            border: 1px solid var(--accent-green);
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-md);
             transition: var(--transition);
+            box-shadow: var(--shadow-sm);
         }
         
         .google-card:hover {
             transform: translateX(4px);
             border-color: var(--accent-blue);
+            box-shadow: var(--shadow-md);
         }
         
         .google-link {
@@ -319,6 +429,7 @@
             color: inherit;
         }
 
+        /* Документы */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -334,10 +445,12 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--text-primary);
         }
 
         .docs-count {
             background: var(--accent-blue);
+            color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 40px;
             font-size: 0.7rem;
@@ -351,7 +464,7 @@
         }
 
         .doc-card {
-            background: var(--bg-card);
+            background: #FFFFFF;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-light);
             transition: var(--transition);
@@ -359,6 +472,7 @@
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.3s ease forwards;
+            box-shadow: var(--shadow-sm);
         }
 
         .doc-card:hover {
@@ -399,7 +513,7 @@
         .doc-name {
             font-weight: 700;
             font-size: 0.95rem;
-            color: #ffffff;
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
             line-height: 1.4;
         }
@@ -416,9 +530,10 @@
         .empty-state {
             text-align: center;
             padding: 3rem;
-            background: var(--bg-card);
+            background: #FFFFFF;
             border-radius: var(--radius-md);
             color: var(--text-secondary);
+            border: 1px solid var(--border-light);
         }
 
         .footer {
@@ -431,13 +546,14 @@
             color: var(--text-muted);
         }
 
+        /* Модальное окно чата */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             z-index: 3000;
             display: flex;
@@ -454,7 +570,7 @@
         }
 
         .modal-toast {
-            background: linear-gradient(135deg, #0D1F3C, #0A1A3A);
+            background: #FFFFFF;
             border: 1px solid var(--accent-cyan);
             border-radius: var(--radius-lg);
             padding: 1.5rem 2rem;
@@ -470,6 +586,11 @@
             transform: scale(1);
         }
 
+        .modal-toast h3 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
         .modal-toast button {
             margin-top: 1rem;
             background: var(--accent-blue);
@@ -481,20 +602,21 @@
             cursor: pointer;
         }
 
+        /* Чат попап */
         .chat-popup {
             position: fixed;
             bottom: 80px;
             right: 20px;
             width: 380px;
             height: 500px;
-            background: linear-gradient(145deg, #0D1F3C, #0A1A3A);
+            background: #FFFFFF;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
             z-index: 2000;
             display: none;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid rgba(0, 180, 216, 0.3);
+            border: 1px solid var(--border-light);
             animation: slideUp 0.3s ease;
         }
         
@@ -503,7 +625,7 @@
         }
         
         .popup-header {
-            background: #07122A;
+            background: #F8FAFE;
             padding: 0.8rem 1rem;
             display: flex;
             align-items: center;
@@ -517,15 +639,15 @@
             gap: 0.5rem;
             font-weight: 600;
             font-size: 0.9rem;
+            color: var(--text-primary);
         }
         
         .development-badge {
-            background: rgba(0, 180, 216, 0.2);
-            color: var(--accent-cyan);
+            background: rgba(45, 106, 255, 0.1);
+            color: var(--accent-blue);
             font-size: 0.55rem;
             padding: 0.2rem 0.5rem;
             border-radius: 40px;
-            margin-left: 0.5rem;
         }
         
         .close-popup {
@@ -537,12 +659,6 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            transition: var(--transition);
-        }
-        
-        .close-popup:hover {
-            background: rgba(0, 180, 216, 0.2);
-            color: var(--accent-cyan);
         }
         
         .popup-messages {
@@ -566,28 +682,24 @@
         }
         
         .popup-bubble {
-            background: #07122A;
+            background: #F0F2F5;
             padding: 0.5rem 0.8rem;
             border-radius: 16px;
             border-top-left-radius: 4px;
             font-size: 0.8rem;
-            word-break: break-word;
-        }
-        
-        .popup-bubble a {
-            color: #00B4D8;
-            text-decoration: underline;
+            color: var(--text-primary);
         }
         
         .popup-message.outgoing .popup-bubble {
             background: var(--accent-blue);
+            color: white;
             border-top-right-radius: 4px;
             border-top-left-radius: 16px;
         }
         
         .popup-input-area {
             padding: 0.8rem;
-            background: #07122A;
+            background: #F8FAFE;
             display: flex;
             gap: 0.5rem;
             border-top: 1px solid var(--border-light);
@@ -595,11 +707,11 @@
         
         .popup-input {
             flex: 1;
-            background: rgba(255,255,255,0.08);
+            background: #FFFFFF;
             border: 1px solid var(--border-light);
             border-radius: 24px;
             padding: 0.5rem 0.8rem;
-            color: white;
+            color: var(--text-primary);
             font-size: 0.8rem;
         }
         
@@ -614,6 +726,7 @@
             font-size: 1rem;
         }
 
+        /* Плавающая кнопка чата */
         .chat-float-btn {
             position: fixed;
             bottom: 20px;
@@ -627,36 +740,29 @@
             justify-content: center;
             font-size: 1.8rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(45,106,255,0.4);
+            box-shadow: 0 4px 15px rgba(45,106,255,0.3);
             z-index: 1500;
             transition: all 0.3s ease;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
-        .chat-float-btn::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
-            border-radius: 50%;
-            background: rgba(45, 106, 255, 0.4);
-            animation: pulseGreen 1.2s infinite;
-            z-index: -1;
+        .chat-float-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(45,106,255,0.4);
         }
 
+        /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 1024px) {
-            .sidebar { width: 260px; }
             .nav-search { max-width: 280px; }
         }
 
         @media (max-width: 768px) {
             .navbar { padding: 0.75rem 1rem; }
-            .nav-container { flex-direction: column; align-items: stretch; }
-            .nav-search { max-width: 100%; order: 3; }
-            .logo { justify-content: space-between; }
-            .nav-links { justify-content: flex-end; }
+            .nav-container { justify-content: space-between; }
+            .nav-search { max-width: none; order: 2; flex: 1; margin: 0 0.5rem; }
+            .logo { order: 1; }
+            .burger-menu { display: flex; order: 3; }
+            .nav-links { display: none; }
             .sidebar { display: none; }
             .main-container { padding: 1rem; }
             .hero-title { font-size: 1.3rem; }
@@ -664,6 +770,10 @@
             .docs-grid { grid-template-columns: 1fr; }
             .chat-popup { width: calc(100% - 40px); right: 20px; left: 20px; bottom: 80px; height: 60vh; }
             .chat-float-btn { width: 48px; height: 48px; font-size: 1.5rem; bottom: 15px; right: 15px; }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu, .menu-overlay { display: none; }
         }
     </style>
 </head>
@@ -678,11 +788,64 @@
         <div class="nav-search">
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
         </div>
+        <div class="burger-menu" id="burgerMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <div class="nav-links">
             <div class="nav-link" id="chatNavBtn">Чат</div>
         </div>
     </div>
 </nav>
+
+<!-- Мобильное меню (выдвижная панель) -->
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+        <button class="close-menu" id="closeMenuBtn">✕</button>
+    </div>
+    
+    <div class="sidebar-section">
+        <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
+        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">
+            <span class="sidebar-icon">📁</span>Все документы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">
+            <span class="sidebar-icon">📋</span>Протоколы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">
+            <span class="sidebar-icon">📊</span>Реестры
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">
+            <span class="sidebar-icon">₽</span>Финансы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();">
+            <span class="sidebar-icon">💼</span>Техническая часть
+        </button>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
+        <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
+            <span class="sidebar-icon">📝</span>Заполнение реестра
+        </a>
+        <a href="archive.html" class="sidebar-item">
+            <span class="sidebar-icon">📁</span>Архив файлов
+        </a>
+    </div>
+    
+    <div class="sidebar-section">
+        <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
+        <button class="sidebar-item" id="mobileChatBtn">
+            <span class="sidebar-icon">💬</span>Открыть чат
+        </button>
+        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
+            <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
+            <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
+        </div>
+    </div>
+</div>
 
 <div class="main-container">
     <aside class="sidebar">
@@ -707,13 +870,13 @@
 
         <div class="sidebar-section">
             <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.15); border-left: 3px solid #2D6AFF;">
+            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
                 <span class="sidebar-icon">📝</span>Заполнение реестра
             </a>
             <a href="archive.html" class="sidebar-item">
                 <span class="sidebar-icon">📁</span>Архив файлов
             </a>
-            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid var(--border-light);">
                 <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
                 <div id="exportedFilesList" class="files-list">
                     <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
@@ -726,8 +889,8 @@
             <button class="sidebar-item" id="chatSidebarBtn">
                 <span class="sidebar-icon">💬</span>Открыть чат
             </button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: var(--accent-cyan);">⚙️ В разработке</div>
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
                 <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
             </div>
         </div>
@@ -766,7 +929,7 @@
         <div class="section-header">
             <div class="section-title">
                 <span>📄 Документы</span>
-                <span class="docs-count" id="docsCount">6</span>
+                <span class="docs-count" id="docsCount">10</span>
             </div>
         </div>
 
@@ -817,18 +980,44 @@
 </div>
 
 <script>
+    // ===== МОБИЛЬНОЕ МЕНЮ =====
+    const burgerMenu = document.getElementById('burgerMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    function openMobileMenu() {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+        burgerMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.remove('active');
+        burgerMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    burgerMenu?.addEventListener('click', openMobileMenu);
+    closeMenuBtn?.addEventListener('click', closeMobileMenu);
+    menuOverlay?.addEventListener('click', closeMobileMenu);
+
+    // ===== ФУНКЦИИ ЧАТА =====
     function linkifyAdvanced(text) {
         if (!text) return text;
         let result = text.replace(/(https?:\/\/[^\s]+)/g, function(url) {
             let displayUrl = url.length > 50 ? url.substring(0, 47) + '...' : url;
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #00B4D8; text-decoration: underline;">${displayUrl}</a>`;
         });
         result = result.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, function(email) {
-            return `<a href="mailto:${email}">${email}</a>`;
+            return `<a href="mailto:${email}" style="color: #00B4D8; text-decoration: underline;">${email}</a>`;
         });
         return result;
     }
 
+    // Данные документов
     const pages = [
         { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
@@ -888,9 +1077,10 @@
             toast.id = 'tempToast';
             toast.style.cssText = `
                 position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
-                background: #0D1F3C; border-left: 4px solid #2D6AFF; padding: 0.6rem 1.2rem;
-                border-radius: 50px; color: white; font-size: 0.8rem; z-index: 2500;
+                background: #FFFFFF; border-left: 4px solid #2D6AFF; padding: 0.6rem 1.2rem;
+                border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500;
                 transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             `;
             document.body.appendChild(toast);
         }
@@ -908,7 +1098,6 @@
     async function loadExportedFiles() {
         const container = document.getElementById('exportedFilesList');
         try {
-            // Используем files-index.json для получения актуального списка
             const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
             const response = await fetch(indexUrl);
             if (!response.ok) throw new Error('Индекс не найден');
@@ -940,7 +1129,7 @@
         debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
     });
 
-    function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); }
+    function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); closeMobileMenu(); }
     function closeChatPopup() { document.getElementById('chatPopup').classList.remove('show'); }
     
     function sendPopupMessage() {
@@ -969,6 +1158,7 @@
     document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); showModalToast(); });
     document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); });
     document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
+    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { openChatPopup(); });
     document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
     
     loadExportedFiles();

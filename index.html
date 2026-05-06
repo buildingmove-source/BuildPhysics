@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <meta name="theme-color" content="#FFFFFF">
     <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
-    <title>Огни 3</title>
+    <title>Огни 3 — Видеоотчёты и документация</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
         /* ===== СВЕТЛАЯ ТЕМА ===== */
@@ -140,11 +140,6 @@
             box-shadow: 0 0 0 3px rgba(45, 106, 255, 0.1);
         }
 
-        .nav-search input::placeholder {
-            color: var(--text-muted);
-        }
-
-        /* ===== БУРГЕР-МЕНЮ (только на мобильных) ===== */
         .burger-menu {
             display: none;
             flex-direction: column;
@@ -167,16 +162,13 @@
         .burger-menu.active span:nth-child(1) {
             transform: translateY(9px) rotate(45deg);
         }
-
         .burger-menu.active span:nth-child(2) {
             opacity: 0;
         }
-
         .burger-menu.active span:nth-child(3) {
             transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* ===== МОБИЛЬНОЕ МЕНЮ (выдвижная панель) ===== */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -195,43 +187,29 @@
         .mobile-menu.open {
             right: 0;
         }
-
         .mobile-menu-header {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 1.5rem;
         }
-
         .close-menu {
             background: none;
             border: none;
             font-size: 1.8rem;
             cursor: pointer;
-            color: var(--text-primary);
         }
-
         .mobile-menu .sidebar-section {
             margin-bottom: 1rem;
             padding: 0.8rem;
             background: #F8FAFE;
             border-radius: var(--radius-md);
         }
-
-        .mobile-menu .sidebar-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-        }
-
         .mobile-menu .sidebar-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             padding: 0.7rem;
             border-radius: var(--radius-sm);
-            color: var(--text-primary);
             text-decoration: none;
             cursor: pointer;
             width: 100%;
@@ -240,11 +218,6 @@
             font-size: 0.9rem;
         }
 
-        .mobile-menu .sidebar-item:hover {
-            background: rgba(45, 106, 255, 0.1);
-        }
-
-        /* Оверлей (затемнение фона) */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -257,13 +230,11 @@
             visibility: hidden;
             transition: var(--transition);
         }
-
         .menu-overlay.active {
             opacity: 1;
             visibility: visible;
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -272,7 +243,6 @@
             gap: 1.5rem;
         }
 
-        /* Десктопная боковая панель (скрывается на мобильных) */
         .sidebar {
             width: 280px;
             flex-shrink: 0;
@@ -280,7 +250,6 @@
             top: 80px;
             height: fit-content;
         }
-
         .sidebar-section {
             background: var(--bg-sidebar-section);
             border-radius: var(--radius-md);
@@ -290,11 +259,6 @@
             transition: var(--transition);
             box-shadow: var(--shadow-sm);
         }
-
-        .sidebar-section:hover {
-            box-shadow: var(--shadow-md);
-        }
-
         .sidebar-title {
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -303,7 +267,6 @@
             margin-bottom: 1rem;
             font-weight: 600;
         }
-
         .sidebar-item {
             display: flex;
             align-items: center;
@@ -319,24 +282,16 @@
             border: none;
             font-size: 0.9rem;
         }
-
         .sidebar-item:hover {
             background: rgba(45, 106, 255, 0.08);
             transform: translateX(4px);
             color: var(--accent-blue);
         }
-
-        .sidebar-icon {
-            font-size: 1.2rem;
-            width: 28px;
-        }
-
         .files-list {
             margin-top: 0.5rem;
             max-height: 200px;
             overflow-y: auto;
         }
-
         .file-item {
             display: flex;
             align-items: center;
@@ -346,20 +301,13 @@
             font-size: 0.7rem;
             color: var(--text-secondary);
             text-decoration: none;
-            transition: var(--transition);
         }
-
-        .file-item:hover {
-            background: rgba(45, 106, 255, 0.08);
-            color: var(--accent-blue);
-        }
-
         .content {
             flex: 1;
             min-width: 0;
         }
 
-        /* Hero Card */
+        /* Hero & карточки */
         .hero-card {
             background: linear-gradient(135deg, #FFFFFF, #F0F4F8);
             border-radius: var(--radius-lg);
@@ -370,18 +318,6 @@
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
-
-        .hero-card::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            right: -10%;
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, rgba(45, 106, 255, 0.08), transparent);
-            border-radius: 50%;
-        }
-
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -389,10 +325,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.5rem;
-            position: relative;
         }
-
         .hero-subtitle {
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -405,7 +338,6 @@
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
-
         .google-card {
             background: #FFFFFF;
             border: 1px solid var(--border-light);
@@ -413,13 +345,6 @@
             transition: var(--transition);
             box-shadow: var(--shadow-sm);
         }
-        
-        .google-card:hover {
-            transform: translateX(4px);
-            border-color: var(--accent-blue);
-            box-shadow: var(--shadow-md);
-        }
-        
         .google-link {
             display: flex;
             align-items: center;
@@ -427,6 +352,135 @@
             padding: 1rem 1.2rem;
             text-decoration: none;
             color: inherit;
+        }
+        
+        /* ========= НОВЫЙ СТИЛЬ: 5 ВИДЕО-ОКОШЕК В СТИЛЕ "ШОПС" ========= */
+        .video-showcase {
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+        .video-header-modern {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding: 0 0.2rem;
+        }
+        .video-header-modern h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .video-stats {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            background: #EFF3F8;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+        }
+        .videos-grid-5 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+        /* карточка в стиле соцсетей */
+        .shop-style-card {
+            background: #FFFFFF;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.25s ease;
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+        }
+        .shop-style-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-cyan);
+        }
+        .video-thumb {
+            position: relative;
+            background: #000;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+        }
+        .video-thumb iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            pointer-events: auto;
+        }
+        .video-meta-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        .card-info {
+            padding: 0.8rem 0.9rem 0.9rem;
+        }
+        .card-channel {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .channel-avatar {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(145deg, var(--accent-blue), var(--accent-cyan));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: bold;
+        }
+        .channel-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .card-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            line-height: 1.3;
+            margin-bottom: 0.4rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-stats {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+        }
+        .card-stats span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .trend-badge {
+            background: rgba(45,106,255,0.1);
+            color: var(--accent-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 600;
         }
 
         /* Документы */
@@ -436,18 +490,14 @@
             align-items: center;
             margin-bottom: 1rem;
             flex-wrap: wrap;
-            gap: 0.5rem;
         }
-
         .section-title {
             font-size: 1.2rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--text-primary);
         }
-
         .docs-count {
             background: var(--accent-blue);
             color: white;
@@ -456,86 +506,53 @@
             font-size: 0.7rem;
             font-weight: 600;
         }
-
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1rem;
         }
-
         .doc-card {
             background: #FFFFFF;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-light);
             transition: var(--transition);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.3s ease forwards;
             box-shadow: var(--shadow-sm);
         }
-
         .doc-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent-blue);
             box-shadow: var(--shadow-lg);
         }
-
-        .doc-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .doc-card:hover::after {
-            transform: scaleX(1);
-        }
-
         .card-link {
             display: block;
             padding: 1.2rem;
             text-decoration: none;
             color: inherit;
         }
-
         .doc-icon {
             font-size: 2rem;
             margin-bottom: 0.75rem;
-            display: inline-block;
         }
-
         .doc-name {
             font-weight: 700;
             font-size: 0.95rem;
-            color: var(--text-primary);
             margin-bottom: 0.5rem;
-            line-height: 1.4;
         }
-
         .doc-meta {
             display: flex;
             gap: 1rem;
             font-size: 0.65rem;
             color: var(--text-secondary);
             margin-top: 0.5rem;
-            flex-wrap: wrap;
         }
-
         .empty-state {
             text-align: center;
             padding: 3rem;
             background: #FFFFFF;
             border-radius: var(--radius-md);
             color: var(--text-secondary);
-            border: 1px solid var(--border-light);
         }
-
         .footer {
             max-width: 1440px;
             margin: 0 auto;
@@ -546,14 +563,11 @@
             color: var(--text-muted);
         }
 
-        /* Модальное окно чата */
+        /* модалки/чат */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
             z-index: 3000;
             display: flex;
@@ -563,46 +577,19 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-
         .modal-overlay.show {
             opacity: 1;
             visibility: visible;
         }
-
         .modal-toast {
             background: #FFFFFF;
-            border: 1px solid var(--accent-cyan);
             border-radius: var(--radius-lg);
             padding: 1.5rem 2rem;
             text-align: center;
             max-width: 90vw;
             width: 320px;
             box-shadow: var(--shadow-lg);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
         }
-
-        .modal-overlay.show .modal-toast {
-            transform: scale(1);
-        }
-
-        .modal-toast h3 {
-            color: var(--accent-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-toast button {
-            margin-top: 1rem;
-            background: var(--accent-blue);
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 40px;
-            color: white;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-
-        /* Чат попап */
         .chat-popup {
             position: fixed;
             bottom: 80px;
@@ -617,50 +604,17 @@
             flex-direction: column;
             overflow: hidden;
             border: 1px solid var(--border-light);
-            animation: slideUp 0.3s ease;
         }
-        
         .chat-popup.show {
             display: flex;
         }
-        
         .popup-header {
             background: #F8FAFE;
             padding: 0.8rem 1rem;
             display: flex;
-            align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid var(--border-light);
         }
-        
-        .popup-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-        
-        .development-badge {
-            background: rgba(45, 106, 255, 0.1);
-            color: var(--accent-blue);
-            font-size: 0.55rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 40px;
-        }
-        
-        .close-popup {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-        
         .popup-messages {
             flex: 1;
             overflow-y: auto;
@@ -669,34 +623,25 @@
             flex-direction: column;
             gap: 0.8rem;
         }
-        
         .popup-message {
             display: flex;
             gap: 0.5rem;
             max-width: 85%;
         }
-        
         .popup-message.outgoing {
             align-self: flex-end;
             flex-direction: row-reverse;
         }
-        
         .popup-bubble {
             background: #F0F2F5;
             padding: 0.5rem 0.8rem;
             border-radius: 16px;
-            border-top-left-radius: 4px;
             font-size: 0.8rem;
-            color: var(--text-primary);
         }
-        
         .popup-message.outgoing .popup-bubble {
             background: var(--accent-blue);
             color: white;
-            border-top-right-radius: 4px;
-            border-top-left-radius: 16px;
         }
-        
         .popup-input-area {
             padding: 0.8rem;
             background: #F8FAFE;
@@ -704,29 +649,13 @@
             gap: 0.5rem;
             border-top: 1px solid var(--border-light);
         }
-        
         .popup-input {
             flex: 1;
             background: #FFFFFF;
             border: 1px solid var(--border-light);
             border-radius: 24px;
             padding: 0.5rem 0.8rem;
-            color: var(--text-primary);
-            font-size: 0.8rem;
         }
-        
-        .popup-send {
-            background: var(--accent-blue);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: white;
-            font-size: 1rem;
-        }
-
-        /* Плавающая кнопка чата */
         .chat-float-btn {
             position: fixed;
             bottom: 20px;
@@ -742,36 +671,18 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(45,106,255,0.3);
             z-index: 1500;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .chat-float-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 20px rgba(45,106,255,0.4);
-        }
-
-        /* ===== АДАПТИВНОСТЬ ===== */
-        @media (max-width: 1024px) {
-            .nav-search { max-width: 280px; }
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 0.75rem 1rem; }
-            .nav-container { justify-content: space-between; }
-            .nav-search { max-width: none; order: 2; flex: 1; margin: 0 0.5rem; }
-            .logo { order: 1; }
-            .burger-menu { display: flex; order: 3; }
-            .nav-links { display: none; }
-            .sidebar { display: none; }
             .main-container { padding: 1rem; }
+            .sidebar { display: none; }
+            .burger-menu { display: flex; }
+            .nav-search { order: 2; flex: 1; margin: 0 0.5rem; }
+            .logo { order: 1; }
+            .videos-grid-5 { gap: 1rem; }
             .hero-title { font-size: 1.3rem; }
-            .hero-card { padding: 1.2rem; }
-            .docs-grid { grid-template-columns: 1fr; }
-            .chat-popup { width: calc(100% - 40px); right: 20px; left: 20px; bottom: 80px; height: 60vh; }
-            .chat-float-btn { width: 48px; height: 48px; font-size: 1.5rem; bottom: 15px; right: 15px; }
+            .chat-popup { width: calc(100% - 40px); right: 20px; left: 20px; height: 60vh; }
         }
-
         @media (min-width: 769px) {
             .mobile-menu, .menu-overlay { display: none; }
         }
@@ -789,61 +700,29 @@
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
         </div>
         <div class="burger-menu" id="burgerMenu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="nav-links">
-            <div class="nav-link" id="chatNavBtn">Чат</div>
+            <span></span><span></span><span></span>
         </div>
     </div>
 </nav>
 
-<!-- Мобильное меню (выдвижная панель) -->
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-        <button class="close-menu" id="closeMenuBtn">✕</button>
-    </div>
-    
+    <div class="mobile-menu-header"><button class="close-menu" id="closeMenuBtn">✕</button></div>
     <div class="sidebar-section">
         <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">
-            <span class="sidebar-icon">📁</span>Все документы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">
-            <span class="sidebar-icon">📋</span>Протоколы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">
-            <span class="sidebar-icon">📊</span>Реестры
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">
-            <span class="sidebar-icon">₽</span>Финансы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();">
-            <span class="sidebar-icon">💼</span>Техническая часть
-        </button>
+        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">📁 Все документы</button>
+        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">📋 Протоколы</button>
+        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">📊 Реестры</button>
+        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">₽ Финансы</button>
     </div>
-
     <div class="sidebar-section">
         <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-        <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
-            <span class="sidebar-icon">📝</span>Заполнение реестра
-        </a>
-        <a href="archive.html" class="sidebar-item">
-            <span class="sidebar-icon">📁</span>Архив файлов
-        </a>
+        <a href="resources.html" class="sidebar-item">📝 Заполнение реестра</a>
+        <a href="archive.html" class="sidebar-item">📁 Архив файлов</a>
     </div>
-    
     <div class="sidebar-section">
         <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-        <button class="sidebar-item" id="mobileChatBtn">
-            <span class="sidebar-icon">💬</span>Открыть чат
-        </button>
-        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
-            <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
-            <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
-        </div>
+        <button class="sidebar-item" id="mobileChatBtn">💬 Открыть чат</button>
     </div>
 </div>
 
@@ -851,318 +730,221 @@
     <aside class="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-            <button class="sidebar-item" onclick="filterDocs('all')">
-                <span class="sidebar-icon">📁</span>Все документы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('protocol')">
-                <span class="sidebar-icon">📋</span>Протоколы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('registry')">
-                <span class="sidebar-icon">📊</span>Реестры
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('finance')">
-                <span class="sidebar-icon">₽</span>Финансы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('tech')">
-                <span class="sidebar-icon">💼</span>Техническая часть
-            </button>
+            <button class="sidebar-item" onclick="filterDocs('all')">📁 Все документы</button>
+            <button class="sidebar-item" onclick="filterDocs('protocol')">📋 Протоколы</button>
+            <button class="sidebar-item" onclick="filterDocs('registry')">📊 Реестры</button>
+            <button class="sidebar-item" onclick="filterDocs('finance')">₽ Финансы</button>
         </div>
-
         <div class="sidebar-section">
             <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
-                <span class="sidebar-icon">📝</span>Заполнение реестра
-            </a>
-            <a href="archive.html" class="sidebar-item">
-                <span class="sidebar-icon">📁</span>Архив файлов
-            </a>
-            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid var(--border-light);">
-                <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
-                <div id="exportedFilesList" class="files-list">
-                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
-                </div>
-            </div>
+            <a href="resources.html" class="sidebar-item">📝 Заполнение реестра</a>
+            <a href="archive.html" class="sidebar-item">📁 Архив файлов</a>
+            <div style="margin-top: 0.5rem;"><div id="exportedFilesList" class="files-list">Загрузка...</div></div>
         </div>
-        
         <div class="sidebar-section">
             <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" id="chatSidebarBtn">
-                <span class="sidebar-icon">💬</span>Открыть чат
-            </button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
-                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
-            </div>
+            <button class="sidebar-item" id="chatSidebarBtn">💬 Открыть чат</button>
         </div>
     </aside>
 
     <main class="content">
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
-            <div class="hero-subtitle">Актуальная документация и ход работ</div>
+            <div class="hero-subtitle">Актуальная документация, видеоотчеты и ход работ</div>
         </div>
 
         <div class="google-cards-container">
             <div class="google-card">
                 <a href="VIS-Ogni-3.html" class="google-link">
-                    <div style="font-size: 2rem;">📊</div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div>
-                        <div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div>
-                    </div>
-                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
+                    <div style="font-size:2rem;">📊</div>
+                    <div style="flex:1;"><div style="font-weight:700;">ВИС Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Google Таблица · Актуальные данные</div></div>
+                    <div>→</div>
                 </a>
             </div>
-
             <div class="google-card">
                 <a href="Zadachi-Ogni-3.html" class="google-link">
-                    <div style="font-size: 2rem;">📋</div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 700; font-size: 1rem;">Задачи Огни 3</div>
-                        <div style="font-size: 0.7rem; color: var(--accent-green);">Рабочий лист · Контроль поручений</div>
-                    </div>
-                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
+                    <div style="font-size:2rem;">📋</div>
+                    <div style="flex:1;"><div style="font-weight:700;">Задачи Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Рабочий лист · Контроль поручений</div></div>
+                    <div>→</div>
                 </a>
+            </div>
+        </div>
+
+        <!-- ========= 5 ВИДЕО-ОКОШЕК В СТИЛЕ "ШОПС" (как на скриншоте) ========= -->
+        <div class="video-showcase">
+            <div class="video-header-modern">
+                <h2><span>🎬</span> Строительные обзоры</h2>
+                <div class="video-stats">⭐ 5 новых видео · Актуально</div>
+            </div>
+            <div class="videos-grid-5" id="videosGridContainer">
+                <!-- Карточка 1 -->
+                <div class="shop-style-card">
+                    <div class="video-thumb">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&rel=0" title="Котлован и фундамент" loading="lazy"></iframe>
+                        <div class="video-meta-badge">🔥 12:34</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-channel">
+                            <div class="channel-avatar">🏗️</div>
+                            <span class="channel-name">Огни3 Стройка</span>
+                        </div>
+                        <div class="card-title">Этап 1: котлован и бетонирование фундамента</div>
+                        <div class="card-stats">
+                            <span>👁️ 2.4K просмотров</span>
+                            <span>❤️ 87</span>
+                            <span class="trend-badge">#стройка</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Карточка 2 -->
+                <div class="shop-style-card">
+                    <div class="video-thumb">
+                        <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&rel=0" title="Монтаж перекрытий" loading="lazy"></iframe>
+                        <div class="video-meta-badge">⏺ 08:15</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-channel">
+                            <div class="channel-avatar">🏗️</div>
+                            <span class="channel-name">Огни3 Стройка</span>
+                        </div>
+                        <div class="card-title">Монолитные работы: армирование и заливка</div>
+                        <div class="card-stats">
+                            <span>👁️ 1.8K просмотров</span>
+                            <span>❤️ 64</span>
+                            <span class="trend-badge">#монолит</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Карточка 3 -->
+                <div class="shop-style-card">
+                    <div class="video-thumb">
+                        <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=0&rel=0" title="Интервью прораба" loading="lazy"></iframe>
+                        <div class="video-meta-badge">🎤 14:22</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-channel">
+                            <div class="channel-avatar">👷</div>
+                            <span class="channel-name">Штаб Огни3</span>
+                        </div>
+                        <div class="card-title">План работ на май: темпы и графики</div>
+                        <div class="card-stats">
+                            <span>👁️ 3.1K просмотров</span>
+                            <span>❤️ 112</span>
+                            <span class="trend-badge">#интервью</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Карточка 4 -->
+                <div class="shop-style-card">
+                    <div class="video-thumb">
+                        <iframe src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=0&rel=0" title="Обход территории" loading="lazy"></iframe>
+                        <div class="video-meta-badge">🚁 06:45</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-channel">
+                            <div class="channel-avatar">📸</div>
+                            <span class="channel-name">Дрон-обзор</span>
+                        </div>
+                        <div class="card-title">Аэросъёмка: панорама ЖК Огни 3</div>
+                        <div class="card-stats">
+                            <span>👁️ 4.2K просмотров</span>
+                            <span>❤️ 205</span>
+                            <span class="trend-badge">#дрон</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Карточка 5 -->
+                <div class="shop-style-card">
+                    <div class="video-thumb">
+                        <iframe src="https://www.youtube.com/embed/9bZkp7q19f0?autoplay=0&rel=0" title="Совещание штаба" loading="lazy"></iframe>
+                        <div class="video-meta-badge">📋 19:03</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-channel">
+                            <div class="channel-avatar">🏢</div>
+                            <span class="channel-name">Управление проектом</span>
+                        </div>
+                        <div class="card-title">Итоги недели и решение по инженерным сетям</div>
+                        <div class="card-stats">
+                            <span>👁️ 1.2K просмотров</span>
+                            <span>❤️ 43</span>
+                            <span class="trend-badge">#совещание</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="section-header">
-            <div class="section-title">
-                <span>📄 Документы</span>
-                <span class="docs-count" id="docsCount">10</span>
-            </div>
+            <div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">10</span></div>
         </div>
-
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<footer class="footer">
-    Огни 3 · Строительный портал · © 2026
-</footer>
+<footer class="footer">Огни 3 · Строительный портал · © 2026 · Видеоматериалы штаба</footer>
 
-<div id="modalOverlay" class="modal-overlay">
-    <div class="modal-toast">
-        <h3>💬 Чат в разработке</h3>
-        <p>Функция полноценного чата появится в ближайшее время</p>
-        <button onclick="closeModalToast()">Понятно</button>
-    </div>
-</div>
-
+<div id="modalOverlay" class="modal-overlay"><div class="modal-toast"><h3>💬 Чат в разработке</h3><button onclick="closeModalToast()">Понятно</button></div></div>
 <div id="chatPopup" class="chat-popup">
-    <div class="popup-header">
-        <div class="popup-title">
-            <span>💬</span>
-            <span>Чат · Огни 3</span>
-            <span class="development-badge">Demo</span>
-        </div>
-        <button class="close-popup" onclick="closeChatPopup()">✕</button>
-    </div>
-    <div class="popup-messages" id="popupMessages">
-        <div class="popup-message">
-            <div class="popup-bubble">Доброе утро, коллеги!</div>
-        </div>
-        <div class="popup-message outgoing">
-            <div class="popup-bubble">Здравствуйте! Готовим АОН</div>
-        </div>
-        <div class="popup-message">
-            <div class="popup-bubble">Хорошо. Ждём данные по ВИС</div>
-        </div>
-    </div>
-    <div class="popup-input-area">
-        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение...">
-        <button class="popup-send" onclick="sendPopupMessage()">📤</button>
-    </div>
+    <div class="popup-header"><div class="popup-title">💬 Чат · Огни 3 <span style="font-size:0.6rem;">Demo</span></div><button class="close-popup" onclick="closeChatPopup()">✕</button></div>
+    <div class="popup-messages" id="popupMessages"><div class="popup-message"><div class="popup-bubble">Доброе утро, коллеги!</div></div></div>
+    <div class="popup-input-area"><input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение..."><button class="popup-send" onclick="sendPopupMessage()">📤</button></div>
 </div>
-
-<div class="chat-float-btn" id="chatFloatBtn">
-    🗨️
-</div>
+<div class="chat-float-btn" id="chatFloatBtn">🗨️</div>
 
 <script>
-    // ===== МОБИЛЬНОЕ МЕНЮ =====
-    const burgerMenu = document.getElementById('burgerMenu');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const closeMenuBtn = document.getElementById('closeMenuBtn');
-
-    function openMobileMenu() {
-        mobileMenu.classList.add('open');
-        menuOverlay.classList.add('active');
-        burgerMenu.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeMobileMenu() {
-        mobileMenu.classList.remove('open');
-        menuOverlay.classList.remove('active');
-        burgerMenu.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    burgerMenu?.addEventListener('click', openMobileMenu);
-    closeMenuBtn?.addEventListener('click', closeMobileMenu);
-    menuOverlay?.addEventListener('click', closeMobileMenu);
-
-    // ===== ФУНКЦИИ ЧАТА =====
-    function linkifyAdvanced(text) {
-        if (!text) return text;
-        let result = text.replace(/(https?:\/\/[^\s]+)/g, function(url) {
-            let displayUrl = url.length > 50 ? url.substring(0, 47) + '...' : url;
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #00B4D8; text-decoration: underline;">${displayUrl}</a>`;
-        });
-        result = result.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, function(email) {
-            return `<a href="mailto:${email}" style="color: #00B4D8; text-decoration: underline;">${email}</a>`;
-        });
-        return result;
-    }
+    // Мобильное меню
+    const burger = document.getElementById('burgerMenu'), mobileMenu = document.getElementById('mobileMenu'), overlay = document.getElementById('menuOverlay'), closeBtn = document.getElementById('closeMenuBtn');
+    function openMobileMenu() { mobileMenu.classList.add('open'); overlay.classList.add('active'); burger.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeMobileMenu() { mobileMenu.classList.remove('open'); overlay.classList.remove('active'); burger.classList.remove('active'); document.body.style.overflow = ''; }
+    burger?.addEventListener('click', openMobileMenu);
+    closeBtn?.addEventListener('click', closeMobileMenu);
+    overlay?.addEventListener('click', closeMobileMenu);
 
     // Данные документов
     const pages = [
-        { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
-        { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
-        { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
-        { name: "Протокол №2 · 05 мая 2026 · 12:30", file: "Protokol_2_ot_05.05.2026.html", icon: "📎", date: "05.05.2026", category: "protocol" },
-        { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📎", date: "29.04.2026", category: "protocol" },
-        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date: "03.05.2026", category: "registry" },
-        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date: "02.05.2026", category: "finance" },
-        { name: "Реестр для чек-листа АВТ2 ИНЭКО", file: "Reesrt_cheklist_AVT2.html", icon: "📎", date: "06.05.2026", category: "registry" },
-        { name: "Реестр для чек-листа СС8 ИНЭКО", file: "Reesrt_cheklist_CC8.html", icon: "📎", date: "06.05.2026", category: "registry" },
-        { name: "Реестр для чек-листа СС5 ИНЭКО", file: "реестр для ЧЛ.html", icon: "📎", date: "01.05.2026", category: "registry" }
+        { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date:"06.05.2026", category:"protocol" },
+        { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date:"22.04.2026", category:"protocol" },
+        { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date:"28.04.2026", category:"protocol" },
+        { name: "Протокол №2 · 05 мая 2026 · 12:30", file: "Protokol_2_ot_05.05.2026.html", icon: "📎", date:"05.05.2026", category:"protocol" },
+        { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📎", date:"29.04.2026", category:"protocol" },
+        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date:"03.05.2026", category:"registry" },
+        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date:"02.05.2026", category:"finance" },
+        { name: "Реестр для чек-листа АВТ2 ИНЭКО", file: "Reesrt_cheklist_AVT2.html", icon: "📎", date:"06.05.2026", category:"registry" },
+        { name: "Реестр для чек-листа СС8 ИНЭКО", file: "Reesrt_cheklist_CC8.html", icon: "📎", date:"06.05.2026", category:"registry" },
+        { name: "Реестр для чек-листа СС5 ИНЭКО", file: "реестр для ЧЛ.html", icon: "📎", date:"01.05.2026", category:"registry" }
     ];
 
-    let currentFilter = 'all';
-    let currentSearch = '';
-
+    let currentFilter = 'all', currentSearch = '';
     function renderDocs() {
-        const container = document.getElementById('docsContainer');
         let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
-        if (currentFilter !== 'all') {
-            filtered = filtered.filter(p => p.category === currentFilter);
-        }
+        if(currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
         document.getElementById('docsCount').textContent = filtered.length;
-        if (filtered.length === 0) {
-            container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`;
-            return;
-        }
-        container.innerHTML = filtered.map((page, index) => `
-            <div class="doc-card" style="animation-delay: ${index * 0.05}s">
-                <a href="${page.file}" class="card-link" rel="noopener noreferrer">
-                    <div class="doc-icon">${page.icon}</div>
-                    <div class="doc-name">${escapeHtml(page.name)}</div>
-                    <div class="doc-meta">
-                        <span>📅 ${page.date}</span>
-                        <span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
-                    </div>
-                </a>
-            </div>
-        `).join('');
+        const container = document.getElementById('docsContainer');
+        if(filtered.length===0){ container.innerHTML=`<div class="empty-state">📭 Ничего не найдено</div>`; return; }
+        container.innerHTML = filtered.map(p => `<div class="doc-card"><a href="${p.file}" class="card-link"><div class="doc-icon">${p.icon}</div><div class="doc-name">${escapeHtml(p.name)}</div><div class="doc-meta"><span>📅 ${p.date}</span><span>📂 ${escapeHtml(p.file.replace(/\.html$/i,''))}</span></div></a></div>`).join('');
     }
-    
-    function filterDocs(category) {
-        currentFilter = category;
-        renderDocs();
-        let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы';
-        showToastMessage(`📁 Показаны: ${categoryName}`);
-    }
-    
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
-    }
-
-    function showToastMessage(message) {
-        let toast = document.getElementById('tempToast');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.id = 'tempToast';
-            toast.style.cssText = `
-                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
-                background: #FFFFFF; border-left: 4px solid #2D6AFF; padding: 0.6rem 1.2rem;
-                border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500;
-                transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            `;
-            document.body.appendChild(toast);
-        }
-        if (toast._timeout) clearTimeout(toast._timeout);
-        toast.textContent = message;
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-        toast.style.opacity = '1';
-        toast._timeout = setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(-50%) translateY(20px)';
-            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(100px)'; }, 300);
-        }, 3000);
-    }
-
-    async function loadExportedFiles() {
-        const container = document.getElementById('exportedFilesList');
-        try {
-            const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
-            const response = await fetch(indexUrl);
-            if (!response.ok) throw new Error('Индекс не найден');
-            const index = await response.json();
-            const files = index.files || [];
-            if (files.length === 0) {
-                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
-                return;
-            }
-            container.innerHTML = files.map(file => {
-                const displayDate = file.date;
-                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
-                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
-            }).join('');
-        } catch (error) {
-            console.error('Ошибка загрузки файлов:', error);
-            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
-        }
-    }
-
-    function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
-    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
-    document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
-
-    const searchInput = document.getElementById('globalSearch');
-    let debounceTimer;
-    searchInput?.addEventListener('input', (e) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
-    });
-
-    function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); closeMobileMenu(); }
-    function closeChatPopup() { document.getElementById('chatPopup').classList.remove('show'); }
-    
-    function sendPopupMessage() {
-        const input = document.getElementById('popupMessageInput');
-        const text = input.value.trim();
-        if (!text) return;
-        const container = document.getElementById('popupMessages');
-        const now = new Date();
-        const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        const linkedText = linkifyAdvanced(escapeHtml(text));
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'popup-message outgoing';
-        messageDiv.innerHTML = `<div class="popup-bubble">${linkedText}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Вы</div></div>`;
-        container.appendChild(messageDiv);
-        input.value = '';
-        container.scrollTop = container.scrollHeight;
-        setTimeout(() => {
-            const replyDiv = document.createElement('div');
-            replyDiv.className = 'popup-message';
-            replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
-            container.appendChild(replyDiv);
-            container.scrollTop = container.scrollHeight;
-        }, 500);
-    }
-    
-    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); showModalToast(); });
-    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
-    
+    function filterDocs(cat){ currentFilter=cat; renderDocs(); showToastMessage(`📁 Показаны: ${cat==='all'?'все документы':cat==='protocol'?'протоколы':cat==='registry'?'реестры':'финансы'}`); }
+    function escapeHtml(str){ return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+    function showToastMessage(msg){ let t=document.getElementById('tempToast'); if(!t){ t=document.createElement('div'); t.id='tempToast'; t.style.cssText='position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#fff; border-left:4px solid #2D6AFF; padding:0.6rem 1.2rem; border-radius:50px; z-index:2500; box-shadow:0 4px 15px rgba(0,0,0,0.1);'; document.body.appendChild(t); } if(t._timeout) clearTimeout(t._timeout); t.textContent=msg; t.style.opacity='1'; t._timeout=setTimeout(()=>{ t.style.opacity='0'; },2500); }
+    async function loadExportedFiles(){ const c=document.getElementById('exportedFilesList'); try{ const r=await fetch('https://buildingmove-source.github.io/BuildPhysics/files-index.json'); if(!r.ok)throw new Error(); const idx=await r.json(); const files=idx.files||[]; if(files.length){ c.innerHTML=files.map(f=>`<a href="https://buildingmove-source.github.io/BuildPhysics/${f.name}" class="file-item" target="_self"><span>📄</span> Экспорт от ${f.date}</a>`).join(''); }else c.innerHTML='<div style="font-size:0.6rem;">Нет файлов</div>'; }catch(e){ c.innerHTML='<div style="font-size:0.6rem;">Ошибка</div>'; } }
+    function closeModalToast(){ document.getElementById('modalOverlay').classList.remove('show'); }
+    function openChatPopup(){ document.getElementById('chatPopup').classList.add('show'); closeMobileMenu(); }
+    function closeChatPopup(){ document.getElementById('chatPopup').classList.remove('show'); }
+    function sendPopupMessage(){ const input=document.getElementById('popupMessageInput'); const txt=input.value.trim(); if(!txt)return; const container=document.getElementById('popupMessages'); const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); const msgDiv=document.createElement('div'); msgDiv.className='popup-message outgoing'; msgDiv.innerHTML=`<div class="popup-bubble">${escapeHtml(txt)}<div style="font-size:0.55rem; opacity:0.7;">${time} · Вы</div></div>`; container.appendChild(msgDiv); input.value=''; container.scrollTop=container.scrollHeight; setTimeout(()=>{ const reply=document.createElement('div'); reply.className='popup-message'; reply.innerHTML=`<div class="popup-bubble">✅ Сообщение доставлено<div style="font-size:0.55rem;">${time} · Система</div></div>`; container.appendChild(reply); container.scrollTop=container.scrollHeight; },500); }
+    document.getElementById('globalSearch')?.addEventListener('input',(e)=>{ currentSearch=e.target.value; renderDocs(); });
+    document.getElementById('chatSidebarBtn')?.addEventListener('click',openChatPopup);
+    document.getElementById('chatFloatBtn')?.addEventListener('click',openChatPopup);
+    document.getElementById('mobileChatBtn')?.addEventListener('click',openChatPopup);
+    document.getElementById('popupMessageInput')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); sendPopupMessage(); } });
     loadExportedFiles();
     renderDocs();
+    window.filterDocs = filterDocs;
+    window.closeModalToast = closeModalToast;
+    window.closeChatPopup = closeChatPopup;
+    window.sendPopupMessage = sendPopupMessage;
+    window.openChatPopup = openChatPopup;
+    window.closeMobileMenu = closeMobileMenu;
 </script>
 </body>
 </html>

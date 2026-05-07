@@ -73,9 +73,9 @@
             100% { transform: scale(1.35); opacity: 0; }
         }
 
-        @keyframes slideInFromRight {
-            0% { transform: translateX(100%); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100%); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         /* Шапка */
@@ -104,6 +104,7 @@
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .logo-img {
@@ -161,6 +162,9 @@
             font-weight: 500;
             transition: var(--transition);
             cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
         }
 
         .nav-link:hover {
@@ -168,18 +172,65 @@
             color: var(--accent-cyan);
         }
 
-        .mobile-menu-toggle {
+        /* Мобильная кнопка репозитория (вместо "Чат") */
+        .mobile-repo-btn {
             display: none;
-            background: none;
-            border: none;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(45,106,255,0.15);
+            padding: 0.4rem 0.8rem;
+            border-radius: 40px;
             cursor: pointer;
-            padding: 8px;
         }
 
-        .mobile-menu-toggle img {
-            width: 28px;
-            height: 28px;
+        .mobile-repo-btn img {
+            width: 24px;
+            height: 24px;
             filter: brightness(0) invert(1);
+        }
+
+        .mobile-repo-btn span {
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+        }
+
+        /* Выдвижная боковая панель (мобильная версия) */
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 1rem;
+            overflow-y: auto;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+        }
+
+        .mobile-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .mobile-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
         }
 
         /* Основной контейнер */
@@ -198,57 +249,6 @@
             position: sticky;
             top: 80px;
             height: fit-content;
-        }
-
-        /* Мобильная боковая панель (выезжающая) */
-        .mobile-sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 85%;
-            max-width: 320px;
-            height: 100%;
-            background: var(--bg-card);
-            z-index: 2000;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            overflow-y: auto;
-            padding: 1rem;
-            box-shadow: var(--shadow-lg);
-            border-right: 1px solid var(--border-light);
-        }
-
-        .mobile-sidebar.open {
-            transform: translateX(0);
-        }
-
-        .mobile-sidebar-header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 1rem;
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1999;
-            display: none;
-        }
-
-        .overlay.active {
-            display: block;
         }
 
         .sidebar-section {
@@ -283,6 +283,7 @@
             background: none;
             border: none;
             font-size: 0.9rem;
+            text-align: left;
         }
 
         .sidebar-item:hover {
@@ -552,7 +553,7 @@
             color: var(--text-muted);
         }
 
-        /* ===== ЧАТ (всплывающее окно) ===== */
+        /* Чат (всплывающее окно) */
         .chat-popup {
             position: fixed;
             bottom: 80px;
@@ -690,7 +691,7 @@
             transform: scale(1.05);
         }
 
-        /* Плавающая кнопка чата (иконка) */
+        /* Плавающая кнопка чата */
         .chat-float-btn {
             position: fixed;
             bottom: 20px;
@@ -728,7 +729,7 @@
             z-index: -1;
         }
 
-        /* Модальное окно для чата "в разработке" (при клике на кнопку в шапке) */
+        /* Модальное окно для чата "в разработке" */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -795,13 +796,13 @@
             }
             .nav-container {
                 flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+                flex-wrap: wrap;
             }
             .nav-search {
+                order: 2;
                 max-width: 100%;
-                order: initial;
-                margin-top: 0;
+                width: 100%;
+                margin-top: 0.5rem;
             }
             .logo {
                 order: 1;
@@ -809,16 +810,14 @@
             .nav-links {
                 order: 3;
             }
-            .mobile-menu-toggle {
-                display: block;
-                order: 2;
-            }
             .sidebar {
                 display: none;
             }
+            .mobile-repo-btn {
+                display: flex;
+            }
             .main-container {
                 padding: 1rem;
-                flex-direction: column;
             }
             .hero-title {
                 font-size: 1.3rem;
@@ -852,22 +851,19 @@
             .victory-message {
                 font-size: 0.75rem;
             }
-            .video-container {
-                margin: 1rem 0;
-            }
-            /* На мобильных видео под задачами Огни 3 */
-            .mobile-video-wrapper {
-                margin-top: 1rem;
-            }
         }
 
         @media (max-width: 480px) {
-            .nav-search input {
+            .nav-links .nav-link {
+                padding: 0.3rem 0.8rem;
                 font-size: 0.8rem;
-                padding: 0.5rem 0.8rem;
             }
-            .hero-title {
-                font-size: 1.2rem;
+            .mobile-repo-btn span {
+                font-size: 0.7rem;
+            }
+            .mobile-repo-btn img {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
@@ -885,17 +881,19 @@
         </div>
         <div class="nav-links">
             <div class="nav-link" id="chatNavBtn">Чат</div>
+            <div class="mobile-repo-btn" id="mobileRepoBtn">
+                <img src="chat_database_messages_db_server_icon_179436.svg" alt="Репозиторий">
+                <span>Репозиторий</span>
+            </div>
         </div>
-        <button class="mobile-menu-toggle" id="mobileMenuToggle">
-            <img src="chat_database_messages_db_server_icon_179436.svg" alt="Меню">
-        </button>
     </div>
 </nav>
 
-<div class="overlay" id="overlay"></div>
-<div class="mobile-sidebar" id="mobileSidebar">
+<!-- Выдвижная панель для мобильной версии (копия десктопного sidebar) -->
+<div id="mobileSidebar" class="mobile-sidebar">
     <div class="mobile-sidebar-header">
-        <button class="close-sidebar" id="closeSidebar">✕</button>
+        <span style="font-weight: 600;">📋 Меню</span>
+        <button class="close-sidebar" id="closeSidebarBtn">✕</button>
     </div>
     <div class="sidebar-section">
         <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
@@ -916,14 +914,16 @@
         </button>
     </div>
 
-    <!-- Видео в мобильной версии будет продублировано под задачами, но пока оставим здесь тоже для справки -->
+    <!-- Видео -->
     <div class="sidebar-section">
         <div class="sidebar-title">📹 ВИДЕОПРЕЗЕНТАЦИЯ</div>
-        <div class="video-container" id="mobileVideoContainer">
-            <video id="mobilePromoVideo" preload="metadata" playsinline>
+        <div class="video-container" id="videoContainerMobile">
+            <video id="promoVideoMobile" preload="metadata" playsinline>
                 <source src="vis-presentation.mp4" type="video/mp4">
             </video>
-            <div class="video-overlay">▶️ Нажмите для воспроизведения со звуком</div>
+            <div class="video-overlay">
+                <span>▶️ Нажмите для воспроизведения со звуком</span>
+            </div>
         </div>
     </div>
 
@@ -935,14 +935,17 @@
         <a href="archive.html" class="sidebar-item">
             <span class="sidebar-icon">📁</span>Архив файлов
         </a>
-        <div class="files-list" id="mobileExportedFilesList">
-            <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+        <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
+            <div id="mobileExportedFilesList" class="files-list">
+                <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+            </div>
         </div>
     </div>
 
     <div class="sidebar-section">
         <div class="sidebar-title">💬 ЧАТ КОМАНДЫ</div>
-        <button class="sidebar-item" onclick="openChatPopup(); closeMobileSidebar();">
+        <button class="sidebar-item" id="mobileChatSidebarBtn" onclick="openChatPopup(); closeMobileSidebar();">
             <span class="sidebar-icon">💬</span>Открыть чат
         </button>
         <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
@@ -974,13 +977,16 @@
             </button>
         </div>
 
+        <!-- Видео (фиксировано в левой панели) -->
         <div class="sidebar-section">
             <div class="sidebar-title">📹 ВИДЕОПРЕЗЕНТАЦИЯ</div>
-            <div class="video-container" id="desktopVideoContainer">
-                <video id="desktopPromoVideo" preload="metadata" playsinline>
+            <div class="video-container" id="videoContainerDesktop">
+                <video id="promoVideoDesktop" preload="metadata" playsinline>
                     <source src="vis-presentation.mp4" type="video/mp4">
                 </video>
-                <div class="video-overlay">▶️ Нажмите для воспроизведения со звуком</div>
+                <div class="video-overlay">
+                    <span>▶️ Нажмите для воспроизведения со звуком</span>
+                </div>
             </div>
         </div>
 
@@ -1044,11 +1050,6 @@
             </div>
         </div>
 
-        <!-- На мобильных видео будет размещено здесь (под задачами) -->
-        <div class="mobile-video-wrapper" id="mobileVideoWrapper">
-            <!-- Видео будет продублировано из мобильной панели, но пока оставим пустым, наполнение через JS -->
-        </div>
-
         <div class="section-header">
             <div class="section-title">
                 <span>📄 Документы</span>
@@ -1064,7 +1065,7 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
-<!-- Модальное окно для чата "в разработке" -->
+<!-- Модальное окно "Чат в разработке" -->
 <div id="modalOverlay" class="modal-overlay">
     <div class="modal-toast">
         <h3>💬 Чат в разработке</h3>
@@ -1079,20 +1080,14 @@
         <div class="popup-title">
             <span>💬</span>
             <span>Чат · Огни 3</span>
-            <span class="development-badge">Demo</span>
+            <span style="background: rgba(0,180,216,0.2); color: #00B4D8; font-size:0.55rem; padding:0.2rem 0.5rem; border-radius:40px;">Demo</span>
         </div>
         <button class="close-popup" onclick="closeChatPopup()">✕</button>
     </div>
     <div class="popup-messages" id="popupMessages">
-        <div class="popup-message">
-            <div class="popup-bubble">Доброе утро, коллеги!</div>
-        </div>
-        <div class="popup-message outgoing">
-            <div class="popup-bubble">Здравствуйте! Готовим АОН</div>
-        </div>
-        <div class="popup-message">
-            <div class="popup-bubble">Хорошо. Ждём данные по ВИС</div>
-        </div>
+        <div class="popup-message"><div class="popup-bubble">Доброе утро, коллеги!</div></div>
+        <div class="popup-message outgoing"><div class="popup-bubble">Здравствуйте! Готовим АОН</div></div>
+        <div class="popup-message"><div class="popup-bubble">Хорошо. Ждём данные по ВИС</div></div>
     </div>
     <div class="popup-input-area">
         <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение...">
@@ -1108,7 +1103,7 @@
 </div>
 
 <script>
-    // ===== НОВЫЙ СПИСОК ДОКУМЕНТОВ =====
+    // ===== ДОКУМЕНТЫ (по заданию) =====
     const pages = [
         { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
@@ -1191,10 +1186,10 @@
         }, 3000);
     }
 
-    // Загрузка списка экспортированных файлов из индекса
-    async function loadExportedFiles() {
-        const container = document.getElementById('exportedFilesList');
-        const mobileContainer = document.getElementById('mobileExportedFilesList');
+    // Загрузка экспортированных файлов (десктоп и мобильная версия)
+    async function loadExportedFiles(containerId = 'exportedFilesList') {
+        const container = document.getElementById(containerId);
+        if (!container) return;
         try {
             const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
             const response = await fetch(indexUrl, { cache: 'no-store' });
@@ -1202,29 +1197,42 @@
             const index = await response.json();
             const files = index.files || [];
             if (files.length === 0) {
-                const msg = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
-                if (container) container.innerHTML = msg;
-                if (mobileContainer) mobileContainer.innerHTML = msg;
+                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
                 return;
             }
-            const html = files.map(file => {
+            container.innerHTML = files.map(file => {
                 const displayDate = file.date;
                 const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
                 return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
             }).join('');
-            if (container) container.innerHTML = html;
-            if (mobileContainer) mobileContainer.innerHTML = html;
         } catch (error) {
             console.error('Ошибка загрузки файлов:', error);
-            const errMsg = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
-            if (container) container.innerHTML = errMsg;
-            if (mobileContainer) mobileContainer.innerHTML = errMsg;
+            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
         }
     }
 
+    // Видео: обработчики для десктопа и мобильной версии
+    function initVideo(videoId, containerId) {
+        const video = document.getElementById(videoId);
+        const container = document.getElementById(containerId);
+        if (!video || !container) return;
+        container.addEventListener('click', () => {
+            if (video.paused) {
+                video.play().catch(e => console.log('Автовоспроизведение заблокировано', e));
+            } else {
+                video.pause();
+            }
+        });
+        video.muted = false; // звук разрешён по клику
+    }
+
     // Чат функции
-    function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); }
-    function closeChatPopup() { document.getElementById('chatPopup').classList.remove('show'); }
+    function openChatPopup() {
+        document.getElementById('chatPopup').classList.add('show');
+    }
+    function closeChatPopup() {
+        document.getElementById('chatPopup').classList.remove('show');
+    }
     
     function sendPopupMessage() {
         const input = document.getElementById('popupMessageInput');
@@ -1259,49 +1267,25 @@
         return result;
     }
     
-    // Видео: клик для воспроизведения со звуком (десктоп и мобильное)
-    function initVideo(videoElement, containerElement) {
-        if (!videoElement || !containerElement) return;
-        containerElement.addEventListener('click', () => {
-            if (videoElement.paused) {
-                videoElement.play().catch(e => console.log('Автовоспроизведение заблокировано', e));
-            } else {
-                videoElement.pause();
-            }
-        });
-        videoElement.muted = false;
-    }
-
-    const desktopVideo = document.getElementById('desktopPromoVideo');
-    const desktopContainer = document.getElementById('desktopVideoContainer');
-    if (desktopVideo && desktopContainer) initVideo(desktopVideo, desktopContainer);
-
-    const mobileVideo = document.getElementById('mobilePromoVideo');
-    const mobileContainer = document.getElementById('mobileVideoContainer');
-    if (mobileVideo && mobileContainer) initVideo(mobileVideo, mobileContainer);
-
-    // Мобильное меню
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    // Модальное окно для чата в разработке (кнопка "Чат" в шапке)
+    function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
+    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
+    document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
+    
+    // Мобильная панель
     const mobileSidebar = document.getElementById('mobileSidebar');
-    const overlay = document.getElementById('overlay');
-    const closeSidebarBtn = document.getElementById('closeSidebar');
-
+    const mobileRepoBtn = document.getElementById('mobileRepoBtn');
+    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+    
     function openMobileSidebar() {
         mobileSidebar.classList.add('open');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
     }
-
     function closeMobileSidebar() {
         mobileSidebar.classList.remove('open');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
     }
-
-    mobileMenuToggle?.addEventListener('click', openMobileSidebar);
+    mobileRepoBtn?.addEventListener('click', openMobileSidebar);
     closeSidebarBtn?.addEventListener('click', closeMobileSidebar);
-    overlay?.addEventListener('click', closeMobileSidebar);
-
+    
     // Поиск
     const searchInput = document.getElementById('globalSearch');
     let debounceTimer;
@@ -1312,35 +1296,18 @@
             renderDocs();
         }, 300);
     });
-
-    // Модальное окно для чата в разработке
-    function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
-    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
-    document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
-
-    // Обработчики чат-кнопок
+    
+    // Обработчики кнопок чата
     document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); showModalToast(); });
     document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); });
     document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
     document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
     
-    // При загрузке страницы также подгружаем видео в мобильный блок под задачами (для удобства)
-    const mobileVideoWrapper = document.getElementById('mobileVideoWrapper');
-    if (mobileVideoWrapper && window.innerWidth <= 768) {
-        // Если видеоконтейнер ещё не добавлен, клонируем из мобильного сайдбара
-        const existingVideoBlock = document.querySelector('#mobileSidebar .video-container');
-        if (existingVideoBlock && !mobileVideoWrapper.querySelector('.video-container')) {
-            const clone = existingVideoBlock.cloneNode(true);
-            clone.id = 'clonedMobileVideo';
-            mobileVideoWrapper.appendChild(clone);
-            const clonedVideo = clone.querySelector('video');
-            const clonedContainer = clone;
-            if (clonedVideo && clonedContainer) initVideo(clonedVideo, clonedContainer);
-        }
-    }
-
     // Инициализация
-    loadExportedFiles();
+    loadExportedFiles('exportedFilesList');
+    loadExportedFiles('mobileExportedFilesList');
+    initVideo('promoVideoDesktop', 'videoContainerDesktop');
+    initVideo('promoVideoMobile', 'videoContainerMobile');
     renderDocs();
 </script>
 </body>

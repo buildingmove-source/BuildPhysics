@@ -73,9 +73,9 @@
             100% { transform: scale(1.35); opacity: 0; }
         }
 
-        @keyframes slideInLeft {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        @keyframes slideInFromRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
         }
 
         /* Шапка */
@@ -168,24 +168,18 @@
             color: var(--accent-cyan);
         }
 
-        /* Мобильная иконка меню */
-        .mobile-menu-icon {
+        .mobile-menu-toggle {
             display: none;
-            background: rgba(45, 106, 255, 0.15);
-            padding: 0.4rem;
-            border-radius: 50%;
+            background: none;
+            border: none;
             cursor: pointer;
-            transition: var(--transition);
+            padding: 8px;
         }
-        .mobile-menu-icon img {
+
+        .mobile-menu-toggle img {
             width: 28px;
             height: 28px;
             filter: brightness(0) invert(1);
-            display: block;
-        }
-        .mobile-menu-icon:hover {
-            background: var(--accent-blue);
-            transform: scale(1.05);
         }
 
         /* Основной контейнер */
@@ -197,7 +191,7 @@
             gap: 1.5rem;
         }
 
-        /* Боковая панель (десктоп) */
+        /* Десктопная боковая панель */
         .sidebar {
             width: 320px;
             flex-shrink: 0;
@@ -207,23 +201,6 @@
         }
 
         /* Мобильная боковая панель (выезжающая) */
-        .mobile-sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .mobile-sidebar-overlay.active {
-            display: block;
-            opacity: 1;
-        }
         .mobile-sidebar {
             position: fixed;
             top: 0;
@@ -232,46 +209,55 @@
             max-width: 320px;
             height: 100%;
             background: var(--bg-card);
-            box-shadow: var(--shadow-lg);
-            z-index: 2001;
+            z-index: 2000;
             transform: translateX(-100%);
-            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: transform 0.3s ease;
             overflow-y: auto;
             padding: 1rem;
+            box-shadow: var(--shadow-lg);
+            border-right: 1px solid var(--border-light);
         }
-        .mobile-sidebar-overlay.active .mobile-sidebar {
+
+        .mobile-sidebar.open {
             transform: translateX(0);
         }
+
         .mobile-sidebar-header {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 1rem;
         }
-        .close-mobile-sidebar {
+
+        .close-sidebar {
             background: none;
             border: none;
             color: var(--text-secondary);
             font-size: 1.5rem;
             cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .close-mobile-sidebar:hover {
-            background: rgba(233,69,96,0.2);
-            color: var(--accent-cyan);
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
         }
 
         .sidebar-section {
-            background: rgba(13, 31, 60, 0.6);
-            backdrop-filter: blur(8px);
+            background: var(--bg-card);
             border-radius: var(--radius-md);
             padding: 1rem;
             margin-bottom: 1rem;
             border: 1px solid var(--border-light);
+            transition: var(--transition);
         }
 
         .sidebar-title {
@@ -309,7 +295,7 @@
             width: 28px;
         }
 
-        /* Видео в стиле TikTok */
+        /* Видео (TikTok/Reels стиль) */
         .video-container {
             margin-top: 0.5rem;
             border-radius: 20px;
@@ -320,6 +306,7 @@
             transition: var(--transition);
             box-shadow: var(--shadow-md);
         }
+
         .video-container video {
             width: 100%;
             height: auto;
@@ -328,6 +315,7 @@
             aspect-ratio: 9 / 16;
             object-fit: cover;
         }
+
         .video-overlay {
             position: absolute;
             bottom: 12px;
@@ -343,17 +331,14 @@
             color: white;
             pointer-events: none;
         }
-        .mobile-video-wrapper {
-            display: none;
-            margin: 1rem 0;
-        }
 
-        /* Файлы (экспортированные) */
+        /* Файлы (экспортированные) – список */
         .files-list {
             margin-top: 0.5rem;
             max-height: 200px;
             overflow-y: auto;
         }
+
         .file-item {
             display: flex;
             align-items: center;
@@ -365,6 +350,7 @@
             text-decoration: none;
             transition: var(--transition);
         }
+
         .file-item:hover {
             background: rgba(45, 106, 255, 0.15);
             color: var(--accent-cyan);
@@ -385,6 +371,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .hero-card::before {
             content: '';
             position: absolute;
@@ -395,6 +382,7 @@
             background: radial-gradient(circle, rgba(45, 106, 255, 0.15), transparent);
             border-radius: 50%;
         }
+
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -403,11 +391,14 @@
             background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
+            position: relative;
         }
+
         .hero-subtitle {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
+
         .victory-message {
             margin-top: 1rem;
             padding: 0.5rem 1rem;
@@ -426,16 +417,19 @@
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
+
         .google-card {
             background: linear-gradient(135deg, #0A1A3A, var(--bg-card));
             border: 1px solid var(--accent-green);
             border-radius: var(--radius-md);
             transition: var(--transition);
         }
+
         .google-card:hover {
             transform: translateX(4px);
             border-color: var(--accent-blue);
         }
+
         .google-link {
             display: flex;
             align-items: center;
@@ -454,6 +448,7 @@
             flex-wrap: wrap;
             gap: 0.5rem;
         }
+
         .section-title {
             font-size: 1.2rem;
             font-weight: 600;
@@ -461,6 +456,7 @@
             align-items: center;
             gap: 0.5rem;
         }
+
         .docs-count {
             background: var(--accent-blue);
             padding: 0.2rem 0.6rem;
@@ -468,11 +464,13 @@
             font-size: 0.7rem;
             font-weight: 600;
         }
+
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1rem;
         }
+
         .doc-card {
             background: var(--bg-card);
             border-radius: var(--radius-md);
@@ -483,11 +481,13 @@
             overflow: hidden;
             animation: fadeInUp 0.3s ease forwards;
         }
+
         .doc-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent-blue);
             box-shadow: var(--shadow-lg);
         }
+
         .doc-card::after {
             content: '';
             position: absolute;
@@ -499,26 +499,32 @@
             transform: scaleX(0);
             transition: transform 0.3s;
         }
+
         .doc-card:hover::after {
             transform: scaleX(1);
         }
+
         .card-link {
             display: block;
             padding: 1.2rem;
             text-decoration: none;
             color: inherit;
         }
+
         .doc-icon {
             font-size: 2rem;
             margin-bottom: 0.75rem;
             display: inline-block;
         }
+
         .doc-name {
             font-weight: 700;
             font-size: 0.95rem;
             color: #ffffff;
             margin-bottom: 0.5rem;
+            line-height: 1.4;
         }
+
         .doc-meta {
             display: flex;
             gap: 1rem;
@@ -527,6 +533,7 @@
             margin-top: 0.5rem;
             flex-wrap: wrap;
         }
+
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -534,6 +541,7 @@
             border-radius: var(--radius-md);
             color: var(--text-secondary);
         }
+
         .footer {
             max-width: 1440px;
             margin: 0 auto;
@@ -544,7 +552,7 @@
             color: var(--text-muted);
         }
 
-        /* Чат попап */
+        /* ===== ЧАТ (всплывающее окно) ===== */
         .chat-popup {
             position: fixed;
             bottom: 80px;
@@ -561,7 +569,11 @@
             border: 1px solid rgba(0, 180, 216, 0.3);
             animation: slideUp 0.3s ease;
         }
-        .chat-popup.show { display: flex; }
+
+        .chat-popup.show {
+            display: flex;
+        }
+
         .popup-header {
             background: #07122A;
             padding: 0.8rem 1rem;
@@ -570,6 +582,7 @@
             justify-content: space-between;
             border-bottom: 1px solid var(--border-light);
         }
+
         .popup-title {
             display: flex;
             align-items: center;
@@ -577,6 +590,7 @@
             font-weight: 600;
             font-size: 0.9rem;
         }
+
         .close-popup {
             background: none;
             border: none;
@@ -586,11 +600,14 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
+            transition: var(--transition);
         }
+
         .close-popup:hover {
             background: rgba(0, 180, 216, 0.2);
             color: var(--accent-cyan);
         }
+
         .popup-messages {
             flex: 1;
             overflow-y: auto;
@@ -599,15 +616,18 @@
             flex-direction: column;
             gap: 0.8rem;
         }
+
         .popup-message {
             display: flex;
             gap: 0.5rem;
             max-width: 85%;
         }
+
         .popup-message.outgoing {
             align-self: flex-end;
             flex-direction: row-reverse;
         }
+
         .popup-bubble {
             background: #07122A;
             padding: 0.5rem 0.8rem;
@@ -616,15 +636,18 @@
             font-size: 0.8rem;
             word-break: break-word;
         }
+
         .popup-bubble a {
             color: #00B4D8;
             text-decoration: underline;
         }
+
         .popup-message.outgoing .popup-bubble {
             background: var(--accent-blue);
             border-top-right-radius: 4px;
             border-top-left-radius: 16px;
         }
+
         .popup-input-area {
             padding: 0.8rem;
             background: #07122A;
@@ -632,6 +655,7 @@
             gap: 0.5rem;
             border-top: 1px solid var(--border-light);
         }
+
         .popup-input {
             flex: 1;
             background: rgba(255,255,255,0.08);
@@ -641,6 +665,7 @@
             color: white;
             font-size: 0.8rem;
         }
+
         .popup-send {
             background: none;
             border: none;
@@ -651,16 +676,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: var(--transition);
         }
+
         .popup-send img {
             width: 24px;
             height: 24px;
             filter: brightness(0) invert(1);
         }
+
         .popup-send:hover {
             background: rgba(0, 180, 216, 0.2);
+            transform: scale(1.05);
         }
 
+        /* Плавающая кнопка чата (иконка) */
         .chat-float-btn {
             position: fixed;
             bottom: 20px;
@@ -678,11 +708,13 @@
             transition: all 0.3s ease;
             border: 2px solid rgba(255,255,255,0.2);
         }
+
         .chat-float-btn img {
             width: 32px;
             height: 32px;
             filter: brightness(0) invert(1);
         }
+
         .chat-float-btn::before {
             content: '';
             position: absolute;
@@ -696,7 +728,7 @@
             z-index: -1;
         }
 
-        /* Модальное окно "в разработке" */
+        /* Модальное окно для чата "в разработке" (при клике на кнопку в шапке) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -713,10 +745,12 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
+
         .modal-overlay.show {
             opacity: 1;
             visibility: visible;
         }
+
         .modal-toast {
             background: linear-gradient(135deg, #0D1F3C, #0A1A3A);
             border: 1px solid var(--accent-cyan);
@@ -729,9 +763,11 @@
             transform: scale(0.9);
             transition: transform 0.3s ease;
         }
+
         .modal-overlay.show .modal-toast {
             transform: scale(1);
         }
+
         .modal-toast button {
             margin-top: 1rem;
             background: var(--accent-blue);
@@ -745,35 +781,94 @@
 
         /* Адаптивность */
         @media (max-width: 1024px) {
-            .sidebar { width: 280px; }
-            .nav-search { max-width: 280px; }
+            .sidebar {
+                width: 280px;
+            }
+            .nav-search {
+                max-width: 280px;
+            }
         }
+
         @media (max-width: 768px) {
-            .navbar { padding: 0.75rem 1rem; }
-            .nav-container { flex-direction: column; align-items: stretch; }
-            .nav-search { max-width: 100%; order: 3; }
-            .logo { justify-content: space-between; }
-            .nav-links { justify-content: flex-end; }
-            .sidebar { display: none; }
-            .desktop-chat-btn { display: none; }
-            .mobile-menu-icon { display: flex; align-items: center; justify-content: center; }
-            .main-container { padding: 1rem; }
-            .hero-title { font-size: 1.3rem; }
-            .hero-card { padding: 1rem; }
-            .docs-grid { grid-template-columns: 1fr; }
-            .chat-popup { width: calc(100% - 40px); right: 20px; left: 20px; bottom: 80px; height: 60vh; }
-            .chat-float-btn { width: 48px; height: 48px; bottom: 15px; right: 15px; }
-            .chat-float-btn img { width: 28px; height: 28px; }
-            .logo-img { height: 36px; }
-            .victory-message { font-size: 0.75rem; }
-            .mobile-video-wrapper { display: block; }
-            .desktop-video { display: none; }
+            .navbar {
+                padding: 0.75rem 1rem;
+            }
+            .nav-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .nav-search {
+                max-width: 100%;
+                order: initial;
+                margin-top: 0;
+            }
+            .logo {
+                order: 1;
+            }
+            .nav-links {
+                order: 3;
+            }
+            .mobile-menu-toggle {
+                display: block;
+                order: 2;
+            }
+            .sidebar {
+                display: none;
+            }
+            .main-container {
+                padding: 1rem;
+                flex-direction: column;
+            }
+            .hero-title {
+                font-size: 1.3rem;
+            }
+            .hero-card {
+                padding: 1rem;
+            }
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+            .chat-popup {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+                bottom: 80px;
+                height: 60vh;
+            }
+            .chat-float-btn {
+                width: 48px;
+                height: 48px;
+                bottom: 15px;
+                right: 15px;
+            }
+            .chat-float-btn img {
+                width: 28px;
+                height: 28px;
+            }
+            .logo-img {
+                height: 36px;
+            }
+            .victory-message {
+                font-size: 0.75rem;
+            }
+            .video-container {
+                margin: 1rem 0;
+            }
+            /* На мобильных видео под задачами Огни 3 */
+            .mobile-video-wrapper {
+                margin-top: 1rem;
+            }
         }
-        @media (min-width: 769px) {
-            .desktop-chat-btn { display: inline-block; }
-            .mobile-menu-icon { display: none; }
-            .desktop-video { display: block; }
-            .mobile-video-wrapper { display: none; }
+
+        @media (max-width: 480px) {
+            .nav-search input {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.8rem;
+            }
+            .hero-title {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -789,13 +884,73 @@
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
         </div>
         <div class="nav-links">
-            <div class="nav-link desktop-chat-btn" id="chatNavBtn">Чат</div>
-            <div class="mobile-menu-icon" id="mobileMenuIcon">
-                <img src="chat_database_messages_db_server_icon_179436.svg" alt="Меню">
-            </div>
+            <div class="nav-link" id="chatNavBtn">Чат</div>
         </div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <img src="chat_database_messages_db_server_icon_179436.svg" alt="Меню">
+        </button>
     </div>
 </nav>
+
+<div class="overlay" id="overlay"></div>
+<div class="mobile-sidebar" id="mobileSidebar">
+    <div class="mobile-sidebar-header">
+        <button class="close-sidebar" id="closeSidebar">✕</button>
+    </div>
+    <div class="sidebar-section">
+        <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
+        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileSidebar();">
+            <span class="sidebar-icon">📁</span>Все документы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileSidebar();">
+            <span class="sidebar-icon">📋</span>Протоколы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileSidebar();">
+            <span class="sidebar-icon">📊</span>Реестры
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileSidebar();">
+            <span class="sidebar-icon">₽</span>Финансы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileSidebar();">
+            <span class="sidebar-icon">💼</span>Техническая часть
+        </button>
+    </div>
+
+    <!-- Видео в мобильной версии будет продублировано под задачами, но пока оставим здесь тоже для справки -->
+    <div class="sidebar-section">
+        <div class="sidebar-title">📹 ВИДЕОПРЕЗЕНТАЦИЯ</div>
+        <div class="video-container" id="mobileVideoContainer">
+            <video id="mobilePromoVideo" preload="metadata" playsinline>
+                <source src="vis-presentation.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay">▶️ Нажмите для воспроизведения со звуком</div>
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
+        <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.15); border-left: 3px solid #2D6AFF;">
+            <span class="sidebar-icon">📝</span>Заполнение реестра
+        </a>
+        <a href="archive.html" class="sidebar-item">
+            <span class="sidebar-icon">📁</span>Архив файлов
+        </a>
+        <div class="files-list" id="mobileExportedFilesList">
+            <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-title">💬 ЧАТ КОМАНДЫ</div>
+        <button class="sidebar-item" onclick="openChatPopup(); closeMobileSidebar();">
+            <span class="sidebar-icon">💬</span>Открыть чат
+        </button>
+        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
+            <div style="font-size: 0.65rem; color: var(--accent-cyan);">⚙️ В разработке</div>
+            <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
+        </div>
+    </div>
+</div>
 
 <div class="main-container">
     <!-- Десктопная боковая панель -->
@@ -819,14 +974,13 @@
             </button>
         </div>
 
-        <!-- Видео – десктопная версия -->
-        <div class="sidebar-section desktop-video">
+        <div class="sidebar-section">
             <div class="sidebar-title">📹 ВИДЕОПРЕЗЕНТАЦИЯ</div>
-            <div class="video-container" id="videoContainerDesktop">
-                <video id="promoVideoDesktop" preload="metadata" playsinline>
+            <div class="video-container" id="desktopVideoContainer">
+                <video id="desktopPromoVideo" preload="metadata" playsinline>
                     <source src="vis-presentation.mp4" type="video/mp4">
                 </video>
-                <div class="video-overlay"><span>▶️ Нажмите для воспроизведения со звуком</span></div>
+                <div class="video-overlay">▶️ Нажмите для воспроизведения со звуком</div>
             </div>
         </div>
 
@@ -840,7 +994,9 @@
             </a>
             <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.05);">
                 <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
-                <div id="exportedFilesList" class="files-list"><div style="font-size:0.6rem; color:var(--text-muted); padding:0.3rem;">Загрузка...</div></div>
+                <div id="exportedFilesList" class="files-list">
+                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+                </div>
             </div>
         </div>
 
@@ -856,47 +1012,6 @@
         </div>
     </aside>
 
-    <!-- Мобильная выезжающая панель -->
-    <div id="mobileSidebarOverlay" class="mobile-sidebar-overlay">
-        <div class="mobile-sidebar">
-            <div class="mobile-sidebar-header">
-                <button class="close-mobile-sidebar" id="closeMobileSidebar">✕</button>
-            </div>
-            <div class="sidebar-section">
-                <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-                <button class="sidebar-item" onclick="filterDocs('all'); closeMobileSidebar();">
-                    <span class="sidebar-icon">📁</span>Все документы
-                </button>
-                <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileSidebar();">
-                    <span class="sidebar-icon">📋</span>Протоколы
-                </button>
-                <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileSidebar();">
-                    <span class="sidebar-icon">📊</span>Реестры
-                </button>
-                <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileSidebar();">
-                    <span class="sidebar-icon">₽</span>Финансы
-                </button>
-                <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileSidebar();">
-                    <span class="sidebar-icon">💼</span>Техническая часть
-                </button>
-            </div>
-            <div class="sidebar-section">
-                <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-                <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.15); border-left: 3px solid #2D6AFF;">
-                    <span class="sidebar-icon">📝</span>Заполнение реестра
-                </a>
-                <a href="archive.html" class="sidebar-item">📁 Архив файлов</a>
-            </div>
-            <div class="sidebar-section">
-                <div class="sidebar-title">💬 ЧАТ КОМАНДЫ</div>
-                <button class="sidebar-item" id="mobileChatSidebarBtn">
-                    <span class="sidebar-icon">💬</span>Открыть чат
-                </button>
-            </div>
-            <div class="sidebar-section desktop-video" style="display: none;"> </div>
-        </div>
-    </div>
-
     <main class="content">
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
@@ -910,53 +1025,74 @@
             <div class="google-card">
                 <a href="VIS-Ogni-3.html" class="google-link">
                     <div style="font-size: 2rem;">📊</div>
-                    <div style="flex:1;"><div style="font-weight:700;">ВИС Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Google Таблица</div></div>
-                    <div style="color:var(--text-secondary);">Открыть →</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
                 </a>
             </div>
             <div class="google-card">
                 <a href="Zadachi-Ogni-3.html" class="google-link">
                     <div style="font-size: 2rem;">📋</div>
-                    <div style="flex:1;"><div style="font-weight:700;">Задачи Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Рабочий лист</div></div>
-                    <div style="color:var(--text-secondary);">Открыть →</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">Задачи Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Рабочий лист · Контроль поручений</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
                 </a>
             </div>
         </div>
 
-        <!-- Мобильная версия видео (под Задачи Огни 3) -->
-        <div class="mobile-video-wrapper">
-            <div class="video-container" id="videoContainerMobile">
-                <video id="promoVideoMobile" preload="metadata" playsinline>
-                    <source src="vis-presentation.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay"><span>▶️ Нажмите для воспроизведения со звуком</span></div>
-            </div>
+        <!-- На мобильных видео будет размещено здесь (под задачами) -->
+        <div class="mobile-video-wrapper" id="mobileVideoWrapper">
+            <!-- Видео будет продублировано из мобильной панели, но пока оставим пустым, наполнение через JS -->
         </div>
 
         <div class="section-header">
-            <div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">0</span></div>
+            <div class="section-title">
+                <span>📄 Документы</span>
+                <span class="docs-count" id="docsCount">0</span>
+            </div>
         </div>
+
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<footer class="footer">Огни 3 · Строительный портал · © 2026</footer>
+<footer class="footer">
+    Огни 3 · Строительный портал · © 2026
+</footer>
 
-<!-- Модальное окно "Чат в разработке" (для десктопной кнопки) -->
+<!-- Модальное окно для чата "в разработке" -->
 <div id="modalOverlay" class="modal-overlay">
-    <div class="modal-toast"><h3>💬 Чат в разработке</h3><p>Функция полноценного чата появится в ближайшее время</p><button onclick="closeModalToast()">Понятно</button></div>
+    <div class="modal-toast">
+        <h3>💬 Чат в разработке</h3>
+        <p>Функция полноценного чата появится в ближайшее время</p>
+        <button onclick="closeModalToast()">Понятно</button>
+    </div>
 </div>
 
-<!-- Всплывающее окно чата -->
+<!-- Всплывающее окно чата (демо) -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header">
-        <div class="popup-title"><span>💬</span><span>Чат · Огни 3</span><span class="development-badge" style="background:rgba(0,180,216,0.2); color:#00B4D8; font-size:0.55rem; padding:0.2rem 0.5rem; border-radius:40px; margin-left:0.5rem;">Demo</span></div>
+        <div class="popup-title">
+            <span>💬</span>
+            <span>Чат · Огни 3</span>
+            <span class="development-badge">Demo</span>
+        </div>
         <button class="close-popup" onclick="closeChatPopup()">✕</button>
     </div>
     <div class="popup-messages" id="popupMessages">
-        <div class="popup-message"><div class="popup-bubble">Доброе утро, коллеги!</div></div>
-        <div class="popup-message outgoing"><div class="popup-bubble">Здравствуйте! Готовим АОН</div></div>
-        <div class="popup-message"><div class="popup-bubble">Хорошо. Ждём данные по ВИС</div></div>
+        <div class="popup-message">
+            <div class="popup-bubble">Доброе утро, коллеги!</div>
+        </div>
+        <div class="popup-message outgoing">
+            <div class="popup-bubble">Здравствуйте! Готовим АОН</div>
+        </div>
+        <div class="popup-message">
+            <div class="popup-bubble">Хорошо. Ждём данные по ВИС</div>
+        </div>
     </div>
     <div class="popup-input-area">
         <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение...">
@@ -972,7 +1108,7 @@
 </div>
 
 <script>
-    // ------ Данные документов ------
+    // ===== НОВЫЙ СПИСОК ДОКУМЕНТОВ =====
     const pages = [
         { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
@@ -1013,14 +1149,20 @@
             </div>
         `).join('');
     }
-
+    
     function filterDocs(category) {
         currentFilter = category;
         renderDocs();
-        let categoryName = { 'all':'все документы', 'protocol':'протоколы', 'registry':'реестры', 'finance':'финансы', 'tech':'техническую часть' }[category] || 'документы';
+        let categoryName = { 
+            'all': 'все документы', 
+            'protocol': 'протоколы', 
+            'registry': 'реестры', 
+            'finance': 'финансы', 
+            'tech': 'техническую часть' 
+        }[category] || 'документы';
         showToastMessage(`📁 Показаны: ${categoryName}`);
     }
-
+    
     function escapeHtml(str) {
         return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
     }
@@ -1030,7 +1172,12 @@
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'tempToast';
-            toast.style.cssText = `position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(100px); background:#0D1F3C; border-left:4px solid #2D6AFF; padding:0.6rem 1.2rem; border-radius:50px; color:white; font-size:0.8rem; z-index:2500; transition:transform 0.3s ease, opacity 0.3s ease; white-space:nowrap;`;
+            toast.style.cssText = `
+                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
+                background: #0D1F3C; border-left: 4px solid #2D6AFF; padding: 0.6rem 1.2rem;
+                border-radius: 50px; color: white; font-size: 0.8rem; z-index: 2500;
+                transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
+            `;
             document.body.appendChild(toast);
         }
         if (toast._timeout) clearTimeout(toast._timeout);
@@ -1044,23 +1191,41 @@
         }, 3000);
     }
 
-    // Загрузка экспортированных файлов из индекса
+    // Загрузка списка экспортированных файлов из индекса
     async function loadExportedFiles() {
         const container = document.getElementById('exportedFilesList');
+        const mobileContainer = document.getElementById('mobileExportedFilesList');
         try {
             const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
             const response = await fetch(indexUrl, { cache: 'no-store' });
-            if (!response.ok) throw new Error();
+            if (!response.ok) throw new Error('Индекс не найден');
             const index = await response.json();
             const files = index.files || [];
-            if (files.length === 0) { container.innerHTML = '<div style="font-size:0.6rem; color:var(--text-muted); padding:0.3rem;">Нет экспортированных файлов</div>'; return; }
-            container.innerHTML = files.map(file => `<a href="https://buildingmove-source.github.io/BuildPhysics/${file.name}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${file.date}</span></a>`).join('');
-        } catch(e) { container.innerHTML = '<div style="font-size:0.6rem; color:var(--text-muted); padding:0.3rem;">Ошибка загрузки</div>'; }
+            if (files.length === 0) {
+                const msg = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
+                if (container) container.innerHTML = msg;
+                if (mobileContainer) mobileContainer.innerHTML = msg;
+                return;
+            }
+            const html = files.map(file => {
+                const displayDate = file.date;
+                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
+                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
+            }).join('');
+            if (container) container.innerHTML = html;
+            if (mobileContainer) mobileContainer.innerHTML = html;
+        } catch (error) {
+            console.error('Ошибка загрузки файлов:', error);
+            const errMsg = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
+            if (container) container.innerHTML = errMsg;
+            if (mobileContainer) mobileContainer.innerHTML = errMsg;
+        }
     }
 
     // Чат функции
     function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); }
     function closeChatPopup() { document.getElementById('chatPopup').classList.remove('show'); }
+    
     function sendPopupMessage() {
         const input = document.getElementById('popupMessageInput');
         const text = input.value.trim();
@@ -1083,58 +1248,98 @@
             container.scrollTop = container.scrollHeight;
         }, 800);
     }
-
+    
     function linkifyAdvanced(text) {
         if (!text) return text;
-        let result = text.replace(/(https?:\/\/[^\s]+)/g, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url.length>50?url.substring(0,47)+'...':url}</a>`);
+        let result = text.replace(/(https?:\/\/[^\s]+)/g, (url) => {
+            let displayUrl = url.length > 50 ? url.substring(0, 47) + '...' : url;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+        });
         result = result.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, (email) => `<a href="mailto:${email}">${email}</a>`);
         return result;
     }
-
-    // Видео: общая логика воспроизведения со звуком
-    function initVideo(videoId, containerId) {
-        const video = document.getElementById(videoId);
-        const container = document.getElementById(containerId);
-        if (!video || !container) return;
-        container.addEventListener('click', () => {
-            if (video.paused) {
-                video.play().catch(e => console.log('autoplay blocked'));
+    
+    // Видео: клик для воспроизведения со звуком (десктоп и мобильное)
+    function initVideo(videoElement, containerElement) {
+        if (!videoElement || !containerElement) return;
+        containerElement.addEventListener('click', () => {
+            if (videoElement.paused) {
+                videoElement.play().catch(e => console.log('Автовоспроизведение заблокировано', e));
             } else {
-                video.pause();
+                videoElement.pause();
             }
         });
-        video.muted = false;
+        videoElement.muted = false;
     }
-    initVideo('promoVideoDesktop', 'videoContainerDesktop');
-    initVideo('promoVideoMobile', 'videoContainerMobile');
+
+    const desktopVideo = document.getElementById('desktopPromoVideo');
+    const desktopContainer = document.getElementById('desktopVideoContainer');
+    if (desktopVideo && desktopContainer) initVideo(desktopVideo, desktopContainer);
+
+    const mobileVideo = document.getElementById('mobilePromoVideo');
+    const mobileContainer = document.getElementById('mobileVideoContainer');
+    if (mobileVideo && mobileContainer) initVideo(mobileVideo, mobileContainer);
 
     // Мобильное меню
-    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-    const mobileOverlay = document.getElementById('mobileSidebarOverlay');
-    const closeMobileBtn = document.getElementById('closeMobileSidebar');
-    function openMobileSidebar() { mobileOverlay.classList.add('active'); }
-    function closeMobileSidebar() { mobileOverlay.classList.remove('active'); }
-    mobileMenuIcon?.addEventListener('click', openMobileSidebar);
-    closeMobileBtn?.addEventListener('click', closeMobileSidebar);
-    mobileOverlay?.addEventListener('click', (e) => { if (e.target === mobileOverlay) closeMobileSidebar(); });
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    const overlay = document.getElementById('overlay');
+    const closeSidebarBtn = document.getElementById('closeSidebar');
 
-    // Обработчики кнопок чата
-    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('modalOverlay').classList.add('show'); });
-    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); closeMobileSidebar(); });
-    document.getElementById('mobileChatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); closeMobileSidebar(); });
-    document.getElementById('chatFloatBtn')?.addEventListener('click', openChatPopup);
-    document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
-    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
-    document.getElementById('modalOverlay')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModalToast(); });
+    function openMobileSidebar() {
+        mobileSidebar.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileSidebar() {
+        mobileSidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    mobileMenuToggle?.addEventListener('click', openMobileSidebar);
+    closeSidebarBtn?.addEventListener('click', closeMobileSidebar);
+    overlay?.addEventListener('click', closeMobileSidebar);
 
     // Поиск
     const searchInput = document.getElementById('globalSearch');
     let debounceTimer;
     searchInput?.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
+        debounceTimer = setTimeout(() => {
+            currentSearch = e.target.value;
+            renderDocs();
+        }, 300);
     });
 
+    // Модальное окно для чата в разработке
+    function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
+    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
+    document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
+
+    // Обработчики чат-кнопок
+    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); showModalToast(); });
+    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); });
+    document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
+    document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
+    
+    // При загрузке страницы также подгружаем видео в мобильный блок под задачами (для удобства)
+    const mobileVideoWrapper = document.getElementById('mobileVideoWrapper');
+    if (mobileVideoWrapper && window.innerWidth <= 768) {
+        // Если видеоконтейнер ещё не добавлен, клонируем из мобильного сайдбара
+        const existingVideoBlock = document.querySelector('#mobileSidebar .video-container');
+        if (existingVideoBlock && !mobileVideoWrapper.querySelector('.video-container')) {
+            const clone = existingVideoBlock.cloneNode(true);
+            clone.id = 'clonedMobileVideo';
+            mobileVideoWrapper.appendChild(clone);
+            const clonedVideo = clone.querySelector('video');
+            const clonedContainer = clone;
+            if (clonedVideo && clonedContainer) initVideo(clonedVideo, clonedContainer);
+        }
+    }
+
+    // Инициализация
     loadExportedFiles();
     renderDocs();
 </script>

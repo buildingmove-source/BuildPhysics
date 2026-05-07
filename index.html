@@ -2,12 +2,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <meta name="theme-color" content="#1A1A2E">
     <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
-    <title>Огни 3</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <title>Огни 3 | Штаб строительства</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         :root {
             --bg-dark: #0A1628;
             --bg-card: #0D1F3C;
@@ -28,13 +35,6 @@
             --radius-lg: 24px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
             background: var(--bg-dark);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -42,37 +42,29 @@
             line-height: 1.5;
             overflow-x: hidden;
             overflow-y: auto;
+            padding-bottom: 2rem;
         }
 
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-sidebar);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
-            border-radius: 10px;
-        }
+        /* Кастомный скролл */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-sidebar); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 10px; }
 
         /* Анимации */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes pulseGreen {
             0% { transform: scale(1); opacity: 0.5; }
             100% { transform: scale(1.35); opacity: 0; }
         }
 
+        /* Navbar (шапка) */
         .navbar {
             background: rgba(13, 31, 60, 0.98);
             backdrop-filter: blur(12px);
@@ -82,7 +74,6 @@
             z-index: 1000;
             padding: 0.75rem 1.5rem;
         }
-
         .nav-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -92,30 +83,19 @@
             gap: 1rem;
             flex-wrap: wrap;
         }
-
         .logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
         }
-
-        /* Логотип с картинкой вместо эмодзи */
-        .logo-icon {
-            width: 40px;
-            height: 40px;
+        .logo-img {
+            height: 44px;
+            width: auto;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: var(--transition);
         }
-        .logo-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
+        .logo-img:hover { transform: scale(1.02); }
         .logo-text {
             font-size: 1.4rem;
             font-weight: 800;
@@ -124,12 +104,7 @@
             background-clip: text;
             color: transparent;
         }
-
-        .nav-search {
-            flex: 1;
-            max-width: 360px;
-        }
-
+        .nav-search { flex: 1; max-width: 360px; }
         .nav-search input {
             width: 100%;
             padding: 0.7rem 1.2rem;
@@ -140,22 +115,14 @@
             font-size: 0.9rem;
             transition: var(--transition);
         }
-
         .nav-search input:focus {
             outline: none;
             background: rgba(255,255,255,0.1);
             border-color: var(--accent-blue);
         }
+        .nav-search input::placeholder { color: var(--text-muted); }
 
-        .nav-search input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 0.5rem;
-        }
-
+        .nav-links { display: flex; gap: 0.5rem; }
         .nav-link {
             padding: 0.5rem 1.2rem;
             border-radius: 40px;
@@ -165,21 +132,22 @@
             transition: var(--transition);
             cursor: pointer;
         }
-
         .nav-link:hover {
             background: rgba(45, 106, 255, 0.15);
             color: var(--accent-cyan);
         }
 
+        /* Основная сетка */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
             padding: 1.5rem;
             display: flex;
             gap: 1.5rem;
+            position: relative;
         }
 
-        /* Боковая панель (sticky) */
+        /* Левая боковая панель */
         .sidebar {
             width: 280px;
             flex-shrink: 0;
@@ -187,7 +155,6 @@
             top: 80px;
             height: fit-content;
         }
-
         .sidebar-section {
             background: var(--bg-card);
             border-radius: var(--radius-md);
@@ -196,7 +163,6 @@
             border: 1px solid var(--border-light);
             transition: var(--transition);
         }
-
         .sidebar-title {
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -205,7 +171,6 @@
             margin-bottom: 1rem;
             font-weight: 600;
         }
-
         .sidebar-item {
             display: flex;
             align-items: center;
@@ -221,91 +186,16 @@
             border: none;
             font-size: 0.9rem;
         }
-
         .sidebar-item:hover {
             background: rgba(45, 106, 255, 0.15);
             transform: translateX(4px);
         }
+        .sidebar-icon { font-size: 1.2rem; width: 28px; }
 
-        .sidebar-icon {
-            font-size: 1.2rem;
-            width: 28px;
-        }
+        /* Контент */
+        .content { flex: 1; min-width: 0; }
 
-        /* Блок видео в стиле TikTok */
-        .video-container {
-            position: relative;
-            width: 100%;
-            margin-bottom: 1rem;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        .video-container video {
-            width: 100%;
-            height: auto;
-            display: block;
-            aspect-ratio: 9 / 16; /* Вертикальное видео */
-            object-fit: cover;
-            cursor: pointer;
-        }
-        .video-close {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0,0,0,0.6);
-            border: none;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 16px;
-            transition: var(--transition);
-            z-index: 2;
-        }
-        .video-close:hover {
-            background: #e31b23;
-            transform: scale(1.05);
-        }
-        /* Если видео скрыто */
-        .video-container.hidden {
-            display: none;
-        }
-
-        /* Список файлов экспорта */
-        .files-list {
-            margin-top: 0.5rem;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 0.5rem;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .file-item:hover {
-            background: rgba(45, 106, 255, 0.15);
-            color: var(--accent-cyan);
-        }
-
-        .content {
-            flex: 1;
-            min-width: 280px;
-        }
-
+        /* Hero карточка с поздравлением */
         .hero-card {
             background: linear-gradient(135deg, var(--bg-card), #0A1A3A);
             border-radius: var(--radius-lg);
@@ -315,7 +205,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .hero-card::before {
             content: '';
             position: absolute;
@@ -323,10 +212,9 @@
             right: -10%;
             width: 280px;
             height: 280px;
-            background: radial-gradient(circle, rgba(45, 106, 255, 0.15), transparent);
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.15), transparent);
             border-radius: 50%;
         }
-
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -335,33 +223,28 @@
             background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
-            position: relative;
+        }
+        .hero-subtitle { color: var(--text-secondary); font-size: 0.9rem; }
+        .victory-message {
+            margin-top: 0.8rem;
+            background: rgba(46, 204, 113, 0.15);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #FFD369;
+            border-left: 3px solid #FFD369;
         }
 
-        .hero-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .google-cards-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
+        /* Google карточки */
+        .google-cards-container { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
         .google-card {
             background: linear-gradient(135deg, #0A1A3A, var(--bg-card));
             border: 1px solid var(--accent-green);
             border-radius: var(--radius-md);
             transition: var(--transition);
         }
-        
-        .google-card:hover {
-            transform: translateX(4px);
-            border-color: var(--accent-blue);
-        }
-        
+        .google-card:hover { transform: translateX(4px); border-color: var(--accent-blue); }
         .google-link {
             display: flex;
             align-items: center;
@@ -371,6 +254,7 @@
             color: inherit;
         }
 
+        /* Документы */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -379,15 +263,7 @@
             flex-wrap: wrap;
             gap: 0.5rem;
         }
-
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
+        .section-title { font-size: 1.2rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
         .docs-count {
             background: var(--accent-blue);
             padding: 0.2rem 0.6rem;
@@ -395,13 +271,11 @@
             font-size: 0.7rem;
             font-weight: 600;
         }
-
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1rem;
         }
-
         .doc-card {
             background: var(--bg-card);
             border-radius: var(--radius-md);
@@ -412,13 +286,11 @@
             overflow: hidden;
             animation: fadeInUp 0.3s ease forwards;
         }
-
         .doc-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent-blue);
             box-shadow: var(--shadow-lg);
         }
-
         .doc-card::after {
             content: '';
             position: absolute;
@@ -430,32 +302,15 @@
             transform: scaleX(0);
             transition: transform 0.3s;
         }
-
-        .doc-card:hover::after {
-            transform: scaleX(1);
-        }
-
+        .doc-card:hover::after { transform: scaleX(1); }
         .card-link {
             display: block;
             padding: 1.2rem;
             text-decoration: none;
             color: inherit;
         }
-
-        .doc-icon {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-            display: inline-block;
-        }
-
-        .doc-name {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
+        .doc-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .doc-name { font-weight: 700; font-size: 0.95rem; color: #ffffff; margin-bottom: 0.5rem; }
         .doc-meta {
             display: flex;
             gap: 1rem;
@@ -464,7 +319,6 @@
             margin-top: 0.5rem;
             flex-wrap: wrap;
         }
-
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -472,15 +326,197 @@
             border-radius: var(--radius-md);
             color: var(--text-secondary);
         }
-
         .footer {
             max-width: 1440px;
-            margin: 0 auto;
-            padding: 1.5rem;
+            margin: 1rem auto 0;
+            padding: 1rem;
             text-align: center;
             border-top: 1px solid var(--border-light);
             font-size: 0.7rem;
             color: var(--text-muted);
+        }
+
+        /* Фиксированное видео (TikTok стиль) */
+        .fixed-video {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 260px;
+            height: 460px;
+            border-radius: 30px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5), 0 0 0 3px rgba(255,255,255,0.1);
+            z-index: 1050;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .fixed-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* Адаптив для видео */
+        @media (max-width: 1024px) {
+            .fixed-video { width: 200px; height: 355px; bottom: 80px; right: 15px; }
+        }
+        @media (max-width: 768px) {
+            .fixed-video { width: 140px; height: 250px; bottom: 70px; right: 10px; }
+        }
+
+        /* Чат поп-ап (всплывает по кнопке) */
+        .chat-popup {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 380px;
+            height: 500px;
+            background: linear-gradient(145deg, #0D1F3C, #0A1A3A);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        .chat-popup.show { display: flex; }
+        .popup-header {
+            background: #07122A;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .popup-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .development-badge {
+            background: rgba(0, 180, 216, 0.2);
+            color: var(--accent-cyan);
+            font-size: 0.55rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 40px;
+            margin-left: 0.5rem;
+        }
+        .close-popup {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .close-popup:hover {
+            background: rgba(0, 180, 216, 0.2);
+            color: var(--accent-cyan);
+        }
+        .popup-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .popup-message {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 85%;
+        }
+        .popup-message.outgoing {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .popup-bubble {
+            background: #07122A;
+            padding: 0.5rem 0.8rem;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 0.8rem;
+            word-break: break-word;
+        }
+        .popup-message.outgoing .popup-bubble {
+            background: var(--accent-blue);
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+        .popup-bubble a {
+            color: #00B4D8;
+            text-decoration: underline;
+        }
+        .popup-input-area {
+            padding: 0.8rem;
+            background: #07122A;
+            display: flex;
+            gap: 0.5rem;
+            border-top: 1px solid var(--border-light);
+        }
+        .popup-input {
+            flex: 1;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 0.5rem 0.8rem;
+            color: white;
+            font-size: 0.8rem;
+        }
+        .popup-send {
+            background: var(--accent-blue);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-size: 1rem;
+        }
+
+        /* Плавающая иконка чата (Telegram стиль) */
+        .chat-float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(45,106,255,0.4);
+            z-index: 1050;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .chat-float-btn:hover { transform: scale(1.08); }
+        .chat-float-btn::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 50%;
+            background: rgba(46, 204, 113, 0.4);
+            animation: pulseGreen 1.2s infinite;
+            z-index: -1;
+        }
+        .chat-icon-img {
+            width: 28px;
+            height: 28px;
+            filter: brightness(0) invert(1);
         }
 
         /* Модальное окно "Чат в разработке" */
@@ -500,12 +536,7 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal-toast {
             background: linear-gradient(135deg, #0D1F3C, #0A1A3A);
             border: 1px solid var(--accent-cyan);
@@ -518,11 +549,7 @@
             transform: scale(0.9);
             transition: transform 0.3s ease;
         }
-
-        .modal-overlay.show .modal-toast {
-            transform: scale(1);
-        }
-
+        .modal-overlay.show .modal-toast { transform: scale(1); }
         .modal-toast button {
             margin-top: 1rem;
             background: var(--accent-blue);
@@ -534,184 +561,11 @@
             cursor: pointer;
         }
 
-        .chat-popup {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 380px;
-            height: 500px;
-            background: linear-gradient(145deg, #0D1F3C, #0A1A3A);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            z-index: 2000;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid rgba(0, 180, 216, 0.3);
-            animation: slideUp 0.3s ease;
-        }
-        
-        .chat-popup.show {
-            display: flex;
-        }
-        
-        .popup-header {
-            background: #07122A;
-            padding: 0.8rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-light);
-        }
-        
-        .popup-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .development-badge {
-            background: rgba(0, 180, 216, 0.2);
-            color: var(--accent-cyan);
-            font-size: 0.55rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 40px;
-            margin-left: 0.5rem;
-        }
-        
-        .close-popup {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-        
-        .close-popup:hover {
-            background: rgba(0, 180, 216, 0.2);
-            color: var(--accent-cyan);
-        }
-        
-        .popup-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-        
-        .popup-message {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 85%;
-        }
-        
-        .popup-message.outgoing {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-        
-        .popup-bubble {
-            background: #07122A;
-            padding: 0.5rem 0.8rem;
-            border-radius: 16px;
-            border-top-left-radius: 4px;
-            font-size: 0.8rem;
-            word-break: break-word;
-        }
-        
-        .popup-bubble a {
-            color: #00B4D8;
-            text-decoration: underline;
-        }
-        
-        .popup-message.outgoing .popup-bubble {
-            background: var(--accent-blue);
-            border-top-right-radius: 4px;
-            border-top-left-radius: 16px;
-        }
-        
-        .popup-input-area {
-            padding: 0.8rem;
-            background: #07122A;
-            display: flex;
-            gap: 0.5rem;
-            border-top: 1px solid var(--border-light);
-        }
-        
-        .popup-input {
-            flex: 1;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 0.5rem 0.8rem;
-            color: white;
-            font-size: 0.8rem;
-        }
-        
-        .popup-send {
-            background: var(--accent-blue);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: white;
-            font-size: 1rem;
-        }
-
-        /* Плавающая кнопка чата с SVG-иконкой */
-        .chat-float-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(45,106,255,0.4);
-            z-index: 1500;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-        .chat-float-btn img {
-            width: 28px;
-            height: 28px;
-            filter: brightness(0) invert(1);
-        }
-        .chat-float-btn::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
-            border-radius: 50%;
-            background: rgba(45, 106, 255, 0.4);
-            animation: pulseGreen 1.2s infinite;
-            z-index: -1;
-        }
-
-        /* Адаптивность */
+        /* Адаптив */
         @media (max-width: 1024px) {
             .sidebar { width: 260px; }
             .nav-search { max-width: 280px; }
-            .video-container video {
-                aspect-ratio: 16 / 9;
-            }
         }
-
         @media (max-width: 768px) {
             .navbar { padding: 0.75rem 1rem; }
             .nav-container { flex-direction: column; align-items: stretch; }
@@ -725,7 +579,15 @@
             .docs-grid { grid-template-columns: 1fr; }
             .chat-popup { width: calc(100% - 40px); right: 20px; left: 20px; bottom: 80px; height: 60vh; }
             .chat-float-btn { width: 48px; height: 48px; bottom: 15px; right: 15px; }
-            .chat-float-btn img { width: 24px; height: 24px; }
+            .chat-icon-img { width: 24px; height: 24px; }
+        }
+        @media (max-width: 896px) and (orientation: landscape) {
+            .sidebar { display: none; }
+            .docs-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero-title { font-size: 1.1rem; }
+            .hero-card { padding: 0.8rem; }
+            .doc-name { font-size: 0.75rem; }
+            .doc-icon { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -734,9 +596,7 @@
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="window.location.href='index.html'">
-            <div class="logo-icon">
-                <img src="free-png.ru-6.png" alt="Logo">
-            </div>
+            <img src="free-png.ru-6.png" alt="Логотип" class="logo-img" onerror="this.src='https://buildingmove-source.github.io/BuildPhysics/free-png.ru-6.png'">
             <span class="logo-text">Огни 3</span>
         </div>
         <div class="nav-search">
@@ -750,20 +610,6 @@
 
 <div class="main-container">
     <aside class="sidebar">
-        <!-- БЛОК ВИДЕО (фиксирован в сайдбаре, sticky) -->
-        <div class="video-container" id="videoContainer">
-            <button class="video-close" id="closeVideoBtn" aria-label="Закрыть видео">✕</button>
-            <video 
-                src="vis-presentation.mp4"
-                autoplay
-                muted
-                loop
-                playsinline
-                controlsList="nodownload"
-                poster=""
-            ></video>
-        </div>
-
         <div class="sidebar-section">
             <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
             <button class="sidebar-item" onclick="filterDocs('all')">
@@ -782,31 +628,14 @@
                 <span class="sidebar-icon">💼</span>Техническая часть
             </button>
         </div>
-
         <div class="sidebar-section">
-            <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.15); border-left: 3px solid #2D6AFF;">
-                <span class="sidebar-icon">📝</span>Заполнение реестра
-            </a>
-            <a href="archive.html" class="sidebar-item">
-                <span class="sidebar-icon">📁</span>Архив файлов
-            </a>
-            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.05);">
-                <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
-                <div id="exportedFilesList" class="files-list">
-                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="sidebar-section">
-            <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
+            <div class="sidebar-title">💬 ЧАТ КОМАНДЫ</div>
             <button class="sidebar-item" id="chatSidebarBtn">
                 <span class="sidebar-icon">💬</span>Открыть чат
             </button>
             <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.1); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: var(--accent-cyan);">⚙️ В разработке</div>
-                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
+                <div style="font-size: 0.65rem; color: var(--accent-cyan);">⚙️ Демо-режим</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Сообщения тестовые</div>
             </div>
         </div>
     </aside>
@@ -815,6 +644,7 @@
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
             <div class="hero-subtitle">Актуальная документация и ход работ</div>
+            <div class="victory-message">✨ С Великим Днём Победы! 1945 – 2026 ✨</div>
         </div>
 
         <div class="google-cards-container">
@@ -828,7 +658,6 @@
                     <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
                 </a>
             </div>
-
             <div class="google-card">
                 <a href="Zadachi-Ogni-3.html" class="google-link">
                     <div style="font-size: 2rem;">📋</div>
@@ -847,7 +676,6 @@
                 <span class="docs-count" id="docsCount">10</span>
             </div>
         </div>
-
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
@@ -856,14 +684,24 @@
     Огни 3 · Строительный портал · © 2026
 </footer>
 
+<!-- Фиксированное видео (TikTok стиль) -->
+<div class="fixed-video" id="fixedVideo">
+    <video id="promoVideo" poster="https://buildingmove-source.github.io/BuildPhysics/vis-presentation-poster.jpg" preload="metadata">
+        <source src="vis-presentation.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+</div>
+
+<!-- Модальное окно "Чат в разработке" -->
 <div id="modalOverlay" class="modal-overlay">
     <div class="modal-toast">
         <h3>💬 Чат в разработке</h3>
-        <p>Функция полноценного чата появится в ближайшее время</p>
+        <p>Полноценный мессенджер появится в ближайшее время</p>
         <button onclick="closeModalToast()">Понятно</button>
     </div>
 </div>
 
+<!-- Всплывающее окно чата (демо) -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header">
         <div class="popup-title">
@@ -874,42 +712,23 @@
         <button class="close-popup" onclick="closeChatPopup()">✕</button>
     </div>
     <div class="popup-messages" id="popupMessages">
-        <div class="popup-message">
-            <div class="popup-bubble">Доброе утро, коллеги!</div>
-        </div>
-        <div class="popup-message outgoing">
-            <div class="popup-bubble">Здравствуйте! Готовим АОН</div>
-        </div>
-        <div class="popup-message">
-            <div class="popup-bubble">Хорошо. Ждём данные по ВИС</div>
-        </div>
+        <div class="popup-message"><div class="popup-bubble">Доброе утро, коллеги!</div></div>
+        <div class="popup-message outgoing"><div class="popup-bubble">Здравствуйте! Готовим АОН</div></div>
+        <div class="popup-message"><div class="popup-bubble">Хорошо. Ждём данные по ВИС, фотофиксацию выхода контингента</div></div>
     </div>
     <div class="popup-input-area">
-        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение...">
+        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение... (тестовый режим)">
         <button class="popup-send" onclick="sendPopupMessage()">📤</button>
     </div>
 </div>
 
-<!-- Плавающая кнопка чата с SVG иконкой -->
+<!-- Плавающая иконка чата (с кастомной иконкой SVG) -->
 <div class="chat-float-btn" id="chatFloatBtn">
-    <img src="message_text_icon_257599.svg" alt="Chat">
+    <img src="message_text_icon_257599.svg" alt="Чат" class="chat-icon-img" onerror="this.src='https://buildingmove-source.github.io/BuildPhysics/message_text_icon_257599.svg'; this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27white%27%3E%3Cpath d=%27M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z%27/%3E%3C/svg%3E'">
 </div>
 
 <script>
-    // ===== ФУНКЦИЯ ДЛЯ АКТИВНЫХ ССЫЛОК В ЧАТЕ =====
-    function linkifyAdvanced(text) {
-        if (!text) return text;
-        let result = text.replace(/(https?:\/\/[^\s]+)/g, function(url) {
-            let displayUrl = url.length > 50 ? url.substring(0, 47) + '...' : url;
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
-        });
-        result = result.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, function(email) {
-            return `<a href="mailto:${email}">${email}</a>`;
-        });
-        return result;
-    }
-
-    // ===== ОБНОВЛЁННЫЙ МАССИВ ДОКУМЕНТОВ =====
+    // ===== НОВЫЙ СПИСОК ДОКУМЕНТОВ (по требованию) =====
     const pages = [
         { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
@@ -950,14 +769,20 @@
             </div>
         `).join('');
     }
-    
+
     function filterDocs(category) {
         currentFilter = category;
         renderDocs();
-        let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы';
+        let categoryName = {
+            'all': 'все документы',
+            'protocol': 'протоколы',
+            'registry': 'реестры',
+            'finance': 'финансы',
+            'tech': 'техническую часть'
+        }[category] || 'документы';
         showToastMessage(`📁 Показаны: ${categoryName}`);
     }
-    
+
     function escapeHtml(str) {
         return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
     }
@@ -982,49 +807,28 @@
         toast._timeout = setTimeout(() => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateX(-50%) translateY(20px)';
-            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(100px)'; }, 300);
+            setTimeout(() => toast.style.transform = 'translateX(-50%) translateY(100px)', 300);
         }, 3000);
     }
 
-    async function loadExportedFiles() {
-        const container = document.getElementById('exportedFilesList');
-        try {
-            // Используем files-index.json для получения актуального списка
-            const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
-            const response = await fetch(indexUrl);
-            if (!response.ok) throw new Error('Индекс не найден');
-            const index = await response.json();
-            const files = index.files || [];
-            if (files.length === 0) {
-                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
-                return;
-            }
-            container.innerHTML = files.map(file => {
-                const displayDate = file.date;
-                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
-                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
-            }).join('');
-        } catch (error) {
-            console.error('Ошибка загрузки файлов:', error);
-            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
-        }
-    }
-
-    function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
-    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
-    document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
-
+    // Поиск
     const searchInput = document.getElementById('globalSearch');
     let debounceTimer;
-    searchInput?.addEventListener('input', (e) => {
+    searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
+        debounceTimer = setTimeout(() => {
+            currentSearch = e.target.value;
+            renderDocs();
+        }, 300);
     });
 
-    // ===== ФУНКЦИИ ЧАТА =====
-    function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); }
-    function closeChatPopup() { document.getElementById('chatPopup').classList.remove('show'); }
-    
+    // === Чат функции ===
+    function openChatPopup() {
+        document.getElementById('chatPopup').classList.add('show');
+    }
+    function closeChatPopup() {
+        document.getElementById('chatPopup').classList.remove('show');
+    }
     function sendPopupMessage() {
         const input = document.getElementById('popupMessageInput');
         const text = input.value.trim();
@@ -1032,49 +836,57 @@
         const container = document.getElementById('popupMessages');
         const now = new Date();
         const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        const linkedText = linkifyAdvanced(escapeHtml(text));
         const messageDiv = document.createElement('div');
         messageDiv.className = 'popup-message outgoing';
-        messageDiv.innerHTML = `<div class="popup-bubble">${linkedText}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Вы</div></div>`;
+        messageDiv.innerHTML = `<div class="popup-bubble">${escapeHtml(text)}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Вы</div></div>`;
         container.appendChild(messageDiv);
         input.value = '';
         container.scrollTop = container.scrollHeight;
         setTimeout(() => {
             const replyDiv = document.createElement('div');
             replyDiv.className = 'popup-message';
-            replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
+            replyDiv.innerHTML = `<div class="popup-bubble">✅ Демо-режим: сообщение принято<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
             container.appendChild(replyDiv);
             container.scrollTop = container.scrollHeight;
         }, 500);
     }
-    
-    // Обработчики кнопок чата
-    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); showModalToast(); });
-    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
-
-    // ===== УПРАВЛЕНИЕ ВИДЕО (кнопка закрыть, сохранение состояния) =====
-    const videoContainer = document.getElementById('videoContainer');
-    const closeVideoBtn = document.getElementById('closeVideoBtn');
-    const VIDEO_HIDDEN_KEY = 'vis_video_hidden';
-    
-    // Проверяем localStorage при загрузке
-    if (localStorage.getItem(VIDEO_HIDDEN_KEY) === 'true') {
-        videoContainer.classList.add('hidden');
-    }
-    
-    closeVideoBtn.addEventListener('click', () => {
-        videoContainer.classList.add('hidden');
-        localStorage.setItem(VIDEO_HIDDEN_KEY, 'true');
-        // Останавливаем воспроизведение видео (если нужно)
-        const video = videoContainer.querySelector('video');
-        if (video) video.pause();
+    document.getElementById('chatNavBtn')?.addEventListener('click', () => openChatPopup());
+    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => openChatPopup());
+    document.getElementById('chatFloatBtn')?.addEventListener('click', () => openChatPopup());
+    document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); }
     });
-    
-    // Опционально: можно добавить кнопку "Показать видео" где-нибудь, но по заданию не требуется.
 
-    loadExportedFiles();
+    // Модальное окно (для кнопки чата в шапке показываем "в разработке")
+    function showModalToast() {
+        document.getElementById('modalOverlay').classList.add('show');
+    }
+    function closeModalToast() {
+        document.getElementById('modalOverlay').classList.remove('show');
+    }
+    // По желанию можно переопределить чат в шапке на модалку, но по заданию – при нажатии на иконку чата открывается чат, а кнопка "Чат" в шапке тоже открывает чат.
+    // Оставим единообразие: все кнопки чата открывают попап.
+
+    // === ФИКСИРОВАННОЕ ВИДЕО (клик для воспроизведения со звуком) ===
+    const videoContainer = document.getElementById('fixedVideo');
+    const video = document.getElementById('promoVideo');
+    if (video) {
+        // При клике на контейнер запускаем/ставим на паузу, включаем звук
+        videoContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (video.paused) {
+                video.play().catch(err => console.log('Автовоспроизведение заблокировано, но клик работает'));
+                video.muted = false;
+            } else {
+                video.pause();
+            }
+        });
+        // Чтобы видео имело звук по клику, убеждаемся что muted выключен
+        video.muted = false;
+        // Предзагрузка метаданных для отображения постера
+        video.load();
+    }
+
     renderDocs();
 </script>
 </body>

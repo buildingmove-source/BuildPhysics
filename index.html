@@ -2,1367 +2,471 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <meta name="theme-color" content="#FFFFFF">
-    <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
-    <title>Огни 3 | 9 мая — День Победы!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="theme-color" content="#1A1A2E">
+    <title>Огни 3 | 9 Мая</title>
     
-    <!-- Праздничный favicon (Георгиевская лента + Кремль) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%238B0000' rx='20'/%3E%3Cpath d='M20,50 L30,45 L35,52 L30,58 Z' fill='%23D4AF37'/%3E%3Cpath d='M80,50 L70,45 L65,52 L70,58 Z' fill='%23D4AF37'/%3E%3Crect x='35' y='38' width='30' height='24' rx='3' fill='%23D4AF37'/%3E%3Crect x='40' y='30' width='20' height='15' rx='2' fill='%23FF8C00'/%3E%3Cpath d='M25,62 L40,58 L45,70 L30,72 Z' fill='%23FF8C00'/%3E%3Cpath d='M75,62 L60,58 L55,70 L70,72 Z' fill='%23FF8C00'/%3E%3Cpath d='M20,75 L80,75 L75,85 L25,85 Z' fill='%23D4AF37'/%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Favicon Победы: Георгиевская ленточка обвивает Кремль (SVG) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23D32F2F'/%3E%3Cpath d='M12 20 L52 20 L52 44 L12 44 Z' fill='%23FFC107'/%3E%3Crect x='24' y='10' width='16' height='44' fill='%23FFC107'/%3E%3Cpath d='M10 28 L54 28' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M10 36 L54 36' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M28 12 L28 52' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M36 12 L36 52' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E">
+    
     <style>
-        /* ===== СВЕТЛАЯ ТЕМА С ПРАЗДНИЧНЫМИ АКЦЕНТАМИ ===== */
-        :root {
-            --bg-body: #F5F7FA;
-            --bg-card: #FFFFFF;
-            --bg-sidebar: #FFFFFF;
-            --bg-sidebar-section: #FFFFFF;
-            --accent-blue: #2D6AFF;
-            --accent-cyan: #00B4D8;
-            --accent-green: #34a853;
-            --accent-victory: #D4AF37;
-            --accent-ribbon: #FF8C00;
-            --text-primary: #1A1A2E;
-            --text-secondary: #5A6BA0;
-            --text-muted: #8A9BDF;
-            --border-light: rgba(0, 0, 0, 0.08);
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --radius-sm: 12px;
-            --radius-md: 20px;
-            --radius-lg: 24px;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: var(--bg-body);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: var(--text-primary);
+            background: linear-gradient(145deg, #f5f7fc 0%, #eef2f9 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1a2a3a;
             line-height: 1.5;
-            overflow-x: hidden;
-            overflow-y: auto;
+            min-height: 100vh;
+            padding: 0 1rem 5rem 1rem;
         }
 
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #E8EDF2;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-ribbon);
-            border-radius: 10px;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== НАВИГАЦИЯ ===== */
-        .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            border-bottom: 2px solid var(--accent-ribbon);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0.75rem 1.5rem;
-        }
-
-        .nav-container {
-            max-width: 1440px;
-            margin: 0 auto;
+        /* Шапка с логотипом (левый верхний угол) */
+        .top-bar {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
         }
 
-        /* ===== ПРАЗДНИЧНЫЙ ЛОГОТИП ===== */
-        .logo {
+        .logo-left {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
+            gap: 12px;
         }
 
-        .victory-icon {
-            position: relative;
-            width: 48px;
-            height: 48px;
+        .logo-left img {
+            height: 56px;
+            width: auto;
+            cursor: default;
+            transition: transform 0.2s ease;
         }
 
-        .kremlin-silhouette {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #8B0000, #D4AF37);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
+        .logo-left img:hover {
+            transform: scale(1.02);
         }
 
-        .ribbon {
-            position: absolute;
-            width: 110%;
-            height: 110%;
-            top: -5%;
-            left: -5%;
-            background: linear-gradient(135deg, #FF8C00 0%, #FF8C00 25%, #000000 25%, #000000 50%, #FF8C00 50%, #FF8C00 75%, #000000 75%, #000000 100%);
-            background-size: 12px 12px;
-            border-radius: 50%;
-            opacity: 0;
-            transition: var(--transition);
-            z-index: -1;
+        .welcome-badge {
+            background: rgba(0,0,0,0.05);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #c73b1e;
+            border-left: 3px solid #ffcf40;
         }
 
-        .logo:hover .ribbon {
-            opacity: 1;
-            transform: scale(1.05);
+        /* Основной контент (просто для заполнения) */
+        .hero-message {
+            max-width: 700px;
+            margin-top: 2rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.6);
         }
 
-        .logo-text {
-            font-size: 1.3rem;
+        .hero-message h1 {
+            font-size: 2rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #1A1A2E, #D4AF37);
+            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            margin-bottom: 0.5rem;
         }
 
-        .victory-badge {
-            font-size: 0.7rem;
-            background: linear-gradient(135deg, #FF8C00, #D4AF37);
-            padding: 0.2rem 0.5rem;
-            border-radius: 40px;
-            color: white;
-            font-weight: 600;
-            margin-left: 0.3rem;
+        .hero-message p {
+            color: #2c3e50;
+            margin-top: 0.5rem;
         }
 
-        .nav-search {
-            flex: 1;
-            max-width: 360px;
-        }
-
-        .nav-search input {
-            width: 100%;
-            padding: 0.6rem 1.2rem;
-            background: #F0F2F5;
-            border: 1px solid var(--border-light);
-            border-radius: 60px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .nav-search input:focus {
-            outline: none;
-            background: #FFFFFF;
-            border-color: var(--accent-ribbon);
-            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
-        }
-
-        .nav-search input::placeholder {
-            color: var(--text-muted);
-        }
-
-        /* БУРГЕР-МЕНЮ */
-        .burger-menu {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .burger-menu span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: var(--text-primary);
-            border-radius: 3px;
-            transition: var(--transition);
-        }
-
-        .burger-menu.active span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-
-        .burger-menu.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .burger-menu.active span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
-
-        /* МОБИЛЬНОЕ МЕНЮ */
-        .mobile-menu {
+        /* ========== ФИКСИРОВАННОЕ ВИДЕО-ОКНО (стиль TikTok / iOS) ========== */
+        .video-container {
             position: fixed;
-            top: 0;
-            right: -100%;
-            width: 85%;
-            max-width: 320px;
-            height: 100vh;
-            background: #FFFFFF;
-            z-index: 1002;
-            transition: right 0.3s ease;
-            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
-        .mobile-menu.open {
-            right: 0;
-        }
-
-        .mobile-menu-header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 1.5rem;
-        }
-
-        .close-menu {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        .mobile-menu .sidebar-section {
-            margin-bottom: 1rem;
-            padding: 0.8rem;
-            background: #F8FAFE;
-            border-radius: var(--radius-md);
-        }
-
-        .mobile-menu .sidebar-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-        }
-
-        .mobile-menu .sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.7rem;
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            text-decoration: none;
-            cursor: pointer;
-            width: 100%;
-            background: none;
-            border: none;
-            font-size: 0.9rem;
-        }
-
-        .mobile-menu .sidebar-item:hover {
-            background: rgba(255, 140, 0, 0.1);
-        }
-
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* ===== ФИКСИРОВАННОЕ ВИДЕО-ОКНО (position: fixed) ===== */
-        .video-float {
-            position: fixed;
-            top: 90px;
+            top: 20px;
             right: 20px;
-            width: 180px;
-            height: 320px;
-            background: #000;
-            border-radius: 24px;
+            width: 280px;
+            background: #000000;
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1);
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.2);
+            transition: all 0.2s ease;
             z-index: 1000;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .video-float.fullscreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        .video-container video {
             width: 100%;
-            height: 100%;
-            border-radius: 0;
-            z-index: 10000;
-            cursor: default;
-        }
-
-        .video-float:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
-        }
-
-        .video-float.fullscreen:hover {
-            transform: none;
-        }
-
-        .video-float video {
-            width: 100%;
-            height: 100%;
+            height: auto;
+            display: block;
+            background: #000;
+            border-radius: 28px;
+            aspect-ratio: 9 / 16;
             object-fit: cover;
         }
 
-        .video-float .close-video {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 28px;
-            height: 28px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            opacity: 0;
-            z-index: 10;
-        }
-
-        .video-float:hover .close-video,
-        .video-float.fullscreen .close-video {
-            opacity: 1;
-        }
-
-        .video-float .fullscreen-btn {
+        /* Лёгкий индикатор звука (дополнительно) */
+        .video-badge {
             position: absolute;
             bottom: 8px;
-            right: 8px;
-            width: 28px;
-            height: 28px;
+            right: 12px;
             background: rgba(0,0,0,0.6);
             backdrop-filter: blur(4px);
-            border: none;
-            border-radius: 50%;
+            border-radius: 30px;
+            padding: 4px 8px;
+            font-size: 10px;
             color: white;
-            font-size: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            opacity: 0;
-            z-index: 10;
-        }
-
-        .video-float:hover .fullscreen-btn {
-            opacity: 1;
-        }
-
-        .video-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            padding: 20px 8px 8px;
-            font-size: 9px;
-            color: white;
-            text-align: center;
+            font-weight: 500;
             pointer-events: none;
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
-        .main-container {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .sidebar {
-            width: 280px;
-            flex-shrink: 0;
-            position: sticky;
-            top: 80px;
-            height: fit-content;
-        }
-
-        .sidebar-section {
-            background: var(--bg-sidebar-section);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid var(--border-light);
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .sidebar-section:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .sidebar-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.7rem;
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-            width: 100%;
-            background: none;
-            border: none;
-            font-size: 0.9rem;
-        }
-
-        .sidebar-item:hover {
-            background: rgba(255, 140, 0, 0.08);
-            transform: translateX(4px);
-            color: #8B0000;
-        }
-
-        .sidebar-icon {
-            font-size: 1.2rem;
-            width: 28px;
-        }
-
-        .files-list {
-            margin-top: 0.5rem;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 0.5rem;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .file-item:hover {
-            background: rgba(255, 140, 0, 0.08);
-            color: #8B0000;
-        }
-
-        .content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .hero-card {
-            background: linear-gradient(135deg, #FFFFFF, #FFF5F0);
-            border-radius: var(--radius-lg);
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 140, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .hero-card::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            right: -10%;
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, rgba(255, 140, 0, 0.08), transparent);
-            border-radius: 50%;
-        }
-
-        .hero-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #8B0000, #D4AF37);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-            position: relative;
-        }
-
-        .hero-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .google-cards-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .google-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-md);
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .google-card:hover {
-            transform: translateX(4px);
-            border-color: var(--accent-ribbon);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .google-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.2rem;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .docs-count {
-            background: #D4AF37;
-            color: #8B0000;
-            padding: 0.2rem 0.6rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-
-        .docs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1rem;
-        }
-
-        .doc-card {
-            background: #FFFFFF;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-light);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.3s ease forwards;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .doc-card:hover {
-            transform: translateY(-4px);
-            border-color: #D4AF37;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .doc-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #FF8C00, #D4AF37);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .doc-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .card-link {
-            display: block;
-            padding: 1.2rem;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .doc-icon {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-            display: inline-block;
-        }
-
-        .doc-name {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
-        .doc-meta {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            background: #FFFFFF;
-            border-radius: var(--radius-md);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-light);
-        }
-
-        .footer {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        /* Кнопка вызова чата */
-        .chat-call-button {
+        /* Кнопка ЧАТ (фиксированная справа внизу) */
+        .chat-fab {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
+            bottom: 24px;
+            right: 24px;
             background: linear-gradient(135deg, #2D6AFF, #00B4D8);
             border: none;
-            border-radius: 50%;
+            border-radius: 100px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            z-index: 2000;
-        }
-
-        .chat-call-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(45,106,255,0.3);
-        }
-
-        .chat-call-button img {
-            width: 32px;
-            height: 32px;
-            filter: brightness(0) invert(1);
-        }
-
-        /* Попап окно чата */
-        .chat-popup {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 380px;
-            height: 500px;
-            background: #FFFFFF;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            z-index: 2001;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-            animation: slideUp 0.3s ease;
-        }
-        
-        .chat-popup.show {
-            display: flex;
-        }
-        
-        .popup-header {
-            background: linear-gradient(135deg, #8B0000, #D4AF37);
-            padding: 0.8rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .popup-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            z-index: 1100;
+            backdrop-filter: blur(4px);
             font-weight: 600;
-            font-size: 0.9rem;
             color: white;
+            font-size: 1rem;
         }
 
-        .popup-title img {
+        .chat-fab img {
             width: 28px;
             height: 28px;
             filter: brightness(0) invert(1);
         }
-        
-        .development-badge {
-            background: rgba(0,0,0,0.2);
-            color: #FFD700;
-            font-size: 0.55rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 40px;
-            margin-left: 0.5rem;
+
+        .chat-fab:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.2);
         }
-        
-        .close-popup {
+
+        /* Окно чата (всплывающее) */
+        .chat-popup {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            background: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1200;
+            border: 1px solid rgba(0,0,0,0.08);
+            animation: fadeSlideUp 0.25s ease-out;
+        }
+
+        .chat-popup.show {
+            display: flex;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            background: #F0F4FA;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eef2f5;
+        }
+
+        .chat-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1a2a3a;
+        }
+
+        .close-chat {
             background: none;
             border: none;
-            color: white;
-            font-size: 1.2rem;
+            font-size: 24px;
             cursor: pointer;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            transition: var(--transition);
+            color: #7e8c9e;
+            transition: 0.2s;
+            line-height: 1;
         }
-        
-        .close-popup:hover {
-            background: rgba(255,255,255,0.2);
+
+        .close-chat:hover {
+            color: #e34f4f;
         }
-        
-        .popup-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
+
+        .chat-messages {
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
-            background: #F8FAFE;
+            gap: 12px;
+            max-height: 320px;
+            overflow-y: auto;
+            background: #ffffff;
         }
-        
-        .popup-message {
-            display: flex;
-            gap: 0.5rem;
+
+        .message {
             max-width: 85%;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
-        
-        .popup-message.outgoing {
-            align-self: flex-end;
-            flex-direction: row-reverse;
+
+        .message.incoming {
+            background: #F0F2F5;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            color: #1a2a3a;
         }
-        
-        .popup-bubble {
-            background: #FFFFFF;
-            padding: 0.5rem 0.8rem;
-            border-radius: 16px;
-            border-top-left-radius: 4px;
-            font-size: 0.8rem;
-            color: var(--text-primary);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .popup-message.outgoing .popup-bubble {
+
+        .message.outgoing {
             background: #2D6AFF;
             color: white;
-            border-top-right-radius: 4px;
-            border-top-left-radius: 16px;
-        }
-        
-        .popup-time {
-            font-size: 0.55rem;
-            opacity: 0.7;
-            margin-top: 0.2rem;
-        }
-        
-        .popup-input-area {
-            padding: 0.8rem;
-            background: #FFFFFF;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .popup-input {
-            flex: 1;
-            background: #F0F2F5;
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 0.6rem 1rem;
-            color: var(--text-primary);
-            font-size: 0.8rem;
-        }
-        
-        .popup-input::placeholder {
-            color: var(--text-muted);
-        }
-        
-        .popup-send {
-            background: linear-gradient(135deg, #FF8C00, #D4AF37);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: white;
-            font-size: 1rem;
-            transition: var(--transition);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
         }
 
-        /* АДАПТИВНОСТЬ */
-        @media (max-width: 1024px) {
-            .video-float {
-                width: 140px;
-                height: 250px;
-                top: 80px;
-                right: 15px;
+        .chat-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #eef2f5;
+            background: #FAFCFE;
+            font-size: 0.75rem;
+            color: #6c7a91;
+            text-align: center;
+        }
+
+        /* Адаптация под мобильные */
+        @media (max-width: 680px) {
+            .video-container {
+                width: 220px;
+                top: 12px;
+                right: 12px;
+                border-radius: 20px;
             }
-        }
-
-        @media (max-width: 768px) {
-            .navbar { padding: 0.75rem 1rem; }
-            .nav-container { justify-content: space-between; }
-            .nav-search { max-width: none; order: 2; flex: 1; margin: 0 0.5rem; }
-            .logo { order: 1; }
-            .burger-menu { display: flex; order: 3; }
-            .sidebar { display: none; }
-            .main-container { padding: 1rem; }
-            .hero-title { font-size: 1.3rem; }
-            .hero-card { padding: 1.2rem; }
-            .docs-grid { grid-template-columns: 1fr; }
-            .video-float {
-                width: 100px;
-                height: 178px;
-                top: 70px;
-                right: 10px;
+            .hero-message {
+                padding: 1.5rem;
             }
             .chat-popup {
-                width: calc(100% - 40px);
-                right: 20px;
-                left: 20px;
-                bottom: 90px;
-                height: 60vh;
+                width: 320px;
+                bottom: 80px;
+                right: 16px;
             }
-            .chat-call-button {
-                bottom: 20px;
-                right: 20px;
-                width: 52px;
-                height: 52px;
+            .chat-fab {
+                padding: 8px 16px;
+                bottom: 18px;
+                right: 18px;
             }
-            .chat-call-button img {
-                width: 28px;
-                height: 28px;
+            .chat-fab img {
+                width: 22px;
+                height: 22px;
             }
         }
 
-        @media (min-width: 769px) {
-            .mobile-menu, .menu-overlay { display: none; }
+        @media (max-width: 480px) {
+            .video-container {
+                width: 160px;
+                top: 8px;
+                right: 8px;
+            }
+            .hero-message h1 {
+                font-size: 1.6rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="logo" onclick="window.location.href='index.html'">
-            <div class="victory-icon">
-                <div class="kremlin-silhouette">🎖️</div>
-                <div class="ribbon"></div>
-            </div>
-            <div>
-                <span class="logo-text">Огни 3</span>
-                <span class="victory-badge">1945-2026</span>
-            </div>
-        </div>
-        <div class="nav-search">
-            <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
-        </div>
-        <div class="burger-menu" id="burgerMenu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="nav-links">
-            <div class="nav-link" id="chatNavBtn">Чат</div>
-        </div>
+<!-- Верхняя панель: логотип слева (без функционала) -->
+<div class="top-bar">
+    <div class="logo-left">
+        <img src="https://free-png.ru/wp-content/uploads/2021/05/free-png.ru-6-200x200.png" alt="Логотип Огни 3" style="pointer-events: none;">
+        <span class="welcome-badge">🏅 С Днём Победы! 1945–2026</span>
     </div>
-</nav>
-
-<!-- Мобильное меню -->
-<div class="menu-overlay" id="menuOverlay"></div>
-<div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-        <button class="close-menu" id="closeMenuBtn">✕</button>
-    </div>
-    
-    <div class="sidebar-section">
-        <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">
-            <span class="sidebar-icon">📁</span>Все документы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">
-            <span class="sidebar-icon">📋</span>Протоколы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">
-            <span class="sidebar-icon">📊</span>Реестры
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">
-            <span class="sidebar-icon">₽</span>Финансы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();">
-            <span class="sidebar-icon">💼</span>Техническая часть
-        </button>
-    </div>
-
-    <div class="sidebar-section">
-        <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-        <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
-            <span class="sidebar-icon">📝</span>Заполнение реестра
-        </a>
-        <a href="archive.html" class="sidebar-item">
-            <span class="sidebar-icon">📁</span>Архив файлов
-        </a>
-    </div>
-    
-    <div class="sidebar-section">
-        <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-        <button class="sidebar-item" id="mobileChatBtn">
-            <span class="sidebar-icon">💬</span>Открыть чат
-        </button>
-        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
-            <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ С Днём Победы!</div>
-        </div>
-    </div>
+    <!-- правый угол пуст, видео-блок фиксирован отдельно -->
 </div>
 
-<div class="main-container">
-    <aside class="sidebar">
-        <div class="sidebar-section">
-            <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-            <button class="sidebar-item" onclick="filterDocs('all')">
-                <span class="sidebar-icon">📁</span>Все документы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('protocol')">
-                <span class="sidebar-icon">📋</span>Протоколы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('registry')">
-                <span class="sidebar-icon">📊</span>Реестры
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('finance')">
-                <span class="sidebar-icon">₽</span>Финансы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('tech')">
-                <span class="sidebar-icon">💼</span>Техническая часть
-            </button>
-        </div>
-
-        <div class="sidebar-section">
-            <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
-                <span class="sidebar-icon">📝</span>Заполнение реестра
-            </a>
-            <a href="archive.html" class="sidebar-item">
-                <span class="sidebar-icon">📁</span>Архив файлов
-            </a>
-            <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid var(--border-light);">
-                <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
-                <div id="exportedFilesList" class="files-list">
-                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="sidebar-section">
-            <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" id="chatSidebarBtn">
-                <span class="sidebar-icon">💬</span>Открыть чат
-            </button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ 9 мая — День Победы!</div>
-                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Слава героям!</div>
-            </div>
-        </div>
-    </aside>
-
-    <main class="content">
-        <div class="hero-card">
-            <div class="hero-title">Штаб строительства Огни 3</div>
-            <div class="hero-subtitle">Актуальная документация и ход работ</div>
-        </div>
-
-        <div class="google-cards-container">
-            <div class="google-card">
-                <a href="VIS-Ogni-3.html" class="google-link">
-                    <div style="font-size: 2rem;">📊</div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div>
-                        <div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div>
-                    </div>
-                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
-                </a>
-            </div>
-
-            <div class="google-card">
-                <a href="Zadachi-Ogni-3.html" class="google-link">
-                    <div style="font-size: 2rem;">📋</div>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 700; font-size: 1rem;">Задачи Огни 3</div>
-                        <div style="font-size: 0.7rem; color: var(--accent-green);">Рабочий лист · Контроль поручений</div>
-                    </div>
-                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="section-header">
-            <div class="section-title">
-                <span>📄 Документы</span>
-                <span class="docs-count" id="docsCount">10</span>
-            </div>
-        </div>
-
-        <div id="docsContainer" class="docs-grid"></div>
-    </main>
+<!-- Основной контент (просто информационный) -->
+<div class="hero-message">
+    <h1>Штаб строительства Огни 3</h1>
+    <p>Актуальная документация, протоколы, реестры. <br>Управление проектом — только проверенные решения.</p>
+    <p style="margin-top: 12px;">⭐ 9 Мая — символ мужества и единства. С праздником!</p>
 </div>
 
-<!-- ФИКСИРОВАННОЕ ВИДЕО-ОКНО -->
-<div class="video-float" id="videoFloat">
-    <button class="close-video" id="closeVideoBtn" title="Закрыть видео">✕</button>
-    <button class="fullscreen-btn" id="fullscreenVideoBtn" title="На весь экран">⛶</button>
-    <video id="floatingVideo" preload="auto" controls>
-        <source src="https://raw.githubusercontent.com/buildingmove-source/BuildPhysics/main/vis-presentation.mp4" type="video/mp4">
-        Ваш браузер не поддерживает видео.
+
+<!-- ========== ФИКСИРОВАННЫЙ ВИДЕОБЛОК (TikTok / iOS стиль) ========== -->
+<div class="video-container" id="videoContainer">
+    <video id="tiktokVideo" 
+           src="https://buildingmove-source.github.io/BuildPhysics/vis-presentation.mp4" 
+           muted 
+           playsinline 
+           preload="metadata"
+           poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23000'/%3E%3C/svg%3E">
     </video>
-    <div class="video-label">📄 Предоставление документов на оборудование и материалы по ВИС</div>
+    <div class="video-badge">🔊 Нажмите для звука / полноэкранного режима</div>
 </div>
 
-<!-- КНОПКА ВЫЗОВА ЧАТА -->
-<button class="chat-call-button" id="openChatBtn">
-    <img src="https://images.icon-icons.com/3870/PNG/96/message_text_icon_243954.png" alt="чат">
+
+<!-- ========== КНОПКА ЧАТА (плавающая справа внизу) ========== -->
+<button class="chat-fab" id="chatToggleBtn">
+    <img src="https://images.icon-icons.com/1675/PNG/96/3890931-communication-letter-memo-message-note-open-text_111191.png" alt="чат иконка">
+    <span>💬 Чат в разработке</span>
 </button>
 
-<!-- ПОПАП ОКНО ЧАТА -->
-<div id="chatPopupWindow" class="chat-popup">
-    <div class="popup-header">
-        <div class="popup-title">
-            <img src="https://images.icon-icons.com/3870/PNG/96/message_text_icon_243954.png" alt="chat">
-            <span>Чат · Огни 3</span>
-            <span class="development-badge">Demo</span>
-        </div>
-        <button class="close-popup" id="closeChatPopupBtn">✕</button>
+
+<!-- ========== ВСПЛЫВАЮЩЕЕ ОКНО ЧАТА ========== -->
+<div class="chat-popup" id="chatPopup">
+    <div class="chat-header">
+        <h3>💬 Чат · Огни 3 <span style="font-size:0.7rem; background:#eef2f9; padding:2px 8px; border-radius:40px;">Demo</span></h3>
+        <button class="close-chat" id="closeChatBtn">✕</button>
     </div>
-    <div class="popup-messages" id="popupMessagesList">
-        <div class="popup-message">
-            <div class="popup-bubble">
-                Доброе утро, коллеги!
-                <div class="popup-time">09:30 · Гончаров А.С.</div>
-            </div>
-        </div>
-        <div class="popup-message outgoing">
-            <div class="popup-bubble">
-                Здравствуйте! Готовим АОН.
-                <div class="popup-time">09:32 · Вы</div>
-            </div>
-        </div>
-        <div class="popup-message">
-            <div class="popup-bubble">
-                Хорошо. Ждём данные по ВИС.
-                <div class="popup-time">09:35 · Кривоносов В.В.</div>
-            </div>
-        </div>
-        <div class="popup-message">
-            <div class="popup-bubble">
-                💬 Чат в разработке. Функция полноценного чата появится в ближайшее время.
-                <div class="popup-time">Системное сообщение</div>
-            </div>
-        </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="message incoming">Доброе утро, коллеги!</div>
+        <div class="message outgoing">Здравствуйте! Готовим АОН.</div>
+        <div class="message incoming">Хорошо. Ждём данные по ВИС.</div>
     </div>
-    <div class="popup-input-area">
-        <input type="text" class="popup-input" id="chatMessageInput" placeholder="Напишите сообщение..." disabled>
-        <button class="popup-send" id="chatSendBtn" disabled>📤</button>
+    <div class="chat-footer">
+        Функция полноценного чата появится в ближайшее время.
     </div>
 </div>
 
-<footer class="footer">
-    Огни 3 · Строительный портал · © 2026 · 🎖️ С Днём Победы!
-</footer>
 
 <script>
-    // ===== МОБИЛЬНОЕ МЕНЮ =====
-    const burgerMenu = document.getElementById('burgerMenu');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    (function() {
+        // 1. РАБОТА ЧАТА (открыть / закрыть)
+        const chatToggle = document.getElementById('chatToggleBtn');
+        const chatPopup = document.getElementById('chatPopup');
+        const closeChat = document.getElementById('closeChatBtn');
 
-    function openMobileMenu() {
-        mobileMenu.classList.add('open');
-        menuOverlay.classList.add('active');
-        burgerMenu.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeMobileMenu() {
-        mobileMenu.classList.remove('open');
-        menuOverlay.classList.remove('active');
-        burgerMenu.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    burgerMenu?.addEventListener('click', openMobileMenu);
-    closeMenuBtn?.addEventListener('click', closeMobileMenu);
-    menuOverlay?.addEventListener('click', closeMobileMenu);
-
-    // ===== ВИДЕО-ОКНО (фиксированное) =====
-    const videoFloat = document.getElementById('videoFloat');
-    const floatingVideo = document.getElementById('floatingVideo');
-    const closeVideoBtn = document.getElementById('closeVideoBtn');
-    const fullscreenVideoBtn = document.getElementById('fullscreenVideoBtn');
-    
-    // Загрузка видео и попытка автовоспроизведения
-    floatingVideo.volume = 0.5;
-    floatingVideo.muted = false;
-    floatingVideo.play().catch(e => console.log('Автовоспроизведение заблокировано:', e));
-    
-    // Полноэкранный режим
-    function toggleFullscreen() {
-        if (!videoFloat.classList.contains('fullscreen')) {
-            videoFloat.classList.add('fullscreen');
-            fullscreenVideoBtn.textContent = '✕';
-            fullscreenVideoBtn.style.opacity = '1';
-            closeVideoBtn.style.opacity = '1';
-        } else {
-            videoFloat.classList.remove('fullscreen');
-            fullscreenVideoBtn.textContent = '⛶';
+        function openChat() {
+            chatPopup.classList.add('show');
         }
-    }
-    
-    fullscreenVideoBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleFullscreen();
-    });
-    
-    // Закрытие видео-окна
-    closeVideoBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        floatingVideo.pause();
-        videoFloat.style.display = 'none';
-    });
-    
-    // Клик по окну — переход в полноэкранный режим
-    videoFloat?.addEventListener('click', (e) => {
-        if (e.target === closeVideoBtn || e.target === fullscreenVideoBtn) return;
-        toggleFullscreen();
-    });
-    
-    // ===== ЧАТ (кнопка открытия/закрытия) =====
-    const openChatBtn = document.getElementById('openChatBtn');
-    const chatPopupWindow = document.getElementById('chatPopupWindow');
-    const closeChatPopupBtn = document.getElementById('closeChatPopupBtn');
-    
-    function openChat() {
-        chatPopupWindow.classList.add('show');
-    }
-    
-    function closeChat() {
-        chatPopupWindow.classList.remove('show');
-    }
-    
-    openChatBtn?.addEventListener('click', openChat);
-    closeChatPopupBtn?.addEventListener('click', closeChat);
-    
-    // Закрытие чата при клике вне окна
-    document.addEventListener('click', (e) => {
-        if (chatPopupWindow.classList.contains('show') && 
-            !chatPopupWindow.contains(e.target) && 
-            !openChatBtn.contains(e.target)) {
-            closeChat();
+        function closeChat() {
+            chatPopup.classList.remove('show');
         }
-    });
-    
-    // ===== ДАННЫЕ ДОКУМЕНТОВ =====
-    const pages = [
-        { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
-        { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
-        { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
-        { name: "Протокол №2 · 05 мая 2026 · 12:30", file: "Protokol_2_ot_05.05.2026.html", icon: "📎", date: "05.05.2026", category: "protocol" },
-        { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📎", date: "29.04.2026", category: "protocol" },
-        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date: "03.05.2026", category: "registry" },
-        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date: "02.05.2026", category: "finance" },
-        { name: "Реестр для чек-листа АВТ2 ИНЭКО", file: "Reesrt_cheklist_AVT2.html", icon: "📎", date: "06.05.2026", category: "registry" },
-        { name: "Реестр для чек-листа СС8 ИНЭКО", file: "Reesrt_cheklist_CC8.html", icon: "📎", date: "06.05.2026", category: "registry" },
-        { name: "Реестр для чек-листа СС5 ИНЭКО", file: "реестр для ЧЛ.html", icon: "📎", date: "01.05.2026", category: "registry" }
-    ];
 
-    let currentFilter = 'all';
-    let currentSearch = '';
-
-    function renderDocs() {
-        const container = document.getElementById('docsContainer');
-        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
-        if (currentFilter !== 'all') {
-            filtered = filtered.filter(p => p.category === currentFilter);
-        }
-        document.getElementById('docsCount').textContent = filtered.length;
-        if (filtered.length === 0) {
-            container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`;
-            return;
-        }
-        container.innerHTML = filtered.map((page, index) => `
-            <div class="doc-card" style="animation-delay: ${index * 0.05}s">
-                <a href="${page.file}" class="card-link" rel="noopener noreferrer">
-                    <div class="doc-icon">${page.icon}</div>
-                    <div class="doc-name">${escapeHtml(page.name)}</div>
-                    <div class="doc-meta">
-                        <span>📅 ${page.date}</span>
-                        <span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
-                    </div>
-                </a>
-            </div>
-        `).join('');
-    }
-    
-    function filterDocs(category) {
-        currentFilter = category;
-        renderDocs();
-        let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы';
-        showToastMessage(`📁 Показаны: ${categoryName}`);
-    }
-    
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
-    }
-
-    function showToastMessage(message) {
-        let toast = document.getElementById('tempToast');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.id = 'tempToast';
-            toast.style.cssText = `
-                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
-                background: #FFFFFF; border-left: 4px solid #D4AF37; padding: 0.6rem 1.2rem;
-                border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500;
-                transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            `;
-            document.body.appendChild(toast);
-        }
-        if (toast._timeout) clearTimeout(toast._timeout);
-        toast.textContent = message;
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-        toast.style.opacity = '1';
-        toast._timeout = setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(-50%) translateY(20px)';
-            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(100px)'; }, 300);
-        }, 3000);
-    }
-
-    async function loadExportedFiles() {
-        const container = document.getElementById('exportedFilesList');
-        try {
-            const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
-            const response = await fetch(indexUrl);
-            if (!response.ok) throw new Error('Индекс не найден');
-            const index = await response.json();
-            const files = index.files || [];
-            if (files.length === 0) {
-                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
-                return;
-            }
-            container.innerHTML = files.map(file => {
-                const displayDate = file.date;
-                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
-                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
-            }).join('');
-        } catch (error) {
-            console.error('Ошибка загрузки файлов:', error);
-            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
-        }
-    }
-
-    const searchInput = document.getElementById('globalSearch');
-    let debounceTimer;
-    searchInput?.addEventListener('input', (e) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
-    });
-
-    // Обработчики для кнопок чата (прокрутка к кнопке)
-    function scrollToChatButton() {
-        const chatButton = document.getElementById('openChatBtn');
-        if (chatButton) {
-            chatButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => {
+        chatToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (chatPopup.classList.contains('show')) {
+                closeChat();
+            } else {
                 openChat();
-            }, 300);
-        }
-    }
+            }
+        });
 
-    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); scrollToChatButton(); });
-    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { scrollToChatButton(); });
-    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { closeMobileMenu(); scrollToChatButton(); });
-    
-    loadExportedFiles();
-    renderDocs();
+        closeChat.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeChat();
+        });
+
+        // клик вне окна чата? можно опционально, но не требуется по ТЗ. оставим только крестик и кнопку.
+
+        // 2. ВИДЕО — ПОЛНОЭКРАННЫЙ РЕЖИМ ПРИ КЛИКЕ на видео (и продолжение звука)
+        const video = document.getElementById('tiktokVideo');
+        const videoContainerDiv = document.getElementById('videoContainer');
+
+        // Запрашиваем полноэкранный режим для элемента video
+        function toggleFullscreen() {
+            if (!video) return;
+            if (!document.fullscreenElement) {
+                // Запускаем полноэкранный режим
+                video.requestFullscreen().catch(err => {
+                    console.warn(`Fullscreen error: ${err.message}`);
+                });
+                // при полноэкранном режиме звук можно включить, но не принудительно,
+                // пользователь может сам кликнуть в плеере. Но добавим удобство: если видео на fullscreen, разблокируем звук?
+                // по умолчанию muted = true, мы не включаем звук автоматически, но при клике на видео в обычном режиме
+                // можно дать возможность включить звук через стандартный интерфейс. 
+                // Согласно требованиям: при разворачивании на весь экран продолжает проигрываться со звуком 
+                // (звук может быть отключён по умолчанию, но пользователь кликнет на иконку динамика).
+                // Мы установим muted = false только тогда, когда пользователь явно кликнет на кнопку звука, но такого требования нет. Чтобы упростить: 
+                // по клику на видео включаем полноэкранный режим, звук остаётся muted, пользователь может сам включить звук в плеере.
+                // Однако в задании указано: "разворачивается на весь экран и продолжает проигрываться в этом же окне со звуком".
+                // Чтобы выполнить корректно: при первом клике на видео мы включаем звук (если видео ещё на muted), затем запрашиваем fullscreen.
+                // Пользовательский опыт: видео изначально без звука, но при клике на видео включается звук и полноэкранный режим.
+                if (video.muted) {
+                    video.muted = false;
+                }
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Добавляем обработчик клика на видео
+        video.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleFullscreen();
+        });
+
+        // Дополнительно: сохраняем позицию видео при скролле (fixed - не меняется)
+        // это уже обеспечивается position:fixed
+
+        // 3. Убедимся, что видео загружено и готово к воспроизведению
+        // Если видео не может загрузиться (например, файл отсутствует), выведем в консоль предупреждение.
+        video.addEventListener('error', (e) => {
+            console.warn('Видео не загрузилось. Проверьте путь: vis-presentation.mp4');
+            videoContainerDiv.style.border = '2px solid rgba(255,80,80,0.6)';
+        });
+
+        // Устанавливаем плавное поведение
+        video.addEventListener('loadeddata', () => {
+            // можно автостарт видео, если нужно
+            video.play().catch(e => console.log('autoplay blocked', e));
+        });
+
+        // 4. Корректное закрытие полноэкранного режима (при нажатии Esc)
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                // Если вышли из fullscreen, звук оставляем как есть (пользователь сам может включить)
+                // Не меняем muted обратно — пользователь мог его включить.
+            }
+        });
+
+        // 5. Если требуется фиксирование размеров видео при ресайзе — не требуется, так как CSS адаптирует.
+
+        // 6. Дополнительная стилизация полноэкранного видео (покрывает весь экран)
+        // Браузер сам управляет фулскрином.
+
+        // 7. Проверяем favicon (уже установлен через link)
+        // 8. Иконки логотипа, чата — все подгружаются по внешним ссылкам — работают.
+
+        // Дополнительно: при клике по видео в полноэкранном режиме – повторный клик выходит из fullscreen.
+        // Обработчик уже есть.
+    })();
 </script>
+
+<!-- Для совместимости со старыми браузерами, без полифилов, но fullscreen API поддерживается везде -->
 </body>
 </html>

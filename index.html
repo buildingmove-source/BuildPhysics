@@ -830,7 +830,7 @@
             </div>
             <div>
                 <span class="logo-text">Огни 3</span>
-                <span class="victory-badge">1945-2025</span>
+                <span class="victory-badge">1945-2026</span>
             </div>
         </div>
         <div class="nav-search">
@@ -912,12 +912,12 @@
             <div class="google-card"><a href="VIS-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📊</div><div style="flex:1;"><div style="font-weight:700; font-size:1rem;">ВИС Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Google Таблица · Актуальные данные</div></div><div style="font-size:0.8rem; color:var(--text-secondary);">Открыть →</div></a></div>
             <div class="google-card"><a href="Zadachi-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📋</div><div style="flex:1;"><div style="font-weight:700; font-size:1rem;">Задачи Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Рабочий лист · Контроль поручений</div></div><div style="font-size:0.8rem; color:var(--text-secondary);">Открыть →</div></a></div>
         </div>
-        <div class="section-header"><div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">0</span></div></div>
+        <div class="section-header"><div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">10</span></div></div>
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<!-- ФИКСИРОВАННОЕ ВИДЕО (всегда на месте, со звуком по клику) -->
+<!-- ФИКСИРОВАННОЕ ВИДЕО (всегда на месте) -->
 <div class="video-fixed" id="videoFixed">
     <button class="close-video-btn" id="closeVideoFixedBtn">✕</button>
     <button class="fullscreen-toggle" id="fullscreenVideoFixedBtn">⛶</button>
@@ -943,161 +943,4 @@
         <div class="chat-message-bubble">Хорошо. Ждём данные по ВИС.<div class="chat-time-small">09:35 · Кривоносов В.В.</div></div>
     </div>
     <div class="chat-modal-input">
-        <input type="text" id="chatModalInput" placeholder="💬 Чат в разработке...">
-        <button id="sendChatModalBtn">📤</button>
-    </div>
-</div>
-
-<footer class="footer">Огни 3 · Строительный портал · © 2026 · 🎖️ С Днём Победы!</footer>
-
-<script>
-    // Мобильное меню
-    const burger = document.getElementById('burgerMenu');
-    const mobMenu = document.getElementById('mobileMenu');
-    const overlayMenu = document.getElementById('menuOverlay');
-    const closeMob = document.getElementById('closeMenuBtn');
-    function openMob() { mobMenu.classList.add('open'); overlayMenu.classList.add('active'); burger.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeMob() { mobMenu.classList.remove('open'); overlayMenu.classList.remove('active'); burger.classList.remove('active'); document.body.style.overflow = ''; }
-    burger?.addEventListener('click', openMob);
-    closeMob?.addEventListener('click', closeMob);
-    overlayMenu?.addEventListener('click', closeMob);
-
-    // ФИКСИРОВАННОЕ ВИДЕО (звук включается/выключается по клику на иконку звука)
-    const videoFixed = document.getElementById('videoFixed');
-    const fixedVideo = document.getElementById('fixedVideo');
-    const closeVideoBtn = document.getElementById('closeVideoFixedBtn');
-    const fullscreenVideoBtn = document.getElementById('fullscreenVideoFixedBtn');
-    
-    // Функция для переключения звука (видео изначально без звука, по клику на само видео включаем)
-    let videoSoundEnabled = false;
-    function toggleVideoSound() {
-        if (fixedVideo.muted) {
-            fixedVideo.muted = false;
-            videoSoundEnabled = true;
-            showToastMessage('🔊 Звук включён');
-        } else {
-            fixedVideo.muted = true;
-            videoSoundEnabled = false;
-            showToastMessage('🔇 Звук выключен');
-        }
-    }
-    // По клику на само видео включаем звук и снимаем mute
-    fixedVideo.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (fixedVideo.muted) {
-            fixedVideo.muted = false;
-            videoSoundEnabled = true;
-            showToastMessage('🔊 Звук включён');
-        } else {
-            fixedVideo.muted = true;
-            videoSoundEnabled = false;
-            showToastMessage('🔇 Звук выключен');
-        }
-    });
-    
-    function toggleFullscreenVideo() {
-        if (!videoFixed.classList.contains('fullscreen')) {
-            videoFixed.classList.add('fullscreen');
-            fullscreenVideoBtn.textContent = '✕';
-        } else {
-            videoFixed.classList.remove('fullscreen');
-            fullscreenVideoBtn.textContent = '⛶';
-        }
-    }
-    fullscreenVideoBtn?.addEventListener('click', (e) => { e.stopPropagation(); toggleFullscreenVideo(); });
-    closeVideoBtn?.addEventListener('click', (e) => { e.stopPropagation(); videoFixed.style.display = 'none'; });
-    videoFixed?.addEventListener('click', (e) => {
-        if (e.target === closeVideoBtn || e.target === fullscreenVideoBtn) return;
-        toggleFullscreenVideo();
-    });
-    // Запуск видео
-    fixedVideo.play().catch(e => console.log('Автовоспроизведение заблокировано:', e));
-
-    // Демо-чат (открытие по кнопке)
-    const chatModal = document.getElementById('chatModal');
-    const closeChatModal = document.getElementById('closeChatModalBtn');
-    const chatModalInput = document.getElementById('chatModalInput');
-    const sendChatBtn = document.getElementById('sendChatModalBtn');
-    const chatMessagesContainer = document.getElementById('chatModalMessages');
-
-    function openChatModal() { chatModal.classList.add('open'); }
-    function closeChatModalFunc() { chatModal.classList.remove('open'); }
-    function addDemoMessage(text, isOutgoing = true) {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'chat-message-bubble' + (isOutgoing ? ' outgoing' : '');
-        const now = new Date();
-        const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        msgDiv.innerHTML = `${escapeHtml(text)}<div class="chat-time-small">${time} · ${isOutgoing ? 'Вы' : 'Система'}</div>`;
-        chatMessagesContainer.appendChild(msgDiv);
-        msgDiv.scrollIntoView({ behavior: 'smooth' });
-    }
-    function sendDemoMessage() {
-        const text = chatModalInput.value.trim();
-        if (!text) return;
-        addDemoMessage(text, true);
-        chatModalInput.value = '';
-        setTimeout(() => {
-            addDemoMessage('✅ Сообщение доставлено (демо-режим). Полноценный чат появится позже.', false);
-        }, 500);
-    }
-    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); openChatModal(); });
-    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatModal(); });
-    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { closeMob(); openChatModal(); });
-    closeChatModal?.addEventListener('click', closeChatModalFunc);
-    sendChatBtn?.addEventListener('click', sendDemoMessage);
-    chatModalInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendDemoMessage(); });
-
-    // Документы (исправлено — данные полностью восстановлены)
-    const pages = [
-        { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
-        { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
-        { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
-        { name: "Протокол №2 · 05 мая 2026 · 12:30", file: "Protokol_2_ot_05.05.2026.html", icon: "📎", date: "05.05.2026", category: "protocol" },
-        { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📎", date: "29.04.2026", category: "protocol" },
-        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date: "03.05.2026", category: "registry" },
-        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date: "02.05.2026", category: "finance" },
-        { name: "Реестр для чек-листа АВТ2 ИНЭКО", file: "Reesrt_cheklist_AVT2.html", icon: "📎", date: "06.05.2026", category: "registry" },
-        { name: "Реестр для чек-листа СС8 ИНЭКО", file: "Reesrt_cheklist_CC8.html", icon: "📎", date: "06.05.2026", category: "registry" },
-        { name: "Реестр для чек-листа СС5 ИНЭКО", file: "реестр для ЧЛ.html", icon: "📎", date: "01.05.2026", category: "registry" }
-    ];
-
-    let currentFilter = 'all', currentSearch = '';
-    function renderDocs() {
-        const container = document.getElementById('docsContainer');
-        if (!container) return;
-        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
-        if (currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
-        const countSpan = document.getElementById('docsCount');
-        if (countSpan) countSpan.textContent = filtered.length;
-        if (!filtered.length) { container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`; return; }
-        container.innerHTML = filtered.map((p, i) => `<div class="doc-card" style="animation-delay:${i*0.05}s"><a href="${p.file}" class="card-link"><div class="doc-icon">${p.icon}</div><div class="doc-name">${escapeHtml(p.name)}</div><div class="doc-meta"><span>📅 ${p.date}</span><span>📂 ${escapeHtml(p.file.replace(/\.html$/i,''))}</span></div></a></div>`).join('');
-    }
-    function filterDocs(cat) { currentFilter = cat; renderDocs(); const names = { all:'все документы', protocol:'протоколы', registry:'реестры', finance:'финансы', tech:'техническую часть' }; showToastMessage(`📁 Показаны: ${names[cat]||'документы'}`); }
-    function escapeHtml(s) { return s.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
-    function showToastMessage(msg) {
-        let t = document.getElementById('tempToast');
-        if (!t) { t = document.createElement('div'); t.id = 'tempToast'; t.style.cssText = 'position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(100px); background:#fff; border-left:4px solid #D4AF37; padding:0.6rem 1.2rem; border-radius:50px; color:#1A1A2E; font-size:0.8rem; z-index:2500; transition:0.3s; white-space:nowrap; box-shadow:0 4px 15px rgba(0,0,0,0.1);'; document.body.appendChild(t); }
-        if (t._timeout) clearTimeout(t._timeout);
-        t.textContent = msg; t.style.transform = 'translateX(-50%) translateY(0)'; t.style.opacity = '1';
-        t._timeout = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(20px)'; setTimeout(() => { t.style.transform = 'translateX(-50%) translateY(100px)'; }, 300); }, 3000);
-    }
-    async function loadExportedFiles() {
-        const container = document.getElementById('exportedFilesList');
-        if (!container) return;
-        try {
-            const res = await fetch('https://buildingmove-source.github.io/BuildPhysics/files-index.json');
-            if (!res.ok) throw new Error();
-            const idx = await res.json();
-            const files = idx.files || [];
-            if (!files.length) { container.innerHTML = '<div style="font-size:0.6rem; color:var(--text-muted); padding:0.3rem;">Нет экспортированных файлов</div>'; return; }
-            container.innerHTML = files.map(f => `<a href="https://buildingmove-source.github.io/BuildPhysics/${f.name}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${f.date}</span></a>`).join('');
-        } catch(e) { container.innerHTML = '<div style="font-size:0.6rem; color:var(--text-muted); padding:0.3rem;">Ошибка загрузки</div>'; }
-    }
-    const searchInp = document.getElementById('globalSearch');
-    let deb;
-    searchInp?.addEventListener('input', e => { clearTimeout(deb); deb = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300); });
-    loadExportedFiles();
-    renderDocs();
-</script>
-</body>
-</html>
+        <input type="text" id

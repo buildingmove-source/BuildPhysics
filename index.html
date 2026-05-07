@@ -6,8 +6,9 @@
     <meta name="theme-color" content="#FFFFFF">
     <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
     <title>Огни 3 | 9 мая — День Победы!</title>
-    <!-- Иконка сайта (favicon) по ссылке -->
-    <link rel="icon" type="image/png" href="https://free-png.ru/wp-content/uploads/2021/05/free-png.ru-6-200x200.png">
+    
+    <!-- Праздничный favicon (Георгиевская лента + Кремль) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%238B0000' rx='20'/%3E%3Cpath d='M20,50 L30,45 L35,52 L30,58 Z' fill='%23D4AF37'/%3E%3Cpath d='M80,50 L70,45 L65,52 L70,58 Z' fill='%23D4AF37'/%3E%3Crect x='35' y='38' width='30' height='24' rx='3' fill='%23D4AF37'/%3E%3Crect x='40' y='30' width='20' height='15' rx='2' fill='%23FF8C00'/%3E%3Cpath d='M25,62 L40,58 L45,70 L30,72 Z' fill='%23FF8C00'/%3E%3Cpath d='M75,62 L60,58 L55,70 L70,72 Z' fill='%23FF8C00'/%3E%3Cpath d='M20,75 L80,75 L75,85 L25,85 Z' fill='%23D4AF37'/%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
         /* ===== СВЕТЛАЯ ТЕМА С ПРАЗДНИЧНЫМИ АКЦЕНТАМИ ===== */
@@ -93,6 +94,7 @@
             gap: 1rem;
         }
 
+        /* ===== ПРАЗДНИЧНЫЙ ЛОГОТИП ===== */
         .logo {
             display: flex;
             align-items: center;
@@ -301,23 +303,23 @@
             visibility: visible;
         }
 
-        /* ===== ФИКСИРОВАННОЕ ВИДЕО-ОКНО ===== */
-        .video-fixed {
+        /* ===== ФИКСИРОВАННОЕ ВИДЕО-ОКНО (position: fixed) ===== */
+        .video-float {
             position: fixed;
-            bottom: 100px;
+            top: 90px;
             right: 20px;
-            width: 260px;
-            height: 460px;
+            width: 180px;
+            height: 320px;
             background: #000;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.3);
-            z-index: 900;
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 1000;
             cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .video-fixed.fullscreen {
+        .video-float.fullscreen {
             position: fixed;
             top: 0;
             left: 0;
@@ -330,13 +332,22 @@
             cursor: default;
         }
 
-        .video-fixed video {
+        .video-float:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+        }
+
+        .video-float.fullscreen:hover {
+            transform: none;
+        }
+
+        .video-float video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .video-fixed .close-video-btn {
+        .video-float .close-video {
             position: absolute;
             top: 8px;
             right: 8px;
@@ -352,20 +363,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10;
+            transition: var(--transition);
             opacity: 0;
-            transition: opacity 0.2s;
+            z-index: 10;
         }
 
-        .video-fixed:hover .close-video-btn {
+        .video-float:hover .close-video,
+        .video-float.fullscreen .close-video {
             opacity: 1;
         }
 
-        .video-fixed.fullscreen .close-video-btn {
-            opacity: 1;
-        }
-
-        .video-fixed .fullscreen-toggle {
+        .video-float .fullscreen-btn {
             position: absolute;
             bottom: 8px;
             right: 8px;
@@ -381,144 +389,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10;
+            transition: var(--transition);
             opacity: 0;
-            transition: opacity 0.2s;
+            z-index: 10;
         }
 
-        .video-fixed:hover .fullscreen-toggle {
+        .video-float:hover .fullscreen-btn {
             opacity: 1;
         }
 
-        .video-label-fixed {
+        .video-label {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
             padding: 20px 8px 8px;
-            font-size: 10px;
+            font-size: 9px;
             color: white;
             text-align: center;
             pointer-events: none;
-        }
-
-        /* ===== ДЕМО-ЧАТ (всплывающий по кнопке) ===== */
-        .chat-modal {
-            position: fixed;
-            bottom: 100px;
-            right: 300px;
-            width: 380px;
-            height: 500px;
-            background: #FFFFFF;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            z-index: 1100;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-            animation: slideUp 0.3s ease;
-        }
-
-        .chat-modal.open {
-            display: flex;
-        }
-
-        .chat-modal-header {
-            background: linear-gradient(135deg, #8B0000, #D4AF37);
-            padding: 0.8rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .chat-modal-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-            font-weight: 600;
-        }
-
-        .chat-modal-title img {
-            width: 28px;
-            height: 28px;
-            background: white;
-            border-radius: 50%;
-            padding: 4px;
-        }
-
-        .close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .chat-modal-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            background: #F8FAFE;
-        }
-
-        .chat-message-bubble {
-            background: #FFFFFF;
-            padding: 0.5rem 0.8rem;
-            border-radius: 16px;
-            border-top-left-radius: 4px;
-            max-width: 85%;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow-sm);
-            align-self: flex-start;
-        }
-
-        .chat-message-bubble.outgoing {
-            background: var(--accent-blue);
-            color: white;
-            align-self: flex-end;
-            border-top-right-radius: 4px;
-            border-top-left-radius: 16px;
-        }
-
-        .chat-time-small {
-            font-size: 0.55rem;
-            opacity: 0.7;
-            margin-top: 0.2rem;
-        }
-
-        .chat-modal-input {
-            padding: 0.8rem;
-            background: #FFFFFF;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-modal-input input {
-            flex: 1;
-            background: #F0F2F5;
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            outline: none;
-        }
-
-        .chat-modal-input button {
-            background: linear-gradient(135deg, #FF8C00, #D4AF37);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: white;
-            font-size: 1rem;
         }
 
         /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
@@ -800,6 +690,194 @@
             color: var(--text-muted);
         }
 
+        /* Кнопка вызова чата */
+        .chat-call-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 2000;
+        }
+
+        .chat-call-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(45,106,255,0.3);
+        }
+
+        .chat-call-button img {
+            width: 32px;
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Попап окно чата */
+        .chat-popup {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 380px;
+            height: 500px;
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            z-index: 2001;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            animation: slideUp 0.3s ease;
+        }
+        
+        .chat-popup.show {
+            display: flex;
+        }
+        
+        .popup-header {
+            background: linear-gradient(135deg, #8B0000, #D4AF37);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .popup-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .popup-title img {
+            width: 28px;
+            height: 28px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .development-badge {
+            background: rgba(0,0,0,0.2);
+            color: #FFD700;
+            font-size: 0.55rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 40px;
+            margin-left: 0.5rem;
+        }
+        
+        .close-popup {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .close-popup:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .popup-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            background: #F8FAFE;
+        }
+        
+        .popup-message {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 85%;
+        }
+        
+        .popup-message.outgoing {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .popup-bubble {
+            background: #FFFFFF;
+            padding: 0.5rem 0.8rem;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .popup-message.outgoing .popup-bubble {
+            background: #2D6AFF;
+            color: white;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+        
+        .popup-time {
+            font-size: 0.55rem;
+            opacity: 0.7;
+            margin-top: 0.2rem;
+        }
+        
+        .popup-input-area {
+            padding: 0.8rem;
+            background: #FFFFFF;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .popup-input {
+            flex: 1;
+            background: #F0F2F5;
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+        
+        .popup-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .popup-send {
+            background: linear-gradient(135deg, #FF8C00, #D4AF37);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 1024px) {
+            .video-float {
+                width: 140px;
+                height: 250px;
+                top: 80px;
+                right: 15px;
+            }
+        }
+
         @media (max-width: 768px) {
             .navbar { padding: 0.75rem 1rem; }
             .nav-container { justify-content: space-between; }
@@ -809,9 +887,31 @@
             .sidebar { display: none; }
             .main-container { padding: 1rem; }
             .hero-title { font-size: 1.3rem; }
+            .hero-card { padding: 1.2rem; }
             .docs-grid { grid-template-columns: 1fr; }
-            .video-fixed { width: 140px; height: 250px; bottom: 80px; right: 10px; }
-            .chat-modal { width: calc(100% - 40px); right: 20px; left: 20px; bottom: 80px; height: 60vh; }
+            .video-float {
+                width: 100px;
+                height: 178px;
+                top: 70px;
+                right: 10px;
+            }
+            .chat-popup {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+                bottom: 90px;
+                height: 60vh;
+            }
+            .chat-call-button {
+                bottom: 20px;
+                right: 20px;
+                width: 52px;
+                height: 52px;
+            }
+            .chat-call-button img {
+                width: 28px;
+                height: 28px;
+            }
         }
 
         @media (min-width: 769px) {
@@ -853,22 +953,41 @@
     <div class="mobile-menu-header">
         <button class="close-menu" id="closeMenuBtn">✕</button>
     </div>
+    
     <div class="sidebar-section">
         <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();"><span class="sidebar-icon">📁</span>Все документы</button>
-        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();"><span class="sidebar-icon">📋</span>Протоколы</button>
-        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();"><span class="sidebar-icon">📊</span>Реестры</button>
-        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();"><span class="sidebar-icon">₽</span>Финансы</button>
-        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();"><span class="sidebar-icon">💼</span>Техническая часть</button>
+        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">
+            <span class="sidebar-icon">📁</span>Все документы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">
+            <span class="sidebar-icon">📋</span>Протоколы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">
+            <span class="sidebar-icon">📊</span>Реестры
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">
+            <span class="sidebar-icon">₽</span>Финансы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();">
+            <span class="sidebar-icon">💼</span>Техническая часть
+        </button>
     </div>
+
     <div class="sidebar-section">
         <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-        <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;"><span class="sidebar-icon">📝</span>Заполнение реестра</a>
-        <a href="archive.html" class="sidebar-item"><span class="sidebar-icon">📁</span>Архив файлов</a>
+        <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
+            <span class="sidebar-icon">📝</span>Заполнение реестра
+        </a>
+        <a href="archive.html" class="sidebar-item">
+            <span class="sidebar-icon">📁</span>Архив файлов
+        </a>
     </div>
+    
     <div class="sidebar-section">
         <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-        <button class="sidebar-item" id="mobileChatBtn"><span class="sidebar-icon">💬</span>Открыть чат</button>
+        <button class="sidebar-item" id="mobileChatBtn">
+            <span class="sidebar-icon">💬</span>Открыть чат
+        </button>
         <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
             <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ С Днём Победы!</div>
         </div>
@@ -879,26 +998,47 @@
     <aside class="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-            <button class="sidebar-item" onclick="filterDocs('all')"><span class="sidebar-icon">📁</span>Все документы</button>
-            <button class="sidebar-item" onclick="filterDocs('protocol')"><span class="sidebar-icon">📋</span>Протоколы</button>
-            <button class="sidebar-item" onclick="filterDocs('registry')"><span class="sidebar-icon">📊</span>Реестры</button>
-            <button class="sidebar-item" onclick="filterDocs('finance')"><span class="sidebar-icon">₽</span>Финансы</button>
-            <button class="sidebar-item" onclick="filterDocs('tech')"><span class="sidebar-icon">💼</span>Техническая часть</button>
+            <button class="sidebar-item" onclick="filterDocs('all')">
+                <span class="sidebar-icon">📁</span>Все документы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('protocol')">
+                <span class="sidebar-icon">📋</span>Протоколы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('registry')">
+                <span class="sidebar-icon">📊</span>Реестры
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('finance')">
+                <span class="sidebar-icon">₽</span>Финансы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('tech')">
+                <span class="sidebar-icon">💼</span>Техническая часть
+            </button>
         </div>
+
         <div class="sidebar-section">
             <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;"><span class="sidebar-icon">📝</span>Заполнение реестра</a>
-            <a href="archive.html" class="sidebar-item"><span class="sidebar-icon">📁</span>Архив файлов</a>
+            <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
+                <span class="sidebar-icon">📝</span>Заполнение реестра
+            </a>
+            <a href="archive.html" class="sidebar-item">
+                <span class="sidebar-icon">📁</span>Архив файлов
+            </a>
             <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid var(--border-light);">
                 <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
-                <div id="exportedFilesList" class="files-list"><div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div></div>
+                <div id="exportedFilesList" class="files-list">
+                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+                </div>
             </div>
         </div>
+        
         <div class="sidebar-section">
             <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" id="chatSidebarBtn"><span class="sidebar-icon">💬</span>Открыть чат</button>
+            <button class="sidebar-item" id="chatSidebarBtn">
+                <span class="sidebar-icon">💬</span>Открыть чат
+            </button>
             <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
                 <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ 9 мая — День Победы!</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Слава героям!</div>
             </div>
         </div>
     </aside>
@@ -908,39 +1048,321 @@
             <div class="hero-title">Штаб строительства Огни 3</div>
             <div class="hero-subtitle">Актуальная документация и ход работ</div>
         </div>
+
         <div class="google-cards-container">
-            <div class="google-card"><a href="VIS-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📊</div><div style="flex:1;"><div style="font-weight:700; font-size:1rem;">ВИС Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Google Таблица · Актуальные данные</div></div><div style="font-size:0.8rem; color:var(--text-secondary);">Открыть →</div></a></div>
-            <div class="google-card"><a href="Zadachi-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📋</div><div style="flex:1;"><div style="font-weight:700; font-size:1rem;">Задачи Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Рабочий лист · Контроль поручений</div></div><div style="font-size:0.8rem; color:var(--text-secondary);">Открыть →</div></a></div>
+            <div class="google-card">
+                <a href="VIS-Ogni-3.html" class="google-link">
+                    <div style="font-size: 2rem;">📊</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
+                </a>
+            </div>
+
+            <div class="google-card">
+                <a href="Zadachi-Ogni-3.html" class="google-link">
+                    <div style="font-size: 2rem;">📋</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">Задачи Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Рабочий лист · Контроль поручений</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
+                </a>
+            </div>
         </div>
-        <div class="section-header"><div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">10</span></div></div>
+
+        <div class="section-header">
+            <div class="section-title">
+                <span>📄 Документы</span>
+                <span class="docs-count" id="docsCount">10</span>
+            </div>
+        </div>
+
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<!-- ФИКСИРОВАННОЕ ВИДЕО (всегда на месте) -->
-<div class="video-fixed" id="videoFixed">
-    <button class="close-video-btn" id="closeVideoFixedBtn">✕</button>
-    <button class="fullscreen-toggle" id="fullscreenVideoFixedBtn">⛶</button>
-    <video id="fixedVideo" loop muted playsinline>
-        <source src="vis-presentation.mp4" type="video/mp4">
+<!-- ФИКСИРОВАННОЕ ВИДЕО-ОКНО -->
+<div class="video-float" id="videoFloat">
+    <button class="close-video" id="closeVideoBtn" title="Закрыть видео">✕</button>
+    <button class="fullscreen-btn" id="fullscreenVideoBtn" title="На весь экран">⛶</button>
+    <video id="floatingVideo" preload="auto" controls>
+        <source src="https://raw.githubusercontent.com/buildingmove-source/BuildPhysics/main/vis-presentation.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
     </video>
-    <div class="video-label-fixed">📄 Предоставление документов на оборудование и материалы по ВИС</div>
+    <div class="video-label">📄 Предоставление документов на оборудование и материалы по ВИС</div>
 </div>
 
-<!-- ВСПЛЫВАЮЩИЙ ДЕМО-ЧАТ (открывается по кнопке) -->
-<div class="chat-modal" id="chatModal">
-    <div class="chat-modal-header">
-        <div class="chat-modal-title">
-            <img src="https://images.icon-icons.com/1725/PNG/96/4014697-message-messaging-send-text-texting_112877.png" alt="chat">
+<!-- КНОПКА ВЫЗОВА ЧАТА -->
+<button class="chat-call-button" id="openChatBtn">
+    <img src="https://images.icon-icons.com/3870/PNG/96/message_text_icon_243954.png" alt="чат">
+</button>
+
+<!-- ПОПАП ОКНО ЧАТА -->
+<div id="chatPopupWindow" class="chat-popup">
+    <div class="popup-header">
+        <div class="popup-title">
+            <img src="https://images.icon-icons.com/3870/PNG/96/message_text_icon_243954.png" alt="chat">
             <span>Чат · Огни 3</span>
-            <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:0.2rem 0.5rem; border-radius:40px;">Demo</span>
+            <span class="development-badge">Demo</span>
         </div>
-        <button class="close-chat" id="closeChatModalBtn">✕</button>
+        <button class="close-popup" id="closeChatPopupBtn">✕</button>
     </div>
-    <div class="chat-modal-messages" id="chatModalMessages">
-        <div class="chat-message-bubble">Доброе утро, коллеги!<div class="chat-time-small">09:30 · Гончаров А.С.</div></div>
-        <div class="chat-message-bubble outgoing">Здравствуйте! Готовим АОН.<div class="chat-time-small">09:32 · Вы</div></div>
-        <div class="chat-message-bubble">Хорошо. Ждём данные по ВИС.<div class="chat-time-small">09:35 · Кривоносов В.В.</div></div>
+    <div class="popup-messages" id="popupMessagesList">
+        <div class="popup-message">
+            <div class="popup-bubble">
+                Доброе утро, коллеги!
+                <div class="popup-time">09:30 · Гончаров А.С.</div>
+            </div>
+        </div>
+        <div class="popup-message outgoing">
+            <div class="popup-bubble">
+                Здравствуйте! Готовим АОН.
+                <div class="popup-time">09:32 · Вы</div>
+            </div>
+        </div>
+        <div class="popup-message">
+            <div class="popup-bubble">
+                Хорошо. Ждём данные по ВИС.
+                <div class="popup-time">09:35 · Кривоносов В.В.</div>
+            </div>
+        </div>
+        <div class="popup-message">
+            <div class="popup-bubble">
+                💬 Чат в разработке. Функция полноценного чата появится в ближайшее время.
+                <div class="popup-time">Системное сообщение</div>
+            </div>
+        </div>
     </div>
-    <div class="chat-modal-input">
-        <input type="text" id
+    <div class="popup-input-area">
+        <input type="text" class="popup-input" id="chatMessageInput" placeholder="Напишите сообщение..." disabled>
+        <button class="popup-send" id="chatSendBtn" disabled>📤</button>
+    </div>
+</div>
+
+<footer class="footer">
+    Огни 3 · Строительный портал · © 2026 · 🎖️ С Днём Победы!
+</footer>
+
+<script>
+    // ===== МОБИЛЬНОЕ МЕНЮ =====
+    const burgerMenu = document.getElementById('burgerMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    function openMobileMenu() {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+        burgerMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.remove('active');
+        burgerMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    burgerMenu?.addEventListener('click', openMobileMenu);
+    closeMenuBtn?.addEventListener('click', closeMobileMenu);
+    menuOverlay?.addEventListener('click', closeMobileMenu);
+
+    // ===== ВИДЕО-ОКНО (фиксированное) =====
+    const videoFloat = document.getElementById('videoFloat');
+    const floatingVideo = document.getElementById('floatingVideo');
+    const closeVideoBtn = document.getElementById('closeVideoBtn');
+    const fullscreenVideoBtn = document.getElementById('fullscreenVideoBtn');
+    
+    // Загрузка видео и попытка автовоспроизведения
+    floatingVideo.volume = 0.5;
+    floatingVideo.muted = false;
+    floatingVideo.play().catch(e => console.log('Автовоспроизведение заблокировано:', e));
+    
+    // Полноэкранный режим
+    function toggleFullscreen() {
+        if (!videoFloat.classList.contains('fullscreen')) {
+            videoFloat.classList.add('fullscreen');
+            fullscreenVideoBtn.textContent = '✕';
+            fullscreenVideoBtn.style.opacity = '1';
+            closeVideoBtn.style.opacity = '1';
+        } else {
+            videoFloat.classList.remove('fullscreen');
+            fullscreenVideoBtn.textContent = '⛶';
+        }
+    }
+    
+    fullscreenVideoBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFullscreen();
+    });
+    
+    // Закрытие видео-окна
+    closeVideoBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        floatingVideo.pause();
+        videoFloat.style.display = 'none';
+    });
+    
+    // Клик по окну — переход в полноэкранный режим
+    videoFloat?.addEventListener('click', (e) => {
+        if (e.target === closeVideoBtn || e.target === fullscreenVideoBtn) return;
+        toggleFullscreen();
+    });
+    
+    // ===== ЧАТ (кнопка открытия/закрытия) =====
+    const openChatBtn = document.getElementById('openChatBtn');
+    const chatPopupWindow = document.getElementById('chatPopupWindow');
+    const closeChatPopupBtn = document.getElementById('closeChatPopupBtn');
+    
+    function openChat() {
+        chatPopupWindow.classList.add('show');
+    }
+    
+    function closeChat() {
+        chatPopupWindow.classList.remove('show');
+    }
+    
+    openChatBtn?.addEventListener('click', openChat);
+    closeChatPopupBtn?.addEventListener('click', closeChat);
+    
+    // Закрытие чата при клике вне окна
+    document.addEventListener('click', (e) => {
+        if (chatPopupWindow.classList.contains('show') && 
+            !chatPopupWindow.contains(e.target) && 
+            !openChatBtn.contains(e.target)) {
+            closeChat();
+        }
+    });
+    
+    // ===== ДАННЫЕ ДОКУМЕНТОВ =====
+    const pages = [
+        { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
+        { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
+        { name: "Протокол №1 · 28 апреля 2026 · 12:30", file: "протокол 28.04.2026.html", icon: "📎", date: "28.04.2026", category: "protocol" },
+        { name: "Протокол №2 · 05 мая 2026 · 12:30", file: "Protokol_2_ot_05.05.2026.html", icon: "📎", date: "05.05.2026", category: "protocol" },
+        { name: "Протокол №47 · 29 апреля 2026 · 09:30", file: "протокол 47 от 29.04.2026.html", icon: "📎", date: "29.04.2026", category: "protocol" },
+        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📎", date: "03.05.2026", category: "registry" },
+        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📎", date: "02.05.2026", category: "finance" },
+        { name: "Реестр для чек-листа АВТ2 ИНЭКО", file: "Reesrt_cheklist_AVT2.html", icon: "📎", date: "06.05.2026", category: "registry" },
+        { name: "Реестр для чек-листа СС8 ИНЭКО", file: "Reesrt_cheklist_CC8.html", icon: "📎", date: "06.05.2026", category: "registry" },
+        { name: "Реестр для чек-листа СС5 ИНЭКО", file: "реестр для ЧЛ.html", icon: "📎", date: "01.05.2026", category: "registry" }
+    ];
+
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    function renderDocs() {
+        const container = document.getElementById('docsContainer');
+        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
+        if (currentFilter !== 'all') {
+            filtered = filtered.filter(p => p.category === currentFilter);
+        }
+        document.getElementById('docsCount').textContent = filtered.length;
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`;
+            return;
+        }
+        container.innerHTML = filtered.map((page, index) => `
+            <div class="doc-card" style="animation-delay: ${index * 0.05}s">
+                <a href="${page.file}" class="card-link" rel="noopener noreferrer">
+                    <div class="doc-icon">${page.icon}</div>
+                    <div class="doc-name">${escapeHtml(page.name)}</div>
+                    <div class="doc-meta">
+                        <span>📅 ${page.date}</span>
+                        <span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
+                    </div>
+                </a>
+            </div>
+        `).join('');
+    }
+    
+    function filterDocs(category) {
+        currentFilter = category;
+        renderDocs();
+        let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы';
+        showToastMessage(`📁 Показаны: ${categoryName}`);
+    }
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+    }
+
+    function showToastMessage(message) {
+        let toast = document.getElementById('tempToast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'tempToast';
+            toast.style.cssText = `
+                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
+                background: #FFFFFF; border-left: 4px solid #D4AF37; padding: 0.6rem 1.2rem;
+                border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500;
+                transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            `;
+            document.body.appendChild(toast);
+        }
+        if (toast._timeout) clearTimeout(toast._timeout);
+        toast.textContent = message;
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        toast.style.opacity = '1';
+        toast._timeout = setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(20px)';
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(100px)'; }, 300);
+        }, 3000);
+    }
+
+    async function loadExportedFiles() {
+        const container = document.getElementById('exportedFilesList');
+        try {
+            const indexUrl = `https://buildingmove-source.github.io/BuildPhysics/files-index.json`;
+            const response = await fetch(indexUrl);
+            if (!response.ok) throw new Error('Индекс не найден');
+            const index = await response.json();
+            const files = index.files || [];
+            if (files.length === 0) {
+                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
+                return;
+            }
+            container.innerHTML = files.map(file => {
+                const displayDate = file.date;
+                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
+                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
+            }).join('');
+        } catch (error) {
+            console.error('Ошибка загрузки файлов:', error);
+            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
+        }
+    }
+
+    const searchInput = document.getElementById('globalSearch');
+    let debounceTimer;
+    searchInput?.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
+    });
+
+    // Обработчики для кнопок чата (прокрутка к кнопке)
+    function scrollToChatButton() {
+        const chatButton = document.getElementById('openChatBtn');
+        if (chatButton) {
+            chatButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                openChat();
+            }, 300);
+        }
+    }
+
+    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); scrollToChatButton(); });
+    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { scrollToChatButton(); });
+    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { closeMobileMenu(); scrollToChatButton(); });
+    
+    loadExportedFiles();
+    renderDocs();
+</script>
+</body>
+</html>

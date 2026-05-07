@@ -301,17 +301,17 @@
             visibility: visible;
         }
 
-        /* ===== ФИКСИРОВАННОЕ ВИДЕО-ОКНО (всегда на месте) ===== */
+        /* ===== ФИКСИРОВАННОЕ ВИДЕО-ОКНО ===== */
         .video-fixed {
             position: fixed;
             bottom: 100px;
             right: 20px;
-            width: 220px;
-            height: 390px;
+            width: 260px;
+            height: 460px;
             background: #000;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.3);
             z-index: 900;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -395,12 +395,130 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
             padding: 20px 8px 8px;
-            font-size: 9px;
+            font-size: 10px;
             color: white;
             text-align: center;
             pointer-events: none;
+        }
+
+        /* ===== ДЕМО-ЧАТ (всплывающий по кнопке) ===== */
+        .chat-modal {
+            position: fixed;
+            bottom: 100px;
+            right: 300px;
+            width: 380px;
+            height: 500px;
+            background: #FFFFFF;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 1100;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            animation: slideUp 0.3s ease;
+        }
+
+        .chat-modal.open {
+            display: flex;
+        }
+
+        .chat-modal-header {
+            background: linear-gradient(135deg, #8B0000, #D4AF37);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-modal-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .chat-modal-title img {
+            width: 28px;
+            height: 28px;
+            background: white;
+            border-radius: 50%;
+            padding: 4px;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-modal-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            background: #F8FAFE;
+        }
+
+        .chat-message-bubble {
+            background: #FFFFFF;
+            padding: 0.5rem 0.8rem;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            max-width: 85%;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-sm);
+            align-self: flex-start;
+        }
+
+        .chat-message-bubble.outgoing {
+            background: var(--accent-blue);
+            color: white;
+            align-self: flex-end;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+
+        .chat-time-small {
+            font-size: 0.55rem;
+            opacity: 0.7;
+            margin-top: 0.2rem;
+        }
+
+        .chat-modal-input {
+            padding: 0.8rem;
+            background: #FFFFFF;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-modal-input input {
+            flex: 1;
+            background: #F0F2F5;
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            outline: none;
+        }
+
+        .chat-modal-input button {
+            background: linear-gradient(135deg, #FF8C00, #D4AF37);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-size: 1rem;
         }
 
         /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
@@ -682,118 +800,6 @@
             color: var(--text-muted);
         }
 
-        /* ===== ДЕМО-ЧАТ (всплывающий по кнопке) ===== */
-        .chat-modal {
-            position: fixed;
-            bottom: 100px;
-            right: 260px;
-            width: 380px;
-            height: 500px;
-            background: #FFFFFF;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            z-index: 1100;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-            animation: slideUp 0.3s ease;
-        }
-
-        .chat-modal.open {
-            display: flex;
-        }
-
-        .chat-modal-header {
-            background: linear-gradient(135deg, #8B0000, #D4AF37);
-            padding: 0.8rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .chat-modal-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-            font-weight: 600;
-        }
-
-        .chat-modal-title img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .chat-modal-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            background: #F8FAFE;
-        }
-
-        .chat-message-bubble {
-            background: #FFFFFF;
-            padding: 0.5rem 0.8rem;
-            border-radius: 16px;
-            border-top-left-radius: 4px;
-            max-width: 85%;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .chat-message-bubble.outgoing {
-            background: var(--accent-blue);
-            color: white;
-            align-self: flex-end;
-            border-top-right-radius: 4px;
-            border-top-left-radius: 16px;
-        }
-
-        .chat-time-small {
-            font-size: 0.55rem;
-            opacity: 0.7;
-            margin-top: 0.2rem;
-        }
-
-        .chat-modal-input {
-            padding: 0.8rem;
-            background: #FFFFFF;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-modal-input input {
-            flex: 1;
-            background: #F0F2F5;
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-        }
-
-        .chat-modal-input button {
-            background: linear-gradient(135deg, #FF8C00, #D4AF37);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: white;
-        }
-
         @media (max-width: 768px) {
             .navbar { padding: 0.75rem 1rem; }
             .nav-container { justify-content: space-between; }
@@ -824,7 +830,7 @@
             </div>
             <div>
                 <span class="logo-text">Огни 3</span>
-                <span class="victory-badge">1945-2026</span>
+                <span class="victory-badge">1945-2025</span>
             </div>
         </div>
         <div class="nav-search">
@@ -849,36 +855,20 @@
     </div>
     <div class="sidebar-section">
         <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">
-            <span class="sidebar-icon">📁</span>Все документы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">
-            <span class="sidebar-icon">📋</span>Протоколы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">
-            <span class="sidebar-icon">📊</span>Реестры
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">
-            <span class="sidebar-icon">₽</span>Финансы
-        </button>
-        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();">
-            <span class="sidebar-icon">💼</span>Техническая часть
-        </button>
+        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();"><span class="sidebar-icon">📁</span>Все документы</button>
+        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();"><span class="sidebar-icon">📋</span>Протоколы</button>
+        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();"><span class="sidebar-icon">📊</span>Реестры</button>
+        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();"><span class="sidebar-icon">₽</span>Финансы</button>
+        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();"><span class="sidebar-icon">💼</span>Техническая часть</button>
     </div>
     <div class="sidebar-section">
         <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-        <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
-            <span class="sidebar-icon">📝</span>Заполнение реестра
-        </a>
-        <a href="archive.html" class="sidebar-item">
-            <span class="sidebar-icon">📁</span>Архив файлов
-        </a>
+        <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;"><span class="sidebar-icon">📝</span>Заполнение реестра</a>
+        <a href="archive.html" class="sidebar-item"><span class="sidebar-icon">📁</span>Архив файлов</a>
     </div>
     <div class="sidebar-section">
         <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-        <button class="sidebar-item" id="mobileChatBtn">
-            <span class="sidebar-icon">💬</span>Открыть чат
-        </button>
+        <button class="sidebar-item" id="mobileChatBtn"><span class="sidebar-icon">💬</span>Открыть чат</button>
         <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
             <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ С Днём Победы!</div>
         </div>
@@ -889,30 +879,16 @@
     <aside class="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-            <button class="sidebar-item" onclick="filterDocs('all')">
-                <span class="sidebar-icon">📁</span>Все документы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('protocol')">
-                <span class="sidebar-icon">📋</span>Протоколы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('registry')">
-                <span class="sidebar-icon">📊</span>Реестры
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('finance')">
-                <span class="sidebar-icon">₽</span>Финансы
-            </button>
-            <button class="sidebar-item" onclick="filterDocs('tech')">
-                <span class="sidebar-icon">💼</span>Техническая часть
-            </button>
+            <button class="sidebar-item" onclick="filterDocs('all')"><span class="sidebar-icon">📁</span>Все документы</button>
+            <button class="sidebar-item" onclick="filterDocs('protocol')"><span class="sidebar-icon">📋</span>Протоколы</button>
+            <button class="sidebar-item" onclick="filterDocs('registry')"><span class="sidebar-icon">📊</span>Реестры</button>
+            <button class="sidebar-item" onclick="filterDocs('finance')"><span class="sidebar-icon">₽</span>Финансы</button>
+            <button class="sidebar-item" onclick="filterDocs('tech')"><span class="sidebar-icon">💼</span>Техническая часть</button>
         </div>
         <div class="sidebar-section">
             <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
-                <span class="sidebar-icon">📝</span>Заполнение реестра
-            </a>
-            <a href="archive.html" class="sidebar-item">
-                <span class="sidebar-icon">📁</span>Архив файлов
-            </a>
+            <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;"><span class="sidebar-icon">📝</span>Заполнение реестра</a>
+            <a href="archive.html" class="sidebar-item"><span class="sidebar-icon">📁</span>Архив файлов</a>
             <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid var(--border-light);">
                 <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
                 <div id="exportedFilesList" class="files-list"><div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div></div>
@@ -920,9 +896,7 @@
         </div>
         <div class="sidebar-section">
             <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" id="chatSidebarBtn">
-                <span class="sidebar-icon">💬</span>Открыть чат
-            </button>
+            <button class="sidebar-item" id="chatSidebarBtn"><span class="sidebar-icon">💬</span>Открыть чат</button>
             <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
                 <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ 9 мая — День Победы!</div>
             </div>
@@ -938,16 +912,16 @@
             <div class="google-card"><a href="VIS-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📊</div><div style="flex:1;"><div style="font-weight:700; font-size:1rem;">ВИС Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Google Таблица · Актуальные данные</div></div><div style="font-size:0.8rem; color:var(--text-secondary);">Открыть →</div></a></div>
             <div class="google-card"><a href="Zadachi-Ogni-3.html" class="google-link"><div style="font-size:2rem;">📋</div><div style="flex:1;"><div style="font-weight:700; font-size:1rem;">Задачи Огни 3</div><div style="font-size:0.7rem; color:var(--accent-green);">Рабочий лист · Контроль поручений</div></div><div style="font-size:0.8rem; color:var(--text-secondary);">Открыть →</div></a></div>
         </div>
-        <div class="section-header"><div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">10</span></div></div>
+        <div class="section-header"><div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">0</span></div></div>
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<!-- ФИКСИРОВАННОЕ ВИДЕО (всегда на месте) -->
+<!-- ФИКСИРОВАННОЕ ВИДЕО (всегда на месте, со звуком по клику) -->
 <div class="video-fixed" id="videoFixed">
     <button class="close-video-btn" id="closeVideoFixedBtn">✕</button>
     <button class="fullscreen-toggle" id="fullscreenVideoFixedBtn">⛶</button>
-    <video id="fixedVideo" autoplay loop muted playsinline>
+    <video id="fixedVideo" loop muted playsinline>
         <source src="vis-presentation.mp4" type="video/mp4">
     </video>
     <div class="video-label-fixed">📄 Предоставление документов на оборудование и материалы по ВИС</div>
@@ -957,7 +931,7 @@
 <div class="chat-modal" id="chatModal">
     <div class="chat-modal-header">
         <div class="chat-modal-title">
-            <img src="https://images.icon-icons.com/1725/PNG/96/4014697-message-messaging-send-text-texting_112877.png" alt="chat icon" style="background:white; border-radius:50%; padding:4px;">
+            <img src="https://images.icon-icons.com/1725/PNG/96/4014697-message-messaging-send-text-texting_112877.png" alt="chat">
             <span>Чат · Огни 3</span>
             <span style="font-size:0.65rem; background:rgba(255,255,255,0.2); padding:0.2rem 0.5rem; border-radius:40px;">Demo</span>
         </div>
@@ -980,35 +954,64 @@
     // Мобильное меню
     const burger = document.getElementById('burgerMenu');
     const mobMenu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('menuOverlay');
+    const overlayMenu = document.getElementById('menuOverlay');
     const closeMob = document.getElementById('closeMenuBtn');
-    function openMob() { mobMenu.classList.add('open'); overlay.classList.add('active'); burger.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeMob() { mobMenu.classList.remove('open'); overlay.classList.remove('active'); burger.classList.remove('active'); document.body.style.overflow = ''; }
+    function openMob() { mobMenu.classList.add('open'); overlayMenu.classList.add('active'); burger.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeMob() { mobMenu.classList.remove('open'); overlayMenu.classList.remove('active'); burger.classList.remove('active'); document.body.style.overflow = ''; }
     burger?.addEventListener('click', openMob);
     closeMob?.addEventListener('click', closeMob);
-    overlay?.addEventListener('click', closeMob);
+    overlayMenu?.addEventListener('click', closeMob);
 
-    // Фиксированное видео
+    // ФИКСИРОВАННОЕ ВИДЕО (звук включается/выключается по клику на иконку звука)
     const videoFixed = document.getElementById('videoFixed');
     const fixedVideo = document.getElementById('fixedVideo');
-    const closeVideo = document.getElementById('closeVideoFixedBtn');
-    const fullscreenBtn = document.getElementById('fullscreenVideoFixedBtn');
+    const closeVideoBtn = document.getElementById('closeVideoFixedBtn');
+    const fullscreenVideoBtn = document.getElementById('fullscreenVideoFixedBtn');
+    
+    // Функция для переключения звука (видео изначально без звука, по клику на само видео включаем)
+    let videoSoundEnabled = false;
+    function toggleVideoSound() {
+        if (fixedVideo.muted) {
+            fixedVideo.muted = false;
+            videoSoundEnabled = true;
+            showToastMessage('🔊 Звук включён');
+        } else {
+            fixedVideo.muted = true;
+            videoSoundEnabled = false;
+            showToastMessage('🔇 Звук выключен');
+        }
+    }
+    // По клику на само видео включаем звук и снимаем mute
+    fixedVideo.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (fixedVideo.muted) {
+            fixedVideo.muted = false;
+            videoSoundEnabled = true;
+            showToastMessage('🔊 Звук включён');
+        } else {
+            fixedVideo.muted = true;
+            videoSoundEnabled = false;
+            showToastMessage('🔇 Звук выключен');
+        }
+    });
     
     function toggleFullscreenVideo() {
         if (!videoFixed.classList.contains('fullscreen')) {
             videoFixed.classList.add('fullscreen');
-            fullscreenBtn.textContent = '✕';
+            fullscreenVideoBtn.textContent = '✕';
         } else {
             videoFixed.classList.remove('fullscreen');
-            fullscreenBtn.textContent = '⛶';
+            fullscreenVideoBtn.textContent = '⛶';
         }
     }
-    fullscreenBtn?.addEventListener('click', (e) => { e.stopPropagation(); toggleFullscreenVideo(); });
-    closeVideo?.addEventListener('click', (e) => { e.stopPropagation(); videoFixed.style.display = 'none'; });
+    fullscreenVideoBtn?.addEventListener('click', (e) => { e.stopPropagation(); toggleFullscreenVideo(); });
+    closeVideoBtn?.addEventListener('click', (e) => { e.stopPropagation(); videoFixed.style.display = 'none'; });
     videoFixed?.addEventListener('click', (e) => {
-        if (e.target === closeVideo || e.target === fullscreenBtn) return;
+        if (e.target === closeVideoBtn || e.target === fullscreenVideoBtn) return;
         toggleFullscreenVideo();
     });
+    // Запуск видео
+    fixedVideo.play().catch(e => console.log('Автовоспроизведение заблокировано:', e));
 
     // Демо-чат (открытие по кнопке)
     const chatModal = document.getElementById('chatModal');
@@ -1017,12 +1020,8 @@
     const sendChatBtn = document.getElementById('sendChatModalBtn');
     const chatMessagesContainer = document.getElementById('chatModalMessages');
 
-    function openChatModal() {
-        chatModal.classList.add('open');
-    }
-    function closeChatModalFunc() {
-        chatModal.classList.remove('open');
-    }
+    function openChatModal() { chatModal.classList.add('open'); }
+    function closeChatModalFunc() { chatModal.classList.remove('open'); }
     function addDemoMessage(text, isOutgoing = true) {
         const msgDiv = document.createElement('div');
         msgDiv.className = 'chat-message-bubble' + (isOutgoing ? ' outgoing' : '');
@@ -1048,7 +1047,7 @@
     sendChatBtn?.addEventListener('click', sendDemoMessage);
     chatModalInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendDemoMessage(); });
 
-    // Документы и поиск (как в исходном коде)
+    // Документы (исправлено — данные полностью восстановлены)
     const pages = [
         { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
@@ -1061,16 +1060,19 @@
         { name: "Реестр для чек-листа СС8 ИНЭКО", file: "Reesrt_cheklist_CC8.html", icon: "📎", date: "06.05.2026", category: "registry" },
         { name: "Реестр для чек-листа СС5 ИНЭКО", file: "реестр для ЧЛ.html", icon: "📎", date: "01.05.2026", category: "registry" }
     ];
+
     let currentFilter = 'all', currentSearch = '';
     function renderDocs() {
         const container = document.getElementById('docsContainer');
+        if (!container) return;
         let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
         if (currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
-        document.getElementById('docsCount').textContent = filtered.length;
+        const countSpan = document.getElementById('docsCount');
+        if (countSpan) countSpan.textContent = filtered.length;
         if (!filtered.length) { container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`; return; }
         container.innerHTML = filtered.map((p, i) => `<div class="doc-card" style="animation-delay:${i*0.05}s"><a href="${p.file}" class="card-link"><div class="doc-icon">${p.icon}</div><div class="doc-name">${escapeHtml(p.name)}</div><div class="doc-meta"><span>📅 ${p.date}</span><span>📂 ${escapeHtml(p.file.replace(/\.html$/i,''))}</span></div></a></div>`).join('');
     }
-    function filterDocs(cat) { currentFilter = cat; renderDocs(); let names = { all:'все документы', protocol:'протоколы', registry:'реестры', finance:'финансы', tech:'техническую часть' }; showToastMessage(`📁 Показаны: ${names[cat]||'документы'}`); }
+    function filterDocs(cat) { currentFilter = cat; renderDocs(); const names = { all:'все документы', protocol:'протоколы', registry:'реестры', finance:'финансы', tech:'техническую часть' }; showToastMessage(`📁 Показаны: ${names[cat]||'документы'}`); }
     function escapeHtml(s) { return s.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
     function showToastMessage(msg) {
         let t = document.getElementById('tempToast');
@@ -1081,6 +1083,7 @@
     }
     async function loadExportedFiles() {
         const container = document.getElementById('exportedFilesList');
+        if (!container) return;
         try {
             const res = await fetch('https://buildingmove-source.github.io/BuildPhysics/files-index.json');
             if (!res.ok) throw new Error();

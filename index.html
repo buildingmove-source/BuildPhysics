@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <meta name="theme-color" content="#FFFFFF">
-    <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры, видео предоставления документов">
-    <title>Огни 3 | Штаб строительства</title>
+    <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
+    <title>Огни 3 | 9 мая — День Победы!</title>
+    <!-- Праздничный favicon (Георгиевская лента + Кремль) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%238B0000' rx='20'/%3E%3Cpath d='M20,50 L30,45 L35,52 L30,58 Z' fill='%23D4AF37'/%3E%3Cpath d='M80,50 L70,45 L65,52 L70,58 Z' fill='%23D4AF37'/%3E%3Crect x='35' y='38' width='30' height='24' rx='3' fill='%23D4AF37'/%3E%3Crect x='40' y='30' width='20' height='15' rx='2' fill='%23FF8C00'/%3E%3Cpath d='M25,62 L40,58 L45,70 L30,72 Z' fill='%23FF8C00'/%3E%3Cpath d='M75,62 L60,58 L55,70 L70,72 Z' fill='%23FF8C00'/%3E%3Cpath d='M20,75 L80,75 L75,85 L25,85 Z' fill='%23D4AF37'/%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    
-    <!-- Исправленная иконка (favicon) -->
-    <link rel="icon" type="image/png" href="https://free-png.ru/wp-content/uploads/2021/05/free-png.ru-2-250x113.png">
-    <link rel="apple-touch-icon" href="https://free-png.ru/wp-content/uploads/2021/05/free-png.ru-2-250x113.png">
-
     <style>
-        /* ===== СВЕТЛАЯ ТЕМА ===== */
+        /* ===== СВЕТЛАЯ ТЕМА С ПРАЗДНИЧНЫМИ АКЦЕНТАМИ ===== */
         :root {
             --bg-body: #F5F7FA;
             --bg-card: #FFFFFF;
@@ -22,6 +19,8 @@
             --accent-blue: #2D6AFF;
             --accent-cyan: #00B4D8;
             --accent-green: #34a853;
+            --accent-victory: #D4AF37;
+            --accent-ribbon: #FF8C00;
             --text-primary: #1A1A2E;
             --text-secondary: #5A6BA0;
             --text-muted: #8A9BDF;
@@ -60,7 +59,7 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
+            background: var(--accent-ribbon);
             border-radius: 10px;
         }
 
@@ -74,11 +73,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes firework {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
         /* ===== НАВИГАЦИЯ ===== */
         .navbar {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 2px solid var(--accent-ribbon);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -94,6 +98,7 @@
             gap: 1rem;
         }
 
+        /* ===== ПРАЗДНИЧНЫЙ ЛОГОТИП ===== */
         .logo {
             display: flex;
             align-items: center;
@@ -101,25 +106,60 @@
             cursor: pointer;
         }
 
-        .logo-icon {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
+        .victory-icon {
+            position: relative;
+            width: 48px;
+            height: 48px;
+        }
+
+        .kremlin-silhouette {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000, #D4AF37);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.8rem;
+        }
+
+        .ribbon {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            top: -5%;
+            left: -5%;
+            background: linear-gradient(135deg, #FF8C00 0%, #FF8C00 25%, #000000 25%, #000000 50%, #FF8C00 50%, #FF8C00 75%, #000000 75%, #000000 100%);
+            background-size: 12px 12px;
+            border-radius: 50%;
+            opacity: 0;
             transition: var(--transition);
+            z-index: -1;
+        }
+
+        .logo:hover .ribbon {
+            opacity: 1;
+            transform: scale(1.05);
         }
 
         .logo-text {
             font-size: 1.3rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(135deg, #1A1A2E, #D4AF37);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+
+        .victory-badge {
+            font-size: 0.7rem;
+            background: linear-gradient(135deg, #FF8C00, #D4AF37);
+            padding: 0.2rem 0.5rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            margin-left: 0.3rem;
         }
 
         .nav-search {
@@ -141,15 +181,15 @@
         .nav-search input:focus {
             outline: none;
             background: #FFFFFF;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(45, 106, 255, 0.1);
+            border-color: var(--accent-ribbon);
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
         }
 
         .nav-search input::placeholder {
             color: var(--text-muted);
         }
 
-        /* ===== БУРГЕР-МЕНЮ (только на мобильных) ===== */
+        /* БУРГЕР-МЕНЮ */
         .burger-menu {
             display: none;
             flex-direction: column;
@@ -169,10 +209,19 @@
             transition: var(--transition);
         }
 
-        .burger-menu.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        .burger-menu.active span:nth-child(2) { opacity: 0; }
-        .burger-menu.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        .burger-menu.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
 
+        .burger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* МОБИЛЬНОЕ МЕНЮ */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -187,103 +236,183 @@
             overflow-y: auto;
             padding: 1.5rem;
         }
-        .mobile-menu.open { right: 0; }
-        .mobile-menu-header { display: flex; justify-content: flex-end; margin-bottom: 1.5rem; }
-        .close-menu { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-primary); }
-        .mobile-menu .sidebar-section { margin-bottom: 1rem; padding: 0.8rem; background: #F8FAFE; border-radius: var(--radius-md); }
-        .mobile-menu .sidebar-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 0.8rem; }
-        .mobile-menu .sidebar-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem; border-radius: var(--radius-sm); color: var(--text-primary); text-decoration: none; cursor: pointer; width: 100%; background: none; border: none; font-size: 0.9rem; }
-        .mobile-menu .sidebar-item:hover { background: rgba(45, 106, 255, 0.1); }
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1001; opacity: 0; visibility: hidden; transition: var(--transition); }
-        .menu-overlay.active { opacity: 1; visibility: visible; }
 
-        /* ===== ВИДЕО-БЛОК (iOS СТИЛЬ) ===== */
-        .video-container {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            width: 280px;
-            background: #FFFFFF;
-            border-radius: 28px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(20px);
-            z-index: 900;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .mobile-menu.open {
+            right: 0;
         }
 
-        .video-container:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2);
+        .mobile-menu-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
         }
 
-        .video-header {
-            padding: 12px 16px;
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .video-title {
-            font-size: 0.85rem;
-            font-weight: 600;
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
             color: var(--text-primary);
+        }
+
+        .mobile-menu .sidebar-section {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #F8FAFE;
+            border-radius: var(--radius-md);
+        }
+
+        .mobile-menu .sidebar-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .mobile-menu .sidebar-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .video-title span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #34a853;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.5; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            background: #000;
+            gap: 0.75rem;
+            padding: 0.7rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            text-decoration: none;
             cursor: pointer;
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
         }
 
-        .video-wrapper video {
+        .mobile-menu .sidebar-item:hover {
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            display: block;
-            aspect-ratio: 16 / 9;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== ПЛАВАЮЩЕЕ ВИДЕО-ОКНО (iOS/TikTok стиль) ===== */
+        .video-float {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            width: 180px;
+            height: 320px;
+            background: #000;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .video-float.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            z-index: 10000;
+            cursor: default;
+        }
+
+        .video-float:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+        }
+
+        .video-float.fullscreen:hover {
+            transform: none;
+        }
+
+        .video-float video {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        .video-caption {
-            padding: 10px 16px;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(0,0,0,0.05);
+        .video-float .close-video {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            opacity: 0;
+            z-index: 10;
         }
 
-        @media (max-width: 768px) {
-            .video-container {
-                position: relative;
-                top: 0;
-                right: 0;
-                width: 100%;
-                margin-bottom: 1rem;
-                border-radius: 20px;
-            }
-            .main-container {
-                flex-direction: column;
-            }
+        .video-float:hover .close-video,
+        .video-float.fullscreen .close-video {
+            opacity: 1;
+        }
+
+        .video-float .fullscreen-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .video-float:hover .fullscreen-btn {
+            opacity: 1;
+        }
+
+        .video-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px 8px 8px;
+            font-size: 9px;
+            color: white;
+            text-align: center;
+            pointer-events: none;
         }
 
         /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
@@ -312,7 +441,10 @@
             transition: var(--transition);
             box-shadow: var(--shadow-sm);
         }
-        .sidebar-section:hover { box-shadow: var(--shadow-md); }
+
+        .sidebar-section:hover {
+            box-shadow: var(--shadow-md);
+        }
 
         .sidebar-title {
             font-size: 0.7rem;
@@ -338,26 +470,57 @@
             border: none;
             font-size: 0.9rem;
         }
-        .sidebar-item:hover { background: rgba(45, 106, 255, 0.08); transform: translateX(4px); color: var(--accent-blue); }
 
-        .sidebar-icon { font-size: 1.2rem; width: 28px; }
-        .files-list { margin-top: 0.5rem; max-height: 200px; overflow-y: auto; }
-        .file-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.5rem; border-radius: 6px; font-size: 0.7rem; color: var(--text-secondary); text-decoration: none; transition: var(--transition); }
-        .file-item:hover { background: rgba(45, 106, 255, 0.08); color: var(--accent-blue); }
+        .sidebar-item:hover {
+            background: rgba(255, 140, 0, 0.08);
+            transform: translateX(4px);
+            color: #8B0000;
+        }
 
-        .content { flex: 1; min-width: 0; }
+        .sidebar-icon {
+            font-size: 1.2rem;
+            width: 28px;
+        }
 
-        /* Hero Card */
+        .files-list {
+            margin-top: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .file-item:hover {
+            background: rgba(255, 140, 0, 0.08);
+            color: #8B0000;
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
         .hero-card {
-            background: linear-gradient(135deg, #FFFFFF, #F0F4F8);
+            background: linear-gradient(135deg, #FFFFFF, #FFF5F0);
             border-radius: var(--radius-lg);
             padding: 1.8rem;
             margin-bottom: 1.5rem;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(255, 140, 0, 0.2);
             position: relative;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
+
         .hero-card::before {
             content: '';
             position: absolute;
@@ -365,22 +528,33 @@
             right: -10%;
             width: 280px;
             height: 280px;
-            background: radial-gradient(circle, rgba(45, 106, 255, 0.08), transparent);
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.08), transparent);
             border-radius: 50%;
         }
+
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(135deg, #8B0000, #D4AF37);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
+            position: relative;
         }
-        .hero-subtitle { color: var(--text-secondary); font-size: 0.9rem; }
 
-        /* Google Cards */
-        .google-cards-container { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .google-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
         .google-card {
             background: #FFFFFF;
             border: 1px solid var(--border-light);
@@ -388,14 +562,55 @@
             transition: var(--transition);
             box-shadow: var(--shadow-sm);
         }
-        .google-card:hover { transform: translateX(4px); border-color: var(--accent-blue); box-shadow: var(--shadow-md); }
-        .google-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; text-decoration: none; color: inherit; }
+        
+        .google-card:hover {
+            transform: translateX(4px);
+            border-color: var(--accent-ribbon);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .google-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
 
-        /* Документы */
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
-        .section-title { font-size: 1.2rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary); }
-        .docs-count { background: var(--accent-blue); color: white; padding: 0.2rem 0.6rem; border-radius: 40px; font-size: 0.7rem; font-weight: 600; }
-        .docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .docs-count {
+            background: #D4AF37;
+            color: #8B0000;
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
         .doc-card {
             background: #FFFFFF;
             border-radius: var(--radius-md);
@@ -407,7 +622,13 @@
             animation: fadeInUp 0.3s ease forwards;
             box-shadow: var(--shadow-sm);
         }
-        .doc-card:hover { transform: translateY(-4px); border-color: var(--accent-blue); box-shadow: var(--shadow-lg); }
+
+        .doc-card:hover {
+            transform: translateY(-4px);
+            border-color: #D4AF37;
+            box-shadow: var(--shadow-lg);
+        }
+
         .doc-card::after {
             content: '';
             position: absolute;
@@ -415,120 +636,203 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(90deg, #FF8C00, #D4AF37);
             transform: scaleX(0);
             transition: transform 0.3s;
         }
-        .doc-card:hover::after { transform: scaleX(1); }
-        .card-link { display: block; padding: 1.2rem; text-decoration: none; color: inherit; }
-        .doc-icon { font-size: 2rem; margin-bottom: 0.75rem; display: inline-block; }
-        .doc-name { font-weight: 700; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.5rem; line-height: 1.4; }
-        .doc-meta { display: flex; gap: 1rem; font-size: 0.65rem; color: var(--text-secondary); margin-top: 0.5rem; flex-wrap: wrap; }
-        .empty-state { text-align: center; padding: 3rem; background: #FFFFFF; border-radius: var(--radius-md); color: var(--text-secondary); border: 1px solid var(--border-light); }
-        .footer { max-width: 1440px; margin: 0 auto; padding: 1.5rem; text-align: center; border-top: 1px solid var(--border-light); font-size: 0.7rem; color: var(--text-muted); }
 
-        /* Модальное окно чата */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+        .doc-card:hover::after {
+            transform: scaleX(1);
         }
-        .modal-overlay.show { opacity: 1; visibility: visible; }
-        .modal-toast {
-            background: #FFFFFF;
-            border: 1px solid var(--accent-cyan);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem 2rem;
+
+        .card-link {
+            display: block;
+            padding: 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .doc-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .doc-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .empty-state {
             text-align: center;
-            max-width: 90vw;
-            width: 320px;
-            box-shadow: var(--shadow-lg);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
+            padding: 3rem;
+            background: #FFFFFF;
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
         }
-        .modal-overlay.show .modal-toast { transform: scale(1); }
-        .modal-toast h3 { color: var(--accent-blue); margin-bottom: 0.5rem; }
-        .modal-toast button { margin-top: 1rem; background: var(--accent-blue); border: none; padding: 0.5rem 1.5rem; border-radius: 40px; color: white; font-size: 0.8rem; cursor: pointer; }
 
-        /* Чат попап (исправлен) */
-        .chat-popup {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 380px;
-            height: 500px;
+        .footer {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== ВОССТАНОВЛЕННЫЙ ЧАТ ===== */
+        .chat-section {
+            max-width: 1440px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .chat-container {
             background: #FFFFFF;
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            z-index: 2000;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
             border: 1px solid var(--border-light);
-            animation: slideUp 0.3s ease;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
-        .chat-popup.show { display: flex; }
-        .popup-header {
+
+        .chat-header {
+            background: linear-gradient(135deg, #8B0000, #D4AF37);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-header-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        .chat-header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .chat-header-title {
+            flex: 1;
+        }
+
+        .chat-header-title h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .chat-header-title p {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .chat-development {
+            background: rgba(0,0,0,0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            color: #FFD700;
+        }
+
+        .chat-messages {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            max-height: 300px;
+            overflow-y: auto;
             background: #F8FAFE;
-            padding: 0.8rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-light);
         }
-        .popup-header-left {
+
+        .chat-message {
             display: flex;
-            align-items: center;
+            gap: 0.5rem;
+            max-width: 85%;
+        }
+
+        .chat-message.outgoing {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .chat-bubble {
+            background: #FFFFFF;
+            padding: 0.5rem 0.8rem;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chat-message.outgoing .chat-bubble {
+            background: var(--accent-blue);
+            color: white;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+
+        .chat-time {
+            font-size: 0.6rem;
+            opacity: 0.7;
+            margin-top: 0.2rem;
+        }
+
+        .chat-input-area {
+            padding: 0.8rem;
+            background: #FFFFFF;
+            border-top: 1px solid var(--border-light);
+            display: flex;
             gap: 0.5rem;
         }
-        .chat-icon-header {
-            width: 28px;
-            height: 28px;
-            background-image: url('https://images.icon-icons.com/3870/PNG/96/message_text_icon_243954.png');
-            background-size: contain;
-            background-repeat: no-repeat;
+
+        .chat-input {
+            flex: 1;
+            background: #F0F2F5;
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.8rem;
         }
-        .popup-title { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); }
-        .development-badge { background: rgba(45, 106, 255, 0.1); color: var(--accent-blue); font-size: 0.55rem; padding: 0.2rem 0.5rem; border-radius: 40px; margin-left: 0.5rem; }
-        .close-popup { background: none; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer; width: 30px; height: 30px; border-radius: 50%; }
-        .close-popup:hover { background: rgba(0, 0, 0, 0.05); }
-        .popup-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
-        .popup-message { display: flex; gap: 0.5rem; max-width: 85%; }
-        .popup-message.outgoing { align-self: flex-end; flex-direction: row-reverse; }
-        .popup-bubble { background: #F0F2F5; padding: 0.5rem 0.8rem; border-radius: 16px; border-top-left-radius: 4px; font-size: 0.8rem; color: var(--text-primary); }
-        .popup-message.outgoing .popup-bubble { background: var(--accent-blue); color: white; border-top-right-radius: 4px; border-top-left-radius: 16px; }
-        .popup-input-area { padding: 0.8rem; background: #F8FAFE; display: flex; gap: 0.5rem; border-top: 1px solid var(--border-light); }
-        .popup-input { flex: 1; background: #FFFFFF; border: 1px solid var(--border-light); border-radius: 24px; padding: 0.5rem 0.8rem; color: var(--text-primary); font-size: 0.8rem; }
-        .popup-send { background: var(--accent-blue); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: white; font-size: 1rem; }
-        .chat-float-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
+
+        .chat-send {
+            background: linear-gradient(135deg, #FF8C00, #D4AF37);
+            border: none;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(45,106,255,0.3);
-            z-index: 1500;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            font-size: 1rem;
         }
-        .chat-float-btn:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(45,106,255,0.4); }
+
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 1024px) {
+            .video-float {
+                width: 140px;
+                height: 250px;
+                top: 80px;
+                right: 15px;
+            }
+        }
 
         @media (max-width: 768px) {
             .navbar { padding: 0.75rem 1rem; }
@@ -536,16 +840,24 @@
             .nav-search { max-width: none; order: 2; flex: 1; margin: 0 0.5rem; }
             .logo { order: 1; }
             .burger-menu { display: flex; order: 3; }
-            .nav-links { display: none; }
             .sidebar { display: none; }
-            .main-container { padding: 1rem; flex-direction: column; }
+            .main-container { padding: 1rem; }
             .hero-title { font-size: 1.3rem; }
             .hero-card { padding: 1.2rem; }
             .docs-grid { grid-template-columns: 1fr; }
-            .chat-popup { width: calc(100% - 40px); right: 20px; left: 20px; bottom: 80px; height: 60vh; }
-            .chat-float-btn { width: 48px; height: 48px; font-size: 1.5rem; bottom: 15px; right: 15px; }
+            .video-float {
+                width: 100px;
+                height: 178px;
+                top: 70px;
+                right: 10px;
+            }
+            .chat-section { padding: 0 1rem; }
+            .chat-message { max-width: 95%; }
         }
-        @media (min-width: 769px) { .mobile-menu, .menu-overlay { display: none; } }
+
+        @media (min-width: 769px) {
+            .mobile-menu, .menu-overlay { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -553,14 +865,22 @@
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="window.location.href='index.html'">
-            <div class="logo-icon">🏗️</div>
-            <span class="logo-text">Огни 3</span>
+            <div class="victory-icon">
+                <div class="kremlin-silhouette">🎖️</div>
+                <div class="ribbon"></div>
+            </div>
+            <div>
+                <span class="logo-text">Огни 3</span>
+                <span class="victory-badge">1945-2026</span>
+            </div>
         </div>
         <div class="nav-search">
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
         </div>
         <div class="burger-menu" id="burgerMenu">
-            <span></span><span></span><span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
         <div class="nav-links">
             <div class="nav-link" id="chatNavBtn">Чат</div>
@@ -574,25 +894,43 @@
     <div class="mobile-menu-header">
         <button class="close-menu" id="closeMenuBtn">✕</button>
     </div>
+    
     <div class="sidebar-section">
         <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();"><span class="sidebar-icon">📁</span>Все документы</button>
-        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();"><span class="sidebar-icon">📋</span>Протоколы</button>
-        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();"><span class="sidebar-icon">📊</span>Реестры</button>
-        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();"><span class="sidebar-icon">₽</span>Финансы</button>
-        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();"><span class="sidebar-icon">💼</span>Техническая часть</button>
+        <button class="sidebar-item" onclick="filterDocs('all'); closeMobileMenu();">
+            <span class="sidebar-icon">📁</span>Все документы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileMenu();">
+            <span class="sidebar-icon">📋</span>Протоколы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileMenu();">
+            <span class="sidebar-icon">📊</span>Реестры
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileMenu();">
+            <span class="sidebar-icon">₽</span>Финансы
+        </button>
+        <button class="sidebar-item" onclick="filterDocs('tech'); closeMobileMenu();">
+            <span class="sidebar-icon">💼</span>Техническая часть
+        </button>
     </div>
+
     <div class="sidebar-section">
         <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-        <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;"><span class="sidebar-icon">📝</span>Заполнение реестра</a>
-        <a href="archive.html" class="sidebar-item"><span class="sidebar-icon">📁</span>Архив файлов</a>
+        <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
+            <span class="sidebar-icon">📝</span>Заполнение реестра
+        </a>
+        <a href="archive.html" class="sidebar-item">
+            <span class="sidebar-icon">📁</span>Архив файлов
+        </a>
     </div>
+    
     <div class="sidebar-section">
         <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-        <button class="sidebar-item" id="mobileChatBtn"><span class="sidebar-icon">💬</span>Открыть чат</button>
-        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
-            <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
-            <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
+        <button class="sidebar-item" id="mobileChatBtn">
+            <span class="sidebar-icon">💬</span>Открыть чат
+        </button>
+        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
+            <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ С Днём Победы!</div>
         </div>
     </div>
 </div>
@@ -601,50 +939,52 @@
     <aside class="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-title">БЫСТРЫЙ ДОСТУП</div>
-            <button class="sidebar-item" onclick="filterDocs('all')"><span class="sidebar-icon">📁</span>Все документы</button>
-            <button class="sidebar-item" onclick="filterDocs('protocol')"><span class="sidebar-icon">📋</span>Протоколы</button>
-            <button class="sidebar-item" onclick="filterDocs('registry')"><span class="sidebar-icon">📊</span>Реестры</button>
-            <button class="sidebar-item" onclick="filterDocs('finance')"><span class="sidebar-icon">₽</span>Финансы</button>
-            <button class="sidebar-item" onclick="filterDocs('tech')"><span class="sidebar-icon">💼</span>Техническая часть</button>
+            <button class="sidebar-item" onclick="filterDocs('all')">
+                <span class="sidebar-icon">📁</span>Все документы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('protocol')">
+                <span class="sidebar-icon">📋</span>Протоколы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('registry')">
+                <span class="sidebar-icon">📊</span>Реестры
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('finance')">
+                <span class="sidebar-icon">₽</span>Финансы
+            </button>
+            <button class="sidebar-item" onclick="filterDocs('tech')">
+                <span class="sidebar-icon">💼</span>Техническая часть
+            </button>
         </div>
+
         <div class="sidebar-section">
             <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;"><span class="sidebar-icon">📝</span>Заполнение реестра</a>
-            <a href="archive.html" class="sidebar-item"><span class="sidebar-icon">📁</span>Архив файлов</a>
+            <a href="resources.html" class="sidebar-item" style="background: rgba(255, 140, 0, 0.08); border-left: 3px solid #D4AF37;">
+                <span class="sidebar-icon">📝</span>Заполнение реестра
+            </a>
+            <a href="archive.html" class="sidebar-item">
+                <span class="sidebar-icon">📁</span>Архив файлов
+            </a>
             <div style="margin-top: 0.5rem; padding-top: 0.3rem; border-top: 1px solid var(--border-light);">
                 <div style="font-size: 0.65rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📁 Экспортированные файлы:</div>
-                <div id="exportedFilesList" class="files-list"><div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div></div>
+                <div id="exportedFilesList" class="files-list">
+                    <div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Загрузка...</div>
+                </div>
             </div>
         </div>
+        
         <div class="sidebar-section">
             <div class="sidebar-title">ВЗАИМОДЕЙСТВИЕ</div>
-            <button class="sidebar-item" id="chatSidebarBtn"><span class="sidebar-icon">💬</span>Открыть чат</button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
-                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
+            <button class="sidebar-item" id="chatSidebarBtn">
+                <span class="sidebar-icon">💬</span>Открыть чат
+            </button>
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(255, 140, 0, 0.05); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.65rem; color: #D4AF37;">🎖️ 9 мая — День Победы!</div>
+                <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Слава героям!</div>
             </div>
         </div>
     </aside>
 
     <main class="content">
-        <!-- Видео-блок (iOS стиль) -->
-        <div class="video-container">
-            <div class="video-header">
-                <div class="video-title">
-                    <span></span> Видео предоставления документов на оборудование и материалы по ВИС
-                </div>
-            </div>
-            <div class="video-wrapper" id="videoWrapper">
-                <video id="visVideo" controls preload="metadata">
-                    <source src="https://vk.com/clip50394692_456240812" type="video/mp4">
-                    Ваш браузер не поддерживает видео.
-                </video>
-            </div>
-            <div class="video-caption">
-                📄 Документы и материалы по ВИС | Актуальная информация
-            </div>
-        </div>
-
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
             <div class="hero-subtitle">Актуальная документация и ход работ</div>
@@ -654,80 +994,160 @@
             <div class="google-card">
                 <a href="VIS-Ogni-3.html" class="google-link">
                     <div style="font-size: 2rem;">📊</div>
-                    <div style="flex: 1;"><div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div><div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div></div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">ВИС Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Google Таблица · Актуальные данные</div>
+                    </div>
                     <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
                 </a>
             </div>
+
             <div class="google-card">
                 <a href="Zadachi-Ogni-3.html" class="google-link">
                     <div style="font-size: 2rem;">📋</div>
-                    <div style="flex: 1;"><div style="font-weight: 700; font-size: 1rem;">Задачи Огни 3</div><div style="font-size: 0.7rem; color: var(--accent-green);">Рабочий лист · Контроль поручений</div></div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700; font-size: 1rem;">Задачи Огни 3</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-green);">Рабочий лист · Контроль поручений</div>
+                    </div>
                     <div style="font-size: 0.8rem; color: var(--text-secondary);">Открыть →</div>
                 </a>
             </div>
         </div>
 
         <div class="section-header">
-            <div class="section-title"><span>📄 Документы</span><span class="docs-count" id="docsCount">10</span></div>
+            <div class="section-title">
+                <span>📄 Документы</span>
+                <span class="docs-count" id="docsCount">10</span>
+            </div>
         </div>
+
         <div id="docsContainer" class="docs-grid"></div>
     </main>
 </div>
 
-<footer class="footer">Огни 3 · Строительный портал · © 2026</footer>
-
-<div id="modalOverlay" class="modal-overlay">
-    <div class="modal-toast"><h3>💬 Чат в разработке</h3><p>Функция полноценного чата появится в ближайшее время</p><button onclick="closeModalToast()">Понятно</button></div>
-</div>
-
-<div id="chatPopup" class="chat-popup">
-    <div class="popup-header">
-        <div class="popup-header-left">
-            <div class="chat-icon-header"></div>
-            <div class="popup-title">Чат · Огни 3</div>
-            <span class="development-badge">Demo</span>
+<!-- ВОССТАНОВЛЕННЫЙ ЧАТ -->
+<div class="chat-section" id="chatSection">
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-header-icon">
+                <img src="https://images.icon-icons.com/3870/PNG/96/message_text_icon_243954.png" alt="chat icon">
+            </div>
+            <div class="chat-header-title">
+                <h3>Чат · Огни 3</h3>
+                <p>Командное общение</p>
+            </div>
+            <div class="chat-development">Demo</div>
         </div>
-        <button class="close-popup" onclick="closeChatPopup()">✕</button>
-    </div>
-    <div class="popup-messages" id="popupMessages">
-        <div class="popup-message"><div class="popup-bubble">Доброе утро, коллеги!</div></div>
-        <div class="popup-message outgoing"><div class="popup-bubble">Здравствуйте! Готовим АОН</div></div>
-        <div class="popup-message"><div class="popup-bubble">Хорошо. Ждём данные по ВИС</div></div>
-    </div>
-    <div class="popup-input-area">
-        <input type="text" class="popup-input" id="popupMessageInput" placeholder="Напишите сообщение...">
-        <button class="popup-send" onclick="sendPopupMessage()">📤</button>
+        <div class="chat-messages" id="chatMessagesList">
+            <div class="chat-message">
+                <div class="chat-bubble">
+                    Доброе утро, коллеги!
+                    <div class="chat-time">09:30 · Гончаров А.С.</div>
+                </div>
+            </div>
+            <div class="chat-message outgoing">
+                <div class="chat-bubble">
+                    Здравствуйте! Готовим АОН.
+                    <div class="chat-time">09:32 · Вы</div>
+                </div>
+            </div>
+            <div class="chat-message">
+                <div class="chat-bubble">
+                    Хорошо. Ждём данные по ВИС.
+                    <div class="chat-time">09:35 · Кривоносов В.В.</div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatMessageInput" placeholder="💬 Чат в разработке. Функция полноценного чата появится в ближайшее время">
+            <button class="chat-send" id="chatSendBtn" disabled>📤</button>
+        </div>
     </div>
 </div>
 
-<div class="chat-float-btn" id="chatFloatBtn">🗨️</div>
+<!-- ПЛАВАЮЩЕЕ ВИДЕО-ОКНО (iOS/TikTok стиль) -->
+<div class="video-float" id="videoFloat">
+    <button class="close-video" id="closeVideoBtn">✕</button>
+    <button class="fullscreen-btn" id="fullscreenVideoBtn">⛶</button>
+    <video id="floatingVideo" preload="auto" controls>
+        <source src="https://vk.com/clip50394692_456240812" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+    <div class="video-label">📄 Предоставление документов на оборудование и материалы по ВИС</div>
+</div>
+
+<footer class="footer">
+    Огни 3 · Строительный портал · © 2026 · 🎖️ С Днём Победы!
+</footer>
 
 <script>
-    // Мобильное меню
+    // ===== МОБИЛЬНОЕ МЕНЮ =====
     const burgerMenu = document.getElementById('burgerMenu');
     const mobileMenu = document.getElementById('mobileMenu');
     const menuOverlay = document.getElementById('menuOverlay');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
 
-    function openMobileMenu() { mobileMenu.classList.add('open'); menuOverlay.classList.add('active'); burgerMenu.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeMobileMenu() { mobileMenu.classList.remove('open'); menuOverlay.classList.remove('active'); burgerMenu.classList.remove('active'); document.body.style.overflow = ''; }
+    function openMobileMenu() {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+        burgerMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.remove('active');
+        burgerMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
     burgerMenu?.addEventListener('click', openMobileMenu);
     closeMenuBtn?.addEventListener('click', closeMobileMenu);
     menuOverlay?.addEventListener('click', closeMobileMenu);
 
-    // Функции чата
-    function linkifyAdvanced(text) {
-        if (!text) return text;
-        let result = text.replace(/(https?:\/\/[^\s]+)/g, function(url) {
-            let displayUrl = url.length > 50 ? url.substring(0, 47) + '...' : url;
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #00B4D8; text-decoration: underline;">${displayUrl}</a>`;
-        });
-        result = result.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, function(email) {
-            return `<a href="mailto:${email}" style="color: #00B4D8; text-decoration: underline;">${email}</a>`;
-        });
-        return result;
+    // ===== ВИДЕО-ОКНО =====
+    const videoFloat = document.getElementById('videoFloat');
+    const floatingVideo = document.getElementById('floatingVideo');
+    const closeVideoBtn = document.getElementById('closeVideoBtn');
+    const fullscreenVideoBtn = document.getElementById('fullscreenVideoBtn');
+    
+    // Загрузка видео и попытка автовоспроизведения
+    // Важно: браузеры блокируют автовоспроизведение с звуком, но мы делаем попытку
+    floatingVideo.volume = 0.5;
+    floatingVideo.muted = false;
+    floatingVideo.play().catch(e => console.log('Автовоспроизведение заблокировано:', e));
+    
+    // Полноэкранный режим
+    function toggleFullscreen() {
+        if (!videoFloat.classList.contains('fullscreen')) {
+            videoFloat.classList.add('fullscreen');
+            fullscreenVideoBtn.textContent = '✕';
+            fullscreenVideoBtn.style.opacity = '1';
+            closeVideoBtn.style.opacity = '1';
+        } else {
+            videoFloat.classList.remove('fullscreen');
+            fullscreenVideoBtn.textContent = '⛶';
+        }
     }
-
+    
+    fullscreenVideoBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFullscreen();
+    });
+    
+    closeVideoBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        floatingVideo.pause();
+        videoFloat.style.display = 'none';
+    });
+    
+    // Клик по окну — переход в полноэкранный режим
+    videoFloat?.addEventListener('click', (e) => {
+        if (e.target === closeVideoBtn || e.target === fullscreenVideoBtn) return;
+        toggleFullscreen();
+    });
+    
+    // ===== ДАННЫЕ ДОКУМЕНТОВ =====
     const pages = [
         { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
@@ -747,20 +1167,64 @@
     function renderDocs() {
         const container = document.getElementById('docsContainer');
         let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
-        if (currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
+        if (currentFilter !== 'all') {
+            filtered = filtered.filter(p => p.category === currentFilter);
+        }
         document.getElementById('docsCount').textContent = filtered.length;
-        if (filtered.length === 0) { container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`; return; }
-        container.innerHTML = filtered.map((page, index) => `<div class="doc-card" style="animation-delay: ${index * 0.05}s"><a href="${page.file}" class="card-link" rel="noopener noreferrer"><div class="doc-icon">${page.icon}</div><div class="doc-name">${escapeHtml(page.name)}</div><div class="doc-meta"><span>📅 ${page.date}</span><span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span></div></a></div>`).join('');
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="empty-state">📭 Ничего не найдено</div>`;
+            return;
+        }
+        container.innerHTML = filtered.map((page, index) => `
+            <div class="doc-card" style="animation-delay: ${index * 0.05}s">
+                <a href="${page.file}" class="card-link" rel="noopener noreferrer">
+                    <div class="doc-icon">${page.icon}</div>
+                    <div class="doc-name">${escapeHtml(page.name)}</div>
+                    <div class="doc-meta">
+                        <span>📅 ${page.date}</span>
+                        <span>📂 ${escapeHtml(page.file.replace(/\.html$/i, ''))}</span>
+                    </div>
+                </a>
+            </div>
+        `).join('');
     }
-    function filterDocs(category) { currentFilter = category; renderDocs(); let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы'; showToastMessage(`📁 Показаны: ${categoryName}`); }
-    function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+    
+    function filterDocs(category) {
+        currentFilter = category;
+        renderDocs();
+        let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы';
+        showToastMessage(`📁 Показаны: ${categoryName}`);
+    }
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+    }
+
     function showToastMessage(message) {
         let toast = document.getElementById('tempToast');
-        if (!toast) { toast = document.createElement('div'); toast.id = 'tempToast'; toast.style.cssText = `position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px); background: #FFFFFF; border-left: 4px solid #2D6AFF; padding: 0.6rem 1.2rem; border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500; transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.1);`; document.body.appendChild(toast); }
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'tempToast';
+            toast.style.cssText = `
+                position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
+                background: #FFFFFF; border-left: 4px solid #D4AF37; padding: 0.6rem 1.2rem;
+                border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500;
+                transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            `;
+            document.body.appendChild(toast);
+        }
         if (toast._timeout) clearTimeout(toast._timeout);
-        toast.textContent = message; toast.style.transform = 'translateX(-50%) translateY(0)'; toast.style.opacity = '1';
-        toast._timeout = setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(100px)'; }, 300); }, 3000);
+        toast.textContent = message;
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        toast.style.opacity = '1';
+        toast._timeout = setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(20px)';
+            setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(100px)'; }, 300);
+        }, 3000);
     }
+
     async function loadExportedFiles() {
         const container = document.getElementById('exportedFilesList');
         try {
@@ -769,57 +1233,39 @@
             if (!response.ok) throw new Error('Индекс не найден');
             const index = await response.json();
             const files = index.files || [];
-            if (files.length === 0) { container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>'; return; }
-            container.innerHTML = files.map(file => { const displayDate = file.date; const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`; return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`; }).join('');
-        } catch (error) { console.error('Ошибка загрузки файлов:', error); container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>'; }
-    }
-    function showModalToast() { document.getElementById('modalOverlay').classList.add('show'); }
-    function closeModalToast() { document.getElementById('modalOverlay').classList.remove('show'); }
-    document.getElementById('modalOverlay')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModalToast(); });
-    const searchInput = document.getElementById('globalSearch');
-    let debounceTimer;
-    searchInput?.addEventListener('input', (e) => { clearTimeout(debounceTimer); debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300); });
-    function openChatPopup() { document.getElementById('chatPopup').classList.add('show'); closeMobileMenu(); }
-    function closeChatPopup() { document.getElementById('chatPopup').classList.remove('show'); }
-    function sendPopupMessage() {
-        const input = document.getElementById('popupMessageInput');
-        const text = input.value.trim();
-        if (!text) return;
-        const container = document.getElementById('popupMessages');
-        const now = new Date();
-        const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        const linkedText = linkifyAdvanced(escapeHtml(text));
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'popup-message outgoing';
-        messageDiv.innerHTML = `<div class="popup-bubble">${linkedText}<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Вы</div></div>`;
-        container.appendChild(messageDiv);
-        input.value = '';
-        container.scrollTop = container.scrollHeight;
-        setTimeout(() => { const replyDiv = document.createElement('div'); replyDiv.className = 'popup-message'; replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`; container.appendChild(replyDiv); container.scrollTop = container.scrollHeight; }, 500);
-    }
-    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); showModalToast(); });
-    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('chatFloatBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { openChatPopup(); });
-    document.getElementById('popupMessageInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendPopupMessage(); } });
-    
-    // Видео: открытие на весь экран при клике
-    const video = document.getElementById('visVideo');
-    const videoWrapper = document.getElementById('videoWrapper');
-    if (video) {
-        videoWrapper.addEventListener('click', function() {
-            if (video.requestFullscreen) { video.requestFullscreen(); }
-            else if (video.webkitRequestFullscreen) { video.webkitRequestFullscreen(); }
-            else if (video.msRequestFullscreen) { video.msRequestFullscreen(); }
-            video.play();
-        });
-        video.addEventListener('error', function() {
-            console.log('Ошибка загрузки видео. Проверьте ссылку на VK клип.');
-            const caption = document.querySelector('.video-caption');
-            if (caption) caption.innerHTML = '⚠️ Видео временно недоступно. Проверьте ссылку.';
-        });
+            if (files.length === 0) {
+                container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Нет экспортированных файлов</div>';
+                return;
+            }
+            container.innerHTML = files.map(file => {
+                const displayDate = file.date;
+                const fileUrl = `https://buildingmove-source.github.io/BuildPhysics/${file.name}`;
+                return `<a href="${fileUrl}" class="file-item" target="_self"><span>📄</span><span>Экспорт от ${displayDate}</span></a>`;
+            }).join('');
+        } catch (error) {
+            console.error('Ошибка загрузки файлов:', error);
+            container.innerHTML = '<div style="font-size: 0.6rem; color: var(--text-muted); padding: 0.3rem;">Ошибка загрузки</div>';
+        }
     }
 
+    const searchInput = document.getElementById('globalSearch');
+    let debounceTimer;
+    searchInput?.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => { currentSearch = e.target.value; renderDocs(); }, 300);
+    });
+
+    function scrollToChat() {
+        const chatSection = document.getElementById('chatSection');
+        if (chatSection) {
+            chatSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    document.getElementById('chatNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); scrollToChat(); });
+    document.getElementById('chatSidebarBtn')?.addEventListener('click', () => { scrollToChat(); });
+    document.getElementById('mobileChatBtn')?.addEventListener('click', () => { closeMobileMenu(); scrollToChat(); });
+    
     loadExportedFiles();
     renderDocs();
 </script>

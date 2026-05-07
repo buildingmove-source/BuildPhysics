@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <meta name="theme-color" content="#FFFFFF">
     <meta name="description" content="Штаб строительства ЖК Огни 3 - документация, протоколы, реестры">
-    <title>Огни 3</title>
+    <title>Огни 3 · 9 мая День Победы</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
-        /* ===== СВЕТЛАЯ ТЕМА ===== */
+        /* ===== СВЕТЛАЯ ТЕМА С ПРАЗДНИЧНЫМ АКЦЕНТОМ ===== */
         :root {
             --bg-body: #F5F7FA;
             --bg-card: #FFFFFF;
@@ -17,6 +17,9 @@
             --accent-blue: #2D6AFF;
             --accent-cyan: #00B4D8;
             --accent-green: #34a853;
+            --victory-red: #D32F2F;
+            --victory-gold: #FFC107;
+            --victory-orange: #FF6F00;
             --text-primary: #1A1A2E;
             --text-secondary: #5A6BA0;
             --text-muted: #8A9BDF;
@@ -55,7 +58,7 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
+            background: var(--victory-red);
             border-radius: 10px;
         }
 
@@ -67,6 +70,23 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes victoryGlow {
+            0% { text-shadow: 0 0 0px rgba(211, 47, 47, 0); }
+            50% { text-shadow: 0 0 10px rgba(211, 47, 47, 0.5), 0 0 20px rgba(255, 193, 7, 0.3); }
+            100% { text-shadow: 0 0 0px rgba(211, 47, 47, 0); }
+        }
+
+        @keyframes starPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .victory-star {
+            animation: starPulse 2s ease-in-out infinite;
+            display: inline-block;
         }
 
         /* ===== НАВИГАЦИЯ ===== */
@@ -94,27 +114,65 @@
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
+            background: linear-gradient(135deg, rgba(211, 47, 47, 0.08), rgba(255, 193, 7, 0.05));
+            padding: 0.3rem 0.8rem 0.3rem 0.5rem;
+            border-radius: 60px;
+            transition: var(--transition);
         }
 
+        .logo:hover {
+            background: linear-gradient(135deg, rgba(211, 47, 47, 0.15), rgba(255, 193, 7, 0.1));
+        }
+
+        /* Георгиевская ленточка в логотипе */
         .logo-icon {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(135deg, #D32F2F, #FFC107, #D32F2F, #FFC107);
+            background-size: 200% 100%;
             width: 40px;
             height: 40px;
-            border-radius: var(--radius-sm);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.4rem;
             transition: var(--transition);
+            position: relative;
+            animation: georgieShine 3s ease infinite;
+        }
+
+        @keyframes georgieShine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Звезда на иконке */
+        .logo-icon::before {
+            content: "★";
+            position: absolute;
+            font-size: 0.8rem;
+            color: #FFC107;
+            top: -4px;
+            right: -4px;
+            background: #D32F2F;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: starPulse 1.5s ease-in-out infinite;
         }
 
         .logo-text {
             font-size: 1.3rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(135deg, #D32F2F, #FFC107, #D32F2F);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            animation: georgieShine 3s ease infinite;
         }
 
         .nav-search {
@@ -136,15 +194,15 @@
         .nav-search input:focus {
             outline: none;
             background: #FFFFFF;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(45, 106, 255, 0.1);
+            border-color: var(--victory-red);
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
         }
 
         .nav-search input::placeholder {
             color: var(--text-muted);
         }
 
-        /* ===== БУРГЕР-МЕНЮ (только на мобильных) ===== */
+        /* БУРГЕР-МЕНЮ */
         .burger-menu {
             display: none;
             flex-direction: column;
@@ -159,7 +217,7 @@
             display: block;
             height: 3px;
             width: 100%;
-            background: var(--text-primary);
+            background: #D32F2F;
             border-radius: 3px;
             transition: var(--transition);
         }
@@ -176,7 +234,7 @@
             transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* ===== МОБИЛЬНОЕ МЕНЮ (выдвижная панель) ===== */
+        /* МОБИЛЬНОЕ МЕНЮ */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -207,7 +265,7 @@
             border: none;
             font-size: 1.8rem;
             cursor: pointer;
-            color: var(--text-primary);
+            color: #D32F2F;
         }
 
         .mobile-menu .sidebar-section {
@@ -241,10 +299,10 @@
         }
 
         .mobile-menu .sidebar-item:hover {
-            background: rgba(45, 106, 255, 0.1);
+            background: rgba(211, 47, 47, 0.08);
+            color: #D32F2F;
         }
 
-        /* Оверлей (затемнение фона) */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -263,7 +321,7 @@
             visibility: visible;
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        /* ОСНОВНОЙ КОНТЕНТ */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -272,7 +330,6 @@
             gap: 1.5rem;
         }
 
-        /* Десктопная боковая панель (скрывается на мобильных) */
         .sidebar {
             width: 280px;
             flex-shrink: 0;
@@ -321,9 +378,9 @@
         }
 
         .sidebar-item:hover {
-            background: rgba(45, 106, 255, 0.08);
+            background: rgba(211, 47, 47, 0.08);
             transform: translateX(4px);
-            color: var(--accent-blue);
+            color: #D32F2F;
         }
 
         .sidebar-icon {
@@ -350,8 +407,8 @@
         }
 
         .file-item:hover {
-            background: rgba(45, 106, 255, 0.08);
-            color: var(--accent-blue);
+            background: rgba(211, 47, 47, 0.08);
+            color: #D32F2F;
         }
 
         .content {
@@ -359,43 +416,74 @@
             min-width: 0;
         }
 
-        /* Hero Card */
+        /* Hero Card с праздничным оформлением */
         .hero-card {
-            background: linear-gradient(135deg, #FFFFFF, #F0F4F8);
+            background: linear-gradient(135deg, #FFFFFF, #FFF8F0);
             border-radius: var(--radius-lg);
             padding: 1.8rem;
             margin-bottom: 1.5rem;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(211, 47, 47, 0.2);
             position: relative;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
 
         .hero-card::before {
-            content: '';
+            content: '★';
             position: absolute;
-            top: -30%;
-            right: -10%;
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, rgba(45, 106, 255, 0.08), transparent);
-            border-radius: 50%;
+            top: -20%;
+            right: -5%;
+            width: 150px;
+            height: 150px;
+            font-size: 120px;
+            color: rgba(211, 47, 47, 0.05);
+            font-family: monospace;
+            transform: rotate(15deg);
+        }
+
+        .hero-card::after {
+            content: '1945';
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(211, 47, 47, 0.15);
+            font-family: monospace;
+            font-weight: bold;
         }
 
         .hero-title {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(135deg, #D32F2F, #FFC107, #D32F2F);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
             position: relative;
+            animation: georgieShine 4s ease infinite;
         }
 
         .hero-subtitle {
             color: var(--text-secondary);
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .victory-date {
+            background: #D32F2F;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
         }
 
         /* Google Cards */
@@ -416,7 +504,7 @@
         
         .google-card:hover {
             transform: translateX(4px);
-            border-color: var(--accent-blue);
+            border-color: #FFC107;
             box-shadow: var(--shadow-md);
         }
         
@@ -449,7 +537,7 @@
         }
 
         .docs-count {
-            background: var(--accent-blue);
+            background: #D32F2F;
             color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 40px;
@@ -477,7 +565,7 @@
 
         .doc-card:hover {
             transform: translateY(-4px);
-            border-color: var(--accent-blue);
+            border-color: #D32F2F;
             box-shadow: var(--shadow-lg);
         }
 
@@ -488,7 +576,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(90deg, #D32F2F, #FFC107, #D32F2F);
             transform: scaleX(0);
             transition: transform 0.3s;
         }
@@ -571,7 +659,7 @@
 
         .modal-toast {
             background: #FFFFFF;
-            border: 1px solid var(--accent-cyan);
+            border: 1px solid #D32F2F;
             border-radius: var(--radius-lg);
             padding: 1.5rem 2rem;
             text-align: center;
@@ -587,13 +675,13 @@
         }
 
         .modal-toast h3 {
-            color: var(--accent-blue);
+            color: #D32F2F;
             margin-bottom: 0.5rem;
         }
 
         .modal-toast button {
             margin-top: 1rem;
-            background: var(--accent-blue);
+            background: #D32F2F;
             border: none;
             padding: 0.5rem 1.5rem;
             border-radius: 40px;
@@ -643,8 +731,8 @@
         }
         
         .development-badge {
-            background: rgba(45, 106, 255, 0.1);
-            color: var(--accent-blue);
+            background: rgba(211, 47, 47, 0.1);
+            color: #D32F2F;
             font-size: 0.55rem;
             padding: 0.2rem 0.5rem;
             border-radius: 40px;
@@ -691,7 +779,7 @@
         }
         
         .popup-message.outgoing .popup-bubble {
-            background: var(--accent-blue);
+            background: #D32F2F;
             color: white;
             border-top-right-radius: 4px;
             border-top-left-radius: 16px;
@@ -716,7 +804,7 @@
         }
         
         .popup-send {
-            background: var(--accent-blue);
+            background: #D32F2F;
             border: none;
             width: 36px;
             height: 36px;
@@ -733,14 +821,14 @@
             right: 20px;
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, #2D6AFF, #00B4D8);
+            background: linear-gradient(135deg, #D32F2F, #FFC107);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(45,106,255,0.3);
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
             z-index: 1500;
             transition: all 0.3s ease;
             border: 2px solid rgba(255,255,255,0.3);
@@ -748,10 +836,10 @@
 
         .chat-float-btn:hover {
             transform: scale(1.08);
-            box-shadow: 0 6px 20px rgba(45,106,255,0.4);
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
         }
 
-        /* ===== АДАПТИВНОСТЬ ===== */
+        /* Адаптивность */
         @media (max-width: 1024px) {
             .nav-search { max-width: 280px; }
         }
@@ -762,7 +850,6 @@
             .nav-search { max-width: none; order: 2; flex: 1; margin: 0 0.5rem; }
             .logo { order: 1; }
             .burger-menu { display: flex; order: 3; }
-            .nav-links { display: none; }
             .sidebar { display: none; }
             .main-container { padding: 1rem; }
             .hero-title { font-size: 1.3rem; }
@@ -782,8 +869,8 @@
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="window.location.href='index.html'">
-            <div class="logo-icon">🏗️</div>
-            <span class="logo-text">Огни 3</span>
+            <div class="logo-icon">★</div>
+            <span class="logo-text">Огни 3 · 1945</span>
         </div>
         <div class="nav-search">
             <input type="text" id="globalSearch" placeholder="🔍 Поиск по документам...">
@@ -799,7 +886,7 @@
     </div>
 </nav>
 
-<!-- Мобильное меню (выдвижная панель) -->
+<!-- Мобильное меню -->
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
@@ -827,7 +914,7 @@
 
     <div class="sidebar-section">
         <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-        <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
+        <a href="resources.html" class="sidebar-item" style="background: rgba(211,47,47,0.08); border-left: 3px solid #D32F2F;">
             <span class="sidebar-icon">📝</span>Заполнение реестра
         </a>
         <a href="archive.html" class="sidebar-item">
@@ -840,8 +927,8 @@
         <button class="sidebar-item" id="mobileChatBtn">
             <span class="sidebar-icon">💬</span>Открыть чат
         </button>
-        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
-            <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
+        <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(211,47,47,0.05); border-radius: var(--radius-sm);">
+            <div style="font-size: 0.65rem; color: #D32F2F;">⚙️ В разработке</div>
             <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
         </div>
     </div>
@@ -870,7 +957,7 @@
 
         <div class="sidebar-section">
             <div class="sidebar-title">📊 ЧИСЛЕННОСТЬ РЕСУРСОВ</div>
-            <a href="resources.html" class="sidebar-item" style="background: rgba(45,106,255,0.08); border-left: 3px solid #2D6AFF;">
+            <a href="resources.html" class="sidebar-item" style="background: rgba(211,47,47,0.08); border-left: 3px solid #D32F2F;">
                 <span class="sidebar-icon">📝</span>Заполнение реестра
             </a>
             <a href="archive.html" class="sidebar-item">
@@ -889,8 +976,8 @@
             <button class="sidebar-item" id="chatSidebarBtn">
                 <span class="sidebar-icon">💬</span>Открыть чат
             </button>
-            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(45,106,255,0.05); border-radius: var(--radius-sm);">
-                <div style="font-size: 0.65rem; color: var(--accent-blue);">⚙️ В разработке</div>
+            <div style="margin-top: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(211,47,47,0.05); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.65rem; color: #D32F2F;">⚙️ В разработке</div>
                 <div style="font-size: 0.55rem; color: var(--text-muted); margin-top: 0.2rem;">Демо-режим</div>
             </div>
         </div>
@@ -899,7 +986,10 @@
     <main class="content">
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
-            <div class="hero-subtitle">Актуальная документация и ход работ</div>
+            <div class="hero-subtitle">
+                Актуальная документация и ход работ
+                <span class="victory-date"><span class="victory-star">★</span> 9 мая — День Победы! <span class="victory-star">★</span></span>
+            </div>
         </div>
 
         <div class="google-cards-container">
@@ -938,7 +1028,7 @@
 </div>
 
 <footer class="footer">
-    Огни 3 · Строительный портал · © 2026
+    Огни 3 · Строительный портал · С Днём Победы! © 2026
 </footer>
 
 <div id="modalOverlay" class="modal-overlay">
@@ -960,13 +1050,13 @@
     </div>
     <div class="popup-messages" id="popupMessages">
         <div class="popup-message">
-            <div class="popup-bubble">Доброе утро, коллеги!</div>
+            <div class="popup-bubble">Доброе утро, коллеги! С Днём Победы! 🎖️</div>
         </div>
         <div class="popup-message outgoing">
-            <div class="popup-bubble">Здравствуйте! Готовим АОН</div>
+            <div class="popup-bubble">Здравствуйте! С праздником! Готовим АОН</div>
         </div>
         <div class="popup-message">
-            <div class="popup-bubble">Хорошо. Ждём данные по ВИС</div>
+            <div class="popup-bubble">Хорошо. Ждём данные по ВИС. Слава героям!</div>
         </div>
     </div>
     <div class="popup-input-area">
@@ -980,7 +1070,7 @@
 </div>
 
 <script>
-    // ===== МОБИЛЬНОЕ МЕНЮ =====
+    // Мобильное меню
     const burgerMenu = document.getElementById('burgerMenu');
     const mobileMenu = document.getElementById('mobileMenu');
     const menuOverlay = document.getElementById('menuOverlay');
@@ -1004,20 +1094,18 @@
     closeMenuBtn?.addEventListener('click', closeMobileMenu);
     menuOverlay?.addEventListener('click', closeMobileMenu);
 
-    // ===== ФУНКЦИИ ЧАТА =====
     function linkifyAdvanced(text) {
         if (!text) return text;
         let result = text.replace(/(https?:\/\/[^\s]+)/g, function(url) {
             let displayUrl = url.length > 50 ? url.substring(0, 47) + '...' : url;
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #00B4D8; text-decoration: underline;">${displayUrl}</a>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #D32F2F; text-decoration: underline;">${displayUrl}</a>`;
         });
         result = result.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, function(email) {
-            return `<a href="mailto:${email}" style="color: #00B4D8; text-decoration: underline;">${email}</a>`;
+            return `<a href="mailto:${email}" style="color: #D32F2F; text-decoration: underline;">${email}</a>`;
         });
         return result;
     }
 
-    // Данные документов
     const pages = [
         { name: "Протокол №48 · 06 мая 2026 · 09:30", file: "Protokol_48_ot_06.05.2026.html", icon: "📎", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026 · 09:30", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📎", date: "22.04.2026", category: "protocol" },
@@ -1064,6 +1152,7 @@
         renderDocs();
         let categoryName = { 'all': 'все документы', 'protocol': 'протоколы', 'registry': 'реестры', 'finance': 'финансы', 'tech': 'техническую часть' }[category] || 'документы';
         showToastMessage(`📁 Показаны: ${categoryName}`);
+        if (window.innerWidth <= 768) closeMobileMenu();
     }
     
     function escapeHtml(str) {
@@ -1077,7 +1166,7 @@
             toast.id = 'tempToast';
             toast.style.cssText = `
                 position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px);
-                background: #FFFFFF; border-left: 4px solid #2D6AFF; padding: 0.6rem 1.2rem;
+                background: #FFFFFF; border-left: 4px solid #D32F2F; padding: 0.6rem 1.2rem;
                 border-radius: 50px; color: #1A1A2E; font-size: 0.8rem; z-index: 2500;
                 transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -1149,7 +1238,7 @@
         setTimeout(() => {
             const replyDiv = document.createElement('div');
             replyDiv.className = 'popup-message';
-            replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
+            replyDiv.innerHTML = `<div class="popup-bubble">✅ Сообщение доставлено. С Днём Победы!<div style="font-size:0.55rem; opacity:0.7; margin-top:0.2rem;">${time} · Система</div></div>`;
             container.appendChild(replyDiv);
             container.scrollTop = container.scrollHeight;
         }, 500);

@@ -34,7 +34,7 @@
         }
         .ticker-slide {
             display: inline-block;
-            animation: tickerMove 28s linear infinite;
+            animation: tickerMove 25s linear infinite;
             font-size: 0.9rem;
             letter-spacing: 0.3px;
         }
@@ -289,49 +289,45 @@
 
         /* Радио-плеер */
         .radio-player {
-            background: #0f1724;
+            background: linear-gradient(135deg, #1a1f2c, #0f1724);
             border-radius: 14px;
-            padding: 12px;
+            padding: 16px;
             color: white;
-            margin-bottom: 16px;
         }
         .radio-station {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         .radio-logo {
             background: #c0392b;
-            width: 42px;
-            height: 42px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            font-size: 18px;
         }
-        .radio-controls button {
-            background: #2c3e50;
-            border: none;
-            color: white;
-            padding: 5px 16px;
-            border-radius: 40px;
-            margin-right: 10px;
-            cursor: pointer;
+        audio {
+            width: 100%;
+            border-radius: 30px;
+            margin-top: 8px;
         }
 
-        .video-bg {
+        /* Видео контейнер */
+        .video-container {
             position: relative;
             border-radius: 16px;
             overflow: hidden;
             background: #000;
         }
-        .video-bg video {
+        .video-container iframe {
             width: 100%;
             aspect-ratio: 16 / 9;
-            object-fit: cover;
-            display: block;
+            border: none;
         }
         .volume-control {
             display: flex;
@@ -339,7 +335,7 @@
             gap: 10px;
             margin-top: 12px;
             background: #f0f2f5;
-            padding: 6px 12px;
+            padding: 8px 12px;
             border-radius: 40px;
         }
         .volume-slider {
@@ -347,6 +343,7 @@
             height: 4px;
             -webkit-appearance: none;
             background: #d1d5db;
+            border-radius: 5px;
         }
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -354,6 +351,7 @@
             height: 14px;
             background: #c0392b;
             border-radius: 50%;
+            cursor: pointer;
         }
 
         .chat-btn {
@@ -367,6 +365,8 @@
             margin-top: 12px;
             cursor: pointer;
         }
+        
+        /* Чат */
         .chat-window {
             position: fixed;
             bottom: 20px;
@@ -389,6 +389,7 @@
             border-radius: 20px 20px 0 0;
             display: flex;
             justify-content: space-between;
+            cursor: pointer;
         }
         .chat-messages {
             height: 320px;
@@ -419,6 +420,15 @@
             border: 1px solid #e2e8f0;
             border-radius: 40px;
             padding: 8px 14px;
+        }
+        .chat-input button {
+            background: #c0392b;
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 8px 18px;
+            margin-left: 8px;
+            cursor: pointer;
         }
         .chat-float {
             position: fixed;
@@ -515,43 +525,46 @@
         </div>
 
         <div class="news-list" id="visDocumentsList">
-            <!-- динамическая загрузка ТОЛЬКО документов по ВИС -->
+            <!-- динамическая загрузка документов ВИС -->
         </div>
     </div>
 
     <aside>
-        <!-- РАДИО РБК ОНЛАЙН -->
+        <!-- РАДИО (РАБОТАЕТ) -->
         <div class="sidebar-card">
-            <div class="card-header">📻 Радио РБК · прямой эфир</div>
+            <div class="card-header">📻 Радио · Прямой эфир</div>
             <div class="card-body">
                 <div class="radio-player">
                     <div class="radio-station">
-                        <div class="radio-logo">РБК</div>
-                        <div><strong>Business FM</strong><br><span style="font-size:11px;">Новости, аналитика</span></div>
+                        <div class="radio-logo">🎵</div>
+                        <div><strong>Radio Record</strong><br><span style="font-size:11px;">Танцевальная станция</span></div>
                     </div>
-                    <audio id="radioStream" controls style="width:100%; border-radius: 30px;" autoplay>
-                        <source src="https://radio.rbc.ru/rbc_radio.mp3" type="audio/mpeg">
+                    <audio id="radioStream" controls preload="auto">
+                        <source src="https://online.recordce.eu/Record_128k.mp3" type="audio/mpeg">
                     </audio>
-                    <div style="font-size:11px; margin-top:8px;">🔴 24/7 эфир · новости строительства и финансов</div>
+                    <div style="font-size:11px; margin-top:8px;">🔴 24/7 эфир · Музыка и новости</div>
                 </div>
             </div>
         </div>
 
-        <!-- ВИДЕО НА ПОВТОРЕ (ФОНОВОЙ РЕЖИМ) -->
+        <!-- ВИДЕО YouTube (РАБОТАЕТ, ПОВТОР) -->
         <div class="sidebar-card">
-            <div class="card-header">🎥 Видеофиксация (loop + фон)</div>
+            <div class="card-header">🎥 Видеофиксация (loop)</div>
             <div class="card-body">
-                <div class="video-bg">
-                    <video id="bgLoopVideo" preload="auto" loop autoplay muted playsinline>
-                        <source src="vis-presentation.mp4" type="video/mp4">
-                    </video>
+                <div class="video-container">
+                    <iframe id="youtubeVideo" 
+                            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk&controls=1&mute=0&enablejsapi=1" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
                 </div>
                 <div class="volume-control">
                     <span>🔊</span>
-                    <input type="range" id="videoVolumeSlider" class="volume-slider" min="0" max="100" value="60">
-                    <span id="volPercent" class="volume-value">60%</span>
+                    <input type="range" id="videoVolumeSlider" class="volume-slider" min="0" max="100" value="70">
+                    <span id="volPercent" class="volume-value">70%</span>
                 </div>
-                <div style="font-size:12px; margin-top:6px;">🔄 Видео зациклено, работает в фоне</div>
+                <div style="font-size:12px; margin-top:6px;">🔄 Видео зациклено · регулятор громкости</div>
             </div>
         </div>
 
@@ -564,7 +577,7 @@
 </div>
 
 <footer>
-    МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · Вся информация по ВИС из репозитория. Радио РБК. © 2026
+    МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · Вся информация по ВИС из репозитория. © 2026
 </footer>
 
 <div class="chat-window" id="chatPopup">
@@ -575,7 +588,7 @@
 <div class="chat-float" id="chatFloatBtn">💬</div>
 
 <script>
-    // ========== ТОЛЬКО ДОКУМЕНТЫ ПО ВИС (ЖК Огни 3) ==========
+    // ========== ДОКУМЕНТЫ ПО ВИС (ЖК Огни 3) ==========
     const visDocuments = [
         { title: "Протокол №48 · 06 мая 2026 · утверждение АОНа", date: "06.05.2026", type: "Протокол", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Решение по графику отделки" },
         { title: "РСР Реестр отделочных работ (ВИС)", date: "03.05.2026", type: "Реестр", icon: "📊", link: "РСР СОР.html" },
@@ -606,7 +619,9 @@
         `).join('');
     }
 
-    function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+    function escapeHtml(str) { 
+        return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); 
+    }
 
     document.getElementById('searchVIS').addEventListener('input', (e) => renderVISList(e.target.value));
 
@@ -618,35 +633,52 @@
         `).join('');
     }
 
-    // ВИДЕО НА ПОВТОРЕ (ФОНОВОЕ)
-    const videoLoop = document.getElementById('bgLoopVideo');
-    if(videoLoop) {
-        videoLoop.loop = true;
-        videoLoop.muted = false;
-        const volumeSliderVideo = document.getElementById('videoVolumeSlider');
-        const volSpan = document.getElementById('volPercent');
-        volumeSliderVideo?.addEventListener('input', (e) => {
-            let vol = e.target.value / 100;
-            videoLoop.volume = vol;
-            volSpan.innerText = e.target.value + '%';
+    // Управление громкостью YouTube видео
+    let player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtubeVideo', {
+            events: {
+                onReady: onPlayerReady
+            }
         });
-        videoLoop.volume = 0.6;
-        volumeSliderVideo.value = 60;
-        // попытка авто-воспроизведения
-        videoLoop.play().catch(e => console.log("autoplay blocked, click to start"));
+    }
+    
+    function onPlayerReady(event) {
+        const volumeSlider = document.getElementById('videoVolumeSlider');
+        const volSpan = document.getElementById('volPercent');
+        
+        volumeSlider.addEventListener('input', (e) => {
+            const volume = e.target.value;
+            player.setVolume(volume);
+            volSpan.innerText = volume + '%';
+        });
+        
+        player.setVolume(70);
+        player.playVideo();
+    }
+    
+    // Загрузка YouTube API
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // РАДИО - принудительное воспроизведение
+    const radio = document.getElementById('radioStream');
+    if(radio) {
+        radio.volume = 0.5;
+        // Попытка автоматического воспроизведения
+        radio.play().catch(e => console.log("Нажмите play на радио для запуска"));
     }
 
-    // РАДИО RBC
-    const radio = document.getElementById('radioStream');
-    if(radio) radio.volume = 0.5;
-
-    // Чат (полностью рабочий)
+    // Чат
     const chatPopup = document.getElementById('chatPopup');
     const chatFloat = document.getElementById('chatFloatBtn');
     const closeChat = document.getElementById('closeChatBtn');
     document.getElementById('openChatSidebarBtn')?.addEventListener('click', () => chatPopup.classList.add('open'));
     chatFloat?.addEventListener('click', () => chatPopup.classList.add('open'));
     closeChat?.addEventListener('click', () => chatPopup.classList.remove('open'));
+    
     function sendMsg() {
         const inp = document.getElementById('chatInput');
         if(!inp.value.trim()) return;
@@ -656,11 +688,16 @@
         msgDiv.insertAdjacentHTML('beforeend', outMsg);
         inp.value = '';
         setTimeout(() => msgDiv.insertAdjacentHTML('beforeend', `<div class="msg-bubble">✅ доставлено (чат штаба)</div>`), 400);
+        msgDiv.scrollTop = msgDiv.scrollHeight;
     }
+    
     document.getElementById('sendChatMsg')?.addEventListener('click', sendMsg);
     document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMsg(); });
 
-    function setDate() { document.getElementById('currentDate').innerText = new Date().toLocaleDateString('ru-RU', {day:'numeric', month:'long', year:'numeric'}); }
+    function setDate() { 
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('ru-RU', {day:'numeric', month:'long', year:'numeric'}); 
+    }
+    
     renderVISList();
     renderSidebarDocsShort();
     setDate();

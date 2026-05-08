@@ -2,261 +2,1120 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Навигация и Медиа</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="МОСКВАДОНСТРОИТСЯ ЖК Огни 3 — актуальная документация, протоколы, реестры строительства">
+    <title>МОСКВАДОНСТРОИТСЯ · ЖК Огни 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: #f0f2f5;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            background: #f5f6f8;
+            color: #1a1f2c;
+            line-height: 1.45;
         }
-        .card {
-            max-width: 700px;
-            width: 100%;
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+
+        /* ===== БЕГУЩАЯ СТРОКА (RBC-style TICKER) ===== */
+        .rbc-ticker {
+            background: #1a2634;
+            color: #ffffff;
+            padding: 8px 0;
             overflow: hidden;
-            padding: 24px 28px 32px;
-            transition: all 0.2s;
+            white-space: nowrap;
+            border-bottom: 1px solid #2d3e4f;
+            position: relative;
+            z-index: 5;
+            font-family: 'Roboto Condensed', sans-serif;
         }
-        h1 {
-            font-size: 1.7rem;
-            font-weight: 600;
-            margin: 0 0 8px 0;
-            color: #1e2a3e;
-        }
-        .sub {
-            color: #4a627a;
-            border-left: 3px solid #3b82f6;
-            padding-left: 12px;
-            margin-bottom: 28px;
+        .ticker-slide {
+            display: inline-block;
+            animation: tickerMove 25s linear infinite;
             font-size: 0.9rem;
+            letter-spacing: 0.3px;
         }
-        .nav-panel {
+        .ticker-slide span {
+            margin: 0 28px;
+            display: inline-block;
+        }
+        .ticker-slide .separator {
+            color: #e03a3a;
+            font-weight: bold;
+        }
+        @keyframes tickerMove {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .rbc-ticker:hover .ticker-slide {
+            animation-play-state: paused;
+        }
+
+        /* ===== RBC-style header ===== */
+        .top-line {
+            background: #fff;
+            border-bottom: 1px solid #e6e9ed;
+            font-size: 12px;
+            padding: 8px 0;
+        }
+        .top-line-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 24px;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav-btn {
-            background: #f1f5f9;
-            border: none;
-            padding: 12px 28px;
-            font-size: 1.1rem;
+        .date-time {
+            color: #6b7280;
+        }
+        .top-menu {
+            display: flex;
+            gap: 20px;
+        }
+        .top-menu a {
+            text-decoration: none;
+            color: #1f2937;
             font-weight: 500;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #0f172a;
-            font-family: inherit;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        .nav-btn:hover {
-            background: #e2e8f0;
-            transform: translateY(-1px);
+        .top-menu a:hover {
+            color: #005eff;
         }
-        .nav-btn:active {
-            transform: translateY(1px);
+
+        .main-header {
+            background: #fff;
+            border-bottom: 1px solid #e6e9ed;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(4px);
         }
-        .radio-section {
-            background: #f8fafc;
-            border-radius: 24px;
+        .header-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #0a2b3e, #c0392b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        .logo span {
+            color: #c0392b;
+            background: none;
+        }
+        .site-tag {
+            font-size: 11px;
+            color: #6c757d;
+            border-left: 1px solid #dee2e6;
+            padding-left: 12px;
+            font-weight: 400;
+        }
+        .header-search {
+            background: #f2f3f5;
+            border-radius: 40px;
+            padding: 8px 16px;
+            width: 260px;
+            border: none;
+            font-size: 14px;
+        }
+        .header-search:focus {
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 2px #005eff30;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2a3e;
+        }
+        .nav-links a:hover {
+            color: #005eff;
+        }
+
+        /* основной контейнер */
+        .main-grid {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 40px;
+        }
+
+        /* лента ВИС-документов */
+        .news-feed h1 {
+            font-size: 28px;
+            font-weight: 700;
+            border-left: 4px solid #c0392b;
+            padding-left: 16px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        .feature-news {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e2e6ea;
+            padding-bottom: 30px;
+        }
+        .main-article {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .main-article:hover {
+            transform: translateY(-2px);
+        }
+        .article-img {
+            background: #d1d5db;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            background: linear-gradient(145deg, #eef2f6, #e0e7ed);
+        }
+        .article-content {
             padding: 20px;
+        }
+        .badge {
+            color: #c0392b;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .article-title {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .news-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            gap: 16px;
+            border: 1px solid #edf2f7;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .news-item:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateX(4px);
+        }
+        .news-icon {
+            font-size: 36px;
+            min-width: 56px;
+            text-align: center;
+        }
+        .news-text {
+            flex: 1;
+        }
+        .news-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .news-desc {
+            font-size: 13px;
+            color: #4a5568;
+        }
+        .news-meta {
+            font-size: 12px;
+            color: #6c757d;
+            display: flex;
+            gap: 12px;
             margin-top: 8px;
         }
-        .radio-title {
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Стили для виджета протокола на главной */
+        .protocol-widget {
+            background: #fff8f0;
+            border-radius: 12px;
+            padding: 12px 0;
+        }
+        .protocol-item {
+            padding: 10px 16px;
+            border-bottom: 1px solid #ffe4d6;
+            font-size: 13px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .protocol-item:last-child {
+            border-bottom: none;
+        }
+        .protocol-icon {
+            color: #c0392b;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+        .protocol-text {
+            flex: 1;
+        }
+        .protocol-text strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #2c3e50;
+        }
+        .protocol-deadline {
+            font-size: 11px;
+            color: #e67e22;
+            margin-top: 4px;
+        }
+        .protocol-status {
+            font-size: 11px;
+            background: #ffe4d6;
+            padding: 2px 8px;
+            border-radius: 20px;
+            color: #c0392b;
+            font-weight: 500;
+        }
+        .protocol-red {
+            color: #c0392b;
+            font-weight: 700;
+        }
+        .protocol-red-bg {
+            background: #ffe4e6;
+            border-left: 3px solid #c0392b;
+        }
+
+        /* SIDEBAR */
+        .sidebar-card {
+            background: #fff;
+            border-radius: 16px;
+            margin-bottom: 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f8;
+            overflow: hidden;
+        }
+        .card-header {
+            font-size: 16px;
+            font-weight: 700;
+            padding: 16px 20px;
+            border-bottom: 1px solid #edf2f7;
+            background: #fafcff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-body {
+            padding: 16px 20px;
+        }
+        .doc-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f2f5;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .doc-button:hover {
+            color: #005eff;
+            transform: translateX(4px);
+        }
+        .doc-button:last-child {
+            border-bottom: none;
+        }
+
+        /* РАДИО-ПЛЕЕР — ТЕРМОЯДЕРНЫЙ МЕТОД */
+        .radio-player {
+            background: linear-gradient(135deg, #1a1f2c, #0f1724);
+            border-radius: 14px;
+            padding: 16px;
+            color: white;
+        }
+        .radio-station {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .radio-logo {
+            background: #c0392b;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .radio-info {
+            flex: 1;
+        }
+        .radio-info h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .radio-info p {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        
+        /* Кастомные кнопки радио вместо стандартных */
+        .radio-custom-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .radio-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .radio-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        .radio-volume {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 120px;
+        }
+        .radio-volume input {
+            flex: 1;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+        }
+        .radio-volume input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #c0392b;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .radio-status {
+            font-size: 11px;
+            margin-top: 12px;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.3); }
+        }
+
+        /* Видео контейнер */
+        .video-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-container video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+        }
+        .volume-control {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 16px;
-            color: #0c4e6e;
+            margin-top: 12px;
+            background: #f0f2f5;
+            padding: 8px 12px;
+            border-radius: 40px;
         }
-        .radio-title span {
-            font-size: 1.5rem;
+        .volume-control span {
+            font-size: 14px;
         }
-        .video-wrapper {
-            background: #000;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #111;
-        }
-        video {
-            width: 100%;
-            height: 100%;
-            display: block;
+        .volume-slider {
+            flex: 1;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #d1d5db;
+            border-radius: 5px;
             outline: none;
         }
-        .status {
-            margin-top: 12px;
-            font-size: 0.8rem;
-            color: #2c6e9e;
-            background: #eef2ff;
-            padding: 6px 12px;
-            border-radius: 40px;
-            display: inline-block;
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #c0392b;
+            border-radius: 50%;
+            cursor: pointer;
         }
-        hr {
-            margin: 24px 0 8px;
+        .volume-value {
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 40px;
+            color: #1f2a3e;
+        }
+
+        .chat-btn {
+            background: #c0392b;
+            color: white;
             border: none;
-            border-top: 1px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 12px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .footer-note {
-            font-size: 0.7rem;
-            color: #5b6e8c;
+        .chat-btn:hover {
+            background: #a02b1f;
+            transform: scale(0.98);
+        }
+        
+        /* Чат */
+        .chat-window {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 360px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #eef2f8;
+        }
+        .chat-window.open {
+            display: flex;
+        }
+        .chat-header {
+            background: #c0392b;
+            color: white;
+            padding: 14px 18px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .chat-header span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chat-messages {
+            height: 340px;
+            overflow-y: auto;
+            padding: 12px;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .msg-bubble {
+            max-width: 85%;
+            padding: 8px 12px;
+            border-radius: 18px;
+            font-size: 13px;
+            background: #eef2ff;
+        }
+        .msg-out {
+            background: #c0392b;
+            color: white;
+            align-self: flex-end;
+        }
+        .chat-input {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid #eef2f8;
+            gap: 8px;
+        }
+        .chat-input input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+        .chat-input input:focus {
+            outline: none;
+            border-color: #c0392b;
+        }
+        .chat-input button {
+            background: #c0392b;
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 8px 18px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .chat-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #c0392b;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 28px;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(192,57,43,0.4);
+            transition: all 0.2s;
+        }
+        .chat-float:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background: #fff;
+            border-top: 1px solid #e6e9ed;
+            padding: 28px;
             text-align: center;
-            margin-top: 24px;
+            color: #6c757d;
+            font-size: 13px;
+            margin-top: 20px;
         }
-        @media (max-width: 550px) {
-            .card {
-                padding: 16px;
-            }
-            .nav-btn {
-                padding: 8px 20px;
-                font-size: 1rem;
-            }
+        @media (max-width: 860px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .feature-news { grid-template-columns: 1fr; }
+            .chat-window { width: calc(100% - 40px); right: 20px; left: 20px; }
         }
     </style>
-    <!-- Подключаем hls.js для поддержки HLS (m3u8) в HTML5 video -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js"></script>
 </head>
 <body>
-<div class="card">
-    <h1>📋 Навигация по реестрам</h1>
-    <div class="sub">Управление документами и онлайн-трансляция</div>
 
-    <!-- Блок кнопок (ВИС-реестры / протоколы) -->
-    <div class="nav-panel">
-        <button class="nav-btn" id="registryBtn">📂 ВИС-реестры</button>
-        <button class="nav-btn" id="protocolsBtn">📄 Протоколы</button>
-    </div>
-
-    <!-- Радио / видео плеер (на базе HLS) -->
-    <div class="radio-section">
-        <div class="radio-title">
-            <span>📡</span> Онлайн-трансляция &nbsp;<span style="font-size:0.8rem;">РБК ТВ</span>
-        </div>
-        <div class="video-wrapper" id="videoContainer">
-            <video id="hlsVideo" controls autoplay muted playsinline poster="https://www.rbc.by/sites/default/files/styles/970x546/public/2022-03/online-tv.jpg?itok=5gk7FG6M">
-                Ваш браузер не поддерживает видео.
-            </video>
-        </div>
-        <div id="playerStatus" class="status">⏳ Загрузка потока...</div>
-        <div style="font-size: 0.75rem; margin-top: 8px; opacity: 0.7;">
-            🎧 Поток: http://online.video.rbc.ru/online/rbctv_480p/index.m3u8
-        </div>
-    </div>
-    <hr />
-    <div class="footer-note">
-        ⚡ При нажатии «ВИС-реестры» и «Протоколы» открываются соответствующие страницы (ссылки можно заменить под свои).
+<!-- БЕГУЩАЯ СТРОКА В СТИЛЕ RBC -->
+<div class="rbc-ticker">
+    <div class="ticker-slide">
+        <span>🔴 МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · АКТУАЛЬНЫЕ ПРОТОКОЛЫ И РЕЕСТРЫ</span>
+        <span class="separator">✦</span>
+        <span>ВИС Огни 3: завершён монтаж вентиляции — 78%</span>
+        <span class="separator">✦</span>
+        <span>Протокол №48 утверждён · следующее заседание 13 мая</span>
+        <span class="separator">✦</span>
+        <span>С ДНЁМ ПОБЕДЫ! 9 МАЯ 1945 – 2026</span>
+        <span class="separator">✦</span>
+        <span>🔴 МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · АКТУАЛЬНЫЕ ПРОТОКОЛЫ И РЕЕСТРЫ</span>
+        <span class="separator">✦</span>
+        <span>ВИС Огни 3: завершён монтаж вентиляции — 78%</span>
+        <span class="separator">✦</span>
+        <span>Протокол №48 утверждён · следующее заседание 13 мая</span>
     </div>
 </div>
 
+<div class="top-line">
+    <div class="top-line-container">
+        <div class="date-time" id="currentDate"></div>
+        <div class="top-menu">
+            <a href="#">Строительство</a>
+            <a href="#">Документы ВИС</a>
+            <a href="#">Протоколы</a>
+        </div>
+    </div>
+</div>
+
+<div class="main-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="#" class="logo">МОСКВАДОНСТРОИТСЯ <span>ЖК Огни 3</span></a>
+            <div class="site-tag">официальный штаб</div>
+        </div>
+        <input type="text" class="header-search" id="searchVIS" placeholder="Поиск по ВИС и документам...">
+        <div class="nav-links">
+            <a href="#">ВИС-реестры</a>
+            <a href="#">Протоколы</a>
+            <a href="#">Контроль</a>
+        </div>
+    </div>
+</div>
+
+<div class="main-grid">
+    <div class="news-feed">
+        <h1>📋 ВИС · Документация строительства</h1>
+        <div class="feature-news">
+            <div class="main-article">
+                <div class="article-img">📐</div>
+                <div class="article-content">
+                    <div class="badge">ВИС-сводка</div>
+                    <div class="article-title">ЖК Огни 3: выполнение отделочных работ — динамика +12% за неделю</div>
+                    <div class="news-meta">📅 6 мая 2026 · реестр РСР</div>
+                </div>
+            </div>
+            <div class="main-article" style="padding: 0;">
+                <div class="badge" style="margin: 20px 20px 0 20px;">⚡ ПРОТОКОЛ №48</div>
+                <div class="article-content" style="padding-top: 8px;">
+                    <div class="article-title" style="font-size: 18px; margin-bottom: 16px;">от 06.05.2026 · штаб</div>
+                    <div class="protocol-widget">
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="protocol-text">
+                                <strong>ИТП/АИТ — запуск первого контура отопления</strong>
+                                <div>Срок: 28.04 → 04.05 → 06.05 <span class="protocol-status">перенос срока</span></div>
+                                <div class="protocol-deadline protocol-red">⚠️ Просрочено: не завершено</div>
+                            </div>
+                        </div>
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-users-slash"></i></div>
+                            <div class="protocol-text">
+                                <strong>Увеличить сотрудников по ЭОМ (+10) и СС (+10)</strong>
+                                <div>Срок: 10.04 → 16.04 → 04.05 <span class="protocol-status">не выполнено</span></div>
+                                <div class="protocol-deadline protocol-red">❌ Не добавлено. Ответственный: ИНЭКО</div>
+                            </div>
+                        </div>
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-hard-hat"></i></div>
+                            <div class="protocol-text">
+                                <strong>Добавить 2-3 ИТР на объект</strong>
+                                <div>Срок: 10.04 → 16.04 → 04.05 <span class="protocol-status">не выполнено</span></div>
+                                <div class="protocol-deadline protocol-red">❌ Не добавлено. Ответственный: ИНЭКО</div>
+                            </div>
+                        </div>
+                        <div class="protocol-item">
+                            <div class="protocol-icon"><i class="fas fa-chalkboard-user"></i></div>
+                            <div class="protocol-text">
+                                <strong>Руководителю проекта от ИНЭКО быть на объекте ежедневно</strong>
+                                <div>Срок: ежедневно <span class="protocol-status protocol-red">Не выполняется</span></div>
+                            </div>
+                        </div>
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="protocol-text">
+                                <strong>Обеспечить выход людей на ВРУ и завершить работы</strong>
+                                <div>Срок: 06.05.2026 <span class="protocol-status">просрочено</span></div>
+                                <div class="protocol-deadline protocol-red">⚠️ Не завершены. Ответственный: ИНЭКО</div>
+                            </div>
+                        </div>
+                        <div class="protocol-item">
+                            <div class="protocol-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="protocol-text">
+                                <strong>Сводка предписаний и ЗОС</strong>
+                                <div>Предписания: 526 всего | Остаток: 161</div>
+                                <div class="protocol-deadline protocol-red">Из них критичных: 7</div>
+                                <div>Акты к ЗОС: подписано 69 из 75, осталось 6</div>
+                            </div>
+                        </div>
+                        <div class="protocol-item">
+                            <div class="protocol-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="protocol-text">
+                                <strong>Следующее совещание</strong>
+                                <div>13.05.2026 в 9:30, штаб строительства</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-meta" style="margin-top: 16px;">
+                        <a href="Protokol_48_ot_06.05.2026.html" style="color:#c0392b; font-weight:500;">→ Полный текст протокола</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="news-list" id="visDocumentsList"></div>
+    </div>
+
+    <aside>
+        <!-- РАДИО BUSINESS FM — ТЕРМОЯДЕРНЫЙ МЕТОД -->
+        <div class="sidebar-card">
+            <div class="card-header">📻 Business FM · прямой эфир</div>
+            <div class="card-body">
+                <div class="radio-player">
+                    <div class="radio-station">
+                        <div class="radio-logo"><i class="fas fa-chart-line"></i></div>
+                        <div class="radio-info">
+                            <h4>Business FM</h4>
+                            <p>Деловое радио · Новости экономики 24/7</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Скрытый аудиоэлемент для термоядерного воспроизведения -->
+                    <audio id="radioStream" preload="auto" style="display: none;"></audio>
+                    
+                    <!-- Кастомные элементы управления -->
+                    <div class="radio-custom-controls">
+                        <button id="radioPlayBtn" class="radio-btn"><i class="fas fa-play"></i></button>
+                        <button id="radioPauseBtn" class="radio-btn"><i class="fas fa-pause"></i></button>
+                        <div class="radio-volume">
+                            <i class="fas fa-volume-up" style="font-size: 12px;"></i>
+                            <input type="range" id="radioVolume" min="0" max="100" value="50">
+                        </div>
+                    </div>
+                    
+                    <div class="radio-status">
+                        <div><span class="live-dot"></span> <span id="radioStatusText">LIVE · Эфир Business FM</span></div>
+                        <div id="radioBitrate" style="font-size: 10px;">📡 128 kbps</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВИДЕО -->
+        <div class="sidebar-card">
+            <div class="card-header">🎥 Видеофиксация (loop + фон)</div>
+            <div class="card-body">
+                <div class="video-container">
+                    <video id="promoVideo" loop preload="auto" playsinline style="width:100%;">
+                        <source src="vis-presentation.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="volume-control">
+                    <span>🔊</span>
+                    <input type="range" id="videoVolumeSlider" class="volume-slider" min="0" max="100" value="70">
+                    <span id="volPercent" class="volume-value">70%</span>
+                </div>
+                <div style="font-size: 12px; margin-top: 6px; color: #4b5563;">
+                    🔄 Видео зациклено · кликните для воспроизведения/паузы
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="card-header">📁 Реестры и акты ВИС</div>
+            <div class="card-body" id="docSidebarShort"></div>
+            <button class="chat-btn" id="openChatSidebarBtn">
+                <i class="fas fa-comments"></i> 💬 Чат штаба
+            </button>
+        </div>
+    </aside>
+</div>
+
+<footer>
+    МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · Вся информация по ВИС из репозитория. © 2026
+</footer>
+
+<div class="chat-window" id="chatPopup">
+    <div class="chat-header">
+        <span><i class="fas fa-comment-dots"></i> Чат строителей · Огни 3</span>
+        <span id="closeChatBtn" style="cursor:pointer;">✕</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="msg-bubble">🏗️ Добро пожаловать в чат ЖК Огни 3!</div>
+        <div class="msg-bubble">📋 Все актуальные протоколы в разделе документов</div>
+        <div class="msg-bubble">⚠️ Внимание! По протоколу №48 есть просроченные задачи</div>
+    </div>
+    <div class="chat-input">
+        <input id="chatInput" placeholder="Введите сообщение...">
+        <button id="sendChatMsg"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+<div class="chat-float" id="chatFloatBtn">
+    <i class="fas fa-comment-dots"></i>
+</div>
+
 <script>
-    // --------------------------------------------------------------
-    // 1. НАСТРОЙКА ОТКРЫТИЯ СТРАНИЦ ПО ТРЕБОВАНИЮ
-    // --------------------------------------------------------------
-    // Замените URL на реальные адреса ваших страниц
-    const REGISTRY_URL = "https://example.com/vis-reestry";   // ← ВАШ URL для ВИС-реестров
-    const PROTOCOLS_URL = "https://example.com/protocols";    // ← ВАШ URL для протоколов
-
-    document.getElementById("registryBtn").addEventListener("click", () => {
-        window.open(REGISTRY_URL, "_blank");  // или "_self" для открытия в текущей вкладке
-    });
-
-    document.getElementById("protocolsBtn").addEventListener("click", () => {
-        window.open(PROTOCOLS_URL, "_blank");
-    });
-
-    // --------------------------------------------------------------
-    // 2. ИНИЦИАЛИЗАЦИЯ HLS ПЛЕЕРА ДЛЯ .M3U8 (РАДИО / ВИДЕО)
-    // --------------------------------------------------------------
-    const video = document.getElementById("hlsVideo");
-    const statusDiv = document.getElementById("playerStatus");
-    const streamUrl = "http://online.video.rbc.ru/online/rbctv_480p/index.m3u8";
-
-    // Автозапуск с учетом политик браузера: autoplay + muted сначала (пользователь может снять mute)
-    // Так как это видео-трансляция, звук будет, если включить громкость.
-    function initPlayer() {
-        // Проверяем поддержку HLS нативным способом (Safari/macOS)
-        if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = streamUrl;
-            statusDiv.innerHTML = "✅ Воспроизведение (нативный HLS)";
-            video.play().catch(e => {
-                console.warn("Автовоспроизведение заблокировано:", e);
-                statusDiv.innerHTML = "⚠️ Нажмите Play для запуска трансляции";
+    // ==================== ТЕРМОЯДЕРНЫЙ РАДИО-ПЛЕЕР ====================
+    // Список резервных потоков (термоядерная надёжность)
+    const radioStreams = [
+        { name: "Business FM (основной)", url: "https://businessfm.cdnvideo.ru/businessfm_mp3/128/playlist.m3u8", type: "hls" },
+        { name: "Business FM (резерв 64)", url: "https://businessfm.cdnvideo.ru/businessfm_mp3/64/playlist.m3u8", type: "hls" },
+        { name: "Business FM (MP3 резерв)", url: "https://radio.businessfm.ru/businessfm.mp3", type: "mp3" },
+        { name: "Comedy Radio (тестовый)", url: "https://radio.recordce.eu/Record_128k.mp3", type: "mp3" }
+    ];
+    
+    let currentStreamIndex = 0;
+    let radioPlaying = false;
+    let hlsPlayer = null;
+    const audioElement = document.getElementById('radioStream');
+    const radioStatusText = document.getElementById('radioStatusText');
+    
+    // Функция переключения на следующий поток при ошибке
+    function switchToNextStream() {
+        currentStreamIndex++;
+        if (currentStreamIndex >= radioStreams.length) {
+            radioStatusText.innerHTML = '<span class="live-dot"></span> ⚠️ Все потоки недоступны';
+            return false;
+        }
+        
+        const stream = radioStreams[currentStreamIndex];
+        radioStatusText.innerHTML = `<span class="live-dot"></span> 🔄 Переключение на ${stream.name}...`;
+        
+        if (hlsPlayer) {
+            hlsPlayer.destroy();
+            hlsPlayer = null;
+        }
+        
+        loadRadioStream(stream);
+        return true;
+    }
+    
+    // Загрузка радио-потока
+    function loadRadioStream(stream) {
+        audioElement.pause();
+        
+        if (stream.type === 'hls' && Hls.isSupported()) {
+            hlsPlayer = new Hls();
+            hlsPlayer.loadSource(stream.url);
+            hlsPlayer.attachMedia(audioElement);
+            hlsPlayer.on(Hls.Events.MANIFEST_PARSED, function() {
+                if (radioPlaying) {
+                    audioElement.play().catch(e => {
+                        console.log("HLS play error:", e);
+                        switchToNextStream();
+                    });
+                }
+                radioStatusText.innerHTML = `<span class="live-dot"></span> LIVE · ${stream.name}`;
             });
-        } 
-        // Если браузер поддерживает hls.js (Chrome, Firefox, Edge и др.)
-        else if (Hls.isSupported()) {
-            const hls = new Hls({
-                enableWorker: true,
-                autoStartLoad: true,
-                startLevel: 0   // старт с лучшего качества
-            });
-            hls.loadSource(streamUrl);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                statusDiv.innerHTML = "✅ Поток загружен, попытка воспроизведения...";
-                video.play().then(() => {
-                    statusDiv.innerHTML = "🔴 Идёт трансляция (звук доступен)";
-                }).catch(err => {
-                    statusDiv.innerHTML = "🔇 Автовоспроизведение заблокировано. Нажмите ▶️";
-                    console.log("Play error:", err);
-                });
-            });
-            hls.on(Hls.Events.ERROR, (event, data) => {
+            hlsPlayer.on(Hls.Events.ERROR, function(event, data) {
                 if (data.fatal) {
-                    statusDiv.innerHTML = "❌ Ошибка потока. Проверьте ссылку.";
-                    console.error("HLS fatal error:", data);
-                } else {
-                    statusDiv.innerHTML = "⚠️ Сбои потока, переподключение...";
+                    console.log("HLS fatal error, switching stream");
+                    switchToNextStream();
                 }
             });
-        } 
-        else {
-            statusDiv.innerHTML = "❌ Ваш браузер не поддерживает HLS трансляции.";
+        } else if (stream.type === 'mp3') {
+            audioElement.src = stream.url;
+            audioElement.load();
+            if (radioPlaying) {
+                audioElement.play().catch(e => {
+                    console.log("MP3 play error:", e);
+                    switchToNextStream();
+                });
+            }
+            radioStatusText.innerHTML = `<span class="live-dot"></span> LIVE · ${stream.name}`;
+        }
+        
+        audioElement.onerror = function() {
+            console.log("Audio error, switching stream");
+            switchToNextStream();
+        };
+    }
+    
+    // Инициализация радио
+    function initRadio() {
+        currentStreamIndex = 0;
+        radioPlaying = true;
+        loadRadioStream(radioStreams[0]);
+        
+        // Установка громкости
+        const radioVolumeSlider = document.getElementById('radioVolume');
+        audioElement.volume = radioVolumeSlider.value / 100;
+        radioVolumeSlider.addEventListener('input', (e) => {
+            audioElement.volume = e.target.value / 100;
+        });
+    }
+    
+    // Кнопки управления радио
+    document.getElementById('radioPlayBtn').addEventListener('click', () => {
+        radioPlaying = true;
+        audioElement.play().catch(e => {
+            if (hlsPlayer) hlsPlayer.startLoad();
+            setTimeout(() => audioElement.play().catch(() => switchToNextStream()), 100);
+        });
+    });
+    
+    document.getElementById('radioPauseBtn').addEventListener('click', () => {
+        radioPlaying = false;
+        audioElement.pause();
+    });
+    
+    // Запуск радио
+    initRadio();
+
+    // ========== ДОКУМЕНТЫ ПО ВИС ==========
+    const visDocuments = [
+        { title: "Протокол №48 · 06 мая 2026 · утверждение АОНа", date: "06.05.2026", type: "Протокол", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Решение по графику отделки и поставок" },
+        { title: "РСР Реестр отделочных работ (ВИС)", date: "03.05.2026", type: "Реестр", icon: "📊", link: "РСР СОР.html", desc: "Актуальный реестр отделочных материалов" },
+        { title: "Сводка оплат и финансирования", date: "02.05.2026", type: "Финансы ВИС", icon: "💰", link: "Сводка оплат.html", desc: "Финансовый отчёт по строительству" },
+        { title: "Реестр чек-листа АВТ2 ИНЭКО", date: "06.05.2026", type: "Чек-лист", icon: "📋", link: "Reesrt_cheklist_AVT2.html", desc: "Проверочный лист АВТ2" },
+        { title: "Реестр чек-листа СС8 + СС5", date: "01.05.2026", type: "Чек-лист", icon: "📑", link: "реестр для ЧЛ.html", desc: "Сводный реестр чек-листов" },
+        { title: "ВИС Огни 3 · актуальная таблица", date: "06.05.2026", type: "Google Sheet", icon: "📈", link: "VIS-Ogni-3.html", desc: "Живая таблица ВИС" },
+        { title: "Задачи штаба (контроль поручений)", date: "05.05.2026", type: "Рабочий лист", icon: "✅", link: "Zadachi-Ogni-3.html", desc: "Контроль выполнения задач" },
+        { title: "Протокол №46 · 22 апреля 2026", date: "22.04.2026", type: "Протокол", icon: "📎", link: "протокол_46_огни_3_от_22_04_2026.html", desc: "Предыдущий протокол заседания" }
+    ];
+
+    function renderVISList(search = "") {
+        const container = document.getElementById('visDocumentsList');
+        let filtered = visDocuments.filter(doc => 
+            doc.title.toLowerCase().includes(search.toLowerCase()) || 
+            (doc.desc && doc.desc.toLowerCase().includes(search.toLowerCase()))
+        );
+        if(filtered.length === 0) {
+            container.innerHTML = `<div style="background:white; border-radius:16px; padding: 40px; text-align:center; color:#6c757d;">📭 Документы по ВИС не найдены</div>`;
+            return;
+        }
+        container.innerHTML = filtered.map(doc => `
+            <a href="${doc.link}" class="news-item">
+                <div class="news-icon">${doc.icon}</div>
+                <div class="news-text">
+                    <div class="news-title">${escapeHtml(doc.title)}</div>
+                    <div class="news-desc">${doc.desc || 'Актуальная версия документа ВИС'}</div>
+                    <div class="news-meta">
+                        <span>📅 ${doc.date}</span>
+                        <span>📂 ${doc.type}</span>
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    }
+
+    function escapeHtml(str) { 
+        return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); 
+    }
+
+    const searchInput = document.getElementById('searchVIS');
+    searchInput.addEventListener('input', (e) => renderVISList(e.target.value));
+
+    function renderSidebarDocsShort() {
+        const sidebarDiv = document.getElementById('docSidebarShort');
+        if(!sidebarDiv) return;
+        sidebarDiv.innerHTML = visDocuments.slice(0, 6).map(doc => `
+            <a href="${doc.link}" class="doc-button">
+                <span>${doc.icon}</span> 
+                <span style="flex:1;">${doc.title.length > 35 ? doc.title.slice(0,32)+'…' : doc.title}</span>
+                <span style="font-size: 10px; color:#8b9eb0;">${doc.date}</span>
+            </a>
+        `).join('');
+    }
+
+    // ========== ВИДЕО ==========
+    const videoElement = document.getElementById('promoVideo');
+    if (videoElement) {
+        videoElement.loop = true;
+        videoElement.volume = 0.7;
+        
+        const volumeSlider = document.getElementById('videoVolumeSlider');
+        const volPercent = document.getElementById('volPercent');
+        
+        volumeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            videoElement.volume = val / 100;
+            volPercent.innerText = val + '%';
+        });
+        
+        const videoContainer = document.querySelector('.video-container');
+        videoContainer.addEventListener('click', (e) => {
+            if (e.target === volumeSlider || volumeSlider.contains(e.target)) return;
+            if (videoElement.paused) {
+                videoElement.play().catch(e => console.log("Play error:", e));
+            } else {
+                videoElement.pause();
+            }
+        });
+        
+        const playPromise = videoElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Автозапуск заблокирован, нажмите на видео");
+            });
         }
     }
 
-    // Принудительно снимаем muted через 1 секунду, если видео уже играет (чтобы был звук)
-    // Но только если пользователь уже взаимодействовал со страницей. Лучше дать контрол.
-    video.addEventListener('canplay', () => {
-        if (video.muted) {
-            // По умолчанию muted стоит для автозапуска, но через паузу можно выключить?
-            // Не выключаем автоматически, чтобы не нарушать политику. Пользователь сам нажмет громкость.
-            // Просто показываем подсказку.
-            if (statusDiv.innerText.includes("блокировано") === false) {
-                statusDiv.innerHTML = "🎬 Трансляция готова (снимите значок 🔇 для звука)";
-            }
-        }
+    // ========== ЧАТ ==========
+    const chatPopup = document.getElementById('chatPopup');
+    const chatFloat = document.getElementById('chatFloatBtn');
+    const closeChat = document.getElementById('closeChatBtn');
+    const openSidebarChat = document.getElementById('openChatSidebarBtn');
+    
+    function openChat() { chatPopup.classList.add('open'); }
+    function closeChatFunc() { chatPopup.classList.remove('open'); }
+    
+    chatFloat.addEventListener('click', openChat);
+    closeChat.addEventListener('click', closeChatFunc);
+    openSidebarChat.addEventListener('click', openChat);
+    
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if (!msg) return;
+        
+        const messagesDiv = document.getElementById('chatMessages');
+        const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        const outgoingMsg = document.createElement('div');
+        outgoingMsg.className = 'msg-bubble msg-out';
+        outgoingMsg.innerHTML = `${escapeHtml(msg)}<div style="font-size: 9px; opacity: 0.7; margin-top: 4px;">${time} · Вы</div>`;
+        messagesDiv.appendChild(outgoingMsg);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        input.value = '';
+        
+        setTimeout(() => {
+            const replyMsg = document.createElement('div');
+            replyMsg.className = 'msg-bubble';
+            replyMsg.innerHTML = `✅ Сообщение принято!<div style="font-size: 9px; opacity: 0.7;">${time} · Штаб</div>`;
+            messagesDiv.appendChild(replyMsg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 500);
+    }
+    
+    document.getElementById('sendChatMsg').addEventListener('click', sendMessage);
+    document.getElementById('chatInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
     });
-
-    // Запускаем плеер
-    initPlayer();
-
-    // Доп. красивое: если кликнуть по странице — можно попробовать разблокировать autoplay, 
-    // но лучше стандартный controls.
-    document.body.addEventListener('click', function enableAudioOnce() {
-        if (video.paused && video.src) {
-            video.play().catch(e=>{});
-        }
-    }, { once: true });
+    
+    function setDate() {
+        const now = new Date();
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('currentDate').innerText = now.toLocaleDateString('ru-RU', options);
+    }
+    
+    renderVISList();
+    renderSidebarDocsShort();
+    setDate();
 </script>
 </body>
 </html>

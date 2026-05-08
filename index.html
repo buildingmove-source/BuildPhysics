@@ -20,21 +20,790 @@
             line-height: 1.45;
         }
 
-        /* ===== БЕГУЩАЯ СТРОКА (ПОЗДРАВЛЕНИЕ С ДНЁМ ПОБЕДЫ) ===== */
+        /* ===== БЕГУЩАЯ СТРОКА (TICKER) ===== */
         .ticker {
-            background: linear-gradient(90deg, #2d3748 0%, #1a202c 50%, #2d3748 100%);
-            color: #ffd700;
+            background: linear-gradient(90deg, #1a4731, #0d2e1f);
+            color: #ffde9e;
             padding: 10px 0;
             overflow: hidden;
             white-space: nowrap;
-            border-bottom: 2px solid #c41e3a;
-            font-weight: 600;
+            border-bottom: 2px solid #ffd966;
             position: relative;
-            z-index: 1000;
+            z-index: 5;
         }
         .ticker-content {
             display: inline-block;
-            animation: tickerMove 25s linear infinite;
+            animation: tickerScroll 22s linear infinite;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        .ticker-content span {
+            margin: 0 35px;
+            display: inline-block;
+        }
+        .ticker-content .victory-emblem {
+            color: #ffd966;
+            font-size: 1.2rem;
+        }
+        @keyframes tickerScroll {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .ticker:hover .ticker-content {
+            animation-play-state: paused;
+        }
+
+        /* ===== RBC-style header ===== */
+        .top-line {
+            background: #fff;
+            border-bottom: 1px solid #e6e9ed;
+            font-size: 12px;
+            padding: 8px 0;
+        }
+        .top-line-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .date-time {
+            color: #6b7280;
+        }
+        .top-menu {
+            display: flex;
+            gap: 20px;
+        }
+        .top-menu a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 500;
+        }
+        .top-menu a:hover {
+            color: #005eff;
+        }
+
+        .main-header {
+            background: #fff;
+            border-bottom: 1px solid #e6e9ed;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(4px);
+        }
+        .header-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #0a2540, #005eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        .logo span {
+            color: #005eff;
+            background: none;
+            -webkit-background-clip: unset;
+        }
+        .site-tag {
+            font-size: 11px;
+            color: #6c757d;
+            border-left: 1px solid #dee2e6;
+            padding-left: 12px;
+            font-weight: 400;
+        }
+        .header-search {
+            background: #f2f3f5;
+            border-radius: 40px;
+            padding: 8px 16px;
+            width: 260px;
+            border: none;
+            font-size: 14px;
+        }
+        .header-search:focus {
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 2px #005eff30;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2a3e;
+        }
+        .nav-links a:hover {
+            color: #005eff;
+        }
+
+        /* основной контейнер */
+        .main-grid {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+        }
+
+        /* лента новостей */
+        .news-feed h1 {
+            font-size: 28px;
+            font-weight: 700;
+            border-left: 4px solid #005eff;
+            padding-left: 16px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        .feature-news {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e2e6ea;
+            padding-bottom: 30px;
+        }
+        .main-article {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: all 0.2s;
+        }
+        .main-article:hover {
+            transform: translateY(-2px);
+        }
+        .article-img {
+            background: #d1d5db;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            background: linear-gradient(145deg, #eef2f6, #e0e7ed);
+        }
+        .article-content {
+            padding: 20px;
+        }
+        .badge {
+            color: #005eff;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .article-title {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .article-desc {
+            color: #4a5568;
+            font-size: 15px;
+        }
+        .secondary-article {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .news-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            gap: 16px;
+            transition: 0.1s;
+            border: 1px solid #edf2f7;
+        }
+        .news-item:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .news-icon {
+            font-size: 36px;
+            min-width: 56px;
+            text-align: center;
+        }
+        .news-text {
+            flex: 1;
+        }
+        .news-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .news-meta {
+            font-size: 12px;
+            color: #6c757d;
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* SIDEBAR (документы, видео, файлы) */
+        .sidebar-card {
+            background: #fff;
+            border-radius: 16px;
+            margin-bottom: 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f8;
+            overflow: hidden;
+        }
+        .card-header {
+            font-size: 16px;
+            font-weight: 700;
+            padding: 16px 20px;
+            border-bottom: 1px solid #edf2f7;
+            background: #fafcff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-body {
+            padding: 16px 20px;
+        }
+        .doc-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f2f5;
+            font-weight: 500;
+            font-size: 14px;
+            transition: 0.1s;
+        }
+        .doc-button:last-child {
+            border-bottom: none;
+        }
+        .doc-button:hover {
+            color: #005eff;
+            transform: translateX(4px);
+        }
+        .video-placeholder {
+            background: #0a111f;
+            border-radius: 12px;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-placeholder video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        /* Регулятор громкости */
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            background: #f0f2f5;
+            padding: 8px 12px;
+            border-radius: 40px;
+        }
+        .volume-control span {
+            font-size: 18px;
+        }
+        .volume-slider {
+            flex: 1;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #d1d5db;
+            border-radius: 5px;
+            outline: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #005eff;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .volume-value {
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 40px;
+            color: #1f2a3e;
+        }
+
+        .files-list {
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .file-row {
+            font-size: 13px;
+            padding: 8px 0;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px dashed #edf2f7;
+        }
+        .chat-btn {
+            background: #005eff;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 12px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .chat-btn:hover {
+            background: #0043c9;
+        }
+
+        /* ЧАТ ПОПАП */
+        .chat-window {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 360px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #e2e8f0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .chat-window.open {
+            display: flex;
+        }
+        .chat-header {
+            background: #005eff;
+            color: white;
+            padding: 14px 18px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        .chat-messages {
+            height: 340px;
+            overflow-y: auto;
+            padding: 12px;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-input {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid #eef2f8;
+            background: white;
+        }
+        .chat-input input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 8px 14px;
+            font-size: 14px;
+        }
+        .chat-input button {
+            background: #005eff;
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 0 18px;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .msg-bubble {
+            max-width: 85%;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            background: #eef2ff;
+        }
+        .msg-out {
+            align-self: flex-end;
+            background: #005eff;
+            color: white;
+        }
+        .chat-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #005eff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,94,255,0.4);
+            z-index: 999;
+            color: white;
+            font-size: 28px;
+            font-weight: 500;
+        }
+
+        footer {
+            background: #fff;
+            border-top: 1px solid #e6e9ed;
+            padding: 28px 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 13px;
+            margin-top: 40px;
+        }
+        @media (max-width: 860px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .feature-news {
+                grid-template-columns: 1fr;
+            }
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .ticker-content {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- БЕГУЩАЯ СТРОКА С ПОЗДРАВЛЕНИЕМ 9 МАЯ -->
+<div class="ticker">
+    <div class="ticker-content">
+        <span>🎖️ С ДНЁМ ВЕЛИКОЙ ПОБЕДЫ! 9 МАЯ 1945 – 2026 🎖️</span>
+        <span>⭐ МЫ ПОМНИМ ПОДВИГ ГЕРОЕВ! СЛАВА! ⭐</span>
+        <span>🏅 ЗДОРОВЬЯ, МИРА И БЛАГОПОЛУЧИЯ ВАШИМ СЕМЬЯМ! 🏅</span>
+        <span>🎖️ С ДНЁМ ВЕЛИКОЙ ПОБЕДЫ! 9 МАЯ 1945 – 2026 🎖️</span>
+        <span>⭐ МЫ ПОМНИМ ПОДВИГ ГЕРОЕВ! СЛАВА! ⭐</span>
+        <span>🏅 ЗДОРОВЬЯ, МИРА И БЛАГОПОЛУЧИЯ ВАШИМ СЕМЬЯМ! 🏅</span>
+    </div>
+</div>
+
+<div class="top-line">
+    <div class="top-line-container">
+        <div class="date-time" id="currentDate"></div>
+        <div class="top-menu">
+            <a href="#">Строительство</a>
+            <a href="#">Документы</a>
+            <a href="#">Протоколы</a>
+            <a href="#">Контакты</a>
+        </div>
+    </div>
+</div>
+
+<div class="main-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="#" class="logo">BuildPhysics<span>News</span></a>
+            <div class="site-tag">Аналитика и документация</div>
+        </div>
+        <input type="text" class="header-search" id="searchNewsInput" placeholder="Поиск по новостям и документам...">
+        <div class="nav-links">
+            <a href="#">Главное</a>
+            <a href="#">Протоколы</a>
+            <a href="#">Реестры</a>
+            <a href="#">ВИС</a>
+        </div>
+    </div>
+</div>
+
+<div class="main-grid">
+    <div class="news-feed">
+        <h1>📰 Актуальные строительные ведомости</h1>
+        <div class="feature-news">
+            <div class="main-article">
+                <div class="article-img">🏗️</div>
+                <div class="article-content">
+                    <div class="badge">✦ Главное</div>
+                    <div class="article-title">Штаб строительства Огни 3: новый этап работ завершён на 78%</div>
+                    <div class="article-desc">По итогам внеочередного протокола №48 утверждены графики поставок отделочных материалов. Завершён монтаж вентиляции.</div>
+                    <div class="news-meta" style="margin-top: 14px;">📅 6 мая 2026 · 15 мин чтения</div>
+                </div>
+            </div>
+            <div class="secondary-article">
+                <div class="badge">⚡ Срочно</div>
+                <div class="article-title" style="font-size: 18px;">Поздравление с Днём Победы — 1945–2026</div>
+                <div class="article-desc" style="margin-top: 8px;">Коллектив штаба поздравляет ветеранов и всех строителей с Великим праздником.</div>
+                <div class="news-meta" style="margin-top: 18px;">🕊️ 9 мая · всенародный праздник</div>
+            </div>
+        </div>
+
+        <div class="news-list" id="newsListContainer"></div>
+    </div>
+
+    <aside>
+        <div class="sidebar-card">
+            <div class="card-header">📹 Видеофиксация + громкость</div>
+            <div class="card-body">
+                <div class="video-placeholder" id="videoBlock">
+                    <video id="promoVideo" preload="metadata" playsinline style="width:100%; border-radius:12px;">
+                        <source src="vis-presentation.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- ПОЛЗУНОК ГРОМКОСТИ -->
+                <div class="volume-control">
+                    <span>🔊</span>
+                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100">
+                    <span id="volumePercent" class="volume-value">100%</span>
+                </div>
+                <div style="font-size:12px; color:#4b5563; margin-top: 8px;">🎬 Нажмите на видео для воспроизведения/паузы</div>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="card-header">📄 Документы и реестры</div>
+            <div class="card-body">
+                <div id="docsSidebarList"></div>
+                <button class="chat-btn" id="openChatSidebarBtn">💬 Открыть чат команды</button>
+            </div>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="card-header">📁 Экспортированные файлы (GitHub)</div>
+            <div class="card-body">
+                <div id="exportedFilesSidebar" class="files-list">
+                    <div class="file-row">Загрузка файлов...</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<footer>
+    BuildPhysics News — Реплика структуры РБК. С Днём Победы! 1945-2026. © 2026
+</footer>
+
+<div class="chat-window" id="chatPopup">
+    <div class="chat-header">
+        <span>💬 Чат строителей · Огни 3</span>
+        <span id="closeChatBtn" style="cursor:pointer;">✕</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="msg-bubble">Добрый день! Актуальные протоколы во вкладке документы</div>
+        <div class="msg-bubble msg-out">Принято, спасибо. Проверяем ВИС</div>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Ваше сообщение...">
+        <button id="sendChatMsg">→</button>
+    </div>
+</div>
+<div class="chat-float" id="chatFloatBtn">💬</div>
+
+<script>
+    // ДАННЫЕ документов (новости)
+    const documentsData = [
+        { title: "Протокол №48 от 06.05.2026 — утверждение АОНа", date: "06.05.2026", type: "protocol", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Обсуждение графика отделки и ввода секций." },
+        { title: "Протокол №46 · 22 апреля 2026 (контроль качества)", date: "22.04.2026", type: "protocol", icon: "📄", link: "протокол_46_огни_3_от_22_04_2026.html" },
+        { title: "РСР Реестр отделочных работ", date: "03.05.2026", type: "registry", icon: "📊", link: "РСР СОР.html" },
+        { title: "Сводка оплат (финансовый отчёт)", date: "02.05.2026", type: "finance", icon: "💰", link: "Сводка оплат.html" },
+        { title: "Реестр чек-листа АВТ2 ИНЭКО", date: "06.05.2026", type: "registry", icon: "📋", link: "Reesrt_cheklist_AVT2.html" },
+        { title: "Реестр чек-листа СС8 + СС5", date: "01.05.2026", type: "registry", icon: "📑", link: "реестр для ЧЛ.html" },
+        { title: "ВИС Огни 3 — актуальные данные (Google-таблица)", date: "06.05.2026", type: "tech", icon: "📈", link: "VIS-Ogni-3.html", external: true },
+        { title: "Задачи штаба (контроль поручений)", date: "05.05.2026", type: "tech", icon: "✅", link: "Zadachi-Ogni-3.html" }
+    ];
+
+    function renderNewsList(searchTerm = "") {
+        const container = document.getElementById('newsListContainer');
+        let filtered = documentsData.filter(doc => 
+            doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (doc.desc && doc.desc.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+        if(filtered.length === 0) {
+            container.innerHTML = `<div style="background:white; border-radius:16px; padding: 24px; text-align:center;">По вашему запросу ничего не найдено</div>`;
+            return;
+        }
+        container.innerHTML = filtered.map(doc => `
+            <a href="${doc.link}" class="news-item" style="display:flex;">
+                <div class="news-icon">${doc.icon}</div>
+                <div class="news-text">
+                    <div class="news-title">${escapeHtml(doc.title)}</div>
+                    <div class="news-desc" style="font-size:13px; color:#4b5563;">${doc.desc || 'Ознакомиться с документом и полной версией протокола'}</div>
+                    <div class="news-meta">
+                        <span>📅 ${doc.date}</span>
+                        <span>📂 ${doc.type === 'protocol' ? 'Протокол' : doc.type === 'registry' ? 'Реестр' : 'Документация'}</span>
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    }
+
+    function escapeHtml(str) { 
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    const searchInput = document.getElementById('searchNewsInput');
+    searchInput.addEventListener('input', (e) => { renderNewsList(e.target.value); });
+
+    function renderSidebarDocs() {
+        const sidebarContainer = document.getElementById('docsSidebarList');
+        if(!sidebarContainer) return;
+        sidebarContainer.innerHTML = documentsData.slice(0,6).map(doc => `
+            <a href="${doc.link}" class="doc-button">
+                <span>${doc.icon}</span>
+                <span style="flex:1;">${doc.title.length > 38 ? doc.title.slice(0,35)+'…' : doc.title}</span>
+                <span style="font-size:10px; color:#8b9eb0;">${doc.date}</span>
+            </a>
+        `).join('');
+    }
+
+    async function loadExportedFiles() {
+        const container = document.getElementById('exportedFilesSidebar');
+        try {
+            const response = await fetch('https://buildingmove-source.github.io/BuildPhysics/files-index.json', { cache: 'no-store' });
+            if(!response.ok) throw new Error();
+            const idx = await response.json();
+            const files = idx.files || [];
+            if(files.length === 0) { container.innerHTML = '<div class="file-row">Нет экспортированных файлов</div>'; return; }
+            container.innerHTML = files.map(f => `
+                <a href="https://buildingmove-source.github.io/BuildPhysics/${f.name}" class="file-row" style="text-decoration:none; color:#005eff;">
+                    <span>📄</span> Экспорт от ${f.date} 
+                </a>
+            `).join('');
+        } catch(e) {
+            container.innerHTML = '<div class="file-row">Ошибка загрузки списка файлов</div>';
+        }
+    }
+
+    // ВИДЕО И ГРОМКОСТЬ (МАКСИМАЛЬНАЯ ПО УМОЛЧАНИЮ)
+    const video = document.getElementById('promoVideo');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumePercentSpan = document.getElementById('volumePercent');
+
+    if (video) {
+        // Ставим громкость на 100% (максимум)
+        video.volume = 1.0;
+        if (volumeSlider) volumeSlider.value = 100;
+        if (volumePercentSpan) volumePercentSpan.innerText = '100%';
+
+        // Событие изменения громкости
+        volumeSlider?.addEventListener('input', (e) => {
+            const val = e.target.value;
+            const volumeLevel = val / 100;
+            video.volume = volumeLevel;
+            volumePercentSpan.innerText = val + '%';
+        });
+
+        // Клик по видео для воспроизведения / паузы + разрешаем звук
+        const videoContainer = document.getElementById('videoBlock');
+        videoContainer?.addEventListener('click', (e) => {
+            if (e.target === volumeSlider || volumeSlider.contains(e.target)) return;
+            if (video.paused) {
+                video.play().catch(e => console.log("autoplay error", e));
+            } else {
+                video.pause();
+            }
+        });
+        // Убедимся, что видео может играть со звуком (не muted)
+        video.muted = false;
+    }
+
+    // Чат
+    const chatPopup = document.getElementById('chatPopup');
+    const chatFloat = document.getElementById('chatFloatBtn');
+    const closeChat = document.getElementById('closeChatBtn');
+    const openSidebarChat = document.getElementById('openChatSidebarBtn');
+
+    function openChat() { chatPopup.classList.add('open'); }
+    function closeChatFunc() { chatPopup.classList.remove('open'); }
+
+    chatFloat?.addEventListener('click', openChat);
+    closeChat?.addEventListener('click', closeChatFunc);
+    openSidebarChat?.addEventListener('click', openChat);
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if(!msg) return;
+        const messagesDiv = document.getElementById('chatMessages');
+        const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        const outgoingDiv = document.createElement('div');
+        outgoingDiv.className = 'msg-bubble msg-out';
+        outgoingDiv.innerHTML = `${escapeHtml(msg)}<div style="font-size:9px; opacity:0.7; margin-top:4px;">${time}</div>`;
+        messagesDiv.appendChild(outgoingDiv);
+        input.value = '';
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        setTimeout(() => {
+            const reply = document.createElement('div');
+            reply.className = 'msg-bubble';
+            reply.innerHTML = `✅ Сообщение доставлено (демо-чат).<div style="font-size:9px;">${time} · помощник</div>`;
+            messagesDiv.appendChild(reply);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 500);
+    }
+
+    document.getElementById('sendChatMsg')?.addEventListener('click', sendMessage);
+    document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
+
+    function setDate() {
+        const now = new Date();
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('currentDate').innerText = now.toLocaleDateString('ru-RU', options);
+    }
+    
+    renderNewsList();
+    renderSidebarDocs();
+    loadExportedFiles();
+    setDate();
+</script>
+</body>
+</html>            animation: tickerMove 25s linear infinite;
             font-size: 16px;
             letter-spacing: 0.5px;
         }

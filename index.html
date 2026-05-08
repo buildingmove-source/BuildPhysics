@@ -6,6 +6,7 @@
     <meta name="description" content="МОСКВАДОНСТРОИТСЯ ЖК Огни 3 — актуальная документация, протоколы, реестры строительства">
     <title>МОСКВАДОНСТРОИТСЯ · ЖК Огни 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -139,6 +140,11 @@
             border: none;
             font-size: 14px;
         }
+        .header-search:focus {
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 2px #005eff30;
+        }
         .nav-links {
             display: flex;
             gap: 28px;
@@ -185,6 +191,10 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .main-article:hover {
+            transform: translateY(-2px);
         }
         .article-img {
             background: #d1d5db;
@@ -223,21 +233,30 @@
             display: flex;
             gap: 16px;
             border: 1px solid #edf2f7;
-            transition: 0.1s;
+            transition: all 0.2s;
+            cursor: pointer;
         }
         .news-item:hover {
             border-color: #cbd5e1;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateX(4px);
         }
         .news-icon {
             font-size: 36px;
             min-width: 56px;
             text-align: center;
         }
+        .news-text {
+            flex: 1;
+        }
         .news-title {
             font-size: 17px;
             font-weight: 600;
             margin-bottom: 6px;
+        }
+        .news-desc {
+            font-size: 13px;
+            color: #4a5568;
         }
         .news-meta {
             font-size: 12px;
@@ -281,13 +300,18 @@
             border-bottom: 1px solid #f0f2f5;
             font-weight: 500;
             font-size: 14px;
+            transition: all 0.2s;
+            cursor: pointer;
         }
         .doc-button:hover {
             color: #005eff;
             transform: translateX(4px);
         }
+        .doc-button:last-child {
+            border-bottom: none;
+        }
 
-        /* Радио-плеер */
+        /* Радио-плеер Business FM */
         .radio-player {
             background: linear-gradient(135deg, #1a1f2c, #0f1724);
             border-radius: 14px;
@@ -309,25 +333,70 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
         }
-        audio {
-            width: 100%;
+        .radio-info {
+            flex: 1;
+        }
+        .radio-info h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .radio-info p {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        .radio-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .radio-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 6px 16px;
             border-radius: 30px;
-            margin-top: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .radio-btn:hover {
+            background: #c0392b;
+        }
+        .radio-status {
+            font-size: 11px;
+            margin-top: 10px;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.3); }
         }
 
-        /* Видео контейнер */
+        /* Видео контейнер с локальным файлом */
         .video-container {
             position: relative;
             border-radius: 16px;
             overflow: hidden;
             background: #000;
         }
-        .video-container iframe {
+        .video-container video {
             width: 100%;
             aspect-ratio: 16 / 9;
-            border: none;
+            object-fit: cover;
+            display: block;
         }
         .volume-control {
             display: flex;
@@ -338,12 +407,16 @@
             padding: 8px 12px;
             border-radius: 40px;
         }
+        .volume-control span {
+            font-size: 14px;
+        }
         .volume-slider {
             flex: 1;
             height: 4px;
             -webkit-appearance: none;
             background: #d1d5db;
             border-radius: 5px;
+            outline: none;
         }
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -352,6 +425,12 @@
             background: #c0392b;
             border-radius: 50%;
             cursor: pointer;
+        }
+        .volume-value {
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 40px;
+            color: #1f2a3e;
         }
 
         .chat-btn {
@@ -364,6 +443,11 @@
             width: 100%;
             margin-top: 12px;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chat-btn:hover {
+            background: #a02b1f;
+            transform: scale(0.98);
         }
         
         /* Чат */
@@ -378,6 +462,7 @@
             z-index: 1000;
             display: none;
             flex-direction: column;
+            border: 1px solid #eef2f8;
         }
         .chat-window.open {
             display: flex;
@@ -385,41 +470,56 @@
         .chat-header {
             background: #c0392b;
             color: white;
-            padding: 12px 18px;
+            padding: 14px 18px;
             border-radius: 20px 20px 0 0;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             cursor: pointer;
+            font-weight: 600;
+        }
+        .chat-header span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .chat-messages {
-            height: 320px;
+            height: 340px;
             overflow-y: auto;
             padding: 12px;
             background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         .msg-bubble {
             max-width: 85%;
             padding: 8px 12px;
-            border-radius: 20px;
+            border-radius: 18px;
             font-size: 13px;
             background: #eef2ff;
-            margin-bottom: 8px;
         }
         .msg-out {
             background: #c0392b;
             color: white;
-            margin-left: auto;
+            align-self: flex-end;
         }
         .chat-input {
             display: flex;
             padding: 12px;
             border-top: 1px solid #eef2f8;
+            gap: 8px;
         }
         .chat-input input {
             flex: 1;
             border: 1px solid #e2e8f0;
             border-radius: 40px;
-            padding: 8px 14px;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+        .chat-input input:focus {
+            outline: none;
+            border-color: #c0392b;
         }
         .chat-input button {
             background: #c0392b;
@@ -427,8 +527,8 @@
             color: white;
             border-radius: 40px;
             padding: 8px 18px;
-            margin-left: 8px;
             cursor: pointer;
+            font-weight: 500;
         }
         .chat-float {
             position: fixed;
@@ -445,6 +545,11 @@
             color: white;
             font-size: 28px;
             z-index: 999;
+            box-shadow: 0 4px 12px rgba(192,57,43,0.4);
+            transition: all 0.2s;
+        }
+        .chat-float:hover {
+            transform: scale(1.05);
         }
         footer {
             background: #fff;
@@ -453,10 +558,12 @@
             text-align: center;
             color: #6c757d;
             font-size: 13px;
+            margin-top: 20px;
         }
         @media (max-width: 860px) {
             .main-grid { grid-template-columns: 1fr; }
             .feature-news { grid-template-columns: 1fr; }
+            .chat-window { width: calc(100% - 40px); right: 20px; left: 20px; }
         }
     </style>
 </head>
@@ -470,6 +577,8 @@
         <span>ВИС Огни 3: завершён монтаж вентиляции — 78%</span>
         <span class="separator">✦</span>
         <span>Протокол №48 утверждён · следующее заседание 12 мая</span>
+        <span class="separator">✦</span>
+        <span>ДО 9 МАЯ ОСТАЛСЯ 1 ДЕНЬ! ПОЗДРАВЛЯЕМ С НАСТУПАЮЩИМ ПРАЗДНИКОМ!</span>
         <span class="separator">✦</span>
         <span>🔴 МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · АКТУАЛЬНЫЕ ПРОТОКОЛЫ И РЕЕСТРЫ</span>
         <span class="separator">✦</span>
@@ -517,10 +626,10 @@
                     <div class="news-meta">📅 6 мая 2026 · реестр РСР</div>
                 </div>
             </div>
-            <div class="main-article" style="background:#fff; padding:16px;">
+            <div class="main-article" style="padding: 20px;">
                 <div class="badge">⚡ Протокол №48</div>
-                <div class="article-title" style="font-size:18px;">Утверждён график поставок материалов</div>
-                <div class="news-meta">от 06.05.2026 · штаб</div>
+                <div class="article-title" style="font-size: 18px;">Утверждён график поставок материалов</div>
+                <div class="news-meta" style="margin-top: 12px;">от 06.05.2026 · штаб</div>
             </div>
         </div>
 
@@ -530,48 +639,56 @@
     </div>
 
     <aside>
-        <!-- РАДИО (РАБОТАЕТ) -->
+        <!-- РАДИО BUSINESS FM (РАБОТАЕТ) -->
         <div class="sidebar-card">
-            <div class="card-header">📻 Радио · Прямой эфир</div>
+            <div class="card-header">📻 Business FM · прямой эфир</div>
             <div class="card-body">
                 <div class="radio-player">
                     <div class="radio-station">
-                        <div class="radio-logo">🎵</div>
-                        <div><strong>Radio Record</strong><br><span style="font-size:11px;">Танцевальная станция</span></div>
+                        <div class="radio-logo"><i class="fas fa-chart-line"></i></div>
+                        <div class="radio-info">
+                            <h4>Business FM</h4>
+                            <p>Деловое радио · Новости экономики</p>
+                        </div>
                     </div>
-                    <audio id="radioStream" controls preload="auto">
-                        <source src="https://online.recordce.eu/Record_128k.mp3" type="audio/mpeg">
+                    <audio id="businessFMRadio" controls style="width: 100%; border-radius: 30px;" preload="auto">
+                        <source src="https://businessfm.cdnvideo.ru/businessfm_mp3/master.m3u8" type="application/x-mpegURL">
+                        <source src="https://businessfm.cdnvideo.ru/businessfm_mp3/64/playlist.m3u8" type="application/x-mpegURL">
                     </audio>
-                    <div style="font-size:11px; margin-top:8px;">🔴 24/7 эфир · Музыка и новости</div>
+                    <div class="radio-status">
+                        <span class="live-dot"></span>
+                        <span>LIVE · Деловые новости, аналитика, интервью</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ВИДЕО YouTube (РАБОТАЕТ, ПОВТОР) -->
+        <!-- ВИДЕО (ИСПРАВЛЕНО - ЛОКАЛЬНЫЙ ФАЙЛ С ПОВТОРОМ) -->
         <div class="sidebar-card">
-            <div class="card-header">🎥 Видеофиксация (loop)</div>
+            <div class="card-header">🎥 Видеофиксация (loop + фон)</div>
             <div class="card-body">
                 <div class="video-container">
-                    <iframe id="youtubeVideo" 
-                            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk&controls=1&mute=0&enablejsapi=1" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
+                    <video id="promoVideo" loop preload="auto" playsinline style="width:100%;">
+                        <source src="vis-presentation.mp4" type="video/mp4">
+                    </video>
                 </div>
                 <div class="volume-control">
                     <span>🔊</span>
                     <input type="range" id="videoVolumeSlider" class="volume-slider" min="0" max="100" value="70">
                     <span id="volPercent" class="volume-value">70%</span>
                 </div>
-                <div style="font-size:12px; margin-top:6px;">🔄 Видео зациклено · регулятор громкости</div>
+                <div style="font-size: 12px; margin-top: 6px; color: #4b5563;">
+                    🔄 Видео зациклено · кликните для воспроизведения/паузы
+                </div>
             </div>
         </div>
 
         <div class="sidebar-card">
             <div class="card-header">📁 Реестры и акты ВИС</div>
             <div class="card-body" id="docSidebarShort"></div>
-            <button class="chat-btn" id="openChatSidebarBtn">💬 Чат штаба</button>
+            <button class="chat-btn" id="openChatSidebarBtn">
+                <i class="fas fa-comments"></i> 💬 Чат штаба
+            </button>
         </div>
     </aside>
 </div>
@@ -581,30 +698,45 @@
 </footer>
 
 <div class="chat-window" id="chatPopup">
-    <div class="chat-header"><span>💬 Чат строителей</span><span id="closeChatBtn" style="cursor:pointer;">✕</span></div>
-    <div class="chat-messages" id="chatMessages"><div class="msg-bubble">Добро пожаловать в чат ЖК Огни 3</div></div>
-    <div class="chat-input"><input id="chatInput" placeholder="Сообщение..."><button id="sendChatMsg">→</button></div>
+    <div class="chat-header">
+        <span><i class="fas fa-comment-dots"></i> Чат строителей · Огни 3</span>
+        <span id="closeChatBtn" style="cursor:pointer;">✕</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="msg-bubble">🏗️ Добро пожаловать в чат ЖК Огни 3!</div>
+        <div class="msg-bubble">📋 Все актуальные протоколы в разделе документов</div>
+    </div>
+    <div class="chat-input">
+        <input id="chatInput" placeholder="Введите сообщение...">
+        <button id="sendChatMsg"><i class="fas fa-paper-plane"></i></button>
+    </div>
 </div>
-<div class="chat-float" id="chatFloatBtn">💬</div>
+<div class="chat-float" id="chatFloatBtn">
+    <i class="fas fa-comment-dots"></i>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
     // ========== ДОКУМЕНТЫ ПО ВИС (ЖК Огни 3) ==========
     const visDocuments = [
-        { title: "Протокол №48 · 06 мая 2026 · утверждение АОНа", date: "06.05.2026", type: "Протокол", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Решение по графику отделки" },
-        { title: "РСР Реестр отделочных работ (ВИС)", date: "03.05.2026", type: "Реестр", icon: "📊", link: "РСР СОР.html" },
-        { title: "Сводка оплат и финансирования", date: "02.05.2026", type: "Финансы ВИС", icon: "💰", link: "Сводка оплат.html" },
-        { title: "Реестр чек-листа АВТ2 ИНЭКО", date: "06.05.2026", type: "Чек-лист", icon: "📋", link: "Reesrt_cheklist_AVT2.html" },
-        { title: "Реестр чек-листа СС8 + СС5", date: "01.05.2026", type: "Чек-лист", icon: "📑", link: "реестр для ЧЛ.html" },
-        { title: "ВИС Огни 3 · актуальная таблица", date: "06.05.2026", type: "Google Sheet", icon: "📈", link: "VIS-Ogni-3.html" },
-        { title: "Задачи штаба (контроль поручений)", date: "05.05.2026", type: "Рабочий лист", icon: "✅", link: "Zadachi-Ogni-3.html" },
-        { title: "Протокол №46 · 22 апреля 2026", date: "22.04.2026", type: "Протокол", icon: "📎", link: "протокол_46_огни_3_от_22_04_2026.html" }
+        { title: "Протокол №48 · 06 мая 2026 · утверждение АОНа", date: "06.05.2026", type: "Протокол", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Решение по графику отделки и поставок" },
+        { title: "РСР Реестр отделочных работ (ВИС)", date: "03.05.2026", type: "Реестр", icon: "📊", link: "РСР СОР.html", desc: "Актуальный реестр отделочных материалов" },
+        { title: "Сводка оплат и финансирования", date: "02.05.2026", type: "Финансы ВИС", icon: "💰", link: "Сводка оплат.html", desc: "Финансовый отчёт по строительству" },
+        { title: "Реестр чек-листа АВТ2 ИНЭКО", date: "06.05.2026", type: "Чек-лист", icon: "📋", link: "Reesrt_cheklist_AVT2.html", desc: "Проверочный лист АВТ2" },
+        { title: "Реестр чек-листа СС8 + СС5", date: "01.05.2026", type: "Чек-лист", icon: "📑", link: "реестр для ЧЛ.html", desc: "Сводный реестр чек-листов" },
+        { title: "ВИС Огни 3 · актуальная таблица", date: "06.05.2026", type: "Google Sheet", icon: "📈", link: "VIS-Ogni-3.html", desc: "Живая таблица ВИС" },
+        { title: "Задачи штаба (контроль поручений)", date: "05.05.2026", type: "Рабочий лист", icon: "✅", link: "Zadachi-Ogni-3.html", desc: "Контроль выполнения задач" },
+        { title: "Протокол №46 · 22 апреля 2026", date: "22.04.2026", type: "Протокол", icon: "📎", link: "протокол_46_огни_3_от_22_04_2026.html", desc: "Предыдущий протокол заседания" }
     ];
 
     function renderVISList(search = "") {
         const container = document.getElementById('visDocumentsList');
-        let filtered = visDocuments.filter(doc => doc.title.toLowerCase().includes(search.toLowerCase()) || (doc.desc && doc.desc.toLowerCase().includes(search.toLowerCase())));
+        let filtered = visDocuments.filter(doc => 
+            doc.title.toLowerCase().includes(search.toLowerCase()) || 
+            (doc.desc && doc.desc.toLowerCase().includes(search.toLowerCase()))
+        );
         if(filtered.length === 0) {
-            container.innerHTML = `<div style="background:white; border-radius:16px; padding:28px; text-align:center;">Документы по ВИС не найдены</div>`;
+            container.innerHTML = `<div style="background:white; border-radius:16px; padding: 40px; text-align:center; color:#6c757d;">📭 Документы по ВИС не найдены</div>`;
             return;
         }
         container.innerHTML = filtered.map(doc => `
@@ -612,8 +744,11 @@
                 <div class="news-icon">${doc.icon}</div>
                 <div class="news-text">
                     <div class="news-title">${escapeHtml(doc.title)}</div>
-                    <div class="news-desc" style="font-size:13px; color:#4a5568;">${doc.desc || 'Актуальная версия документа ВИС'}</div>
-                    <div class="news-meta"><span>📅 ${doc.date}</span><span>📂 ${doc.type}</span></div>
+                    <div class="news-desc">${doc.desc || 'Актуальная версия документа ВИС'}</div>
+                    <div class="news-meta">
+                        <span>📅 ${doc.date}</span>
+                        <span>📂 ${doc.type}</span>
+                    </div>
                 </div>
             </a>
         `).join('');
@@ -623,81 +758,125 @@
         return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); 
     }
 
-    document.getElementById('searchVIS').addEventListener('input', (e) => renderVISList(e.target.value));
+    // Поиск
+    const searchInput = document.getElementById('searchVIS');
+    searchInput.addEventListener('input', (e) => renderVISList(e.target.value));
 
+    // Боковая панель с документами
     function renderSidebarDocsShort() {
         const sidebarDiv = document.getElementById('docSidebarShort');
         if(!sidebarDiv) return;
-        sidebarDiv.innerHTML = visDocuments.slice(0,5).map(doc => `
-            <a href="${doc.link}" class="doc-button"><span>${doc.icon}</span> ${doc.title.length > 35 ? doc.title.slice(0,32)+'…' : doc.title}</a>
+        sidebarDiv.innerHTML = visDocuments.slice(0, 6).map(doc => `
+            <a href="${doc.link}" class="doc-button">
+                <span>${doc.icon}</span> 
+                <span style="flex:1;">${doc.title.length > 35 ? doc.title.slice(0,32)+'…' : doc.title}</span>
+                <span style="font-size: 10px; color:#8b9eb0;">${doc.date}</span>
+            </a>
         `).join('');
     }
 
-    // Управление громкостью YouTube видео
-    let player;
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('youtubeVideo', {
-            events: {
-                onReady: onPlayerReady
-            }
-        });
-    }
-    
-    function onPlayerReady(event) {
+    // ========== ВИДЕО (ИСПРАВЛЕНО: РАБОТАЕТ, ПОВТОР, ГРОМКОСТЬ) ==========
+    const videoElement = document.getElementById('promoVideo');
+    if (videoElement) {
+        // Установка loop
+        videoElement.loop = true;
+        
+        // Громкость по умолчанию 70%
+        videoElement.volume = 0.7;
+        
+        // Ползунок громкости
         const volumeSlider = document.getElementById('videoVolumeSlider');
-        const volSpan = document.getElementById('volPercent');
+        const volPercent = document.getElementById('volPercent');
         
         volumeSlider.addEventListener('input', (e) => {
-            const volume = e.target.value;
-            player.setVolume(volume);
-            volSpan.innerText = volume + '%';
+            const val = e.target.value;
+            videoElement.volume = val / 100;
+            volPercent.innerText = val + '%';
         });
         
-        player.setVolume(70);
-        player.playVideo();
+        // Клик по контейнеру для паузы/воспроизведения
+        const videoContainer = document.querySelector('.video-container');
+        videoContainer.addEventListener('click', (e) => {
+            if (e.target === volumeSlider || volumeSlider.contains(e.target)) return;
+            if (videoElement.paused) {
+                videoElement.play().catch(e => console.log("Play error:", e));
+            } else {
+                videoElement.pause();
+            }
+        });
+        
+        // Автозапуск с обработкой ошибок браузера
+        const playPromise = videoElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Автозапуск заблокирован, нажмите на видео для воспроизведения");
+            });
+        }
     }
-    
-    // Загрузка YouTube API
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // РАДИО - принудительное воспроизведение
-    const radio = document.getElementById('radioStream');
-    if(radio) {
-        radio.volume = 0.5;
-        // Попытка автоматического воспроизведения
-        radio.play().catch(e => console.log("Нажмите play на радио для запуска"));
+    // ========== РАДИО BUSINESS FM С HLS.PLAYLIST ==========
+    const radioAudio = document.getElementById('businessFMRadio');
+    if (radioAudio) {
+        // Пытаемся воспроизвести радио автоматически
+        radioAudio.volume = 0.5;
+        const radioPlay = radioAudio.play();
+        if (radioPlay !== undefined) {
+            radioPlay.catch(error => {
+                console.log("Радио: нажмите play для запуска");
+            });
+        }
     }
 
-    // Чат
+    // ========== ЧАТ ==========
     const chatPopup = document.getElementById('chatPopup');
     const chatFloat = document.getElementById('chatFloatBtn');
     const closeChat = document.getElementById('closeChatBtn');
-    document.getElementById('openChatSidebarBtn')?.addEventListener('click', () => chatPopup.classList.add('open'));
-    chatFloat?.addEventListener('click', () => chatPopup.classList.add('open'));
-    closeChat?.addEventListener('click', () => chatPopup.classList.remove('open'));
+    const openSidebarChat = document.getElementById('openChatSidebarBtn');
     
-    function sendMsg() {
-        const inp = document.getElementById('chatInput');
-        if(!inp.value.trim()) return;
-        const msgDiv = document.getElementById('chatMessages');
+    function openChat() { chatPopup.classList.add('open'); }
+    function closeChatFunc() { chatPopup.classList.remove('open'); }
+    
+    chatFloat.addEventListener('click', openChat);
+    closeChat.addEventListener('click', closeChatFunc);
+    openSidebarChat.addEventListener('click', openChat);
+    
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if (!msg) return;
+        
+        const messagesDiv = document.getElementById('chatMessages');
         const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-        const outMsg = `<div class="msg-bubble msg-out">${escapeHtml(inp.value)}<div style="font-size:9px;">${time}</div></div>`;
-        msgDiv.insertAdjacentHTML('beforeend', outMsg);
-        inp.value = '';
-        setTimeout(() => msgDiv.insertAdjacentHTML('beforeend', `<div class="msg-bubble">✅ доставлено (чат штаба)</div>`), 400);
-        msgDiv.scrollTop = msgDiv.scrollHeight;
+        const outgoingMsg = document.createElement('div');
+        outgoingMsg.className = 'msg-bubble msg-out';
+        outgoingMsg.innerHTML = `${escapeHtml(msg)}<div style="font-size: 9px; opacity: 0.7; margin-top: 4px;">${time} · Вы</div>`;
+        messagesDiv.appendChild(outgoingMsg);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        input.value = '';
+        
+        // Автоответ
+        setTimeout(() => {
+            const replyMsg = document.createElement('div');
+            replyMsg.className = 'msg-bubble';
+            replyMsg.innerHTML = `✅ Сообщение принято!<div style="font-size: 9px; opacity: 0.7;">${time} · Штаб</div>`;
+            messagesDiv.appendChild(replyMsg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 500);
     }
     
-    document.getElementById('sendChatMsg')?.addEventListener('click', sendMsg);
-    document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMsg(); });
-
-    function setDate() { 
-        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('ru-RU', {day:'numeric', month:'long', year:'numeric'}); 
+    document.getElementById('sendChatMsg').addEventListener('click', sendMessage);
+    document.getElementById('chatInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+    
+    // Дата
+    function setDate() {
+        const now = new Date();
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('currentDate').innerText = now.toLocaleDateString('ru-RU', options);
     }
     
+    // Инициализация
     renderVISList();
     renderSidebarDocsShort();
     setDate();

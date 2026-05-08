@@ -363,7 +363,7 @@
             border-bottom: none;
         }
 
-        /* Радио-плеер Business FM */
+        /* РАДИО-ПЛЕЕР — ТЕРМОЯДЕРНЫЙ МЕТОД */
         .radio-player {
             background: linear-gradient(135deg, #1a1f2c, #0f1724);
             border-radius: 14px;
@@ -398,31 +398,63 @@
             font-size: 11px;
             opacity: 0.7;
         }
-        .radio-controls {
+        
+        /* Кастомные кнопки радио вместо стандартных */
+        .radio-custom-controls {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 15px;
             margin-top: 12px;
+            flex-wrap: wrap;
         }
         .radio-btn {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             border: none;
             color: white;
-            padding: 6px 16px;
-            border-radius: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 18px;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .radio-btn:hover {
             background: #c0392b;
+            transform: scale(1.05);
+        }
+        .radio-volume {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 120px;
+        }
+        .radio-volume input {
+            flex: 1;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+        }
+        .radio-volume input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #c0392b;
+            border-radius: 50%;
+            cursor: pointer;
         }
         .radio-status {
             font-size: 11px;
-            margin-top: 10px;
+            margin-top: 12px;
             opacity: 0.8;
             display: flex;
             align-items: center;
             gap: 8px;
+            justify-content: space-between;
         }
         .live-dot {
             width: 8px;
@@ -630,7 +662,7 @@
         <span class="separator">✦</span>
         <span>Протокол №48 утверждён · следующее заседание 13 мая</span>
         <span class="separator">✦</span>
-        <span>ДО 9 МАЯ ОСТАЛСЯ 1 ДЕНЬ! ПОЗДРАВЛЯЕМ С НАСТУПАЮЩИМ ПРАЗДНИКОМ!</span>
+        <span>С ДНЁМ ПОБЕДЫ! 9 МАЯ 1945 – 2026</span>
         <span class="separator">✦</span>
         <span>🔴 МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · АКТУАЛЬНЫЕ ПРОТОКОЛЫ И РЕЕСТРЫ</span>
         <span class="separator">✦</span>
@@ -683,7 +715,6 @@
                 <div class="article-content" style="padding-top: 8px;">
                     <div class="article-title" style="font-size: 18px; margin-bottom: 16px;">от 06.05.2026 · штаб</div>
                     <div class="protocol-widget">
-                        <!-- Пункты протокола с красным выделением просроченных -->
                         <div class="protocol-item protocol-red-bg">
                             <div class="protocol-icon"><i class="fas fa-exclamation-triangle"></i></div>
                             <div class="protocol-text">
@@ -747,13 +778,11 @@
             </div>
         </div>
 
-        <div class="news-list" id="visDocumentsList">
-            <!-- динамическая загрузка документов ВИС -->
-        </div>
+        <div class="news-list" id="visDocumentsList"></div>
     </div>
 
     <aside>
-        <!-- РАДИО BUSINESS FM -->
+        <!-- РАДИО BUSINESS FM — ТЕРМОЯДЕРНЫЙ МЕТОД -->
         <div class="sidebar-card">
             <div class="card-header">📻 Business FM · прямой эфир</div>
             <div class="card-body">
@@ -762,16 +791,26 @@
                         <div class="radio-logo"><i class="fas fa-chart-line"></i></div>
                         <div class="radio-info">
                             <h4>Business FM</h4>
-                            <p>Деловое радио · Новости экономики</p>
+                            <p>Деловое радио · Новости экономики 24/7</p>
                         </div>
                     </div>
-                    <audio id="businessFMRadio" controls style="width: 100%; border-radius: 30px;" preload="auto">
-                        <source src="https://businessfm.cdnvideo.ru/businessfm_mp3/master.m3u8" type="application/x-mpegURL">
-                        <source src="https://businessfm.cdnvideo.ru/businessfm_mp3/64/playlist.m3u8" type="application/x-mpegURL">
-                    </audio>
+                    
+                    <!-- Скрытый аудиоэлемент для термоядерного воспроизведения -->
+                    <audio id="radioStream" preload="auto" style="display: none;"></audio>
+                    
+                    <!-- Кастомные элементы управления -->
+                    <div class="radio-custom-controls">
+                        <button id="radioPlayBtn" class="radio-btn"><i class="fas fa-play"></i></button>
+                        <button id="radioPauseBtn" class="radio-btn"><i class="fas fa-pause"></i></button>
+                        <div class="radio-volume">
+                            <i class="fas fa-volume-up" style="font-size: 12px;"></i>
+                            <input type="range" id="radioVolume" min="0" max="100" value="50">
+                        </div>
+                    </div>
+                    
                     <div class="radio-status">
-                        <span class="live-dot"></span>
-                        <span>LIVE · Деловые новости, аналитика, интервью</span>
+                        <div><span class="live-dot"></span> <span id="radioStatusText">LIVE · Эфир Business FM</span></div>
+                        <div id="radioBitrate" style="font-size: 10px;">📡 128 kbps</div>
                     </div>
                 </div>
             </div>
@@ -819,7 +858,7 @@
     <div class="chat-messages" id="chatMessages">
         <div class="msg-bubble">🏗️ Добро пожаловать в чат ЖК Огни 3!</div>
         <div class="msg-bubble">📋 Все актуальные протоколы в разделе документов</div>
-        <div class="msg-bubble">⚠️ Внимание! По протоколу №48 есть просроченные задачи (выделены красным)</div>
+        <div class="msg-bubble">⚠️ Внимание! По протоколу №48 есть просроченные задачи</div>
     </div>
     <div class="chat-input">
         <input id="chatInput" placeholder="Введите сообщение...">
@@ -830,9 +869,115 @@
     <i class="fas fa-comment-dots"></i>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
-    // ========== ДОКУМЕНТЫ ПО ВИС (ЖК Огни 3) ==========
+    // ==================== ТЕРМОЯДЕРНЫЙ РАДИО-ПЛЕЕР ====================
+    // Список резервных потоков (термоядерная надёжность)
+    const radioStreams = [
+        { name: "Business FM (основной)", url: "https://businessfm.cdnvideo.ru/businessfm_mp3/128/playlist.m3u8", type: "hls" },
+        { name: "Business FM (резерв 64)", url: "https://businessfm.cdnvideo.ru/businessfm_mp3/64/playlist.m3u8", type: "hls" },
+        { name: "Business FM (MP3 резерв)", url: "https://radio.businessfm.ru/businessfm.mp3", type: "mp3" },
+        { name: "Comedy Radio (тестовый)", url: "https://radio.recordce.eu/Record_128k.mp3", type: "mp3" }
+    ];
+    
+    let currentStreamIndex = 0;
+    let radioPlaying = false;
+    let hlsPlayer = null;
+    const audioElement = document.getElementById('radioStream');
+    const radioStatusText = document.getElementById('radioStatusText');
+    
+    // Функция переключения на следующий поток при ошибке
+    function switchToNextStream() {
+        currentStreamIndex++;
+        if (currentStreamIndex >= radioStreams.length) {
+            radioStatusText.innerHTML = '<span class="live-dot"></span> ⚠️ Все потоки недоступны';
+            return false;
+        }
+        
+        const stream = radioStreams[currentStreamIndex];
+        radioStatusText.innerHTML = `<span class="live-dot"></span> 🔄 Переключение на ${stream.name}...`;
+        
+        if (hlsPlayer) {
+            hlsPlayer.destroy();
+            hlsPlayer = null;
+        }
+        
+        loadRadioStream(stream);
+        return true;
+    }
+    
+    // Загрузка радио-потока
+    function loadRadioStream(stream) {
+        audioElement.pause();
+        
+        if (stream.type === 'hls' && Hls.isSupported()) {
+            hlsPlayer = new Hls();
+            hlsPlayer.loadSource(stream.url);
+            hlsPlayer.attachMedia(audioElement);
+            hlsPlayer.on(Hls.Events.MANIFEST_PARSED, function() {
+                if (radioPlaying) {
+                    audioElement.play().catch(e => {
+                        console.log("HLS play error:", e);
+                        switchToNextStream();
+                    });
+                }
+                radioStatusText.innerHTML = `<span class="live-dot"></span> LIVE · ${stream.name}`;
+            });
+            hlsPlayer.on(Hls.Events.ERROR, function(event, data) {
+                if (data.fatal) {
+                    console.log("HLS fatal error, switching stream");
+                    switchToNextStream();
+                }
+            });
+        } else if (stream.type === 'mp3') {
+            audioElement.src = stream.url;
+            audioElement.load();
+            if (radioPlaying) {
+                audioElement.play().catch(e => {
+                    console.log("MP3 play error:", e);
+                    switchToNextStream();
+                });
+            }
+            radioStatusText.innerHTML = `<span class="live-dot"></span> LIVE · ${stream.name}`;
+        }
+        
+        audioElement.onerror = function() {
+            console.log("Audio error, switching stream");
+            switchToNextStream();
+        };
+    }
+    
+    // Инициализация радио
+    function initRadio() {
+        currentStreamIndex = 0;
+        radioPlaying = true;
+        loadRadioStream(radioStreams[0]);
+        
+        // Установка громкости
+        const radioVolumeSlider = document.getElementById('radioVolume');
+        audioElement.volume = radioVolumeSlider.value / 100;
+        radioVolumeSlider.addEventListener('input', (e) => {
+            audioElement.volume = e.target.value / 100;
+        });
+    }
+    
+    // Кнопки управления радио
+    document.getElementById('radioPlayBtn').addEventListener('click', () => {
+        radioPlaying = true;
+        audioElement.play().catch(e => {
+            if (hlsPlayer) hlsPlayer.startLoad();
+            setTimeout(() => audioElement.play().catch(() => switchToNextStream()), 100);
+        });
+    });
+    
+    document.getElementById('radioPauseBtn').addEventListener('click', () => {
+        radioPlaying = false;
+        audioElement.pause();
+    });
+    
+    // Запуск радио
+    initRadio();
+
+    // ========== ДОКУМЕНТЫ ПО ВИС ==========
     const visDocuments = [
         { title: "Протокол №48 · 06 мая 2026 · утверждение АОНа", date: "06.05.2026", type: "Протокол", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Решение по графику отделки и поставок" },
         { title: "РСР Реестр отделочных работ (ВИС)", date: "03.05.2026", type: "Реестр", icon: "📊", link: "РСР СОР.html", desc: "Актуальный реестр отделочных материалов" },
@@ -873,11 +1018,9 @@
         return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); 
     }
 
-    // Поиск
     const searchInput = document.getElementById('searchVIS');
     searchInput.addEventListener('input', (e) => renderVISList(e.target.value));
 
-    // Боковая панель с документами
     function renderSidebarDocsShort() {
         const sidebarDiv = document.getElementById('docSidebarShort');
         if(!sidebarDiv) return;
@@ -918,19 +1061,7 @@
         const playPromise = videoElement.play();
         if (playPromise !== undefined) {
             playPromise.catch(error => {
-                console.log("Автозапуск заблокирован, нажмите на видео для воспроизведения");
-            });
-        }
-    }
-
-    // ========== РАДИО BUSINESS FM С HLS ==========
-    const radioAudio = document.getElementById('businessFMRadio');
-    if (radioAudio) {
-        radioAudio.volume = 0.5;
-        const radioPlay = radioAudio.play();
-        if (radioPlay !== undefined) {
-            radioPlay.catch(error => {
-                console.log("Радио: нажмите play для запуска");
+                console.log("Автозапуск заблокирован, нажмите на видео");
             });
         }
     }
@@ -976,14 +1107,12 @@
         if (e.key === 'Enter') sendMessage();
     });
     
-    // Дата
     function setDate() {
         const now = new Date();
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         document.getElementById('currentDate').innerText = now.toLocaleDateString('ru-RU', options);
     }
     
-    // Инициализация
     renderVISList();
     renderSidebarDocsShort();
     setDate();

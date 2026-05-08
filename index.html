@@ -221,72 +221,6 @@
             line-height: 1.3;
             margin-bottom: 12px;
         }
-        
-        /* ===== ГОРЯЩИЕ ПУНКТЫ ПРОТОКОЛА ===== */
-        .protocol-alert {
-            background: #fff5f5;
-            border-left: 4px solid #c0392b;
-            padding: 16px;
-            margin-top: 16px;
-            border-radius: 8px;
-        }
-        .alert-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #c0392b;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .alert-title i {
-            font-size: 14px;
-        }
-        .alert-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #ffe0e0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13px;
-            animation: pulseRed 1.5s infinite;
-        }
-        .alert-item:last-child {
-            border-bottom: none;
-        }
-        .alert-icon {
-            width: 24px;
-            height: 24px;
-            background: #c0392b;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-            flex-shrink: 0;
-        }
-        .alert-text {
-            flex: 1;
-            font-weight: 500;
-            color: #991b1b;
-        }
-        .alert-deadline {
-            font-size: 11px;
-            background: #c0392b20;
-            padding: 3px 8px;
-            border-radius: 20px;
-            color: #c0392b;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        @keyframes pulseRed {
-            0% { background-color: rgba(192, 57, 43, 0); border-left-color: transparent; }
-            50% { background-color: rgba(192, 57, 43, 0.08); border-left-color: #c0392b; }
-            100% { background-color: rgba(192, 57, 43, 0); border-left-color: transparent; }
-        }
-
         .news-list {
             display: flex;
             flex-direction: column;
@@ -336,6 +270,58 @@
             color: inherit;
         }
 
+        /* Стили для виджета протокола на главной */
+        .protocol-widget {
+            background: #fff8f0;
+            border-radius: 12px;
+            padding: 12px 0;
+        }
+        .protocol-item {
+            padding: 10px 16px;
+            border-bottom: 1px solid #ffe4d6;
+            font-size: 13px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .protocol-item:last-child {
+            border-bottom: none;
+        }
+        .protocol-icon {
+            color: #c0392b;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+        .protocol-text {
+            flex: 1;
+        }
+        .protocol-text strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #2c3e50;
+        }
+        .protocol-deadline {
+            font-size: 11px;
+            color: #e67e22;
+            margin-top: 4px;
+        }
+        .protocol-status {
+            font-size: 11px;
+            background: #ffe4d6;
+            padding: 2px 8px;
+            border-radius: 20px;
+            color: #c0392b;
+            font-weight: 500;
+        }
+        .protocol-red {
+            color: #c0392b;
+            font-weight: 700;
+        }
+        .protocol-red-bg {
+            background: #ffe4e6;
+            border-left: 3px solid #c0392b;
+        }
+
         /* SIDEBAR */
         .sidebar-card {
             background: #fff;
@@ -377,7 +363,7 @@
             border-bottom: none;
         }
 
-        /* Радио-плеер */
+        /* Радио-плеер Business FM */
         .radio-player {
             background: linear-gradient(135deg, #1a1f2c, #0f1724);
             border-radius: 14px;
@@ -412,10 +398,23 @@
             font-size: 11px;
             opacity: 0.7;
         }
-        audio {
-            width: 100%;
+        .radio-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .radio-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 6px 16px;
             border-radius: 30px;
-            margin-top: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .radio-btn:hover {
+            background: #c0392b;
         }
         .radio-status {
             font-size: 11px;
@@ -438,7 +437,7 @@
             100% { opacity: 0; transform: scale(1.3); }
         }
 
-        /* Видео */
+        /* Видео контейнер */
         .video-container {
             position: relative;
             border-radius: 16px;
@@ -460,12 +459,16 @@
             padding: 8px 12px;
             border-radius: 40px;
         }
+        .volume-control span {
+            font-size: 14px;
+        }
         .volume-slider {
             flex: 1;
             height: 4px;
             -webkit-appearance: none;
             background: #d1d5db;
             border-radius: 5px;
+            outline: none;
         }
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -474,6 +477,12 @@
             background: #c0392b;
             border-radius: 50%;
             cursor: pointer;
+        }
+        .volume-value {
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 40px;
+            color: #1f2a3e;
         }
 
         .chat-btn {
@@ -505,6 +514,7 @@
             z-index: 1000;
             display: none;
             flex-direction: column;
+            border: 1px solid #eef2f8;
         }
         .chat-window.open {
             display: flex;
@@ -517,7 +527,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
             font-weight: 600;
+        }
+        .chat-header span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .chat-messages {
             height: 340px;
@@ -553,6 +569,10 @@
             padding: 10px 14px;
             font-size: 13px;
         }
+        .chat-input input:focus {
+            outline: none;
+            border-color: #c0392b;
+        }
         .chat-input button {
             background: #c0392b;
             border: none;
@@ -560,6 +580,7 @@
             border-radius: 40px;
             padding: 8px 18px;
             cursor: pointer;
+            font-weight: 500;
         }
         .chat-float {
             position: fixed;
@@ -577,6 +598,10 @@
             font-size: 28px;
             z-index: 999;
             box-shadow: 0 4px 12px rgba(192,57,43,0.4);
+            transition: all 0.2s;
+        }
+        .chat-float:hover {
+            transform: scale(1.05);
         }
         footer {
             background: #fff;
@@ -596,18 +621,22 @@
 </head>
 <body>
 
-<!-- БЕГУЩАЯ СТРОКА -->
+<!-- БЕГУЩАЯ СТРОКА В СТИЛЕ RBC -->
 <div class="rbc-ticker">
     <div class="ticker-slide">
         <span>🔴 МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · АКТУАЛЬНЫЕ ПРОТОКОЛЫ И РЕЕСТРЫ</span>
         <span class="separator">✦</span>
-        <span>⚠️ ПРОТОКОЛ №48: КРИТИЧЕСКИЕ ПУНКТЫ ТРЕБУЮТ ИСПОЛНЕНИЯ ДО 15.05</span>
-        <span class="separator">✦</span>
         <span>ВИС Огни 3: завершён монтаж вентиляции — 78%</span>
+        <span class="separator">✦</span>
+        <span>Протокол №48 утверждён · следующее заседание 13 мая</span>
         <span class="separator">✦</span>
         <span>ДО 9 МАЯ ОСТАЛСЯ 1 ДЕНЬ! ПОЗДРАВЛЯЕМ С НАСТУПАЮЩИМ ПРАЗДНИКОМ!</span>
         <span class="separator">✦</span>
         <span>🔴 МОСКВАДОНСТРОИТСЯ · ЖК Огни 3 · АКТУАЛЬНЫЕ ПРОТОКОЛЫ И РЕЕСТРЫ</span>
+        <span class="separator">✦</span>
+        <span>ВИС Огни 3: завершён монтаж вентиляции — 78%</span>
+        <span class="separator">✦</span>
+        <span>Протокол №48 утверждён · следующее заседание 13 мая</span>
     </div>
 </div>
 
@@ -649,40 +678,70 @@
                     <div class="news-meta">📅 6 мая 2026 · реестр РСР</div>
                 </div>
             </div>
-            
-            <!-- ПРОТОКОЛ №48 С ГОРЯЩИМИ КРАСНЫМИ ПУНКТАМИ -->
             <div class="main-article" style="padding: 0;">
-                <div class="article-content">
-                    <div class="badge">⚠️ ПРОТОКОЛ №48 | 06.05.2026</div>
-                    <div class="article-title" style="font-size: 18px;">Утверждён график поставок материалов</div>
-                    <div class="news-meta" style="margin-bottom: 16px;">от 06.05.2026 · штаб</div>
-                    
-                    <!-- ГОРЯЩИЕ КРАСНЫЕ ПУНКТЫ -->
-                    <div class="protocol-alert">
-                        <div class="alert-title">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            КРИТИЧЕСКИЕ ПУНКТЫ · ТРЕБУЮТ НЕМЕДЛЕННОГО ИСПОЛНЕНИЯ
+                <div class="badge" style="margin: 20px 20px 0 20px;">⚡ ПРОТОКОЛ №48</div>
+                <div class="article-content" style="padding-top: 8px;">
+                    <div class="article-title" style="font-size: 18px; margin-bottom: 16px;">от 06.05.2026 · штаб</div>
+                    <div class="protocol-widget">
+                        <!-- Пункты протокола с красным выделением просроченных -->
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="protocol-text">
+                                <strong>ИТП/АИТ — запуск первого контура отопления</strong>
+                                <div>Срок: 28.04 → 04.05 → 06.05 <span class="protocol-status">перенос срока</span></div>
+                                <div class="protocol-deadline protocol-red">⚠️ Просрочено: не завершено</div>
+                            </div>
                         </div>
-                        <div class="alert-item">
-                            <div class="alert-icon"><i class="fas fa-hourglass-half"></i></div>
-                            <div class="alert-text">Пункт 3.2 — Завершить монтаж вентиляции до 12.05.2026</div>
-                            <div class="alert-deadline">СРОК: 6 дней</div>
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-users-slash"></i></div>
+                            <div class="protocol-text">
+                                <strong>Увеличить сотрудников по ЭОМ (+10) и СС (+10)</strong>
+                                <div>Срок: 10.04 → 16.04 → 04.05 <span class="protocol-status">не выполнено</span></div>
+                                <div class="protocol-deadline protocol-red">❌ Не добавлено. Ответственный: ИНЭКО</div>
+                            </div>
                         </div>
-                        <div class="alert-item">
-                            <div class="alert-icon"><i class="fas fa-truck"></i></div>
-                            <div class="alert-text">Пункт 4.1 — Поставка отделочных материалов (керамогранит) задерживается</div>
-                            <div class="alert-deadline">СРЫВ ГРАФИКА</div>
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-hard-hat"></i></div>
+                            <div class="protocol-text">
+                                <strong>Добавить 2-3 ИТР на объект</strong>
+                                <div>Срок: 10.04 → 16.04 → 04.05 <span class="protocol-status">не выполнено</span></div>
+                                <div class="protocol-deadline protocol-red">❌ Не добавлено. Ответственный: ИНЭКО</div>
+                            </div>
                         </div>
-                        <div class="alert-item">
-                            <div class="alert-icon"><i class="fas fa-chart-line"></i></div>
-                            <div class="alert-text">Пункт 5.3 — Корректировка бюджета: превышение на 8%</div>
-                            <div class="alert-deadline">ТРЕБУЕТ СОГЛАСОВАНИЯ</div>
+                        <div class="protocol-item">
+                            <div class="protocol-icon"><i class="fas fa-chalkboard-user"></i></div>
+                            <div class="protocol-text">
+                                <strong>Руководителю проекта от ИНЭКО быть на объекте ежедневно</strong>
+                                <div>Срок: ежедневно <span class="protocol-status protocol-red">Не выполняется</span></div>
+                            </div>
                         </div>
-                        <div class="alert-item">
-                            <div class="alert-icon"><i class="fas fa-file-signature"></i></div>
-                            <div class="alert-text">Пункт 7.1 — Не подписаны акты КС-2 за апрель</div>
-                            <div class="alert-deadline">ПРОСРОЧКА: 14 дней</div>
+                        <div class="protocol-item protocol-red-bg">
+                            <div class="protocol-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="protocol-text">
+                                <strong>Обеспечить выход людей на ВРУ и завершить работы</strong>
+                                <div>Срок: 06.05.2026 <span class="protocol-status">просрочено</span></div>
+                                <div class="protocol-deadline protocol-red">⚠️ Не завершены. Ответственный: ИНЭКО</div>
+                            </div>
                         </div>
+                        <div class="protocol-item">
+                            <div class="protocol-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="protocol-text">
+                                <strong>Сводка предписаний и ЗОС</strong>
+                                <div>Предписания: 526 всего | Остаток: 161</div>
+                                <div class="protocol-deadline protocol-red">Из них критичных: 7</div>
+                                <div>Акты к ЗОС: подписано 69 из 75, осталось 6</div>
+                            </div>
+                        </div>
+                        <div class="protocol-item">
+                            <div class="protocol-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="protocol-text">
+                                <strong>Следующее совещание</strong>
+                                <div>13.05.2026 в 9:30, штаб строительства</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-meta" style="margin-top: 16px;">
+                        <a href="Protokol_48_ot_06.05.2026.html" style="color:#c0392b; font-weight:500;">→ Полный текст протокола</a>
                     </div>
                 </div>
             </div>
@@ -708,6 +767,7 @@
                     </div>
                     <audio id="businessFMRadio" controls style="width: 100%; border-radius: 30px;" preload="auto">
                         <source src="https://businessfm.cdnvideo.ru/businessfm_mp3/master.m3u8" type="application/x-mpegURL">
+                        <source src="https://businessfm.cdnvideo.ru/businessfm_mp3/64/playlist.m3u8" type="application/x-mpegURL">
                     </audio>
                     <div class="radio-status">
                         <span class="live-dot"></span>
@@ -719,7 +779,7 @@
 
         <!-- ВИДЕО -->
         <div class="sidebar-card">
-            <div class="card-header">🎥 Видеофиксация (loop)</div>
+            <div class="card-header">🎥 Видеофиксация (loop + фон)</div>
             <div class="card-body">
                 <div class="video-container">
                     <video id="promoVideo" loop preload="auto" playsinline style="width:100%;">
@@ -758,7 +818,8 @@
     </div>
     <div class="chat-messages" id="chatMessages">
         <div class="msg-bubble">🏗️ Добро пожаловать в чат ЖК Огни 3!</div>
-        <div class="msg-bubble">⚠️ Внимание! Критические пункты протокола №48 требуют исполнения!</div>
+        <div class="msg-bubble">📋 Все актуальные протоколы в разделе документов</div>
+        <div class="msg-bubble">⚠️ Внимание! По протоколу №48 есть просроченные задачи (выделены красным)</div>
     </div>
     <div class="chat-input">
         <input id="chatInput" placeholder="Введите сообщение...">
@@ -771,9 +832,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
-    // ========== ДОКУМЕНТЫ ПО ВИС ==========
+    // ========== ДОКУМЕНТЫ ПО ВИС (ЖК Огни 3) ==========
     const visDocuments = [
-        { title: "Протокол №48 · 06 мая 2026 · утверждение АОНа", date: "06.05.2026", type: "Протокол", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Полный текст протокола с критическими пунктами" },
+        { title: "Протокол №48 · 06 мая 2026 · утверждение АОНа", date: "06.05.2026", type: "Протокол", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Решение по графику отделки и поставок" },
         { title: "РСР Реестр отделочных работ (ВИС)", date: "03.05.2026", type: "Реестр", icon: "📊", link: "РСР СОР.html", desc: "Актуальный реестр отделочных материалов" },
         { title: "Сводка оплат и финансирования", date: "02.05.2026", type: "Финансы ВИС", icon: "💰", link: "Сводка оплат.html", desc: "Финансовый отчёт по строительству" },
         { title: "Реестр чек-листа АВТ2 ИНЭКО", date: "06.05.2026", type: "Чек-лист", icon: "📋", link: "Reesrt_cheklist_AVT2.html", desc: "Проверочный лист АВТ2" },
@@ -812,9 +873,11 @@
         return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); 
     }
 
+    // Поиск
     const searchInput = document.getElementById('searchVIS');
     searchInput.addEventListener('input', (e) => renderVISList(e.target.value));
 
+    // Боковая панель с документами
     function renderSidebarDocsShort() {
         const sidebarDiv = document.getElementById('docSidebarShort');
         if(!sidebarDiv) return;
@@ -852,14 +915,24 @@
             }
         });
         
-        videoElement.play().catch(e => console.log("Автозапуск заблокирован"));
+        const playPromise = videoElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Автозапуск заблокирован, нажмите на видео для воспроизведения");
+            });
+        }
     }
 
-    // ========== РАДИО ==========
+    // ========== РАДИО BUSINESS FM С HLS ==========
     const radioAudio = document.getElementById('businessFMRadio');
     if (radioAudio) {
         radioAudio.volume = 0.5;
-        radioAudio.play().catch(e => console.log("Радио: нажмите play"));
+        const radioPlay = radioAudio.play();
+        if (radioPlay !== undefined) {
+            radioPlay.catch(error => {
+                console.log("Радио: нажмите play для запуска");
+            });
+        }
     }
 
     // ========== ЧАТ ==========
@@ -903,12 +976,14 @@
         if (e.key === 'Enter') sendMessage();
     });
     
+    // Дата
     function setDate() {
         const now = new Date();
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         document.getElementById('currentDate').innerText = now.toLocaleDateString('ru-RU', options);
     }
     
+    // Инициализация
     renderVISList();
     renderSidebarDocsShort();
     setDate();

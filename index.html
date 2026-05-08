@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Огни 3 - актуальные новости строительства и технологий. Документация, протоколы, аналитика.">
+    <meta name="description" content="BuildPhysics News - актуальные новости строительства и технологий. Документация, протоколы, аналитика.">
     <title>BuildPhysics News · Строительный портал</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -20,7 +20,53 @@
             line-height: 1.45;
         }
 
-        /* ===== RBC-style header ===== */
+        /* ===== БЕГУЩАЯ СТРОКА (ПОЗДРАВЛЕНИЕ С ДНЁМ ПОБЕДЫ) ===== */
+        .ticker {
+            background: linear-gradient(90deg, #2d3748 0%, #1a202c 50%, #2d3748 100%);
+            color: #ffd700;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 2px solid #c41e3a;
+            font-weight: 600;
+            position: relative;
+            z-index: 1000;
+        }
+        .ticker-content {
+            display: inline-block;
+            animation: tickerMove 25s linear infinite;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        .ticker-content span {
+            margin: 0 40px;
+            display: inline-block;
+        }
+        .ticker-content i {
+            font-style: normal;
+            color: #c41e3a;
+            margin: 0 8px;
+            font-weight: 900;
+        }
+        @keyframes tickerMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .ticker:hover .ticker-content {
+            animation-play-state: paused;
+        }
+        /* Георгиевская ленточка в бегущей строке */
+        .george-ribbon {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff8c00 0%, #ff8c00 30%, #000000 30%, #000000 70%, #ff8c00 70%, #ff8c00 100%);
+            width: 40px;
+            height: 18px;
+            margin: 0 8px;
+            border-radius: 4px;
+            vertical-align: middle;
+        }
+
+        /* ===== ОСТАЛЬНЫЕ СТИЛИ (RBC-style) ===== */
         .top-line {
             background: #fff;
             border-bottom: 1px solid #e6e9ed;
@@ -125,7 +171,6 @@
             color: #005eff;
         }
 
-        /* основной контейнер */
         .main-grid {
             max-width: 1300px;
             margin: 30px auto;
@@ -135,7 +180,6 @@
             gap: 40px;
         }
 
-        /* лента новостей (RBC style) */
         .news-feed h1 {
             font-size: 28px;
             font-weight: 700;
@@ -240,7 +284,6 @@
             color: inherit;
         }
 
-        /* SIDEBAR (документы, видео, файлы) */
         .sidebar-card {
             background: #fff;
             border-radius: 16px;
@@ -324,7 +367,6 @@
             background: #0043c9;
         }
 
-        /* ЧАТ ПОПАП */
         .chat-window {
             position: fixed;
             bottom: 20px;
@@ -438,10 +480,36 @@
                 flex-wrap: wrap;
                 gap: 16px;
             }
+            .ticker-content {
+                font-size: 13px;
+                animation: tickerMove 20s linear infinite;
+            }
         }
     </style>
 </head>
 <body>
+
+<!-- БЕГУЩАЯ СТРОКА С ПОЗДРАВЛЕНИЕМ ДНЯ ПОБЕДЫ -->
+<div class="ticker">
+    <div class="ticker-content">
+        <span>🎖️ 9 МАЯ — ДЕНЬ ПОБЕДЫ! 🎖️</span>
+        <span><i>★</i> С ДНЁМ ВЕЛИКОЙ ПОБЕДЫ! 1945 – 2026 <i>★</i></span>
+        <span>🇷🇺 МЫ ПОМНИМ! МЫ ГОРДИМСЯ! 🇷🇺</span>
+        <span>⚔️ НИКТО НЕ ЗАБЫТ, НИЧТО НЕ ЗАБЫТО! ⚔️</span>
+        <span>🌹 ВЕЧНАЯ СЛАВА ГЕРОЯМ! 🌹</span>
+        <span>🏆 81 ГОД ВЕЛИКОЙ ПОБЕДЫ! 🏆</span>
+        <span style="display:inline-block;"><div class="george-ribbon"></div> ГЕОРГИЕВСКАЯ ЛЕНТА — СИМВОЛ ПАМЯТИ <div class="george-ribbon"></div></span>
+        <span>🎶 С ЛЕГЕНДАРНЫМ ПРАЗДНИКОМ, ДРУЗЬЯ! 🎶</span>
+        <span>🎖️ 9 МАЯ — ДЕНЬ ПОБЕДЫ! 🎖️</span>
+        <span><i>★</i> С ДНЁМ ВЕЛИКОЙ ПОБЕДЫ! 1945 – 2026 <i>★</i></span>
+        <span>🇷🇺 МЫ ПОМНИМ! МЫ ГОРДИМСЯ! 🇷🇺</span>
+        <span>⚔️ НИКТО НЕ ЗАБЫТ, НИЧТО НЕ ЗАБЫТО! ⚔️</span>
+        <span>🌹 ВЕЧНАЯ СЛАВА ГЕРОЯМ! 🌹</span>
+        <span>🏆 81 ГОД ВЕЛИКОЙ ПОБЕДЫ! 🏆</span>
+        <span style="display:inline-block;"><div class="george-ribbon"></div> ГЕОРГИЕВСКАЯ ЛЕНТА — СИМВОЛ ПАМЯТИ <div class="george-ribbon"></div></span>
+        <span>🎶 С ЛЕГЕНДАРНЫМ ПРАЗДНИКОМ, ДРУЗЬЯ! 🎶</span>
+    </div>
+</div>
 
 <div class="top-line">
     <div class="top-line-container">
@@ -472,7 +540,6 @@
 </div>
 
 <div class="main-grid">
-    <!-- Лента новостей (основной контент в стиле РБК) -->
     <div class="news-feed">
         <h1>📰 Актуальные строительные ведомости</h1>
         <div class="feature-news">
@@ -488,17 +555,14 @@
             <div class="secondary-article">
                 <div class="badge">⚡ Срочно</div>
                 <div class="article-title" style="font-size: 18px;">Поздравление с Днём Победы — 1945–2026</div>
-                <div class="article-desc" style="margin-top: 8px;">Коллектив Департамента строительства Донстрой  поздравляет ветеранов и всех строителей с Великим праздником.</div>
+                <div class="article-desc" style="margin-top: 8px;">Коллектив штаба поздравляет ветеранов и всех строителей с Великим праздником.</div>
                 <div class="news-meta" style="margin-top: 18px;">🕊️ 9 мая · всенародный праздник</div>
             </div>
         </div>
 
-        <div class="news-list" id="newsListContainer">
-            <!-- Динамические карточки новостей / документов -->
-        </div>
+        <div class="news-list" id="newsListContainer"></div>
     </div>
 
-    <!-- САЙДБАР: блоки с видео, файлами и чатом -->
     <aside>
         <div class="sidebar-card">
             <div class="card-header">📹 Видеофиксация</div>
@@ -515,9 +579,7 @@
         <div class="sidebar-card">
             <div class="card-header">📄 Документы и реестры</div>
             <div class="card-body">
-                <div id="docsSidebarList">
-                    <!-- Загрузка документов из списка -->
-                </div>
+                <div id="docsSidebarList"></div>
                 <button class="chat-btn" id="openChatSidebarBtn">💬 Открыть чат команды</button>
             </div>
         </div>
@@ -537,7 +599,6 @@
     BuildPhysics News — Реплика структуры РБК. Все материалы соответствуют строительной документации. © 2026
 </footer>
 
-<!-- Чат-попап -->
 <div class="chat-window" id="chatPopup">
     <div class="chat-header">
         <span>💬 Чат строителей · Огни 3</span>
@@ -555,7 +616,6 @@
 <div class="chat-float" id="chatFloatBtn">💬</div>
 
 <script>
-    // ------------------ ДАННЫЕ документов (новости в стиле RBC) ------------------
     const documentsData = [
         { title: "Протокол №48 от 06.05.2026 — утверждение АОНа", date: "06.05.2026", type: "protocol", icon: "📄", link: "Protokol_48_ot_06.05.2026.html", desc: "Обсуждение графика отделки и ввода секций." },
         { title: "Протокол №46 · 22 апреля 2026 (контроль качества)", date: "22.04.2026", type: "protocol", icon: "📄", link: "протокол_46_огни_3_от_22_04_2026.html" },
@@ -567,7 +627,6 @@
         { title: "Задачи штаба (контроль поручений)", date: "05.05.2026", type: "tech", icon: "✅", link: "Zadachi-Ogni-3.html" }
     ];
 
-    // отображение новостей (RBC-style карточки)
     function renderNewsList(searchTerm = "") {
         const container = document.getElementById('newsListContainer');
         let filtered = documentsData.filter(doc => 
@@ -602,11 +661,9 @@
         });
     }
 
-    // поиск
     const searchInput = document.getElementById('searchNewsInput');
     searchInput.addEventListener('input', (e) => { renderNewsList(e.target.value); });
 
-    // боковая панель со списком документов (быстрый доступ)
     function renderSidebarDocs() {
         const sidebarContainer = document.getElementById('docsSidebarList');
         if(!sidebarContainer) return;
@@ -619,7 +676,6 @@
         `).join('');
     }
 
-    // загрузка экспортированных файлов с GitHub
     async function loadExportedFiles() {
         const container = document.getElementById('exportedFilesSidebar');
         try {
@@ -638,7 +694,6 @@
         }
     }
 
-    // Video logic (воспроизведение)
     function initVideo() {
         const video = document.getElementById('promoVideo');
         const container = document.getElementById('videoBlock');
@@ -650,7 +705,6 @@
         video.muted = false;
     }
 
-    // ------------- ЧАТ -------------
     const chatPopup = document.getElementById('chatPopup');
     const chatFloat = document.getElementById('chatFloatBtn');
     const closeChat = document.getElementById('closeChatBtn');
@@ -687,7 +741,6 @@
     document.getElementById('sendChatMsg')?.addEventListener('click', sendMessage);
     document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
 
-    // Дата в топ-баре
     function setDate() {
         const now = new Date();
         const options = { day: 'numeric', month: 'long', year: 'numeric' };

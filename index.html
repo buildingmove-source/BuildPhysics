@@ -299,6 +299,143 @@
             color: var(--accent-green);
             font-weight: 700;
         }
+
+        /* НОВЫЙ ВИДЖЕТ: СРОЧНЫЕ ПОРУЧЕНИЯ */
+        .urgent-widget {
+            background: rgba(239,68,68,0.05);
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(239,68,68,0.3);
+            overflow: hidden;
+        }
+        .urgent-header {
+            background: rgba(239,68,68,0.15);
+            padding: 0.7rem 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(239,68,68,0.2);
+        }
+        .urgent-list {
+            padding: 0.5rem 0;
+        }
+        .urgent-item {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .urgent-item:last-child {
+            border-bottom: none;
+        }
+        .urgent-info {
+            flex: 1;
+        }
+        .urgent-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+        }
+        .urgent-deadline {
+            font-size: 0.7rem;
+            color: var(--accent-red);
+        }
+        .assign-btn {
+            background: rgba(59,130,246,0.2);
+            border: 1px solid var(--accent-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+        }
+        .assign-btn:hover {
+            background: var(--accent-blue);
+        }
+
+        /* МОДАЛЬНОЕ ОКНО СОЗДАНИЯ ЗАДАЧИ */
+        .task-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 3500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .task-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .task-modal-content {
+            background: var(--bg-card);
+            border-radius: 28px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(59,130,246,0.4);
+            overflow: hidden;
+        }
+        .task-modal-header {
+            padding: 1rem 1.5rem;
+            background: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-modal-body {
+            padding: 1.5rem;
+        }
+        .task-form-group {
+            margin-bottom: 1rem;
+        }
+        .task-form-group label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+        .task-form-group input, .task-form-group select, .task-form-group textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 0.6rem;
+            color: white;
+            font-size: 0.85rem;
+        }
+        .task-form-group input:focus, .task-form-group select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+        .create-task-btn {
+            background: var(--accent-blue);
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+        .create-task-btn:hover {
+            background: var(--accent-cyan);
+        }
+
         .google-cards-container {
             display: flex;
             flex-direction: column;
@@ -356,6 +493,7 @@
             transition: var(--transition);
             cursor: pointer;
             animation: fadeSlideUp 0.3s ease;
+            position: relative;
         }
         .doc-card:hover {
             transform: translateY(-3px);
@@ -378,6 +516,20 @@
             gap: 1rem;
             font-size: 0.6rem;
             color: var(--text-secondary);
+        }
+        .next-step-btn {
+            background: rgba(6,182,212,0.15);
+            border-top: 1px solid var(--border-light);
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .next-step-btn:hover {
+            background: rgba(6,182,212,0.3);
+            color: white;
         }
         .empty-state {
             text-align: center;
@@ -634,7 +786,6 @@
         <div class="nav-search">
             <input type="text" id="globalSearch" placeholder="Поиск по документам...">
         </div>
-        <!-- КНОПКА "КОНТАКТНЫЙ ЛИСТ" -->
         <button class="mobile-menu-btn" id="contactsMenuBtn">📋 Контактный лист</button>
     </div>
 </nav>
@@ -680,6 +831,16 @@
     </aside>
 
     <main class="content">
+        <!-- НОВЫЙ ВИДЖЕТ: СРОЧНЫЕ ПОРУЧЕНИЯ -->
+        <div class="urgent-widget">
+            <div class="urgent-header">
+                🔥 НОВЫЕ / СРОЧНЫЕ ПОРУЧЕНИЯ (из протокола №49)
+            </div>
+            <div class="urgent-list" id="urgentTasksList">
+                <!-- Загружается из JS -->
+            </div>
+        </div>
+
         <div class="hero-card">
             <div class="hero-title">Штаб строительства Огни 3</div>
             <div class="hero-subtitle">Актуальные данные, поручения и документация</div>
@@ -687,7 +848,7 @@
                 <div class="tasks-title">⚡ КЛЮЧЕВЫЕ ПОРУЧЕНИЯ НА НЕДЕЛЮ</div>
                 <div style="font-size:0.8rem; display:flex; flex-direction:column; gap:4px;">
                     <div>• Ленский Ф.А.: счета СКР, заявки, оплаты.</div>
-                    <div>• Департамент строительства: ВИС, завершть до 30 мая.</div>
+                    <div>• Департамент строительства: ВИС, завершить до 30 мая.</div>
                     <div>• Лебединский Д.О.: координация 2 секции и МОПов до 15 мая.</div>
                     <div>• Красотель: документы за подрядчиков + 1С недостатки квартир.</div>
                 </div>
@@ -716,16 +877,45 @@
             <h2>📋 Контактный лист проекта</h2>
             <button class="close-contacts" id="closeContactsBtn">&times;</button>
         </div>
-        <div class="contacts-body" id="contactsBody">
-            <!-- Контакты будут загружены из CONTACTS -->
-        </div>
+        <div class="contacts-body" id="contactsBody"></div>
         <div class="contacts-footer">
             <button class="copy-all-btn" id="copyAllContactsBtn">📋 Копировать всё</button>
         </div>
     </div>
 </div>
 
-<!-- mobile sidebar, чат и пр. -->
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ СОЗДАНИЯ СЛЕДУЮЩЕЙ ЗАДАЧИ -->
+<div id="taskModal" class="task-modal">
+    <div class="task-modal-content">
+        <div class="task-modal-header">
+            <h3>➕ Создать следующую задачу</h3>
+            <button class="close-contacts" id="closeTaskBtn" style="background:none; border:none; color:white; font-size:1.5rem;">&times;</button>
+        </div>
+        <div class="task-modal-body">
+            <div class="task-form-group">
+                <label>📋 Название задачи</label>
+                <input type="text" id="taskName" placeholder="Например: Приемка квартир ДРОН">
+            </div>
+            <div class="task-form-group">
+                <label>🏗️ Объект / Секция</label>
+                <input type="text" id="taskObject" placeholder="Корпус 1, Секция 2, Паркинг...">
+            </div>
+            <div class="task-form-group">
+                <label>👤 Ответственный</label>
+                <select id="taskResponsible">
+                    <option value="">Выберите из контактов</option>
+                </select>
+            </div>
+            <div class="task-form-group">
+                <label>📅 Срок</label>
+                <input type="date" id="taskDeadline">
+            </div>
+            <button class="create-task-btn" id="createTaskBtn">✅ Создать задачу</button>
+        </div>
+    </div>
+</div>
+
+<!-- mobile sidebar, чат -->
 <div class="backdrop" id="mobileBackdrop"></div>
 <div class="mobile-sidebar" id="mobileSidebar">
     <div style="display:flex; justify-content:space-between; margin-bottom:1rem;"><h3>Меню</h3><button id="closeMobileSidebar" style="background:none; border:none; color:white; font-size:1.6rem;">✕</button></div>
@@ -745,61 +935,51 @@
 <div class="chat-float-btn" id="chatFloatBtn">💬</div>
 
 <script>
-    // ===== КОНТАКТЫ (полностью из вашего запроса) =====
+    // ===== КОНТАКТЫ =====
     const CONTACTS = {
-        // ООО "ДС Строй" (Заказчик)
-        'Рябинин Юрий Вячеславович': { display: 'Рябинин Юрий Вячеславович | Заказчик | ryabinin_yv@dsinv.ru', company: 'ООО "ДС Строй"', position: '', phone: '', email: 'ryabinin_yv@dsinv.ru' },
-        'Филимонова Анастасия Витальевна': { display: 'Филимонова Анастасия Витальевна | Зам. руководителя управления | filimonova_av@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Заместитель руководителя управления', phone: '', email: 'filimonova_av@dsinv.ru' },
-        'Кривоносов Владимир Витальевич': { display: 'Кривоносов Владимир Витальевич | Рук. строительства | 8(964)709-97-77 | krivonosov_vv@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Руководитель строительства', phone: '8(964)709-97-77', email: 'krivonosov_vv@dsinv.ru' },
-        'Ленский Филипп Андреевич': { display: 'Ленский Филипп Андреевич | Рук. проекта | 8-909-918-15-54 | lenskij_fa@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Руководитель проекта', phone: '8-909-918-15-54', email: 'lenskij_fa@dsinv.ru' },
-        'Лебединский Дмитрий Олегович': { display: 'Лебединский Дмитрий Олегович | Директор по строительству | 8-903-217-94-90 | lebedinskij_do@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Директор по строительству', phone: '8-903-217-94-90', email: 'lebedinskij_do@dsinv.ru' },
-        
-        // ООО "КрасОтель"
-        'Олейник Роман Владиславович': { display: 'Олейник Роман Владиславович | Ген. директор КрасОтель | 8-968-935-25-20', company: 'ООО "КрасОтель"', position: 'Генеральный директор', phone: '8-968-935-25-20', email: 'krasotel-ogni3@yandex.ru' },
-        'Дубровский Сергей Михайлович': { display: 'Дубровский Сергей Михайлович | Рук. проекта КрасОтель | 8-985-385-86-29', company: 'ООО "КрасОтель"', position: 'Руководитель проекта', phone: '8-985-385-86-29', email: 'krasotel-ogni3@yandex.ru' },
-        'Левченко Анастасия Максимовна': { display: 'Левченко Анастасия Максимовна | Администратор КрасОтель | 8-909-956-38-22', company: 'ООО "КрасОтель"', position: 'Администратор проекта', phone: '8-909-956-38-22', email: 'krasotel-ogni3@yandex.ru' },
-        'Попов-Иванов Кирилл Юрьевич': { display: 'Попов-Иванов Кирилл Юрьевич | Ст. инженер СК по СС | 8-996-969-06-72', company: 'ООО "КрасОтель"', position: 'Ст. инженер СК по СС', phone: '8-996-969-06-72', email: 'krasotel-ogni3@yandex.ru' },
-        'Егоров Юрий Александрович': { display: 'Егоров Юрий Александрович | Ст. инженер СК по ЭОМ | 8-909-923-35-23', company: 'ООО "КрасОтель"', position: 'Ст. инженер СК по ЭОМ', phone: '8-909-923-35-23', email: 'krasotel-ogni3@yandex.ru' },
-        'Смоленцев Всеволод Юрьевич': { display: 'Смоленцев Всеволод Юрьевич | Ст. инженер СК по ОВ и ВК | 8-968-404-55-50', company: 'ООО "КрасОтель"', position: 'Ст. инженер СК по ОВ и ВК', phone: '8-968-404-55-50', email: 'krasotel-ogni3@yandex.ru' },
-        'Могучий Никита Антонович': { display: 'Могучий Никита Антонович | Инженер СК по общестрою | 8-985-297-08-27', company: 'ООО "КрасОтель"', position: 'Инженер СК по общестроительным работам', phone: '8-985-297-08-27', email: 'krasotel-ogni3@yandex.ru' },
-        'Арион Сергей Юрьевич': { display: 'Арион Сергей Юрьевич | Инженер СК по общестрою | 8-916-025-17-98', company: 'ООО "КрасОтель"', position: 'Инженер СК по общестроительным работам', phone: '8-916-025-17-98', email: 'krasotel-ogni3@yandex.ru' },
-        'Скименко Сергей Николаевич': { display: 'Скименко Сергей Николаевич | Инженер СК по общестрою | 8-916-492-01-03', company: 'ООО "КрасОтель"', position: 'Инженер СК по общестроительным работам', phone: '8-916-492-01-03', email: 'krasotel-ogni3@yandex.ru' },
-        'Коханов Андрей Валентинович': { display: 'Коханов Андрей Валентинович | Инженер по ОТ и ТБ | 8-964-589-76-67', company: 'ООО "КрасОтель"', position: 'Инженер по ОТ и ТБ', phone: '8-964-589-76-67', email: 'krasotel-ogni3@yandex.ru' },
-        'Курако Дмитрий Евгеньевич': { display: 'Курако Дмитрий Евгеньевич | ГИП | 8-985-984-73-99', company: 'ООО "КрасОтель"', position: 'Главный инженер проекта', phone: '8-985-984-73-99', email: 'krasotel-ogni3@yandex.ru' },
-        
-        // ООО "СКР"
-        'Кудлай Николай Николаевич': { display: 'Кудлай Николай Николаевич | Ген. директор СКР | 8(985)412-16-36', company: 'ООО "СКР"', position: 'Генеральный директор', phone: '8(985)412-16-36', email: '' },
-        'Подкорытов Алексей Викторович': { display: 'Подкорытов Алексей Викторович | Рук. проекта СКР | 8(965)107-48-14 | podkorytov_av@oooskr.ru', company: 'ООО "СКР"', position: 'Руководитель проекта', phone: '8(965)107-48-14', email: 'podkorytov_av@oooskr.ru' },
-        'Мингазов Артур Закариевич': { display: 'Мингазов Артур Закариевич | Зам. рук. проекта СКР | 8(926)123-41-32 | mingazov_az@oooskr.ru', company: 'ООО "СКР"', position: 'Заместитель руководителя проекта', phone: '8(926)123-41-32', email: 'mingazov_az@oooskr.ru' },
-        'Басс Игорь Михайлович': { display: 'Басс Игорь Михайлович | ИО нач. лимитного отдела | 8(916)912-49-93 | bass_im@oooskr.ru', company: 'ООО "СКР"', position: 'Исполняющий обязанности начальника лимитного отдела', phone: '8(916)912-49-93', email: 'bass_im@oooskr.ru' },
-        'Сиваков Сергей Леонидович': { display: 'Сиваков Сергей Леонидович | Нач. участка | 8(917)587-66-10 | sivakov_sl@oooskr.ru', company: 'ООО "СКР"', position: 'Начальник участка', phone: '8(917)587-66-10', email: 'sivakov_sl@oooskr.ru' },
-        'Турманов Игорь Николаевич': { display: 'Турманов Игорь Николаевич | Прораб | 8(909)692-21-30 | turmanov_in@oooskr.ru', company: 'ООО "СКР"', position: 'Прораб', phone: '8(909)692-21-30', email: 'turmanov_in@oooskr.ru' },
-        'Евстафьев Евгений Геннадьевич': { display: 'Евстафьев Евгений Геннадьевич | Кладовщик | 8(969)978-49-86 | evstafev_eg@oooskr.ru', company: 'ООО "СКР"', position: 'Кладовщик', phone: '8(969)978-49-86', email: 'evstafev_eg@oooskr.ru' },
-        'Федченко Павел Александрович': { display: 'Федченко Павел Александрович | Производитель работ | 8(962)302-94-07 | fedchenko_pa@oooskr.ru', company: 'ООО "СКР"', position: 'Производитель работ', phone: '8(962)302-94-07', email: 'fedchenko_pa@oooskr.ru' },
-        'Куропятник Владимир Алексеевич': { display: 'Куропятник Владимир Алексеевич | Инженер ОТ и ТБ | 8(985)194-64-00 | kuropyatnik_va@oooskr.ru', company: 'ООО "СКР"', position: 'Инженер ОТ и ТБ', phone: '8(985)194-64-00', email: 'kuropyatnik_va@oooskr.ru' },
-        'Каплина Анастасия Алексеевна': { display: 'Каплина Анастасия Алексеевна | Инженер ПТО | 8(916)437-44-25 | kaplina_aa@oooskr.ru', company: 'ООО "СКР"', position: 'Инженер ПТО', phone: '8(916)437-44-25', email: 'kaplina_aa@oooskr.ru' },
-        
-        // ООО "ИНЭКО"
-        'Онур Хамурджу': { display: 'Онур Хамурджу | Рук. проекта ИНЭКО | 8(925)616-80-78 | onurhamurcu@yandex.ru', company: 'ООО "ИНЭКО"', position: 'Руководитель проекта', phone: '8(925)616-80-78', email: 'onurhamurcu@yandex.ru' },
-        'Онур Кескин': { display: 'Онур Кескин | Рук. проекта ИНЭКО | 8(965)056-74-66 | onurkeskinsaren@gmail.com', company: 'ООО "ИНЭКО"', position: 'Руководитель проекта', phone: '8(965)056-74-66', email: 'onurkeskinsaren@gmail.com' },
-        'Курбанов Манзаршо Анварович': { display: 'Курбанов Манзаршо Анварович | инженер ЭОМ | 8(932)251-41-04', company: 'ООО "ИНЭКО"', position: 'инженер ЭОМ', phone: '8(932)251-41-04', email: '' },
-        'А. Джошгун Махмудович': { display: 'А. Джошгун Махмудович | инженер по ОВ и ВК | 8(999)851-09-98', company: 'ООО "ИНЭКО"', position: 'инженер по ОВ и ВК', phone: '8(999)851-09-98', email: '' },
-        'Худойбердиев Афзал': { display: 'Худойбердиев Афзал | инженер по ОВ и ВК | 8(926)567-26-26', company: 'ООО "ИНЭКО"', position: 'инженер по ОВ и ВК', phone: '8(926)567-26-26', email: '' },
-        'Курбонов Ахтамшох Анварович': { display: 'Курбонов Ахтамшох Анварович | Инженер по СС | 8(980)465-88-00', company: 'ООО "ИНЭКО"', position: 'Инженер по СС', phone: '8(980)465-88-00', email: '' },
-        'Богданов Роман Денисович': { display: 'Богданов Роман Денисович | Инженер ПТО ИНЭКО | 8(916)382-32-19 | romapekka@gmail.com', company: 'ООО "ИНЭКО"', position: 'Инженер ПТО', phone: '8(916)382-32-19', email: 'romapekka@gmail.com' },
-        'Докучаев Кирилл Германович': { display: 'Докучаев Кирилл Германович | Инженер ПТО ИНЭКО | 8(915)348-80-62 | kirilldokucaev52@gmail.com', company: 'ООО "ИНЭКО"', position: 'Инженер ПТО', phone: '8(915)348-80-62', email: 'kirilldokucaev52@gmail.com' },
-        
-        // ООО "ГРИН-СИТИ"
-        'Чудаков Виталий Викторович': { display: 'Чудаков Виталий Викторович | Рук. проекта ГРИН-СИТИ | 8-926-241-13-82;8-926-273-17-31 | greencity77@list.ru', company: 'ООО "ГРИН-СИТИ"', position: 'Руководитель проекта', phone: '8-926-241-13-82;8-926-273-17-31', email: 'greencity77@list.ru' },
-        
-        // ООО "Эстетика Фасада"
-        'Оголь Павел Владимирович': { display: 'Оголь Павел Владимирович | Рук. проекта Эстетика Фасада | 8-918-120-66-65 | info@esteticafasada.ru;9364909@mail.ru', company: 'ООО "Эстетика Фасада"', position: 'Руководитель проекта', phone: '8-918-120-66-65', email: 'info@esteticafasada.ru;9364909@mail.ru' },
-        
-        // ООО "СтройПроект"
-        'Демешко Роман Евгеньевич': { display: 'Демешко Роман Евгеньевич | Нач. участка СтройПроект | 8-916-847-64-61 | stroy_proyekt@mail.ru', company: 'ООО "СтройПроект"', position: 'Начальник участка', phone: '8-916-847-64-61', email: 'stroy_proyekt@mail.ru' }
+        'Рябинин Юрий Вячеславович': { display: 'Рябинин Юрий Вячеславович | Заказчик | ryabinin_yv@dsinv.ru', company: 'ООО "ДС Строй"', phone: '', email: 'ryabinin_yv@dsinv.ru' },
+        'Филимонова Анастасия Витальевна': { display: 'Филимонова Анастасия Витальевна | Зам. руководителя управления | filimonova_av@dsinv.ru', company: 'ООО "ДС Строй"', phone: '', email: 'filimonova_av@dsinv.ru' },
+        'Кривоносов Владимир Витальевич': { display: 'Кривоносов Владимир Витальевич | Рук. строительства | 8(964)709-97-77', company: 'ООО "ДС Строй"', phone: '8(964)709-97-77', email: 'krivonosov_vv@dsinv.ru' },
+        'Ленский Филипп Андреевич': { display: 'Ленский Филипп Андреевич | Рук. проекта | 8-909-918-15-54', company: 'ООО "ДС Строй"', phone: '8-909-918-15-54', email: 'lenskij_fa@dsinv.ru' },
+        'Лебединский Дмитрий Олегович': { display: 'Лебединский Дмитрий Олегович | Директор по строительству | 8-903-217-94-90', company: 'ООО "ДС Строй"', phone: '8-903-217-94-90', email: 'lebedinskij_do@dsinv.ru' },
+        'Олейник Роман Владиславович': { display: 'Олейник Роман Владиславович | Ген. директор КрасОтель | 8-968-935-25-20', company: 'ООО "КрасОтель"', phone: '8-968-935-25-20', email: 'krasotel-ogni3@yandex.ru' },
+        'Дубровский Сергей Михайлович': { display: 'Дубровский Сергей Михайлович | Рук. проекта КрасОтель | 8-985-385-86-29', company: 'ООО "КрасОтель"', phone: '8-985-385-86-29', email: 'krasotel-ogni3@yandex.ru' },
+        'Подкорытов Алексей Викторович': { display: 'Подкорытов Алексей Викторович | Рук. проекта СКР | 8(965)107-48-14', company: 'ООО "СКР"', phone: '8(965)107-48-14', email: 'podkorytov_av@oooskr.ru' },
+        'Кудлай Николай Николаевич': { display: 'Кудлай Николай Николаевич | Ген. директор СКР | 8(985)412-16-36', company: 'ООО "СКР"', phone: '8(985)412-16-36', email: '' },
+        'Онур Хамурджу': { display: 'Онур Хамурджу | Рук. проекта ИНЭКО | 8(925)616-80-78', company: 'ООО "ИНЭКО"', phone: '8(925)616-80-78', email: 'onurhamurcu@yandex.ru' },
+        'Чудаков Виталий Викторович': { display: 'Чудаков Виталий Викторович | Рук. проекта ГРИН-СИТИ | 8-926-241-13-82', company: 'ООО "ГРИН-СИТИ"', phone: '8-926-241-13-82', email: 'greencity77@list.ru' },
+        'Оголь Павел Владимирович': { display: 'Оголь Павел Владимирович | Рук. проекта Эстетика Фасада | 8-918-120-66-65', company: 'ООО "Эстетика Фасада"', phone: '8-918-120-66-65', email: 'info@esteticafasada.ru' }
     };
 
-    // Группировка контактов по компаниям
+    // Срочные поручения из протокола
+    const urgentTasks = [
+        { title: "ИНЭКО: увеличить штат (ЭОМ +10, СС +10, ИТР +3)", deadline: "Просрочено с 10.04", responsible: "Онур Хамурджу" },
+        { title: "Лобби 1 и Лобби 2 — завершить отделку", deadline: "Срок: 20.05.2026", responsible: "СКР / ИНЭКО" },
+        { title: "ДС: подготовить досудебную претензию в СКР", deadline: "до 15.05.2026", responsible: "Ленский Ф.А." },
+        { title: "Автоматика лифтов Корпус 2 — срочно!", deadline: "СРОЧНО", responsible: "ИНЭКО" },
+        { title: "Паркинг -1,-2: полная вычистка", deadline: "до 20.05.2026", responsible: "СКР" }
+    ];
+
+    function renderUrgentTasks() {
+        const container = document.getElementById('urgentTasksList');
+        if (!container) return;
+        container.innerHTML = urgentTasks.map(task => `
+            <div class="urgent-item">
+                <div class="urgent-info">
+                    <div class="urgent-title">${escapeHtml(task.title)}</div>
+                    <div class="urgent-deadline">📅 ${escapeHtml(task.deadline)} | Ответственный: ${escapeHtml(task.responsible)}</div>
+                </div>
+                <button class="assign-btn" onclick="openContactsForAssign('${escapeHtml(task.title)}')">Назначить</button>
+            </div>
+        `).join('');
+    }
+
+    let pendingTaskTitle = '';
+    function openContactsForAssign(taskTitle) {
+        pendingTaskTitle = taskTitle;
+        openContactsModal();
+    }
+
     function renderContacts() {
         const container = document.getElementById('contactsBody');
         const grouped = {};
@@ -813,59 +993,80 @@
             html += `<div class="contact-group"><div class="contact-group-title">🏢 ${company}</div>`;
             contacts.forEach(c => {
                 let detailsHtml = '';
-                if (c.phone) {
-                    const phoneClean = c.phone.replace(/[^0-9+]/g, '');
-                    detailsHtml += `<a href="tel:${phoneClean}">📞 ${c.phone}</a>`;
+                if (c.phone) detailsHtml += `<a href="tel:${c.phone.replace(/[^0-9+]/g, '')}">📞 ${c.phone}</a>`;
+                if (c.email) detailsHtml += `<a href="mailto:${c.email.split(';')[0]}">✉️ ${c.email}</a>`;
+                html += `<div class="contact-item"><span class="contact-name">👤 ${c.name}</span><div class="contact-details">${detailsHtml || '—'}</div>`;
+                if (pendingTaskTitle) {
+                    html += `<button class="assign-btn" style="margin-left:auto;" onclick="assignTaskTo('${escapeHtml(c.name)}')">Назначить</button>`;
                 }
-                if (c.email) {
-                    detailsHtml += `<a href="mailto:${c.email.split(';')[0]}">✉️ ${c.email}</a>`;
-                }
-                html += `<div class="contact-item"><span class="contact-name">👤 ${c.name}</span><div class="contact-details">${detailsHtml || '—'}</div></div>`;
+                html += `</div>`;
             });
             html += `</div>`;
         }
         container.innerHTML = html;
     }
 
-    // Копирование всех контактов
+    function assignTaskTo(personName) {
+        showToast(`✅ Задача "${pendingTaskTitle}" назначена на ${personName}`);
+        pendingTaskTitle = '';
+        closeContactsModal();
+    }
+
     function copyAllContacts() {
         let text = '';
         for (const [name, data] of Object.entries(CONTACTS)) {
             text += `${name} | ${data.company} | ${data.phone || ''} | ${data.email || ''}\n`;
         }
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('📋 Контакты скопированы в буфер обмена');
-        }).catch(() => {
-            showToast('❌ Не удалось скопировать');
-        });
+        navigator.clipboard.writeText(text).then(() => showToast('📋 Контакты скопированы'));
     }
 
-    // Модальное окно контактов
+    // Модальные окна
     const contactsModal = document.getElementById('contactsModal');
     const contactsMenuBtn = document.getElementById('contactsMenuBtn');
     const closeContactsBtn = document.getElementById('closeContactsBtn');
-    
-    function openContactsModal() { contactsModal.classList.add('show'); }
-    function closeContactsModal() { contactsModal.classList.remove('show'); }
-    
+    function openContactsModal() { contactsModal.classList.add('show'); renderContacts(); }
+    function closeContactsModal() { contactsModal.classList.remove('show'); pendingTaskTitle = ''; }
     contactsMenuBtn?.addEventListener('click', openContactsModal);
     closeContactsBtn?.addEventListener('click', closeContactsModal);
     contactsModal?.addEventListener('click', (e) => { if (e.target === contactsModal) closeContactsModal(); });
     document.getElementById('copyAllContactsBtn')?.addEventListener('click', copyAllContacts);
-    
-    // Документы и прочие функции
+
+    // Модалка создания задачи
+    const taskModal = document.getElementById('taskModal');
+    const closeTaskBtn = document.getElementById('closeTaskBtn');
+    function openTaskModal(defaultObject = '', defaultTaskName = '') {
+        document.getElementById('taskObject').value = defaultObject;
+        document.getElementById('taskName').value = defaultTaskName;
+        // Заполняем select контактами
+        const select = document.getElementById('taskResponsible');
+        select.innerHTML = '<option value="">Выберите из контактов</option>';
+        for (const name of Object.keys(CONTACTS)) {
+            select.innerHTML += `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`;
+        }
+        taskModal.classList.add('show');
+    }
+    function closeTaskModal() { taskModal.classList.remove('show'); }
+    closeTaskBtn?.addEventListener('click', closeTaskModal);
+    taskModal?.addEventListener('click', (e) => { if (e.target === taskModal) closeTaskModal(); });
+    document.getElementById('createTaskBtn')?.addEventListener('click', () => {
+        const taskName = document.getElementById('taskName').value;
+        const taskObject = document.getElementById('taskObject').value;
+        const responsible = document.getElementById('taskResponsible').value;
+        const deadline = document.getElementById('taskDeadline').value;
+        if (!taskName) { showToast('Введите название задачи'); return; }
+        showToast(`✅ Задача "${taskName}" создана${responsible ? ' для ' + responsible : ''}${deadline ? ' со сроком ' + deadline : ''}`);
+        closeTaskModal();
+    });
+
+    // Документы
     const pages = [
-        { name: "Реестр чек-листов ПОДПИСАНО/НЕПОДПИСАНО ООО ИНЭКО · 18 мая 2026", file: "Reestr\-chek-listov_INEKO.html", icon: "📄", date: "18.05.2026", category: "registry" },
+        { name: "Реестр чек-листов ПОДПИСАНО/НЕПОДПИСАНО ООО ИНЭКО · 18 мая 2026", file: "Reestr-chek-listov_INEKO.html", icon: "📄", date: "18.05.2026", category: "registry" },
         { name: "Протокол №49 · 13 мая 2026", file: "Protokol_49_ot_13.05.2026.html", icon: "📄", date: "13.05.2026", category: "protocol" },
         { name: "Протокол №48 · 06 мая 2026", file: "Protokol_48_ot_06.05.2026.html", icon: "📄", date: "06.05.2026", category: "protocol" },
         { name: "Протокол №46 · 22 апреля 2026", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📄", date: "22.04.2026", category: "protocol" },
-        { name: "Протокол №1 · 28 апреля 2026", file: "протокол 28.04.2026.html", icon: "📄", date: "28.04.2026", category: "protocol" },
-        { name: "Протокол №2 · 05 мая 2026", file: "Protokol_2_ot_05.05.2026.html", icon: "📄", date: "05.05.2026", category: "protocol" },
         { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📊", date: "03.05.2026", category: "registry" },
         { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📊", date: "02.05.2026", category: "finance" },
         { name: "Реестр чек-лист АВТ2", file: "Reesrt_cheklist_AVT2.html", icon: "📋", date: "06.05.2026", category: "registry" },
-        { name: "Реестр чек-лист СС8", file: "Reesrt_cheklist_CC8.html", icon: "📋", date: "06.05.2026", category: "registry" },
-        { name: "Реестр для ЧЛ СС5", file: "реестр для ЧЛ.html", icon: "📋", date: "01.05.2026", category: "registry" },
         { name: "Технический аудит ВИС", file: "tech_vis.html", icon: "⚙️", date: "10.05.2026", category: "tech" }
     ];
 
@@ -876,7 +1077,16 @@
         const container = document.getElementById('docsContainer');
         document.getElementById('docsCount').innerText = filtered.length;
         if (!filtered.length) { container.innerHTML = `<div class="empty-state">📭 Документы не найдены</div>`; return; }
-        container.innerHTML = filtered.map(d => `<div class="doc-card"><a href="${d.file}" class="card-link"><div style="font-size:1.6rem;">${d.icon}</div><div class="doc-name">${escapeHtml(d.name)}</div><div class="doc-meta"><span>📅 ${d.date}</span><span>${d.file.replace('.html','')}</span></div></a></div>`).join('');
+        container.innerHTML = filtered.map(d => `
+            <div class="doc-card">
+                <a href="${d.file}" class="card-link">
+                    <div style="font-size:1.6rem;">${d.icon}</div>
+                    <div class="doc-name">${escapeHtml(d.name)}</div>
+                    <div class="doc-meta"><span>📅 ${d.date}</span></div>
+                </a>
+                <div class="next-step-btn" onclick="openTaskModal('${escapeHtml(d.name.split('·')[0])}', 'Следующий этап: ${escapeHtml(d.name)}')">➕ Создать следующую задачу</div>
+            </div>
+        `).join('');
     }
     function filterDocs(cat) { currentFilter = cat; renderDocs(); showToast(`Показаны: ${cat}`); }
     function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
@@ -925,8 +1135,13 @@
     const search = document.getElementById('globalSearch');
     let deb; search?.addEventListener('input', (e)=> { clearTimeout(deb); deb = setTimeout(()=>{ currentSearch = e.target.value; renderDocs(); }, 280); });
     
+    window.openTaskModal = openTaskModal;
+    window.assignTaskTo = assignTaskTo;
+    window.openContactsForAssign = openContactsForAssign;
+    
     loadExportedFiles();
     renderDocs();
+    renderUrgentTasks();
     renderContacts();
 </script>
 </body>

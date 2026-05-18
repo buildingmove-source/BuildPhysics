@@ -114,34 +114,47 @@
             border-color: var(--accent-blue);
             background: rgba(59,130,246,0.1);
         }
+        
+        /* КНОПКА "ДС" */
         .mobile-menu-btn {
-            background: rgba(59,130,246,0.15);
-            border: none;
-            display: none;
+            background: rgba(59,130,246,0.2);
+            border: 1px solid rgba(59,130,246,0.5);
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 0.5rem 1rem;
             border-radius: 40px;
             color: white;
-            font-weight: 500;
+            font-weight: 800;
+            font-size: 1.2rem;
             cursor: pointer;
+            transition: all 0.2s ease;
+            width: 52px;
+            height: 52px;
+            letter-spacing: 1px;
+        }
+        .mobile-menu-btn:hover {
+            background: var(--accent-blue);
+            transform: scale(1.02);
+            border-color: var(--accent-blue);
         }
 
-        /* БЕГУЩАЯ СТРОКА (Ticker) */
+        /* БЕГУЩАЯ СТРОКА — ГОРЯЩИЕ ПОЗИЦИИ ИЗ ПРОТОКОЛА №49 */
         .ticker-wrapper {
             background: #0F172A;
-            border-bottom: 1px solid rgba(59,130,246,0.3);
-            border-top: 1px solid rgba(59,130,246,0.2);
+            border-bottom: 1px solid rgba(239,68,68,0.4);
+            border-top: 1px solid rgba(239,68,68,0.3);
             padding: 0.6rem 0;
             overflow: hidden;
             white-space: nowrap;
         }
         .ticker {
             display: inline-block;
-            animation: tickerScroll 45s linear infinite;
+            animation: tickerScroll 70s linear infinite;
             font-size: 0.85rem;
             font-weight: 500;
-            color: var(--accent-orange);
+            color: #FFFFFF;
             letter-spacing: 0.3px;
         }
         .ticker span {
@@ -149,16 +162,17 @@
             display: inline-block;
         }
         .ticker i {
-            color: var(--accent-red);
+            color: #F87171;
             font-style: normal;
             margin-right: 0.5rem;
+            font-weight: 700;
         }
         @keyframes tickerScroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-48%); }
+            100% { transform: translateX(-55%); }
         }
 
-        /* ОСНОВНОЙ КОНТЕЙНЕР */
+        /* ОСТАЛЬНЫЕ СТИЛИ БЕЗ ИЗМЕНЕНИЙ */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -240,8 +254,6 @@
             background: rgba(59,130,246,0.1);
             color: var(--accent-cyan);
         }
-
-        /* ОСНОВНОЙ КОНТЕНТ (стиль новостного портала) */
         .content {
             flex: 1;
             min-width: 0;
@@ -373,8 +385,6 @@
             font-size: 0.7rem;
             color: var(--text-muted);
         }
-
-        /* Мобильные адаптации */
         .mobile-sidebar {
             position: fixed;
             top: 0;
@@ -404,7 +414,6 @@
             transition: 0.2s;
         }
         .backdrop.show { opacity: 1; visibility: visible; }
-
         .chat-popup {
             position: fixed;
             bottom: 90px;
@@ -466,7 +475,6 @@
             animation: pulseGreen 1.4s infinite;
             z-index: -1;
         }
-
         @media (max-width: 800px) {
             .sidebar { display: none; }
             .mobile-menu-btn { display: flex; }
@@ -474,7 +482,7 @@
             .hero-title { font-size: 1.3rem; }
             .chat-popup { width: calc(100% - 32px); right: 16px; left: 16px; height: 60vh; }
             .docs-grid { grid-template-columns: 1fr; }
-            .ticker { animation-duration: 70s; }
+            .ticker { animation-duration: 95s; }
         }
     </style>
 </head>
@@ -489,20 +497,22 @@
         <div class="nav-search">
             <input type="text" id="globalSearch" placeholder="Поиск по документам...">
         </div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">📂 Меню</button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">ДС</button>
     </div>
 </nav>
 
-<!-- БЕГУЩАЯ СТРОКА С ПОРУЧЕНИЯМИ -->
+<!-- БЕГУЩАЯ СТРОКА: ГОРЯЩИЕ ПОЗИЦИИ ИЗ ПРОТОКОЛА №49 -->
 <div class="ticker-wrapper">
     <div class="ticker">
-        <span> <i>Ленскому Ф.А.</i> — обеспечить получение заявок и счетов СКР (по списку во вложении) и заведение и оплату их нами. Хоть за них делайте.</span>
-        <span> <i>Ленскому Ф.А. + юристы</i> — подготовить претензионные предсудебные претензии и направить их в СКР по почте с уведомлением, на руки вручить, по электронной почте.</span>
-        <span> <i>Рябинину Ю.В.</i> — провести последнюю политическую беседу с Кудлай Н.Н. Не хочет работать — забираем работы по отделке, отдаем другим, включая работы по устранению замечаний по квартирам.</span>
-        <span> <i>Департамент строительства</i> — завершить работы по ВИС силами привлеченных компаний, привлекать подрядчиков до 30 мая, провести комплексные работы по 1 секции и подвалу.</span>
-        <span> <i>Лебединскому Д.О.</i> — взять функции координатора, довести до ума 2 секцию и МОПЫ 1 и 2 секции до 15 мая.</span>
-        <span> <i>Красотелю</i> — оформлять документы по выполненным работам за подрядчиков. Начать вносить в 1С все недостатки по квартирам.</span>
-        <span> <i>Красотелю</i> — вносить в 1С все недостатки по квартирам, активировать приемку работ.</span>
+        <span><i>⚠️ СРЫВ СРОКОВ:</i> ИНЭКО не увеличило штат (ЭОМ +10, СС +10, ИТР +3) — не выполнено.</span>
+        <span><i>🔥 КРИТИЧЕСКОЕ:</i> Лобби 1 и Лобби 2 — сроки с 15.04 → 06.05 → 20.05. Срыв!</span>
+        <span><i>⚡ ПРЕТЕНЗИОННАЯ РАБОТА:</i> ДС готовит досудебную претензию в СКР до 15.05.2026.</span>
+        <span><i>🏗️ ИНЖЕНЕРНЫЕ СИСТЕМЫ:</i> ВРУ, линии электропитания, гидравлика ВПВ Корпус 1 к 20.05 — контроль!</span>
+        <span><i>🧱 ОТДЕЛКА КОРПУС 2:</i> Локальные недоделки завершить до 20.05, полная готовность 27.05.</span>
+        <span><i>📋 ЧЕК-ЛИСТЫ:</i> По инженерным системам за ИНЭКО готовит Красотель. Контроль!</span>
+        <span><i>🚨 ЛИФТЫ И ПАРКИНГ:</i> Автоматика лифтов Корпус 2 — срочно. Паркинг -1,-2 вычистить до 20.05.</span>
+        <span><i>🎯 КОМПЛЕКСНЫЕ ИСПЫТАНИЯ:</i> Паркинг — 22.05, Корпус 1 — 29.05. Ответственный ДС.</span>
+        <span><i>📑 ПОДГОТОВИТЬ ГРАФИК:</i> Поэтажный совмещенный график ВИС-Отделка Корпус 1 (Красотель).</span>
     </div>
 </div>
 
@@ -540,7 +550,7 @@
                 <div style="font-size:0.8rem; display:flex; flex-direction:column; gap:4px;">
                     <div>• Ленский Ф.А.: счета СКР, заявки, оплаты.</div>
                     <div>• Претензии в СКР: подготовить и направить всеми способами.</div>
-                    <div>• Рябинин Ю.В.: финальная беседа с Кудлаей Н.Н..</div>
+                    <div>• Рябинин Ю.В.: финальная беседа с Кудлай Н.Н.</div>
                     <div>• Департамент строительства: ВИС, подрядчики до 30 мая.</div>
                     <div>• Лебединский Д.О.: координация 2 секции и МОПов до 15 мая.</div>
                     <div>• Красотель: документы за подрядчиков + 1С недостатки квартир.</div>

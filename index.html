@@ -115,7 +115,7 @@
             background: rgba(59,130,246,0.1);
         }
         
-        /* КНОПКА "ДС" */
+        /* НОВАЯ КНОПКА "КОНТАКТНЫЙ ЛИСТ" */
         .mobile-menu-btn {
             background: rgba(59,130,246,0.2);
             border: 1px solid rgba(59,130,246,0.5);
@@ -123,16 +123,14 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 40px;
             color: white;
-            font-weight: 800;
-            font-size: 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s ease;
-            width: 52px;
-            height: 52px;
-            letter-spacing: 1px;
+            white-space: nowrap;
         }
         .mobile-menu-btn:hover {
             background: var(--accent-blue);
@@ -140,7 +138,7 @@
             border-color: var(--accent-blue);
         }
 
-        /* БЕГУЩАЯ СТРОКА — ГОРЯЩИЕ ПОЗИЦИИ ИЗ ПРОТОКОЛА №49 */
+        /* БЕГУЩАЯ СТРОКА */
         .ticker-wrapper {
             background: #0F172A;
             border-bottom: 1px solid rgba(239,68,68,0.4);
@@ -289,7 +287,6 @@
             margin-bottom: 0.5rem;
             letter-spacing: 1px;
         }
-        /* Стиль для данных по ЗОС */
         .zos-stats {
             background: rgba(16,185,129,0.08);
             border-radius: 12px;
@@ -398,6 +395,133 @@
             font-size: 0.7rem;
             color: var(--text-muted);
         }
+
+        /* МОДАЛЬНОЕ ОКНО КОНТАКТНОГО ЛИСТА */
+        .contacts-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .contacts-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .contacts-modal-content {
+            background: var(--bg-card);
+            border-radius: 28px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(59,130,246,0.4);
+            box-shadow: var(--shadow-lg);
+        }
+        .contacts-header {
+            padding: 1.2rem 1.5rem;
+            background: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .contacts-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .close-contacts {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: var(--transition);
+        }
+        .close-contacts:hover {
+            color: var(--accent-red);
+        }
+        .contacts-body {
+            padding: 1.2rem 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .contact-group {
+            margin-bottom: 1.5rem;
+        }
+        .contact-group-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-cyan);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .contact-item {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        .contact-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 220px;
+        }
+        .contact-details {
+            color: var(--text-secondary);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .contact-details a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .contact-details a:hover {
+            color: var(--accent-blue);
+            text-decoration: underline;
+        }
+        .copy-all-btn {
+            background: rgba(59,130,246,0.2);
+            border: 1px solid var(--accent-blue);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .copy-all-btn:hover {
+            background: var(--accent-blue);
+        }
+        .contacts-footer {
+            padding: 0.8rem 1.5rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .mobile-sidebar {
             position: fixed;
             top: 0;
@@ -496,6 +620,7 @@
             .chat-popup { width: calc(100% - 32px); right: 16px; left: 16px; height: 60vh; }
             .docs-grid { grid-template-columns: 1fr; }
             .ticker { animation-duration: 95s; }
+            .contact-name { min-width: 100%; }
         }
     </style>
 </head>
@@ -510,11 +635,12 @@
         <div class="nav-search">
             <input type="text" id="globalSearch" placeholder="Поиск по документам...">
         </div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">ДС</button>
+        <!-- КНОПКА "КОНТАКТНЫЙ ЛИСТ" -->
+        <button class="mobile-menu-btn" id="contactsMenuBtn">📋 Контактный лист</button>
     </div>
 </nav>
 
-<!-- БЕГУЩАЯ СТРОКА: ГОРЯЩИЕ ПОЗИЦИИ ИЗ ПРОТОКОЛА №49 -->
+<!-- БЕГУЩАЯ СТРОКА -->
 <div class="ticker-wrapper">
     <div class="ticker">
         <span><i> СРЫВ СРОКОВ:</i> ИНЭКО не увеличило штат (ЭОМ +10, СС +10, ИТР +3) — не выполнено.</span>
@@ -562,11 +688,10 @@
                 <div class="tasks-title">⚡ КЛЮЧЕВЫЕ ПОРУЧЕНИЯ НА НЕДЕЛЮ</div>
                 <div style="font-size:0.8rem; display:flex; flex-direction:column; gap:4px;">
                     <div>• Ленский Ф.А.: счета СКР, заявки, оплаты.</div>
-                    <div>• Департамент строительства: ВИС, завершение до 30 мая.</div>
+                    <div>• Департамент строительства: ВИС, завершть до 30 мая.</div>
                     <div>• Лебединский Д.О.: координация 2 секции и МОПов до 15 мая.</div>
                     <div>• Красотель: документы за подрядчиков + 1С недостатки квартир.</div>
                 </div>
-                <!-- ДАННЫЕ ПО ЗОС ИЗ ПРОТОКОЛА №49 -->
                 <div class="zos-stats">
                     📋 <strong>ЗОС (Заключение о соответствии):</strong> подписано <span>69</span> актов из <span>75</span><br>
                 </div>
@@ -585,7 +710,23 @@
 
 <footer class="footer">Огни 3 · Штаб строительства · Данные оперативно обновляются</footer>
 
-<!-- mobile sidebar -->
+<!-- МОДАЛЬНОЕ ОКНО КОНТАКТНОГО ЛИСТА -->
+<div id="contactsModal" class="contacts-modal">
+    <div class="contacts-modal-content">
+        <div class="contacts-header">
+            <h2>📋 Контактный лист проекта</h2>
+            <button class="close-contacts" id="closeContactsBtn">&times;</button>
+        </div>
+        <div class="contacts-body" id="contactsBody">
+            <!-- Контакты будут загружены из CONTACTS -->
+        </div>
+        <div class="contacts-footer">
+            <button class="copy-all-btn" id="copyAllContactsBtn">📋 Копировать всё</button>
+        </div>
+    </div>
+</div>
+
+<!-- mobile sidebar, чат и пр. -->
 <div class="backdrop" id="mobileBackdrop"></div>
 <div class="mobile-sidebar" id="mobileSidebar">
     <div style="display:flex; justify-content:space-between; margin-bottom:1rem;"><h3>Меню</h3><button id="closeMobileSidebar" style="background:none; border:none; color:white; font-size:1.6rem;">✕</button></div>
@@ -597,7 +738,6 @@
     <button class="sidebar-item" id="mobileChatBtn" onclick="openChatPopup(); closeMobileSidebar();">💬 Чат</button>
 </div>
 
-<!-- Чат попап -->
 <div id="chatPopup" class="chat-popup">
     <div class="popup-header" style="display:flex; justify-content:space-between; padding:0.8rem; background:#0F172A;"><span>💬 Чат штаба</span><button onclick="closeChatPopup()" style="background:none; border:none; color:white; font-size:1.2rem;">✕</button></div>
     <div class="popup-messages" id="popupMessages"><div class="popup-message"><div class="popup-bubble">Рабочие часы: 9:00–19:00</div></div></div>
@@ -606,7 +746,115 @@
 <div class="chat-float-btn" id="chatFloatBtn">💬</div>
 
 <script>
-    // ДАННЫЕ ДОКУМЕНТОВ
+    // ===== КОНТАКТЫ (полностью из вашего запроса) =====
+    const CONTACTS = {
+        // ООО "ДС Строй" (Заказчик)
+        'Рябинин Юрий Вячеславович': { display: 'Рябинин Юрий Вячеславович | Заказчик | ryabinin_yv@dsinv.ru', company: 'ООО "ДС Строй"', position: '', phone: '', email: 'ryabinin_yv@dsinv.ru' },
+        'Филимонова Анастасия Витальевна': { display: 'Филимонова Анастасия Витальевна | Зам. руководителя управления | filimonova_av@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Заместитель руководителя управления', phone: '', email: 'filimonova_av@dsinv.ru' },
+        'Кривоносов Владимир Витальевич': { display: 'Кривоносов Владимир Витальевич | Рук. строительства | 8(964)709-97-77 | krivonosov_vv@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Руководитель строительства', phone: '8(964)709-97-77', email: 'krivonosov_vv@dsinv.ru' },
+        'Ленский Филипп Андреевич': { display: 'Ленский Филипп Андреевич | Рук. проекта | 8-909-918-15-54 | lenskij_fa@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Руководитель проекта', phone: '8-909-918-15-54', email: 'lenskij_fa@dsinv.ru' },
+        'Лебединский Дмитрий Олегович': { display: 'Лебединский Дмитрий Олегович | Директор по строительству | 8-903-217-94-90 | lebedinskij_do@dsinv.ru', company: 'ООО "ДС Строй"', position: 'Директор по строительству', phone: '8-903-217-94-90', email: 'lebedinskij_do@dsinv.ru' },
+        
+        // ООО "КрасОтель"
+        'Олейник Роман Владиславович': { display: 'Олейник Роман Владиславович | Ген. директор КрасОтель | 8-968-935-25-20', company: 'ООО "КрасОтель"', position: 'Генеральный директор', phone: '8-968-935-25-20', email: 'krasotel-ogni3@yandex.ru' },
+        'Дубровский Сергей Михайлович': { display: 'Дубровский Сергей Михайлович | Рук. проекта КрасОтель | 8-985-385-86-29', company: 'ООО "КрасОтель"', position: 'Руководитель проекта', phone: '8-985-385-86-29', email: 'krasotel-ogni3@yandex.ru' },
+        'Левченко Анастасия Максимовна': { display: 'Левченко Анастасия Максимовна | Администратор КрасОтель | 8-909-956-38-22', company: 'ООО "КрасОтель"', position: 'Администратор проекта', phone: '8-909-956-38-22', email: 'krasotel-ogni3@yandex.ru' },
+        'Попов-Иванов Кирилл Юрьевич': { display: 'Попов-Иванов Кирилл Юрьевич | Ст. инженер СК по СС | 8-996-969-06-72', company: 'ООО "КрасОтель"', position: 'Ст. инженер СК по СС', phone: '8-996-969-06-72', email: 'krasotel-ogni3@yandex.ru' },
+        'Егоров Юрий Александрович': { display: 'Егоров Юрий Александрович | Ст. инженер СК по ЭОМ | 8-909-923-35-23', company: 'ООО "КрасОтель"', position: 'Ст. инженер СК по ЭОМ', phone: '8-909-923-35-23', email: 'krasotel-ogni3@yandex.ru' },
+        'Смоленцев Всеволод Юрьевич': { display: 'Смоленцев Всеволод Юрьевич | Ст. инженер СК по ОВ и ВК | 8-968-404-55-50', company: 'ООО "КрасОтель"', position: 'Ст. инженер СК по ОВ и ВК', phone: '8-968-404-55-50', email: 'krasotel-ogni3@yandex.ru' },
+        'Могучий Никита Антонович': { display: 'Могучий Никита Антонович | Инженер СК по общестрою | 8-985-297-08-27', company: 'ООО "КрасОтель"', position: 'Инженер СК по общестроительным работам', phone: '8-985-297-08-27', email: 'krasotel-ogni3@yandex.ru' },
+        'Арион Сергей Юрьевич': { display: 'Арион Сергей Юрьевич | Инженер СК по общестрою | 8-916-025-17-98', company: 'ООО "КрасОтель"', position: 'Инженер СК по общестроительным работам', phone: '8-916-025-17-98', email: 'krasotel-ogni3@yandex.ru' },
+        'Скименко Сергей Николаевич': { display: 'Скименко Сергей Николаевич | Инженер СК по общестрою | 8-916-492-01-03', company: 'ООО "КрасОтель"', position: 'Инженер СК по общестроительным работам', phone: '8-916-492-01-03', email: 'krasotel-ogni3@yandex.ru' },
+        'Коханов Андрей Валентинович': { display: 'Коханов Андрей Валентинович | Инженер по ОТ и ТБ | 8-964-589-76-67', company: 'ООО "КрасОтель"', position: 'Инженер по ОТ и ТБ', phone: '8-964-589-76-67', email: 'krasotel-ogni3@yandex.ru' },
+        'Курако Дмитрий Евгеньевич': { display: 'Курако Дмитрий Евгеньевич | ГИП | 8-985-984-73-99', company: 'ООО "КрасОтель"', position: 'Главный инженер проекта', phone: '8-985-984-73-99', email: 'krasotel-ogni3@yandex.ru' },
+        
+        // ООО "СКР"
+        'Кудлай Николай Николаевич': { display: 'Кудлай Николай Николаевич | Ген. директор СКР | 8(985)412-16-36', company: 'ООО "СКР"', position: 'Генеральный директор', phone: '8(985)412-16-36', email: '' },
+        'Подкорытов Алексей Викторович': { display: 'Подкорытов Алексей Викторович | Рук. проекта СКР | 8(965)107-48-14 | podkorytov_av@oooskr.ru', company: 'ООО "СКР"', position: 'Руководитель проекта', phone: '8(965)107-48-14', email: 'podkorytov_av@oooskr.ru' },
+        'Мингазов Артур Закариевич': { display: 'Мингазов Артур Закариевич | Зам. рук. проекта СКР | 8(926)123-41-32 | mingazov_az@oooskr.ru', company: 'ООО "СКР"', position: 'Заместитель руководителя проекта', phone: '8(926)123-41-32', email: 'mingazov_az@oooskr.ru' },
+        'Басс Игорь Михайлович': { display: 'Басс Игорь Михайлович | ИО нач. лимитного отдела | 8(916)912-49-93 | bass_im@oooskr.ru', company: 'ООО "СКР"', position: 'Исполняющий обязанности начальника лимитного отдела', phone: '8(916)912-49-93', email: 'bass_im@oooskr.ru' },
+        'Сиваков Сергей Леонидович': { display: 'Сиваков Сергей Леонидович | Нач. участка | 8(917)587-66-10 | sivakov_sl@oooskr.ru', company: 'ООО "СКР"', position: 'Начальник участка', phone: '8(917)587-66-10', email: 'sivakov_sl@oooskr.ru' },
+        'Турманов Игорь Николаевич': { display: 'Турманов Игорь Николаевич | Прораб | 8(909)692-21-30 | turmanov_in@oooskr.ru', company: 'ООО "СКР"', position: 'Прораб', phone: '8(909)692-21-30', email: 'turmanov_in@oooskr.ru' },
+        'Евстафьев Евгений Геннадьевич': { display: 'Евстафьев Евгений Геннадьевич | Кладовщик | 8(969)978-49-86 | evstafev_eg@oooskr.ru', company: 'ООО "СКР"', position: 'Кладовщик', phone: '8(969)978-49-86', email: 'evstafev_eg@oooskr.ru' },
+        'Федченко Павел Александрович': { display: 'Федченко Павел Александрович | Производитель работ | 8(962)302-94-07 | fedchenko_pa@oooskr.ru', company: 'ООО "СКР"', position: 'Производитель работ', phone: '8(962)302-94-07', email: 'fedchenko_pa@oooskr.ru' },
+        'Куропятник Владимир Алексеевич': { display: 'Куропятник Владимир Алексеевич | Инженер ОТ и ТБ | 8(985)194-64-00 | kuropyatnik_va@oooskr.ru', company: 'ООО "СКР"', position: 'Инженер ОТ и ТБ', phone: '8(985)194-64-00', email: 'kuropyatnik_va@oooskr.ru' },
+        'Каплина Анастасия Алексеевна': { display: 'Каплина Анастасия Алексеевна | Инженер ПТО | 8(916)437-44-25 | kaplina_aa@oooskr.ru', company: 'ООО "СКР"', position: 'Инженер ПТО', phone: '8(916)437-44-25', email: 'kaplina_aa@oooskr.ru' },
+        
+        // ООО "ИНЭКО"
+        'Онур Хамурджу': { display: 'Онур Хамурджу | Рук. проекта ИНЭКО | 8(925)616-80-78 | onurhamurcu@yandex.ru', company: 'ООО "ИНЭКО"', position: 'Руководитель проекта', phone: '8(925)616-80-78', email: 'onurhamurcu@yandex.ru' },
+        'Онур Кескин': { display: 'Онур Кескин | Рук. проекта ИНЭКО | 8(965)056-74-66 | onurkeskinsaren@gmail.com', company: 'ООО "ИНЭКО"', position: 'Руководитель проекта', phone: '8(965)056-74-66', email: 'onurkeskinsaren@gmail.com' },
+        'Курбанов Манзаршо Анварович': { display: 'Курбанов Манзаршо Анварович | инженер ЭОМ | 8(932)251-41-04', company: 'ООО "ИНЭКО"', position: 'инженер ЭОМ', phone: '8(932)251-41-04', email: '' },
+        'А. Джошгун Махмудович': { display: 'А. Джошгун Махмудович | инженер по ОВ и ВК | 8(999)851-09-98', company: 'ООО "ИНЭКО"', position: 'инженер по ОВ и ВК', phone: '8(999)851-09-98', email: '' },
+        'Худойбердиев Афзал': { display: 'Худойбердиев Афзал | инженер по ОВ и ВК | 8(926)567-26-26', company: 'ООО "ИНЭКО"', position: 'инженер по ОВ и ВК', phone: '8(926)567-26-26', email: '' },
+        'Курбонов Ахтамшох Анварович': { display: 'Курбонов Ахтамшох Анварович | Инженер по СС | 8(980)465-88-00', company: 'ООО "ИНЭКО"', position: 'Инженер по СС', phone: '8(980)465-88-00', email: '' },
+        'Богданов Роман Денисович': { display: 'Богданов Роман Денисович | Инженер ПТО ИНЭКО | 8(916)382-32-19 | romapekka@gmail.com', company: 'ООО "ИНЭКО"', position: 'Инженер ПТО', phone: '8(916)382-32-19', email: 'romapekka@gmail.com' },
+        'Докучаев Кирилл Германович': { display: 'Докучаев Кирилл Германович | Инженер ПТО ИНЭКО | 8(915)348-80-62 | kirilldokucaev52@gmail.com', company: 'ООО "ИНЭКО"', position: 'Инженер ПТО', phone: '8(915)348-80-62', email: 'kirilldokucaev52@gmail.com' },
+        
+        // ООО "ГРИН-СИТИ"
+        'Чудаков Виталий Викторович': { display: 'Чудаков Виталий Викторович | Рук. проекта ГРИН-СИТИ | 8-926-241-13-82;8-926-273-17-31 | greencity77@list.ru', company: 'ООО "ГРИН-СИТИ"', position: 'Руководитель проекта', phone: '8-926-241-13-82;8-926-273-17-31', email: 'greencity77@list.ru' },
+        
+        // ООО "Эстетика Фасада"
+        'Оголь Павел Владимирович': { display: 'Оголь Павел Владимирович | Рук. проекта Эстетика Фасада | 8-918-120-66-65 | info@esteticafasada.ru;9364909@mail.ru', company: 'ООО "Эстетика Фасада"', position: 'Руководитель проекта', phone: '8-918-120-66-65', email: 'info@esteticafasada.ru;9364909@mail.ru' },
+        
+        // ООО "СтройПроект"
+        'Демешко Роман Евгеньевич': { display: 'Демешко Роман Евгеньевич | Нач. участка СтройПроект | 8-916-847-64-61 | stroy_proyekt@mail.ru', company: 'ООО "СтройПроект"', position: 'Начальник участка', phone: '8-916-847-64-61', email: 'stroy_proyekt@mail.ru' }
+    };
+
+    // Группировка контактов по компаниям
+    function renderContacts() {
+        const container = document.getElementById('contactsBody');
+        const grouped = {};
+        for (const [name, data] of Object.entries(CONTACTS)) {
+            const company = data.company || 'Другое';
+            if (!grouped[company]) grouped[company] = [];
+            grouped[company].push({ name, ...data });
+        }
+        let html = '';
+        for (const [company, contacts] of Object.entries(grouped)) {
+            html += `<div class="contact-group"><div class="contact-group-title">🏢 ${company}</div>`;
+            contacts.forEach(c => {
+                let detailsHtml = '';
+                if (c.phone) {
+                    const phoneClean = c.phone.replace(/[^0-9+]/g, '');
+                    detailsHtml += `<a href="tel:${phoneClean}">📞 ${c.phone}</a>`;
+                }
+                if (c.email) {
+                    detailsHtml += `<a href="mailto:${c.email.split(';')[0]}">✉️ ${c.email}</a>`;
+                }
+                html += `<div class="contact-item"><span class="contact-name">👤 ${c.name}</span><div class="contact-details">${detailsHtml || '—'}</div></div>`;
+            });
+            html += `</div>`;
+        }
+        container.innerHTML = html;
+    }
+
+    // Копирование всех контактов
+    function copyAllContacts() {
+        let text = '';
+        for (const [name, data] of Object.entries(CONTACTS)) {
+            text += `${name} | ${data.company} | ${data.phone || ''} | ${data.email || ''}\n`;
+        }
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('📋 Контакты скопированы в буфер обмена');
+        }).catch(() => {
+            showToast('❌ Не удалось скопировать');
+        });
+    }
+
+    // Модальное окно контактов
+    const contactsModal = document.getElementById('contactsModal');
+    const contactsMenuBtn = document.getElementById('contactsMenuBtn');
+    const closeContactsBtn = document.getElementById('closeContactsBtn');
+    
+    function openContactsModal() { contactsModal.classList.add('show'); }
+    function closeContactsModal() { contactsModal.classList.remove('show'); }
+    
+    contactsMenuBtn?.addEventListener('click', openContactsModal);
+    closeContactsBtn?.addEventListener('click', closeContactsModal);
+    contactsModal?.addEventListener('click', (e) => { if (e.target === contactsModal) closeContactsModal(); });
+    document.getElementById('copyAllContactsBtn')?.addEventListener('click', copyAllContacts);
+    
+    // Документы и прочие функции
     const pages = [
         { name: "Протокол №49 · 13 мая 2026", file: "Protokol_49_ot_13.05.2026.html", icon: "📄", date: "13.05.2026", category: "protocol" },
         { name: "Протокол №48 · 06 мая 2026", file: "Protokol_48_ot_06.05.2026.html", icon: "📄", date: "06.05.2026", category: "protocol" },
@@ -663,7 +911,6 @@
         setTimeout(()=>{ let reply=document.createElement('div'); reply.className='popup-message'; reply.innerHTML=`<div class="popup-bubble">✅ Принято (демо-режим)</div>`; container.appendChild(reply); container.scrollTop=container.scrollHeight; }, 600);
     }
 
-    // Mobile sidebar
     const mobileBtn = document.getElementById('mobileMenuBtn'), mobileSide = document.getElementById('mobileSidebar'), backdrop = document.getElementById('mobileBackdrop');
     function openMobileSidebar() { mobileSide.classList.add('open'); backdrop.classList.add('show'); document.body.style.overflow='hidden'; }
     function closeMobileSidebar() { mobileSide.classList.remove('open'); backdrop.classList.remove('show'); document.body.style.overflow=''; }
@@ -677,8 +924,10 @@
 
     const search = document.getElementById('globalSearch');
     let deb; search?.addEventListener('input', (e)=> { clearTimeout(deb); deb = setTimeout(()=>{ currentSearch = e.target.value; renderDocs(); }, 280); });
+    
     loadExportedFiles();
     renderDocs();
+    renderContacts();
 </script>
 </body>
 </html>

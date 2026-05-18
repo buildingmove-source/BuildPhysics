@@ -24,6 +24,7 @@
             --accent-green: #10B981;
             --accent-red: #EF4444;
             --accent-orange: #F97316;
+            --accent-yellow: #F59E0B;
             --text-primary: #F3F4F6;
             --text-secondary: #9CA3AF;
             --text-muted: #6B7280;
@@ -57,7 +58,7 @@
             100% { transform: scale(1.2); opacity: 0; }
         }
 
-        /* ШАПКА В СТИЛЕ RBC */
+        /* ШАПКА */
         .navbar {
             background: var(--bg-sidebar);
             border-bottom: 1px solid var(--border-light);
@@ -81,11 +82,6 @@
             gap: 0.5rem;
             cursor: pointer;
             flex-shrink: 0;
-        }
-        .logo-img {
-            height: 42px;
-            width: auto;
-            border-radius: 8px;
         }
         .logo-text {
             font-size: 1.3rem;
@@ -115,7 +111,6 @@
             background: rgba(59,130,246,0.1);
         }
         
-        /* НОВАЯ КНОПКА "КОНТАКТНЫЙ ЛИСТ" */
         .mobile-menu-btn {
             background: rgba(59,130,246,0.2);
             border: 1px solid rgba(59,130,246,0.5);
@@ -135,7 +130,6 @@
         .mobile-menu-btn:hover {
             background: var(--accent-blue);
             transform: scale(1.02);
-            border-color: var(--accent-blue);
         }
 
         /* БЕГУЩАЯ СТРОКА */
@@ -170,7 +164,6 @@
             100% { transform: translateX(-55%); }
         }
 
-        /* ОСНОВНОЙ КОНТЕНТ */
         .main-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -199,7 +192,20 @@
             color: var(--accent-cyan);
             margin-bottom: 1rem;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-red { background: var(--accent-red); box-shadow: 0 0 6px var(--accent-red); }
+        .status-yellow { background: var(--accent-yellow); box-shadow: 0 0 6px var(--accent-yellow); }
+        .status-green { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
+
         .sidebar-item {
             display: flex;
             align-items: center;
@@ -207,7 +213,6 @@
             padding: 0.7rem;
             border-radius: var(--radius-sm);
             color: var(--text-primary);
-            text-decoration: none;
             transition: var(--transition);
             cursor: pointer;
             width: 100%;
@@ -219,7 +224,6 @@
         .sidebar-item:hover {
             background: rgba(59,130,246,0.15);
             transform: translateX(5px);
-            color: white;
         }
         .video-container {
             border-radius: 16px;
@@ -256,13 +260,57 @@
             flex: 1;
             min-width: 0;
         }
+
+        /* ВИДЖЕТ ГЛАВНОГО ВОЗДЕЙСТВИЯ */
+        .impact-widget {
+            background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(0,0,0,0.3));
+            border-radius: var(--radius-lg);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(239,68,68,0.4);
+            overflow: hidden;
+        }
+        .impact-header {
+            background: rgba(239,68,68,0.2);
+            padding: 0.8rem 1.2rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .impact-body {
+            padding: 1.2rem;
+        }
+        .impact-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .impact-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .impact-action {
+            background: var(--accent-red);
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .impact-action:hover {
+            background: #dc2626;
+            transform: scale(1.02);
+        }
+
         .hero-card {
             background: linear-gradient(135deg, #111827, #0B1120);
             border-radius: var(--radius-lg);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             border-left: 4px solid var(--accent-blue);
-            box-shadow: var(--shadow-sm);
         }
         .hero-title {
             font-size: 1.6rem;
@@ -295,12 +343,8 @@
             border: 1px solid rgba(16,185,129,0.3);
             font-size: 0.75rem;
         }
-        .zos-stats span {
-            color: var(--accent-green);
-            font-weight: 700;
-        }
 
-        /* НОВЫЙ ВИДЖЕТ: СРОЧНЫЕ ПОРУЧЕНИЯ */
+        /* ВИДЖЕТ СРОЧНЫХ ПОРУЧЕНИЙ С ИНДИКАТОРАМИ */
         .urgent-widget {
             background: rgba(239,68,68,0.05);
             border-radius: var(--radius-md);
@@ -314,8 +358,7 @@
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid rgba(239,68,68,0.2);
+            justify-content: space-between;
         }
         .urgent-list {
             padding: 0.5rem 0;
@@ -329,9 +372,6 @@
             flex-wrap: wrap;
             gap: 0.8rem;
         }
-        .urgent-item:last-child {
-            border-bottom: none;
-        }
         .urgent-info {
             flex: 1;
         }
@@ -343,97 +383,6 @@
         .urgent-deadline {
             font-size: 0.7rem;
             color: var(--accent-red);
-        }
-        .assign-btn {
-            background: rgba(59,130,246,0.2);
-            border: 1px solid var(--accent-blue);
-            padding: 0.3rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: var(--transition);
-            color: white;
-        }
-        .assign-btn:hover {
-            background: var(--accent-blue);
-        }
-
-        /* МОДАЛЬНОЕ ОКНО СОЗДАНИЯ ЗАДАЧИ */
-        .task-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 3500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .task-modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .task-modal-content {
-            background: var(--bg-card);
-            border-radius: 28px;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid rgba(59,130,246,0.4);
-            overflow: hidden;
-        }
-        .task-modal-header {
-            padding: 1rem 1.5rem;
-            background: var(--bg-sidebar);
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .task-modal-body {
-            padding: 1.5rem;
-        }
-        .task-form-group {
-            margin-bottom: 1rem;
-        }
-        .task-form-group label {
-            display: block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 0.3rem;
-        }
-        .task-form-group input, .task-form-group select, .task-form-group textarea {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 0.6rem;
-            color: white;
-            font-size: 0.85rem;
-        }
-        .task-form-group input:focus, .task-form-group select:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-        }
-        .create-task-btn {
-            background: var(--accent-blue);
-            border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 40px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: var(--transition);
-        }
-        .create-task-btn:hover {
-            background: var(--accent-cyan);
         }
 
         .google-cards-container {
@@ -483,7 +432,7 @@
         }
         .docs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 1rem;
         }
         .doc-card {
@@ -493,7 +442,6 @@
             transition: var(--transition);
             cursor: pointer;
             animation: fadeSlideUp 0.3s ease;
-            position: relative;
         }
         .doc-card:hover {
             transform: translateY(-3px);
@@ -511,11 +459,22 @@
             font-size: 0.9rem;
             margin: 0.4rem 0;
         }
+        .doc-risk {
+            font-size: 0.7rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            display: inline-block;
+        }
+        .risk-critical { background: rgba(239,68,68,0.2); color: #F87171; border-left: 3px solid var(--accent-red); }
+        .risk-warning { background: rgba(245,158,11,0.2); color: #FCD34D; border-left: 3px solid var(--accent-yellow); }
+        .risk-normal { background: rgba(16,185,129,0.2); color: #6EE7B7; border-left: 3px solid var(--accent-green); }
         .doc-meta {
             display: flex;
             gap: 1rem;
             font-size: 0.6rem;
             color: var(--text-secondary);
+            margin-top: 0.5rem;
         }
         .next-step-btn {
             background: rgba(6,182,212,0.15);
@@ -529,7 +488,6 @@
         }
         .next-step-btn:hover {
             background: rgba(6,182,212,0.3);
-            color: white;
         }
         .empty-state {
             text-align: center;
@@ -548,8 +506,8 @@
             color: var(--text-muted);
         }
 
-        /* МОДАЛЬНОЕ ОКНО КОНТАКТНОГО ЛИСТА */
-        .contacts-modal {
+        /* МОДАЛЬНЫЕ ОКНА */
+        .contacts-modal, .task-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -565,11 +523,8 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-        .contacts-modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .contacts-modal-content {
+        .contacts-modal.show, .task-modal.show { opacity: 1; visibility: visible; }
+        .contacts-modal-content, .task-modal-content {
             background: var(--bg-card);
             border-radius: 28px;
             width: 90%;
@@ -579,9 +534,9 @@
             display: flex;
             flex-direction: column;
             border: 1px solid rgba(59,130,246,0.4);
-            box-shadow: var(--shadow-lg);
         }
-        .contacts-header {
+        .task-modal-content { max-width: 500px; }
+        .contacts-header, .task-modal-header {
             padding: 1.2rem 1.5rem;
             background: var(--bg-sidebar);
             border-bottom: 1px solid var(--border-light);
@@ -589,24 +544,12 @@
             justify-content: space-between;
             align-items: center;
         }
-        .contacts-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .close-contacts {
+        .close-contacts, .close-task {
             background: none;
             border: none;
             color: var(--text-secondary);
             font-size: 1.8rem;
             cursor: pointer;
-            line-height: 1;
-            transition: var(--transition);
-        }
-        .close-contacts:hover {
-            color: var(--accent-red);
         }
         .contacts-body {
             padding: 1.2rem 1.5rem;
@@ -622,37 +565,55 @@
             letter-spacing: 1.5px;
             color: var(--accent-cyan);
             margin-bottom: 0.8rem;
-            padding-bottom: 0.3rem;
             border-bottom: 1px solid var(--border-light);
+            padding-bottom: 0.3rem;
         }
         .contact-item {
             padding: 0.6rem 0;
             border-bottom: 1px solid var(--border-light);
-            font-size: 0.8rem;
             display: flex;
             flex-wrap: wrap;
-            align-items: baseline;
+            justify-content: space-between;
+            align-items: center;
             gap: 0.5rem;
         }
-        .contact-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            min-width: 220px;
+        .contact-name { font-weight: 600; }
+        .assign-small-btn {
+            background: rgba(59,130,246,0.2);
+            border: 1px solid var(--accent-blue);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
         }
-        .contact-details {
+        .task-form-group {
+            margin-bottom: 1rem;
+            padding: 0 1.5rem;
+        }
+        .task-form-group label {
+            display: block;
+            font-size: 0.7rem;
             color: var(--text-secondary);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
+            margin-bottom: 0.3rem;
         }
-        .contact-details a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            transition: var(--transition);
+        .task-form-group input, .task-form-group select {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 0.6rem;
+            color: white;
         }
-        .contact-details a:hover {
-            color: var(--accent-blue);
-            text-decoration: underline;
+        .create-task-btn {
+            background: var(--accent-blue);
+            border: none;
+            padding: 0.6rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            width: calc(100% - 3rem);
+            margin: 0 1.5rem 1.5rem;
         }
         .copy-all-btn {
             background: rgba(59,130,246,0.2);
@@ -662,18 +623,7 @@
             color: white;
             font-size: 0.7rem;
             cursor: pointer;
-            transition: var(--transition);
         }
-        .copy-all-btn:hover {
-            background: var(--accent-blue);
-        }
-        .contacts-footer {
-            padding: 0.8rem 1.5rem;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            justify-content: flex-end;
-        }
-
         .mobile-sidebar {
             position: fixed;
             top: 0;
@@ -687,7 +637,6 @@
             transition: transform 0.3s ease;
             overflow-y: auto;
             padding: 1rem;
-            box-shadow: -4px 0 20px rgba(0,0,0,0.6);
         }
         .mobile-sidebar.open { transform: translateX(0); }
         .backdrop {
@@ -700,7 +649,6 @@
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
-            transition: 0.2s;
         }
         .backdrop.show { opacity: 1; visibility: visible; }
         .chat-popup {
@@ -715,23 +663,20 @@
             display: none;
             flex-direction: column;
             border: 1px solid rgba(6,182,212,0.4);
-            overflow: hidden;
         }
         .chat-popup.show { display: flex; }
         .popup-messages {
             flex: 1;
             overflow-y: auto;
             padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
         }
-        .popup-message.outgoing { align-self: flex-end; flex-direction: row-reverse; }
+        .popup-message.outgoing { text-align: right; }
         .popup-bubble {
             background: #1E293B;
             padding: 0.5rem 0.8rem;
             border-radius: 18px;
-            font-size: 0.8rem;
+            display: inline-block;
+            max-width: 80%;
         }
         .popup-message.outgoing .popup-bubble { background: var(--accent-blue); }
         .popup-input-area {
@@ -753,7 +698,6 @@
             justify-content: center;
             cursor: pointer;
             z-index: 1500;
-            box-shadow: 0 4px 14px rgba(59,130,246,0.5);
         }
         .chat-float-btn::before {
             content: '';
@@ -768,11 +712,7 @@
             .sidebar { display: none; }
             .mobile-menu-btn { display: flex; }
             .main-container { padding: 1rem; }
-            .hero-title { font-size: 1.3rem; }
-            .chat-popup { width: calc(100% - 32px); right: 16px; left: 16px; height: 60vh; }
             .docs-grid { grid-template-columns: 1fr; }
-            .ticker { animation-duration: 95s; }
-            .contact-name { min-width: 100%; }
         }
     </style>
 </head>
@@ -790,54 +730,49 @@
     </div>
 </nav>
 
-<!-- БЕГУЩАЯ СТРОКА -->
 <div class="ticker-wrapper">
     <div class="ticker">
         <span><i> СРЫВ СРОКОВ:</i> ИНЭКО не увеличило штат (ЭОМ +10, СС +10, ИТР +3) — не выполнено.</span>
         <span><i> КРИТИЧЕСКОЕ:</i> Лобби 1 и Лобби 2 — сроки с 15.04 → 06.05 → 20.05. Срыв!</span>
         <span><i> ПРЕТЕНЗИОННАЯ РАБОТА:</i> ДС готовит досудебную претензию в СКР до 15.05.2026.</span>
-        <span><i> ИНЖЕНЕРНЫЕ СИСТЕМЫ:</i> ВРУ, линии электропитания, гидравлика ВПВ Корпус 1 к 20.05 — контроль!</span>
-        <span><i> ОТДЕЛКА КОРПУС 2:</i> Локальные недоделки завершить до 20.05, полная готовность 27.05.</span>
-        <span><i> ЧЕК-ЛИСТЫ:</i> По инженерным системам за ИНЭКО готовит Красотель. Контроль!</span>
-        <span><i> ЛИФТЫ И ПАРКИНГ:</i> Автоматика лифтов Корпус 2 — срочно. Паркинг -1,-2 вычистить до 20.05.</span>
-        <span><i> КОМПЛЕКСНЫЕ ИСПЫТАНИЯ:</i> Паркинг — 22.05, Корпус 1 — 29.05. Ответственный ДС.</span>
-        <span><i> ПОДГОТОВИТЬ ГРАФИК:</i> Поэтажный совмещенный график ВИС-Отделка Корпус 1 (Красотель).</span>
+        <span><i> ОТДЕЛКА КОРПУС 2:</i> Локальные недоделки завершить до 20.05.</span>
     </div>
 </div>
 
 <div class="main-container">
     <aside class="sidebar">
-        <div class="sidebar-section"><div class="sidebar-title">📌 НАВИГАЦИЯ</div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">📌 НАВИГАЦИЯ <span class="status-indicator status-red" id="navStatusIndicator"></span></div>
             <button class="sidebar-item" onclick="filterDocs('all')">📁 Все документы</button>
             <button class="sidebar-item" onclick="filterDocs('protocol')">📋 Протоколы</button>
             <button class="sidebar-item" onclick="filterDocs('registry')">📊 Реестры</button>
-            <button class="sidebar-item" onclick="filterDocs('finance')">📊 Финансы</button>
+            <button class="sidebar-item" onclick="filterDocs('finance')">💰 Финансы</button>
             <button class="sidebar-item" onclick="filterDocs('tech')">⚙️ Техническая часть</button>
         </div>
-        <div class="sidebar-section"><div class="sidebar-title">📹 ИД ООО ЦПИО</div>
+        <div class="sidebar-section"><div class="sidebar-title">📹 ВИДЕО</div>
             <div class="video-container" id="videoContainer">
                 <video id="promoVideo" preload="metadata" playsinline><source src="vis-presentation.mp4" type="video/mp4"></video>
-                <div style="padding:6px 12px; font-size:0.7rem; text-align:center;">▶️ Нажмите для звука</div>
+                <div style="padding:6px 12px; font-size:0.7rem;">▶️ Нажмите для звука</div>
             </div>
         </div>
         <div class="sidebar-section"><div class="sidebar-title">📁 ЭКСПОРТ ФАЙЛОВ</div>
             <a href="resources.html" class="sidebar-item">📝 Заполнение реестра</a>
             <a href="archive.html" class="sidebar-item">🗄️ Архив файлов</a>
-            <div id="exportedFilesList" class="files-list"><div style="font-size:0.7rem;">Загрузка...</div></div>
+            <div id="exportedFilesList" class="files-list"><div>Загрузка...</div></div>
         </div>
-        <div class="sidebar-section"><div class="sidebar-title">💬 ОПЕРАТИВНЫЙ ЧАТ</div>
-            <button class="sidebar-item" id="chatSidebarBtn">💬 Открыть чат (демо)</button>
+        <div class="sidebar-section"><div class="sidebar-title">💬 ЧАТ</div>
+            <button class="sidebar-item" id="chatSidebarBtn">💬 Открыть чат</button>
         </div>
     </aside>
 
     <main class="content">
-        <!-- НОВЫЙ ВИДЖЕТ: СРОЧНЫЕ ПОРУЧЕНИЯ -->
-        <div class="urgent-widget">
-            <div class="urgent-header">
-                🔥 НОВЫЕ / СРОЧНЫЕ ПОРУЧЕНИЯ (из протокола №49)
-            </div>
-            <div class="urgent-list" id="urgentTasksList">
-                <!-- Загружается из JS -->
+        <!-- ВИДЖЕТ ГЛАВНОГО ВОЗДЕЙСТВИЯ НЕДЕЛИ -->
+        <div class="impact-widget" id="impactWidget">
+            <div class="impact-header">⚠️ ГЛАВНОЕ ВОЗДЕЙСТВИЕ НЕДЕЛИ</div>
+            <div class="impact-body">
+                <div class="impact-title" id="impactTitle">ИНЭКО: невыполнение обязательств по увеличению штата</div>
+                <div class="impact-desc" id="impactDesc">+10 ЭОМ, +10 СС, +3 ИТР не добавлены. Срыв сроков отделки Лобби 1 и 2. Риск срыва ввода секций.</div>
+                <button class="impact-action" id="impactActionBtn">🔧 Требуется вмешательство ДС →</button>
             </div>
         </div>
 
@@ -846,21 +781,26 @@
             <div class="hero-subtitle">Актуальные данные, поручения и документация</div>
             <div class="tasks-block">
                 <div class="tasks-title">⚡ КЛЮЧЕВЫЕ ПОРУЧЕНИЯ НА НЕДЕЛЮ</div>
-                <div style="font-size:0.8rem; display:flex; flex-direction:column; gap:4px;">
+                <div style="font-size:0.8rem;">
                     <div>• Ленский Ф.А.: счета СКР, заявки, оплаты.</div>
                     <div>• Департамент строительства: ВИС, завершить до 30 мая.</div>
-                    <div>• Лебединский Д.О.: координация 2 секции и МОПов до 15 мая.</div>
-                    <div>• Красотель: документы за подрядчиков + 1С недостатки квартир.</div>
+                    <div>• Лебединский Д.О.: координация 2 секции до 15 мая.</div>
                 </div>
-                <div class="zos-stats">
-                    📋 <strong>ЗОС (Заключение о соответствии):</strong> подписано <span>69</span> актов из <span>75</span><br>
-                </div>
+                <div class="zos-stats">📋 ЗОС: подписано <span>69</span> из <span>75</span> актов</div>
             </div>
         </div>
 
+        <div class="urgent-widget">
+            <div class="urgent-header">
+                🔥 СРОЧНЫЕ ПОРУЧЕНИЯ
+                <span class="status-indicator status-red"></span>
+            </div>
+            <div class="urgent-list" id="urgentTasksList"></div>
+        </div>
+
         <div class="google-cards-container">
-            <div class="google-card"><a href="VIS-Ogni-3.html" class="google-link"><span style="font-size:1.8rem;">📊</span><div><strong>ВИС Огни 3</strong><div style="font-size:0.7rem; color:#10B981;">Актуальная таблица ресурсов</div></div><span style="margin-left:auto;">→</span></a></div>
-            <div class="google-card"><a href="Zadachi-Ogni-3.html" class="google-link"><span style="font-size:1.8rem;">📋</span><div><strong>Задачи Огни 3</strong><div style="font-size:0.7rem;">Контроль поручений</div></div><span style="margin-left:auto;">→</span></a></div>
+            <div class="google-card"><a href="VIS-Ogni-3.html" class="google-link"><span style="font-size:1.8rem;">📊</span><div><strong>ВИС Огни 3</strong><div style="font-size:0.7rem;">Актуальная таблица</div></div><span>→</span></a></div>
+            <div class="google-card"><a href="Zadachi-Ogni-3.html" class="google-link"><span style="font-size:1.8rem;">📋</span><div><strong>Задачи Огни 3</strong><div style="font-size:0.7rem;">Контроль поручений</div></div><span>→</span></a></div>
         </div>
 
         <div class="section-header"><div class="section-title">📄 Документы <span class="docs-count" id="docsCount">0</span></div></div>
@@ -870,95 +810,106 @@
 
 <footer class="footer">Огни 3 · Штаб строительства · Данные оперативно обновляются</footer>
 
-<!-- МОДАЛЬНОЕ ОКНО КОНТАКТНОГО ЛИСТА -->
+<!-- Модальные окна -->
 <div id="contactsModal" class="contacts-modal">
     <div class="contacts-modal-content">
-        <div class="contacts-header">
-            <h2>📋 Контактный лист проекта</h2>
-            <button class="close-contacts" id="closeContactsBtn">&times;</button>
-        </div>
+        <div class="contacts-header"><h2>📋 Контактный лист</h2><button class="close-contacts" id="closeContactsBtn">&times;</button></div>
         <div class="contacts-body" id="contactsBody"></div>
-        <div class="contacts-footer">
-            <button class="copy-all-btn" id="copyAllContactsBtn">📋 Копировать всё</button>
-        </div>
+        <div class="contacts-footer" style="padding:1rem; text-align:right;"><button class="copy-all-btn" id="copyAllContactsBtn">📋 Копировать всё</button></div>
     </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО ДЛЯ СОЗДАНИЯ СЛЕДУЮЩЕЙ ЗАДАЧИ -->
 <div id="taskModal" class="task-modal">
     <div class="task-modal-content">
-        <div class="task-modal-header">
-            <h3>➕ Создать следующую задачу</h3>
-            <button class="close-contacts" id="closeTaskBtn" style="background:none; border:none; color:white; font-size:1.5rem;">&times;</button>
-        </div>
-        <div class="task-modal-body">
-            <div class="task-form-group">
-                <label>📋 Название задачи</label>
-                <input type="text" id="taskName" placeholder="Например: Приемка квартир ДРОН">
-            </div>
-            <div class="task-form-group">
-                <label>🏗️ Объект / Секция</label>
-                <input type="text" id="taskObject" placeholder="Корпус 1, Секция 2, Паркинг...">
-            </div>
-            <div class="task-form-group">
-                <label>👤 Ответственный</label>
-                <select id="taskResponsible">
-                    <option value="">Выберите из контактов</option>
-                </select>
-            </div>
-            <div class="task-form-group">
-                <label>📅 Срок</label>
-                <input type="date" id="taskDeadline">
-            </div>
-            <button class="create-task-btn" id="createTaskBtn">✅ Создать задачу</button>
-        </div>
+        <div class="task-modal-header"><h3>➕ Создать следующую задачу</h3><button class="close-task" id="closeTaskBtn">&times;</button></div>
+        <div class="task-form-group"><label>Название</label><input type="text" id="taskName" placeholder="Например: Приемка квартир"></div>
+        <div class="task-form-group"><label>Объект</label><input type="text" id="taskObject" placeholder="Корпус 1, Секция 2"></div>
+        <div class="task-form-group"><label>Ответственный</label><select id="taskResponsible"></select></div>
+        <div class="task-form-group"><label>Срок</label><input type="date" id="taskDeadline"></div>
+        <button class="create-task-btn" id="createTaskBtn">✅ Создать задачу</button>
     </div>
 </div>
 
-<!-- mobile sidebar, чат -->
 <div class="backdrop" id="mobileBackdrop"></div>
 <div class="mobile-sidebar" id="mobileSidebar">
-    <div style="display:flex; justify-content:space-between; margin-bottom:1rem;"><h3>Меню</h3><button id="closeMobileSidebar" style="background:none; border:none; color:white; font-size:1.6rem;">✕</button></div>
+    <div style="display:flex; justify-content:space-between;"><h3>Меню</h3><button id="closeMobileSidebar" style="background:none; border:none; color:white; font-size:1.6rem;">✕</button></div>
     <button class="sidebar-item" onclick="filterDocs('all'); closeMobileSidebar();">📁 Все документы</button>
     <button class="sidebar-item" onclick="filterDocs('protocol'); closeMobileSidebar();">📋 Протоколы</button>
     <button class="sidebar-item" onclick="filterDocs('registry'); closeMobileSidebar();">📊 Реестры</button>
-    <button class="sidebar-item" onclick="filterDocs('finance'); closeMobileSidebar();">📊 Финансы</button>
-    <div class="video-container" style="margin:1rem 0;"><video id="mobilePromoVideo" preload="metadata"><source src="vis-presentation.mp4"></video></div>
-    <button class="sidebar-item" id="mobileChatBtn" onclick="openChatPopup(); closeMobileSidebar();">💬 Чат</button>
+    <div class="video-container"><video id="mobilePromoVideo" preload="metadata"><source src="vis-presentation.mp4"></video></div>
 </div>
 
 <div id="chatPopup" class="chat-popup">
-    <div class="popup-header" style="display:flex; justify-content:space-between; padding:0.8rem; background:#0F172A;"><span>💬 Чат штаба</span><button onclick="closeChatPopup()" style="background:none; border:none; color:white; font-size:1.2rem;">✕</button></div>
+    <div class="popup-header" style="display:flex; justify-content:space-between; padding:0.8rem; background:#0F172A;"><span>💬 Чат</span><button onclick="closeChatPopup()" style="background:none; border:none; color:white;">✕</button></div>
     <div class="popup-messages" id="popupMessages"><div class="popup-message"><div class="popup-bubble">Рабочие часы: 9:00–19:00</div></div></div>
-    <div class="popup-input-area"><input id="popupMessageInput" class="popup-input" placeholder="Сообщение..."><button onclick="sendPopupMessage()" style="background:#3B82F6; border:none; border-radius:40px; padding:0 16px;">Отпр</button></div>
+    <div class="popup-input-area"><input id="popupMessageInput" placeholder="Сообщение..."><button onclick="sendPopupMessage()" style="background:#3B82F6; border:none; border-radius:40px; padding:0 16px;">Отпр</button></div>
 </div>
 <div class="chat-float-btn" id="chatFloatBtn">💬</div>
 
 <script>
-    // ===== КОНТАКТЫ =====
+    // КОНТАКТЫ
     const CONTACTS = {
-        'Рябинин Юрий Вячеславович': { display: 'Рябинин Юрий Вячеславович | Заказчик | ryabinin_yv@dsinv.ru', company: 'ООО "ДС Строй"', phone: '', email: 'ryabinin_yv@dsinv.ru' },
-        'Филимонова Анастасия Витальевна': { display: 'Филимонова Анастасия Витальевна | Зам. руководителя управления | filimonova_av@dsinv.ru', company: 'ООО "ДС Строй"', phone: '', email: 'filimonova_av@dsinv.ru' },
-        'Кривоносов Владимир Витальевич': { display: 'Кривоносов Владимир Витальевич | Рук. строительства | 8(964)709-97-77', company: 'ООО "ДС Строй"', phone: '8(964)709-97-77', email: 'krivonosov_vv@dsinv.ru' },
-        'Ленский Филипп Андреевич': { display: 'Ленский Филипп Андреевич | Рук. проекта | 8-909-918-15-54', company: 'ООО "ДС Строй"', phone: '8-909-918-15-54', email: 'lenskij_fa@dsinv.ru' },
-        'Лебединский Дмитрий Олегович': { display: 'Лебединский Дмитрий Олегович | Директор по строительству | 8-903-217-94-90', company: 'ООО "ДС Строй"', phone: '8-903-217-94-90', email: 'lebedinskij_do@dsinv.ru' },
-        'Олейник Роман Владиславович': { display: 'Олейник Роман Владиславович | Ген. директор КрасОтель | 8-968-935-25-20', company: 'ООО "КрасОтель"', phone: '8-968-935-25-20', email: 'krasotel-ogni3@yandex.ru' },
-        'Дубровский Сергей Михайлович': { display: 'Дубровский Сергей Михайлович | Рук. проекта КрасОтель | 8-985-385-86-29', company: 'ООО "КрасОтель"', phone: '8-985-385-86-29', email: 'krasotel-ogni3@yandex.ru' },
-        'Подкорытов Алексей Викторович': { display: 'Подкорытов Алексей Викторович | Рук. проекта СКР | 8(965)107-48-14', company: 'ООО "СКР"', phone: '8(965)107-48-14', email: 'podkorytov_av@oooskr.ru' },
-        'Кудлай Николай Николаевич': { display: 'Кудлай Николай Николаевич | Ген. директор СКР | 8(985)412-16-36', company: 'ООО "СКР"', phone: '8(985)412-16-36', email: '' },
-        'Онур Хамурджу': { display: 'Онур Хамурджу | Рук. проекта ИНЭКО | 8(925)616-80-78', company: 'ООО "ИНЭКО"', phone: '8(925)616-80-78', email: 'onurhamurcu@yandex.ru' },
-        'Чудаков Виталий Викторович': { display: 'Чудаков Виталий Викторович | Рук. проекта ГРИН-СИТИ | 8-926-241-13-82', company: 'ООО "ГРИН-СИТИ"', phone: '8-926-241-13-82', email: 'greencity77@list.ru' },
-        'Оголь Павел Владимирович': { display: 'Оголь Павел Владимирович | Рук. проекта Эстетика Фасада | 8-918-120-66-65', company: 'ООО "Эстетика Фасада"', phone: '8-918-120-66-65', email: 'info@esteticafasada.ru' }
+        'Ленский Филипп Андреевич': { company: 'ООО "ДС Строй"', phone: '8-909-918-15-54', email: 'lenskij_fa@dsinv.ru' },
+        'Кривоносов Владимир Витальевич': { company: 'ООО "ДС Строй"', phone: '8(964)709-97-77', email: 'krivonosov_vv@dsinv.ru' },
+        'Лебединский Дмитрий Олегович': { company: 'ООО "ДС Строй"', phone: '8-903-217-94-90', email: 'lebedinskij_do@dsinv.ru' },
+        'Рябинин Юрий Вячеславович': { company: 'ООО "ДС Строй"', phone: '', email: 'ryabinin_yv@dsinv.ru' },
+        'Подкорытов Алексей Викторович': { company: 'ООО "СКР"', phone: '8(965)107-48-14', email: 'podkorytov_av@oooskr.ru' },
+        'Кудлай Николай Николаевич': { company: 'ООО "СКР"', phone: '8(985)412-16-36', email: '' },
+        'Онур Хамурджу': { company: 'ООО "ИНЭКО"', phone: '8(925)616-80-78', email: 'onurhamurcu@yandex.ru' },
+        'Дубровский Сергей Михайлович': { company: 'ООО "КрасОтель"', phone: '8-985-385-86-29', email: 'krasotel-ogni3@yandex.ru' }
     };
 
-    // Срочные поручения из протокола
-    const urgentTasks = [
-        { title: "ИНЭКО: увеличить штат (ЭОМ +10, СС +10, ИТР +3)", deadline: "Просрочено с 10.04", responsible: "Онур Хамурджу" },
-        { title: "Лобби 1 и Лобби 2 — завершить отделку", deadline: "Срок: 20.05.2026", responsible: "СКР / ИНЭКО" },
-        { title: "ДС: подготовить досудебную претензию в СКР", deadline: "до 15.05.2026", responsible: "Ленский Ф.А." },
-        { title: "Автоматика лифтов Корпус 2 — срочно!", deadline: "СРОЧНО", responsible: "ИНЭКО" },
-        { title: "Паркинг -1,-2: полная вычистка", deadline: "до 20.05.2026", responsible: "СКР" }
+    // ДАННЫЕ ДОКУМЕНТОВ С РИСКАМИ
+    const pages = [
+        { name: "Протокол №49 · 13 мая 2026", file: "Protokol_49_ot_13.05.2026.html", icon: "📄", date: "13.05.2026", category: "protocol", risk: "⚠️ Срыв сроков: ИНЭКО не увеличило штат (ЭОМ +10, СС +10)", riskLevel: "critical" },
+        { name: "Протокол №48 · 06 мая 2026", file: "Protokol_48_ot_06.05.2026.html", icon: "📄", date: "06.05.2026", category: "protocol", risk: "📌 Лобби 1 и 2: перенос сроков на 20.05", riskLevel: "warning" },
+        { name: "Реестр чек-листов ИНЭКО", file: "Reestr-chek-listov_INEKO.html", icon: "📊", date: "18.05.2026", category: "registry", risk: "✅ Частично подписано, 6 актов ожидают", riskLevel: "normal" },
+        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📊", date: "03.05.2026", category: "registry", risk: "⚠️ Отставание от графика на 10 дней", riskLevel: "warning" },
+        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "💰", date: "02.05.2026", category: "finance", risk: "💰 Ожидается оплата счетов СКР на сумму 4.2 млн", riskLevel: "normal" },
+        { name: "Протокол №46 · 22 апреля", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📄", date: "22.04.2026", category: "protocol", risk: "🔴 Автоматика лифтов Корпус 2 — СРОЧНО", riskLevel: "critical" }
     ];
+
+    // СРОЧНЫЕ ПОРУЧЕНИЯ
+    const urgentTasks = [
+        { title: "ИНЭКО: увеличить штат (ЭОМ +10, СС +10)", deadline: "Просрочено", responsible: "Онур Хамурджу", status: "red" },
+        { title: "Лобби 1 и Лобби 2 — завершить отделку", deadline: "20.05.2026", responsible: "СКР", status: "yellow" },
+        { title: "ДС: подготовить претензию в СКР", deadline: "15.05.2026", responsible: "Ленский Ф.А.", status: "red" },
+        { title: "Паркинг -1,-2: полная вычистка", deadline: "20.05.2026", responsible: "СКР", status: "yellow" }
+    ];
+
+    let currentFilter = 'all', currentSearch = '';
+    let pendingTaskTitle = '';
+
+    function renderDocs() {
+        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
+        if (currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
+        const container = document.getElementById('docsContainer');
+        document.getElementById('docsCount').innerText = filtered.length;
+        if (!filtered.length) { container.innerHTML = `<div class="empty-state">📭 Документы не найдены</div>`; return; }
+        container.innerHTML = filtered.map(d => {
+            const riskClass = d.riskLevel === 'critical' ? 'risk-critical' : (d.riskLevel === 'warning' ? 'risk-warning' : 'risk-normal');
+            return `
+            <div class="doc-card">
+                <a href="${d.file}" class="card-link">
+                    <div style="font-size:1.6rem;">${d.icon}</div>
+                    <div class="doc-name">${escapeHtml(d.name)}</div>
+                    <div class="doc-risk ${riskClass}">${escapeHtml(d.risk)}</div>
+                    <div class="doc-meta"><span>📅 ${d.date}</span></div>
+                </a>
+                <div class="next-step-btn" onclick="openTaskModal('${escapeHtml(d.name.split('·')[0])}', 'Следующий этап: ${escapeHtml(d.name)}')">➕ Создать следующую задачу</div>
+            </div>`;
+        }).join('');
+        updateNavStatusIndicator();
+    }
+
+    function updateNavStatusIndicator() {
+        const hasCritical = pages.some(p => p.riskLevel === 'critical');
+        const hasWarning = pages.some(p => p.riskLevel === 'warning');
+        const indicator = document.getElementById('navStatusIndicator');
+        if (hasCritical) { indicator.className = 'status-indicator status-red'; indicator.title = 'Есть критические риски'; }
+        else if (hasWarning) { indicator.className = 'status-indicator status-yellow'; indicator.title = 'Есть предупреждения'; }
+        else { indicator.className = 'status-indicator status-green'; indicator.title = 'Все в норме'; }
+    }
 
     function renderUrgentTasks() {
         const container = document.getElementById('urgentTasksList');
@@ -969,36 +920,28 @@
                     <div class="urgent-title">${escapeHtml(task.title)}</div>
                     <div class="urgent-deadline">📅 ${escapeHtml(task.deadline)} | Ответственный: ${escapeHtml(task.responsible)}</div>
                 </div>
-                <button class="assign-btn" onclick="openContactsForAssign('${escapeHtml(task.title)}')">Назначить</button>
+                <span class="status-indicator ${task.status === 'red' ? 'status-red' : 'status-yellow'}"></span>
+                <button class="assign-small-btn" onclick="openContactsForAssign('${escapeHtml(task.title)}')">Назначить</button>
             </div>
         `).join('');
     }
 
-    let pendingTaskTitle = '';
-    function openContactsForAssign(taskTitle) {
-        pendingTaskTitle = taskTitle;
-        openContactsModal();
-    }
-
     function renderContacts() {
         const container = document.getElementById('contactsBody');
+        let html = '';
         const grouped = {};
         for (const [name, data] of Object.entries(CONTACTS)) {
-            const company = data.company || 'Другое';
-            if (!grouped[company]) grouped[company] = [];
-            grouped[company].push({ name, ...data });
+            if (!grouped[data.company]) grouped[data.company] = [];
+            grouped[data.company].push({ name, ...data });
         }
-        let html = '';
         for (const [company, contacts] of Object.entries(grouped)) {
             html += `<div class="contact-group"><div class="contact-group-title">🏢 ${company}</div>`;
             contacts.forEach(c => {
-                let detailsHtml = '';
-                if (c.phone) detailsHtml += `<a href="tel:${c.phone.replace(/[^0-9+]/g, '')}">📞 ${c.phone}</a>`;
-                if (c.email) detailsHtml += `<a href="mailto:${c.email.split(';')[0]}">✉️ ${c.email}</a>`;
-                html += `<div class="contact-item"><span class="contact-name">👤 ${c.name}</span><div class="contact-details">${detailsHtml || '—'}</div>`;
-                if (pendingTaskTitle) {
-                    html += `<button class="assign-btn" style="margin-left:auto;" onclick="assignTaskTo('${escapeHtml(c.name)}')">Назначить</button>`;
-                }
+                let details = '';
+                if (c.phone) details += `<a href="tel:${c.phone.replace(/[^0-9+]/g, '')}">📞 ${c.phone}</a> `;
+                if (c.email) details += `<a href="mailto:${c.email}">✉️ ${c.email}</a>`;
+                html += `<div class="contact-item"><span class="contact-name">👤 ${c.name}</span><span>${details}</span>`;
+                if (pendingTaskTitle) html += `<button class="assign-small-btn" onclick="assignTaskTo('${escapeHtml(c.name)}')">Назначить</button>`;
                 html += `</div>`;
             });
             html += `</div>`;
@@ -1006,19 +949,22 @@
         container.innerHTML = html;
     }
 
-    function assignTaskTo(personName) {
-        showToast(`✅ Задача "${pendingTaskTitle}" назначена на ${personName}`);
-        pendingTaskTitle = '';
-        closeContactsModal();
-    }
-
+    function openContactsForAssign(taskTitle) { pendingTaskTitle = taskTitle; openContactsModal(); renderContacts(); }
+    function assignTaskTo(personName) { showToast(`✅ Задача "${pendingTaskTitle}" назначена на ${personName}`); pendingTaskTitle = ''; closeContactsModal(); }
     function copyAllContacts() {
         let text = '';
-        for (const [name, data] of Object.entries(CONTACTS)) {
-            text += `${name} | ${data.company} | ${data.phone || ''} | ${data.email || ''}\n`;
-        }
+        for (const [name, data] of Object.entries(CONTACTS)) text += `${name} | ${data.company} | ${data.phone || ''} | ${data.email || ''}\n`;
         navigator.clipboard.writeText(text).then(() => showToast('📋 Контакты скопированы'));
     }
+
+    function showToast(msg) {
+        let t = document.getElementById('toastMsg');
+        if(!t){ t=document.createElement('div'); t.id='toastMsg'; t.style.cssText='position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#1E293B; border-left:4px solid #3B82F6; padding:6px 18px; border-radius:40px; z-index:3000; font-size:0.8rem;'; document.body.appendChild(t); }
+        t.textContent=msg; t.style.opacity='1'; setTimeout(()=>t.style.opacity='0', 2000);
+    }
+
+    function filterDocs(cat) { currentFilter = cat; renderDocs(); showToast(`Показаны: ${cat}`); }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
 
     // Модальные окна
     const contactsModal = document.getElementById('contactsModal');
@@ -1031,80 +977,31 @@
     contactsModal?.addEventListener('click', (e) => { if (e.target === contactsModal) closeContactsModal(); });
     document.getElementById('copyAllContactsBtn')?.addEventListener('click', copyAllContacts);
 
-    // Модалка создания задачи
     const taskModal = document.getElementById('taskModal');
     const closeTaskBtn = document.getElementById('closeTaskBtn');
-    function openTaskModal(defaultObject = '', defaultTaskName = '') {
-        document.getElementById('taskObject').value = defaultObject;
-        document.getElementById('taskName').value = defaultTaskName;
-        // Заполняем select контактами
+    window.openTaskModal = (obj, taskName) => {
+        document.getElementById('taskObject').value = obj;
+        document.getElementById('taskName').value = taskName;
         const select = document.getElementById('taskResponsible');
-        select.innerHTML = '<option value="">Выберите из контактов</option>';
-        for (const name of Object.keys(CONTACTS)) {
-            select.innerHTML += `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`;
-        }
+        select.innerHTML = '<option value="">Выберите</option>';
+        for (const name of Object.keys(CONTACTS)) select.innerHTML += `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`;
         taskModal.classList.add('show');
-    }
+    };
     function closeTaskModal() { taskModal.classList.remove('show'); }
     closeTaskBtn?.addEventListener('click', closeTaskModal);
     taskModal?.addEventListener('click', (e) => { if (e.target === taskModal) closeTaskModal(); });
     document.getElementById('createTaskBtn')?.addEventListener('click', () => {
-        const taskName = document.getElementById('taskName').value;
-        const taskObject = document.getElementById('taskObject').value;
-        const responsible = document.getElementById('taskResponsible').value;
-        const deadline = document.getElementById('taskDeadline').value;
-        if (!taskName) { showToast('Введите название задачи'); return; }
-        showToast(`✅ Задача "${taskName}" создана${responsible ? ' для ' + responsible : ''}${deadline ? ' со сроком ' + deadline : ''}`);
+        const name = document.getElementById('taskName').value;
+        if (!name) { showToast('Введите название задачи'); return; }
+        showToast(`✅ Задача "${name}" создана`);
         closeTaskModal();
     });
 
-    // Документы
-    const pages = [
-        { name: "Реестр чек-листов ПОДПИСАНО/НЕПОДПИСАНО ООО ИНЭКО · 18 мая 2026", file: "Reestr-chek-listov_INEKO.html", icon: "📄", date: "18.05.2026", category: "registry" },
-        { name: "Протокол №49 · 13 мая 2026", file: "Protokol_49_ot_13.05.2026.html", icon: "📄", date: "13.05.2026", category: "protocol" },
-        { name: "Протокол №48 · 06 мая 2026", file: "Protokol_48_ot_06.05.2026.html", icon: "📄", date: "06.05.2026", category: "protocol" },
-        { name: "Протокол №46 · 22 апреля 2026", file: "протокол_46_огни_3_от_22_04_2026.html", icon: "📄", date: "22.04.2026", category: "protocol" },
-        { name: "РСР Реестр отделочных работ", file: "РСР СОР.html", icon: "📊", date: "03.05.2026", category: "registry" },
-        { name: "Сводка оплат", file: "Сводка оплат.html", icon: "📊", date: "02.05.2026", category: "finance" },
-        { name: "Реестр чек-лист АВТ2", file: "Reesrt_cheklist_AVT2.html", icon: "📋", date: "06.05.2026", category: "registry" },
-        { name: "Технический аудит ВИС", file: "tech_vis.html", icon: "⚙️", date: "10.05.2026", category: "tech" }
-    ];
+    // Виджет главного воздействия
+    document.getElementById('impactActionBtn')?.addEventListener('click', () => { openContactsForAssign('ИНЭКО: увеличение штата и устранение срывов'); });
 
-    let currentFilter = 'all', currentSearch = '';
-    function renderDocs() {
-        let filtered = pages.filter(p => p.name.toLowerCase().includes(currentSearch.toLowerCase()));
-        if (currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
-        const container = document.getElementById('docsContainer');
-        document.getElementById('docsCount').innerText = filtered.length;
-        if (!filtered.length) { container.innerHTML = `<div class="empty-state">📭 Документы не найдены</div>`; return; }
-        container.innerHTML = filtered.map(d => `
-            <div class="doc-card">
-                <a href="${d.file}" class="card-link">
-                    <div style="font-size:1.6rem;">${d.icon}</div>
-                    <div class="doc-name">${escapeHtml(d.name)}</div>
-                    <div class="doc-meta"><span>📅 ${d.date}</span></div>
-                </a>
-                <div class="next-step-btn" onclick="openTaskModal('${escapeHtml(d.name.split('·')[0])}', 'Следующий этап: ${escapeHtml(d.name)}')">➕ Создать следующую задачу</div>
-            </div>
-        `).join('');
-    }
-    function filterDocs(cat) { currentFilter = cat; renderDocs(); showToast(`Показаны: ${cat}`); }
-    function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
-    function showToast(msg) { let t = document.getElementById('toastMsg'); if(!t){ t=document.createElement('div'); t.id='toastMsg'; t.style.cssText='position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#1E293B; border-left:4px solid #3B82F6; padding:6px 18px; border-radius:40px; z-index:3000; font-size:0.8rem;'; document.body.appendChild(t); } t.textContent=msg; t.style.opacity='1'; setTimeout(()=>t.style.opacity='0', 2000); }
-
-    async function loadExportedFiles() {
-        const container = document.getElementById('exportedFilesList');
-        try {
-            const resp = await fetch('https://buildingmove-source.github.io/BuildPhysics/files-index.json', { cache: 'no-store' });
-            if(!resp.ok) throw new Error();
-            const idx = await resp.json();
-            const files = idx.files || [];
-            if(files.length===0){ container.innerHTML='<div style="font-size:0.7rem;">Нет экспортированных файлов</div>'; return; }
-            container.innerHTML = files.map(f => `<a href="https://buildingmove-source.github.io/BuildPhysics/${f.name}" class="file-item">📎 Экспорт от ${f.date || 'недавно'}</a>`).join('');
-        } catch(e) { container.innerHTML='<div style="font-size:0.7rem;">Ошибка загрузки индекса</div>'; }
-    }
-
-    function setupVideo(videoEl, parent) { if(videoEl) parent.addEventListener('click',()=>{ if(videoEl.paused) videoEl.play().catch(e=>console.log); else videoEl.pause(); }); videoEl.muted=false; }
+    // Видео, чат, мобильное меню
+    function setupVideo(videoEl, parent) { if(videoEl) parent.addEventListener('click',()=>{ if(videoEl.paused) videoEl.play(); else videoEl.pause(); }); videoEl.muted=false; }
     const deskVideo = document.getElementById('promoVideo'), deskParent = document.getElementById('videoContainer');
     if(deskVideo && deskParent) setupVideo(deskVideo, deskParent);
     const mobVideo = document.getElementById('mobilePromoVideo');
@@ -1116,9 +1013,9 @@
         let inp = document.getElementById('popupMessageInput'), txt = inp.value.trim();
         if(!txt) return;
         let container = document.getElementById('popupMessages');
-        let outDiv = document.createElement('div'); outDiv.className='popup-message outgoing'; outDiv.innerHTML=`<div class="popup-bubble">${escapeHtml(txt)}<div style="font-size:0.55rem; opacity:0.7;">Вы · ${new Date().toLocaleTimeString()}</div></div>`;
+        let outDiv = document.createElement('div'); outDiv.className='popup-message outgoing'; outDiv.innerHTML=`<div class="popup-bubble">${escapeHtml(txt)}<div style="font-size:0.55rem;">Вы · ${new Date().toLocaleTimeString()}</div></div>`;
         container.appendChild(outDiv); inp.value=''; container.scrollTop=container.scrollHeight;
-        setTimeout(()=>{ let reply=document.createElement('div'); reply.className='popup-message'; reply.innerHTML=`<div class="popup-bubble">✅ Принято (демо-режим)</div>`; container.appendChild(reply); container.scrollTop=container.scrollHeight; }, 600);
+        setTimeout(()=>{ let reply=document.createElement('div'); reply.className='popup-message'; reply.innerHTML=`<div class="popup-bubble">✅ Принято (демо)</div>`; container.appendChild(reply); container.scrollTop=container.scrollHeight; }, 600);
     }
 
     const mobileBtn = document.getElementById('mobileMenuBtn'), mobileSide = document.getElementById('mobileSidebar'), backdrop = document.getElementById('mobileBackdrop');
@@ -1129,20 +1026,29 @@
     backdrop?.addEventListener('click', closeMobileSidebar);
     document.getElementById('chatSidebarBtn')?.addEventListener('click', openChatPopup);
     document.getElementById('chatFloatBtn')?.addEventListener('click', openChatPopup);
-    document.getElementById('mobileChatBtn')?.addEventListener('click', openChatPopup);
     document.getElementById('popupMessageInput')?.addEventListener('keypress', e => { if(e.key==='Enter') sendPopupMessage(); });
 
     const search = document.getElementById('globalSearch');
     let deb; search?.addEventListener('input', (e)=> { clearTimeout(deb); deb = setTimeout(()=>{ currentSearch = e.target.value; renderDocs(); }, 280); });
     
-    window.openTaskModal = openTaskModal;
-    window.assignTaskTo = assignTaskTo;
     window.openContactsForAssign = openContactsForAssign;
+    window.assignTaskTo = assignTaskTo;
+    
+    async function loadExportedFiles() {
+        const container = document.getElementById('exportedFilesList');
+        try {
+            const resp = await fetch('https://buildingmove-source.github.io/BuildPhysics/files-index.json', { cache: 'no-store' });
+            if(!resp.ok) throw new Error();
+            const idx = await resp.json();
+            const files = idx.files || [];
+            if(files.length===0){ container.innerHTML='<div>Нет файлов</div>'; return; }
+            container.innerHTML = files.map(f => `<a href="https://buildingmove-source.github.io/BuildPhysics/${f.name}" class="file-item">📎 Экспорт от ${f.date || 'недавно'}</a>`).join('');
+        } catch(e) { container.innerHTML='<div>Ошибка загрузки</div>'; }
+    }
     
     loadExportedFiles();
     renderDocs();
     renderUrgentTasks();
-    renderContacts();
 </script>
 </body>
 </html>

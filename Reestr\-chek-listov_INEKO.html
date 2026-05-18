@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>ПТО | Реестр чек-листов · ЖК «ОГНИ-3»</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            color: #eef2ff;
+            padding: 1.5rem 1rem;
+            line-height: 1.45;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .protocol-header {
+            background: rgba(10, 20, 45, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            border-left: 6px solid #e31b23;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+            word-break: break-word;
+        }
+
+        .protocol-header h1 {
+            font-size: clamp(1.4rem, 6vw, 1.9rem);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff, #a0b4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-date {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .badge {
+            background: #101a36;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            border: 1px solid #2a3a6e;
+            color: #cfdeff;
+        }
+
+        .badge.red {
+            border-left: 3px solid #e31b23;
+            background: #1f1122;
+        }
+
+        .section {
+            background: rgba(6, 12, 28, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            margin-bottom: 1.8rem;
+            overflow: hidden;
+            border: 1px solid rgba(227, 27, 35, 0.3);
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #0e1a3a 0%, #030b1f 100%);
+            padding: 0.9rem 1.2rem;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            border-bottom: 1px solid #e31b2340;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title span {
+            background: #e31b23;
+            width: 6px;
+            height: 26px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+
+        .checklist-table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            font-family: 'Arial', 'Helvetica Neue', sans-serif;
+        }
+
+        .checklist-table th {
+            text-align: left;
+            padding: 0.9rem 0.8rem;
+            background-color: rgba(20, 35, 65, 0.9);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #bfd6ff;
+            border-bottom: 1px solid #2a4b7a;
+        }
+
+        .checklist-table td {
+            padding: 0.75rem 0.8rem;
+            border-bottom: 1px solid rgba(71, 98, 145, 0.4);
+            vertical-align: middle;
+            color: #eef2ff;
+            font-size: 0.78rem;
+        }
+
+        @media (max-width: 640px) {
+            .checklist-table th, .checklist-table td {
+                padding: 0.65rem 0.6rem;
+                font-size: 0.72rem;
+            }
+            .checklist-table {
+                min-width: 550px;
+            }
+        }
+
+        .checklist-table tr:hover td {
+            background-color: rgba(227, 27, 35, 0.08);
+        }
+
+        .status-signed {
+            color: #2ecc71;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 2px #00aa44;
+        }
+
+        .status-unsigned {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            font-weight: bold;
+            animation: pulseWarning 1.1s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes pulseWarning {
+            0% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+            50% { opacity: 0.6; text-shadow: 0 0 4px #e31b23; }
+            100% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+        }
+
+        .system-header {
+            background: rgba(227, 27, 35, 0.25);
+            font-weight: 700;
+        }
+
+        .system-header td {
+            background: rgba(30, 45, 80, 0.8);
+            font-weight: bold;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem;
+            }
+            .protocol-header, .section {
+                border-radius: 1.2rem;
+            }
+            .section-title {
+                padding: 0.7rem 1rem;
+            }
+        }
+
+        .executor-note {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 1.2rem;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(227, 27, 35, 0.2);
+            color: #bbd0ff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- ШАПКА -->
+    <div class="protocol-header">
+        <h1>РЕЕСТР ЧЕК-ЛИСТОВ</h1>
+        <div style="font-size: clamp(0.85rem, 3.5vw, 1rem); margin-top: 0.25rem;">ЖК «ОГНИ-3» · исполнительная документация</div>
+        <div style="font-size: 0.85rem; margin-top: 0.25rem; opacity: 0.9;">г. Москва, вн.тер.г. муниципальный округ Раменки, уч. 120А/1</div>
+        <div class="badge-date">
+            <div class="badge">Реестр №1</div>
+            <div class="badge">Дата формирования: 18.05.2026</div>
+            <div class="badge red">Ответственный исполнитель: ООО «ИНЭКО»</div>
+        </div>
+    </div>
+
+    <!-- ОСНОВНАЯ ТАБЛИЦА ЧЕК-ЛИСТОВ -->
+    <div class="section">
+        <div class="section-title"><span></span> ЧЕК-ЛИСТЫ ПО СИСТЕМАМ · СТАТУС ПОДПИСАНИЯ</div>
+        <div class="table-wrapper">
+            <table class="checklist-table">
+                <thead>
+                    <tr>
+                        <th>Система</th>
+                        <th>Номер чек-листа</th>
+                        <th>Наличие / Статус</th>
+                        <th>Подпись (ИНЭКО)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ==================== ВЕНТИЛЯЦИЯ (ОВ) ==================== -->
+                    <tr class="system-header">
+                        <td colspan="4"><strong>ВЕНТИЛЯЦИЯ (Cистема ОВ)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/7</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/8</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/9</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/10</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/11</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/12</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/13</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/14</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/15</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>ОВ</td><td>№ 05.05-О3-ОВиВК/16</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+
+                    <!-- ==================== СЛАБОТОЧНЫЕ СИСТЕМЫ (СС) ==================== -->
+                    <tr class="system-header">
+                        <td colspan="4"><strong>СЛАБОТОЧНЫЕ СИСТЕМЫ (Cистема СС)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>СС</td><td>№ 012.05-О3-СС.2/1</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>СС</td><td>№ 012.05-О3-СС.8/1</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>СС</td><td>№ 012.05-О3-СС.8/2</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>СС</td><td>№ 012.05-О3-СС.5/1</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>СС</td><td>№ 012.05-О3-СС.5/2</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+
+                    <!-- ==================== АВТОМАТИКА (СС/АВТ) ==================== -->
+                    <tr class="system-header">
+                        <td colspan="4"><strong>АВТОМАТИКА (Cистема СС/АВТ)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ3/1</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ3/2</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ4/1</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ4/2</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ4/3</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ4/4</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ5/1</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ5/2</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ5/3</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td>
+                    </tr>
+                    <tr>
+                        <td>АВТ</td><td>№ 012.05-О3-АВТ5/4</td><td>Есть</td><td class="status-signed">✅ подписано</td>
+                    </tr>
+
+                    <!-- ==================== ЭЛЕКТРООСВЕЩЕНИЕ (ЭОМ) ==================== -->
+                    <tr class="system-header">
+                        <td colspan="4"><strong>ЭЛЕКТРООСВЕЩЕНИЕ (Cистема ЭОМ)</strong></td>
+                    </tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/1</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/2</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/3</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/4</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/5</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/6</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/7</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/8</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/9</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/10</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/11</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/12</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/13</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/14</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/15</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/16</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/17</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/18</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/19</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/20</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/21</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/22</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/23</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/24</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/25</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="executor-note">
+            📌 Все чек-листы исполнило и предоставило ООО «ИНЭКО». Статус подписания указан по факту: 
+            <strong style="color:#2ecc71">✅ подписано</strong> — зелёная галочка, 
+            <strong style="color:#e74c3c">⚠️ не подписано</strong> — красный предупреждающий знак (мигание). 
+            Неподписанные позиции требуют оперативного заверения со стороны ответственных лиц.
+        </div>
+    </div>
+
+    <!-- СВОДНАЯ СТАТИСТИКА -->
+    <div class="section">
+        <div class="section-title"><span></span> СВОДКА ПО ЧЕК-ЛИСТАМ</div>
+        <div class="table-wrapper">
+            <table class="checklist-table">
+                <thead>
+                    <tr>
+                        <th>Система</th>
+                        <th>Всего чек-листов</th>
+                        <th>Подписано (ИНЭКО)</th>
+                        <th>Не подписано</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Вентиляция (ОВ)</td><td>10</td><td>7</td><td class="status-unsigned">3</td></tr>
+                    <tr><td>Слаботочные системы (СС)</td><td>5</td><td>3</td><td class="status-unsigned">2</td></tr>
+                    <tr><td>Автоматика (СС/АВТ)</td><td>10</td><td>5</td><td class="status-unsigned">5</td></tr>
+                    <tr><td>Электроосвещение (ЭОМ)</td><td>25</td><td>14</td><td class="status-unsigned">11</td></tr>
+                    <tr style="background: rgba(227,27,35,0.15); font-weight: bold;"><td>ИТОГО</td><td>50</td><td>29</td><td class="status-unsigned">21</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info">
+            <div>✅ Общая готовность чек-листов: 58%</div>
+            <div>⚠️ Не подписано 21 позиция — требуется дозаверение</div>
+            <div>📅 Контрольная дата подписания: 25.05.2026</div>
+        </div>
+    </div>
+
+    <!-- НИЖНИЙ БЛОК С ОТВЕТСТВЕННЫМИ -->
+    <div class="protocol-header" style="margin-top: 0.5rem; background: rgba(0,0,0,0.6);">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+            <div><strong>Ответственный исполнитель чек-листов:</strong> ООО «ИНЭКО» (Хамурджу О.)</div>
+            <div style="font-size: 0.75rem;">Инженер ПТО / Реестр чек-листов от 18.05.2026</div>
+        </div>
+        <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;">
+            Данные актуальны на 18.05.2026. Все неподписанные чек-листы выделены мигающим предупреждением. 
+            Для завершения приёмочной документации необходимо подписать 21 позицию в срок до 25.05.2026.
+        </div>
+    </div>
+</div>
+</body>
+</html>

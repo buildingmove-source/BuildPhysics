@@ -208,6 +208,67 @@
             border-top: 1px solid rgba(227, 27, 35, 0.2);
             color: #bbd0ff;
         }
+
+        .home-button-global {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #e31b23, #ff4d4d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(227, 27, 35, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .home-button-global:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(227, 27, 35, 0.6);
+        }
+        .home-button-global:active {
+            transform: scale(0.95);
+        }
+        .home-button-global::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 50%;
+            background: rgba(46, 204, 113, 0.6);
+            animation: pulseGreen 1.2s infinite;
+            z-index: -1;
+        }
+        @keyframes pulseGreen {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+        .home-icon-global {
+            font-size: 28px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        .home-button-global:hover .home-icon-global {
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .home-button-global {
+                width: 48px;
+                height: 48px;
+                bottom: 15px;
+                right: 15px;
+            }
+            .home-icon-global {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -228,7 +289,7 @@
     <div class="section">
         <div class="section-title"><span></span> ЧЕК-ЛИСТЫ ПО СИСТЕМАМ · СТАТУС ПОДПИСАНИЯ</div>
         <div class="table-wrapper">
-            <table class="checklist-table">
+            <table class="checklist-table" id="mainChecklistTable">
                 <thead>
                     <tr>
                         <th>Система</th>
@@ -249,8 +310,8 @@
                     <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/11</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
                     <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/12</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
                     <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/13</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
-                    <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/14</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/15</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/14</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/15</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
                     <tr><td>ОВ</td><td>№ 05.05-О3-ОВиВК/16</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
 
                     <!-- ==================== СЛАБОТОЧНЫЕ СИСТЕМЫ (СС) ==================== -->
@@ -258,8 +319,8 @@
                         <td colspan="4"><strong>СЛАБОТОЧНЫЕ СИСТЕМЫ (Система СС)</strong></td>
                     </tr>
                     <tr><td>СС</td><td>№ 012.05-О3-СС.2/1</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>СС</td><td>№ 012.05-О3-СС.8/1</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
-                    <tr><td>СС</td><td>№ 012.05-О3-СС.8/2</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>СС</td><td>№ 012.05-О3-СС.8/1</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
+                    <tr><td>СС</td><td>№ 012.05-О3-СС.8/2</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
                     <tr><td>СС</td><td>№ 012.05-О3-СС.5/1</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
                     <tr><td>СС</td><td>№ 012.05-О3-СС.5/2</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
 
@@ -276,28 +337,26 @@
                     <tr><td>АВТ</td><td>№ 012.05-О3-АВТ5/1</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
                     <tr><td>АВТ</td><td>№ 012.05-О3-АВТ5/2</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
                     <tr><td>АВТ</td><td>№ 012.05-О3-АВТ5/3</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
-                    <tr><td>АВТ</td><td>№ 012.05-О3-АВТ5/4</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>АВТ</td><td>№ 012.05-О3-АВТ5/4</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
 
                     <!-- ==================== ЭЛЕКТРООСВЕЩЕНИЕ (ЭОМ) ==================== -->
                     <tr class="system-header">
                         <td colspan="4"><strong>ЭЛЕКТРООСВЕЩЕНИЕ (Система ЭОМ)</strong></td>
                     </tr>
-                    <!-- 14 подписанных -->
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/1</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/2</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/3</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/4</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/5</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/6</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/7</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/8</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/9</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/10</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/11</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/12</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/13</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/14</td><td>Есть</td><td class="status-signed">✅ подписано</td></tr>
-                    <!-- 11 неподписанных -->
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/1</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/2</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/3</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/4</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/5</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/6</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/7</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/8</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/9</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/10</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/11</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/12</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/13</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
+                    <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/14</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
                     <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/15</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
                     <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/16</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
                     <tr><td>ЭОМ</td><td>№ 012.05-О3-ЭОМ2-2/17</td><td>Есть</td><td class="status-unsigned">⚠️ не подписано</td></tr>
@@ -320,11 +379,11 @@
         </div>
     </div>
 
-    <!-- СВОДНАЯ СТАТИСТИКА -->
-    <div class="section">
+    <!-- СВОДНАЯ СТАТИСТИКА (динамическая) -->
+    <div class="section" id="summarySection">
         <div class="section-title"><span></span> СВОДКА ПО ЧЕК-ЛИСТАМ</div>
         <div class="table-wrapper">
-            <table class="checklist-table">
+            <table class="checklist-table" id="summaryTable">
                 <thead>
                     <tr>
                         <th>Система</th>
@@ -333,19 +392,13 @@
                         <th>Не подписано</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr><td>Вентиляция (ОВ)</td><td>10</td><td>7</td><td class="status-unsigned">3</td></tr>
-                    <tr><td>Слаботочные системы (СС)</td><td>5</td><td>3</td><td class="status-unsigned">2</td></tr>
-                    <tr><td>Автоматика (СС/АВТ)</td><td>10</td><td>5</td><td class="status-unsigned">5</td></tr>
-                    <tr><td>Электроосвещение (ЭОМ)</td><td>25</td><td>14</td><td class="status-unsigned">11</td></tr>
-                    <tr style="background: rgba(227,27,35,0.15); font-weight: bold;"><td>ИТОГО</td><td>50</td><td>29</td><td class="status-unsigned">21</td></tr>
+                <tbody id="summaryTableBody">
+                    <!-- сюда динамически будет добавлена статистика -->
                 </tbody>
             </table>
         </div>
-        <div class="footer-info">
-            <div>✅ Общая готовность чек-листов: 58%</div>
-            <div>⚠️ Не подписано 21 позиция — требуется дозаверение</div>
-            <div>📅 Контрольная дата подписания: 25.05.2026</div>
+        <div class="footer-info" id="summaryFooter">
+            <!-- динамическое содержимое -->
         </div>
     </div>
 
@@ -355,79 +408,171 @@
             <div><strong>Ответственный исполнитель чек-листов:</strong> ООО «ИНЭКО» (Хамурджу О.)</div>
             <div style="font-size: 0.75rem;">Инженер ПТО / Реестр чек-листов от 18.05.2026</div>
         </div>
-        <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;">
+        <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;" id="dynamicUnsignedNote">
             Данные актуальны на 18.05.2026. Все неподписанные чек-листы выделены мигающим предупреждением. 
-            Для завершения приёмочной документации необходимо подписать 21 позицию в срок до 25.05.2026.
+            Для завершения приёмочной документации необходимо подписать все неподписанные позиции в срок до 25.05.2026.
         </div>
     </div>
 </div>
 
-<!-- Кнопка "На главную" -->
-<style>
-    .home-button-global {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 56px;
-        height: 56px;
-        background: linear-gradient(135deg, #e31b23, #ff4d4d);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(227, 27, 35, 0.4);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        text-decoration: none;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-    .home-button-global:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 25px rgba(227, 27, 35, 0.6);
-    }
-    .home-button-global:active {
-        transform: scale(0.95);
-    }
-    .home-button-global::after {
-        content: '';
-        position: absolute;
-        top: -8px;
-        left: -8px;
-        right: -8px;
-        bottom: -8px;
-        border-radius: 50%;
-        background: rgba(46, 204, 113, 0.6);
-        animation: pulseGreen 1.2s infinite;
-        z-index: -1;
-    }
-    @keyframes pulseGreen {
-        0% { transform: scale(1); opacity: 0.7; }
-        100% { transform: scale(1.4); opacity: 0; }
-    }
-    .home-icon-global {
-        font-size: 28px;
-        color: white;
-        transition: transform 0.3s ease;
-    }
-    .home-button-global:hover .home-icon-global {
-        transform: translateY(-2px);
-    }
-    @media (max-width: 480px) {
-        .home-button-global {
-            width: 48px;
-            height: 48px;
-            bottom: 15px;
-            right: 15px;
-        }
-        .home-icon-global {
-            font-size: 24px;
-        }
-    }
-</style>
-
 <a href="https://buildingmove-source.github.io/BuildPhysics/" class="home-button-global">
     <span class="home-icon-global">🏠</span>
 </a>
+
+<script>
+    (function() {
+        // Функция для сбора данных из основной таблицы
+        function getStatistics() {
+            const mainTable = document.getElementById('mainChecklistTable');
+            if (!mainTable) return null;
+            const rows = mainTable.querySelectorAll('tbody tr');
+            const stats = {}; // { systemName: { total: 0, signed: 0 } }
+            
+            for (let row of rows) {
+                // Пропускаем строки-заголовки систем
+                if (row.classList.contains('system-header')) continue;
+                
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 4) continue;
+                
+                const system = cells[0].innerText.trim();
+                if (!system) continue;
+                
+                const statusCell = cells[3];
+                let isSigned = false;
+                if (statusCell.classList.contains('status-signed')) {
+                    isSigned = true;
+                } else if (statusCell.classList.contains('status-unsigned')) {
+                    isSigned = false;
+                } else {
+                    // fallback: проверим текст
+                    const text = statusCell.innerText.trim();
+                    isSigned = text.includes('✅') || text.toLowerCase().includes('подписано');
+                }
+                
+                if (!stats[system]) {
+                    stats[system] = { total: 0, signed: 0 };
+                }
+                stats[system].total++;
+                if (isSigned) stats[system].signed++;
+            }
+            
+            // Преобразуем в массив для удобства, добавим итоговую строку
+            const systemsOrder = ['ОВ', 'СС', 'АВТ', 'ЭОМ'];
+            const data = [];
+            let grandTotal = 0;
+            let grandSigned = 0;
+            
+            for (let sys of systemsOrder) {
+                if (stats[sys]) {
+                    data.push({
+                        system: sys,
+                        total: stats[sys].total,
+                        signed: stats[sys].signed,
+                        unsigned: stats[sys].total - stats[sys].signed
+                    });
+                    grandTotal += stats[sys].total;
+                    grandSigned += stats[sys].signed;
+                } else {
+                    data.push({ system: sys, total: 0, signed: 0, unsigned: 0 });
+                }
+            }
+            
+            const grandUnsigned = grandTotal - grandSigned;
+            const percent = grandTotal > 0 ? Math.round((grandSigned / grandTotal) * 100) : 0;
+            
+            return { data, grandTotal, grandSigned, grandUnsigned, percent };
+        }
+        
+        // Функция обновления сводки
+        function updateSummary() {
+            const stats = getStatistics();
+            if (!stats) return;
+            
+            // Обновляем таблицу сводки
+            const tbody = document.getElementById('summaryTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            for (let item of stats.data) {
+                const row = tbody.insertRow();
+                row.insertCell(0).innerText = item.system;
+                row.insertCell(1).innerText = item.total;
+                row.insertCell(2).innerHTML = `<span style="color:#2ecc71;">${item.signed}</span>`;
+                row.insertCell(3).innerHTML = `<span class="status-unsigned" style="font-size:1rem; animation:none;">${item.unsigned}</span>`;
+            }
+            // Итоговая строка
+            const totalRow = tbody.insertRow();
+            totalRow.style.background = 'rgba(227,27,35,0.15)';
+            totalRow.style.fontWeight = 'bold';
+            totalRow.insertCell(0).innerText = 'ИТОГО';
+            totalRow.insertCell(1).innerText = stats.grandTotal;
+            totalRow.insertCell(2).innerHTML = `<span style="color:#2ecc71;">${stats.grandSigned}</span>`;
+            totalRow.insertCell(3).innerHTML = `<span class="status-unsigned" style="font-size:1rem; animation:none;">${stats.grandUnsigned}</span>`;
+            
+            // Обновляем footer-info в секции сводки
+            const footer = document.getElementById('summaryFooter');
+            if (footer) {
+                footer.innerHTML = `
+                    <div>✅ Общая готовность чек-листов: ${stats.percent}%</div>
+                    <div>⚠️ Не подписано ${stats.grandUnsigned} позиция(ий) — требуется дозаверение</div>
+                    <div>📅 Контрольная дата подписания: 25.05.2026</div>
+                `;
+            }
+            
+            // Обновляем текст в нижнем блоке с количеством неподписанных
+            const noteBlock = document.getElementById('dynamicUnsignedNote');
+            if (noteBlock) {
+                const unsignedText = stats.grandUnsigned;
+                noteBlock.innerHTML = `Данные актуальны на 18.05.2026. Все неподписанные чек-листы выделены мигающим предупреждением. 
+                Для завершения приёмочной документации необходимо подписать ${unsignedText} позицию(ий) в срок до 25.05.2026.`;
+            }
+        }
+        
+        // Инициализация: обновляем сводку при загрузке
+        updateSummary();
+        
+        // Наблюдатель за изменениями в основной таблице (классы, содержимое)
+        const mainTable = document.getElementById('mainChecklistTable');
+        if (mainTable) {
+            const observer = new MutationObserver(function(mutations) {
+                // При любых изменениях в таблице пересчитываем сводку
+                updateSummary();
+            });
+            observer.observe(mainTable, {
+                attributes: true,
+                childList: true,
+                subtree: true,
+                attributeFilter: ['class']
+            });
+        }
+        
+        // Дополнительно: можно добавить обработчик клика на ячейки статуса для демонстрации автоматического обновления
+        // (по желанию, но для наглядности - позволяет переключать статус двойным кликом)
+        function addInteractiveToggle() {
+            const statusCells = document.querySelectorAll('#mainChecklistTable tbody td:last-child');
+            for (let cell of statusCells) {
+                cell.style.cursor = 'pointer';
+                cell.title = 'Двойной клик для смены статуса (демо)';
+                cell.addEventListener('dblclick', function(e) {
+                    e.stopPropagation();
+                    if (this.classList.contains('status-signed')) {
+                        this.classList.remove('status-signed');
+                        this.classList.add('status-unsigned');
+                        this.innerHTML = '⚠️ не подписано';
+                    } else if (this.classList.contains('status-unsigned')) {
+                        this.classList.remove('status-unsigned');
+                        this.classList.add('status-signed');
+                        this.innerHTML = '✅ подписано';
+                    }
+                    // Мутационный наблюдатель сам вызовет updateSummary, но для надёжности вызовем явно
+                    updateSummary();
+                });
+            }
+        }
+        // Чтобы не мешать, добавим через небольшой таймаут, чтобы все элементы точно были
+        setTimeout(addInteractiveToggle, 100);
+    })();
+</script>
 </body>
 </html>

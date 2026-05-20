@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>ПТО | Протокол №3 · ЖК «ОГНИ-3»</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0f2a, #030617);
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+            color: #eef2ff;
+            padding: 1.5rem 1rem;
+            line-height: 1.45;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .protocol-header {
+            background: rgba(10, 20, 45, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            border-left: 6px solid #e31b23;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+            word-break: break-word;
+        }
+
+        .protocol-header h1 {
+            font-size: clamp(1.4rem, 6vw, 1.9rem);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff, #a0b4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-date {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .badge {
+            background: #101a36;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            border: 1px solid #2a3a6e;
+            color: #cfdeff;
+        }
+
+        .badge.red {
+            border-left: 3px solid #e31b23;
+            background: #1f1122;
+        }
+
+        .section {
+            background: rgba(6, 12, 28, 0.75);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            margin-bottom: 1.8rem;
+            overflow: hidden;
+            border: 1px solid rgba(227, 27, 35, 0.3);
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #0e1a3a 0%, #030b1f 100%);
+            padding: 0.9rem 1.2rem;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            border-bottom: 1px solid #e31b2340;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title span {
+            background: #e31b23;
+            width: 6px;
+            height: 26px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+
+        .data-table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            font-family: 'Arial', 'Helvetica Neue', sans-serif;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.9rem 0.8rem;
+            background-color: rgba(20, 35, 65, 0.9);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #bfd6ff;
+            border-bottom: 1px solid #2a4b7a;
+        }
+
+        .data-table td {
+            padding: 0.75rem 0.8rem;
+            border-bottom: 1px solid rgba(71, 98, 145, 0.4);
+            vertical-align: top;
+            color: #eef2ff;
+            font-size: 0.78rem;
+        }
+
+        @media (max-width: 640px) {
+            .data-table th, .data-table td {
+                padding: 0.65rem 0.6rem;
+                font-size: 0.72rem;
+            }
+            .data-table {
+                min-width: 620px;
+            }
+        }
+
+        .data-table tr:hover td {
+            background-color: rgba(227, 27, 35, 0.08);
+        }
+
+        .blink-text {
+            animation: pulseWarning 1.1s infinite ease-in-out;
+            font-weight: 700;
+            color: #ff6b6b;
+            text-shadow: 0 0 2px #ff0000aa;
+        }
+
+        @keyframes pulseWarning {
+            0% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+            50% { opacity: 0.65; text-shadow: 0 0 4px #e31b23; color: #ff8888; }
+            100% { opacity: 1; text-shadow: 0 0 0px #ff4d4d; }
+        }
+
+        .participant-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            padding: 1rem 1.2rem;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .org {
+            background: #0f1a2e;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            color: #b9ceff;
+            font-size: 0.75rem;
+            word-break: break-word;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem;
+            }
+            .protocol-header, .section {
+                border-radius: 1.2rem;
+            }
+            .section-title {
+                padding: 0.7rem 1rem;
+            }
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-right: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- ШАПКА ПРОТОКОЛА -->
+    <div class="protocol-header">
+        <h1>ПРОТОКОЛ №3</h1>
+        <div style="font-size: clamp(0.85rem, 3.5vw, 1rem); margin-top: 0.25rem;">совещания по объекту: ЖК «ОГНИ-3»</div>
+        <div style="font-size: 0.85rem; margin-top: 0.25rem; opacity: 0.9;">г. Москва, вн.тер.г. муниципальный округ Раменки, между ул. Лобачевского, земельный участок 120А/1</div>
+        <div class="badge-date">
+            <div class="badge">Дата: 19 мая 2026 г.</div>
+            <div class="badge">Время: 12:30</div>
+            <div class="badge red">Место: Штаб строительства</div>
+        </div>
+    </div>
+
+    <!-- УЧАСТНИКИ (по умолчанию из предыдущих протоколов) -->
+    <div class="section">
+        <div class="section-title"><span></span> УЧАСТНИКИ СОВЕЩАНИЯ</div>
+        <div class="participant-grid">
+            <span class="org">ООО «ДС Строй»</span>
+            <span class="org">ООО «Красотель»</span>
+            <span class="org">ООО «СКР»</span>
+            <span class="org">ООО «ИНЭКО»</span>
+            <span class="org">ООО «ПСК 28» (ПИ+)</span>
+        </div>
+    </div>
+
+    <!-- ОСНОВНАЯ ТАБЛИЦА РЕШЕНИЙ -->
+    <div class="section">
+        <div class="section-title"><span></span> РЕШЕНИЯ СОВЕЩАНИЯ · МАТЕРИАЛЫ И СРОКИ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>№ п/п</th><th>Наименование</th><th>Срок выполнения</th><th>Ответственный</th><th>Примечание</th></tr>
+                </thead>
+                <tbody>
+                    <!-- 1 -->
+                    <tr><td>1</td><td>График завершения отделки (Корпус 1, Корпус 2, Лобби 1, Лобби 2, Паркинг)</td>
+                    <td>20.05.2026</td><td>СКР</td><td></td></tr>
+                    <!-- 2 -->
+                    <tr><td>2</td><td>График завершения инженерных работ (Механика, ЭОМ, СС)</td>
+                    <td>20.05.2026</td><td>Инэко/ ПИ+</td><td></td></tr>
+                    <!-- 3 -->
+                    <tr><td>3</td><td>График подключения этажей к отоплению</td>
+                    <td>20.05.2026</td><td>ПИ+</td><td></td></tr>
+                    <!-- 4 -->
+                    <tr><td>4</td><td>Светильники на лестницу паркинг и Лобби 1 (эвакуационный выход) — распред.письмо 19.05.2026, оплата 25.05.2026</td>
+                    <td>С 19.05.2026</td><td>СКР/ДС</td><td>Ставим визуально похожую времянку для ЗОС, <strong>подобрать аналог 19.05.2026</strong></td></tr>
+                    <!-- 5 -->
+                    <tr><td>5</td><td>При отправке счетов выделять что СРОЧНО для ЗОС</td>
+                    <td>Постоянно</td><td>СКР</td><td>Из отправленных выделить срочное</td></tr>
+                    <!-- 6 -->
+                    <tr><td>6</td><td>Распред.письма на все зеленые счета для закупки ДС Монолит</td>
+                    <td>19.05.2026</td><td>СКР</td><td></td></tr>
+                    <!-- 7 -->
+                    <tr><td>7</td><td>Перечень с оставшимися позициями для закупки</td>
+                    <td>20.05.2026</td><td>СКР</td><td></td></tr>
+                    <!-- 8 -->
+                    <tr><td>8</td><td>Кабель для диспетчеризации лифтов — оплачено, поставлено 50%, остаток <span class="strikethrough">30.04.2026</span></td>
+                    <td><span class="blink-text">Уточнить срок 19.05.2026</span></td><td>СКР/ДС/Инэко/Красотель</td><td>просрочка</td></tr>
+                    <!-- 9 -->
+                    <tr><td>9</td><td>Шкафы электрические 4шт — счет есть, оплата 06.05.2026, поставка 28.05.2026</td>
+                    <td>29.04.2026 — 28.05.2026</td><td>СКР/ДС/Инэко/Красотель</td><td></td></tr>
+                    <!-- 10 -->
+                    <tr><td>10</td><td>СС (включая АРМ): 70% заявка + счета 05.05.2026, 30% заявка 05.05.2026 счета 07.05.2026, 100% поставка 30.05.2026</td>
+                    <td>05.05.2026 — 30.05.2026</td><td>СКР/ДС/Инэко/Красотель</td><td>По готовым счетам подготовить распред.письма</td></tr>
+                    <!-- 11 -->
+                    <tr><td>11</td><td>АРМ СОУЭ (обратная связь) Рубеж ЦПИУ — поставка 50 раб.дн., оплата 25.05.2026</td>
+                    <td>С 25.05.2026</td><td>СКР/ДС</td><td></td></tr>
+                    <!-- 12 -->
+                    <tr><td>12</td><td>Клапана на Корпус 1 ЛХ — распред.письмо 19.05.2026, оплата 25.05.2026, изготовление 8 раб.дн</td>
+                    <td>С 19.05.2026</td><td>СКР/ДС</td><td></td></tr>
+                    <!-- 13 -->
+                    <tr><td>13</td><td>Заявки на материалы в ИТП + Узел учета — заявка есть, счет на узел учета — ДС посодействовать, поставка 45 дней</td>
+                    <td><span class="strikethrough">20.06.2026</span> <span class="blink-text">срок уточняется</span></td><td>СКР/ДС/Красотель</td><td>перенос</td></tr>
+                    <!-- 14 -->
+                    <tr><td>14</td><td>Механика Пи Плюс: гребенки (на объекте), доукомплектовка; воздуховоды паркинг (поставка ~15.05.2026); воздуховоды кровля — срочно (неделя)</td>
+                    <td><span class="strikethrough">06.06.2026</span> <span class="blink-text">контроль 15.05.2026</span></td><td>СКР/ДС/Красотель/ПИ+</td><td>отследить поставку</td></tr>
+                    <!-- 15 -->
+                    <tr><td>15</td><td>Пожарный водопровод — заявка 07.05.2026, счета 12.05.2026, оплата 13-14.05.2026, поставка ~20.05.2026</td>
+                    <td>28.04.2026 — 20.05.2026</td><td>СКР/ДС/Красотель</td><td></td></tr>
+                    <!-- 16 -->
+                    <tr><td>16</td><td>Комплексные испытания Корпус 2 + паркинг</td>
+                    <td><span class="blink-text">10.05.2026 (просрочено)</span></td><td>Инэко/СКР/Красотель/ДС</td><td class="blink-text">не выполнено</td></tr>
+                    <!-- 17 -->
+                    <tr><td>17</td><td>ПНР Корпус 2</td>
+                    <td>30.05.2026</td><td>ПИ+</td><td></td></tr>
+                    <!-- 18 -->
+                    <tr><td>18</td><td>Отопление Корпус 1 — 4 недели</td>
+                    <td><span class="strikethrough">07.06.2026</span> <span class="blink-text">15.06.2026</span></td><td>ПИ+/Красотель/ДС</td><td>перенос</td></tr>
+                    <!-- 19 -->
+                    <tr><td>19</td><td>Отопление Корпус 2 — 2 недели</td>
+                    <td><span class="blink-text">25.05.2026</span></td><td>ПИ+/Красотель/ДС</td><td></td></tr>
+                    <!-- 20 -->
+                    <tr><td>20</td><td>Водопровод ГВС ХВС завершение: Корпус 1 — 25.06.2026, Корпус 2 — 07.06.2026</td>
+                    <td>07.06.2026 — 25.06.2026</td><td>ПИ+/Красотель/ДС</td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer-info">
+            <div>Контроль исполнения: графики отделки и инженерных работ предоставить до 20.05.2026</div>
+            <div>Срочные закупки: светильники-аналоги для ЗОС, клапана на Корпус 1, АРМ СОУЭ</div>
+        </div>
+    </div>
+
+    <!-- СВОДКА ПО КЛЮЧЕВЫМ ЭТАПАМ (выжимка) -->
+    <div class="section">
+        <div class="section-title"><span></span> КЛЮЧЕВЫЕ КОНТРОЛЬНЫЕ ТОЧКИ</div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr><th>Объект/Система</th><th>Мероприятие</th><th>Срок</th><th>Ответственный</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Корпус 2 + паркинг</td><td>Комплексные испытания</td><td class="blink-text">10.05.2026 (просрочено)</td><td>Инэко/СКР/Красотель/ДС</td></tr>
+                    <tr><td>Корпус 2</td><td>ПНР</td><td>30.05.2026</td><td>ПИ+</td></tr>
+                    <tr><td>Отопление Корпус 2</td><td>Завершение (2 недели)</td><td class="blink-text">25.05.2026</td><td>ПИ+/Красотель/ДС</td></tr>
+                    <tr><td>Отопление Корпус 1</td><td>Завершение (4 недели)</td><td>15.06.2026</td><td>ПИ+/Красотель/ДС</td></tr>
+                    <tr><td>Водопровод ГВС/ХВС Корпус 2</td><td>Готовность</td><td>07.06.2026</td><td>ПИ+/Красотель/ДС</td></tr>
+                    <tr><td>Водопровод ГВС/ХВС Корпус 1</td><td>Готовность</td><td>25.06.2026</td><td>ПИ+/Красотель/ДС</td></tr>
+                    <tr><td>Шкафы электрические (4 шт)</td><td>Поставка</td><td>28.05.2026</td><td>СКР/ДС/Инэко/Красотель</td></tr>
+                    <tr><td>СС (АРМ)</td><td>100% поставка</td><td>30.05.2026</td><td>СКР/ДС/Инэко/Красотель</td></tr>
+                    <tr><td>Пожарный водопровод</td><td>Поставка</td><td>~20.05.2026</td><td>СКР/ДС/Красотель</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ФУТЕР С ДАТОЙ СЛЕДУЮЩЕГО СОВЕЩАНИЯ (не указана, ставим предположительно) -->
+    <div class="protocol-header" style="margin-top: 0.5rem; background: rgba(0,0,0,0.6);">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+            <div><strong>Следующее совещание:</strong> по согласованию (ориентировочно 26.05.2026)</div>
+            <div style="font-size: 0.75rem;">Инженер ПТО / Протокол №3 от 19.05.2026</div>
+        </div>
+        <div style="margin-top: 0.8rem; font-size: 0.7rem; border-top: 1px solid #2a3c6e; padding-top: 0.7rem;">
+            Ключевые поручения: предоставить графики завершения отделки и инженерных работ до 20.05; обеспечить поставку аналогов светильников для ЗОС; завершить комплексные испытания К2+паркинг; активизировать оплаты по распред.письмам.
+        </div>
+    </div>
+</div>
+</body>
+</html>

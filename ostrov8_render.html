@@ -1,0 +1,488 @@
+cat > ~/Desktop/ostrov8_render.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ОСТРОВ‑8 · кв.8 корп.1,2 · 3D по РД 13‑23</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#0c1018; --bg1:#0a0d14; --panel:rgba(13,18,27,.82); --panel2:rgba(10,14,21,.92);
+  --ink:#eef2f8; --mut:#8893a6; --mut2:#525d70; --line:rgba(150,172,205,.13); --line2:rgba(150,172,205,.30);
+  --cu:#e08a3c; --cu2:#ff7a18; --cyn:#27d3d3; --grn:#39d353; --red:#ff4d4d; --glass:#86b6d6;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --disp:'Space Grotesk',system-ui,sans-serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg1);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 82% -12%, rgba(224,138,60,.10), transparent 55%),
+    radial-gradient(120% 110% at 4% 112%, rgba(39,211,211,.07), transparent 52%),
+    radial-gradient(150% 120% at 50% 40%, transparent 50%, rgba(0,0,0,.55) 100%),
+    repeating-linear-gradient(0deg,transparent 0 47px,var(--line) 47px 48px),
+    repeating-linear-gradient(90deg,transparent 0 47px,var(--line) 47px 48px),
+    linear-gradient(180deg,var(--bg0),var(--bg1));}
+::selection{background:var(--cu2);color:#1a0d04}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--line2)}
+.stamp{position:relative;z-index:6;display:flex;flex-wrap:wrap;gap:14px 26px;align-items:flex-end;justify-content:space-between;padding:18px clamp(14px,3vw,42px) 14px;border-bottom:1px solid var(--line2)}
+.brand{display:flex;flex-direction:column;gap:6px;min-width:0}
+.kicker{font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--cu);display:flex;align-items:center;gap:9px}
+.kicker .dot{width:7px;height:7px;background:var(--cu2);border-radius:50%;box-shadow:0 0 0 4px rgba(255,122,24,.18);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.brand h1{font-family:var(--disp);font-weight:700;line-height:.82;letter-spacing:-.02em;font-size:clamp(2rem,6.4vw,4.6rem);text-transform:uppercase}
+.brand h1 em{font-style:normal;color:var(--mut);font-weight:400}
+.brand .sub{font-family:var(--mono);font-size:10.5px;color:var(--mut);letter-spacing:.04em;margin-top:2px}
+.meta{font-family:var(--mono);font-size:10px;line-height:1.6;color:var(--mut);display:grid;grid-template-columns:auto auto;gap:1px 16px;align-content:end}
+.meta .k{color:var(--mut2);text-transform:uppercase;letter-spacing:.1em}.meta b{color:var(--ink);font-weight:600;text-align:right}
+.stage{position:relative;z-index:2;height:calc(100vh - 104px);min-height:520px;width:100%}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}#c:active{cursor:grabbing}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{font-family:var(--mono);font-size:10px;font-weight:600;color:#fff;white-space:nowrap;background:rgba(10,14,21,.78);border:1px solid var(--cu);padding:2px 7px;letter-spacing:.04em;box-shadow:0 2px 10px rgba(0,0,0,.5);backdrop-filter:blur(3px)}
+.lbl.cy{border-color:var(--cyn);color:#dffaff}.lbl.sm{font-size:9px;border-color:var(--line2);color:var(--mut);background:rgba(10,14,21,.6)}
+.cor{position:absolute;width:18px;height:18px;border:2px solid var(--cyn);z-index:5;pointer-events:none}
+.cor.tl{top:10px;left:10px;border-right:0;border-bottom:0}.cor.tr{top:10px;right:10px;border-left:0;border-bottom:0}
+.cor.bl{bottom:46px;left:10px;border-right:0;border-top:0}.cor.br{bottom:46px;right:10px;border-left:0;border-top:0}
+.tagv{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut2);z-index:5;pointer-events:none}
+.tagv.t{top:16px;left:36px}.tagv.b{bottom:52px;left:36px;color:var(--grn)}
+.pnl{position:absolute;z-index:6;background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--line2);font-family:var(--mono)}
+.pnl h3{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cu);padding:9px 12px 7px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
+.pnl h3 span{color:var(--mut2)}.pnl .bd{padding:10px 12px}
+.left{top:14px;left:14px;width:232px}
+.right{top:14px;right:14px;width:236px;max-height:calc(100% - 76px);display:flex;flex-direction:column}
+.right .bd{overflow:auto}
+.views{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:10px}
+.vbtn{font:600 9px var(--mono);letter-spacing:.03em;text-transform:uppercase;padding:8px 2px;border:1px solid var(--line2);background:transparent;color:var(--mut);cursor:pointer;transition:.15s;position:relative;overflow:hidden}
+.vbtn::after{content:"";position:absolute;inset:0;background:var(--cyn);transform:translateY(101%);transition:transform .25s;z-index:-1}
+.vbtn:hover{color:var(--ink);border-color:var(--cyn)}
+.vbtn.on{color:#06121b;border-color:var(--cyn)}.vbtn.on::after{transform:translateY(0)}
+.sld{margin:4px 0 9px}
+.sld .row{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut2);margin-bottom:5px}
+.sld .row b{color:var(--cu)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--line2);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--cu);border:2px solid var(--bg1);cursor:pointer;transform:rotate(45deg)}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--cu);border:2px solid var(--bg1);cursor:pointer;border-radius:0}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px dashed var(--line);cursor:pointer;user-select:none;color:var(--mut);font-size:10px;transition:.14s}
+.tog:hover{color:var(--ink)}.tog .lab{display:flex;align-items:center;gap:8px}
+.tog .sw{width:12px;height:12px;border:1px solid var(--mut2);position:relative;flex:0 0 auto;transition:.14s}
+.tog.on .sw{background:var(--cu);border-color:var(--cu)}.tog.on .sw::after{content:"";position:absolute;inset:2px;background:var(--bg1)}
+.tog.cy.on .sw{background:var(--cyn);border-color:var(--cyn)}
+.led{width:100%;border-collapse:collapse;font-size:10px}
+.led th{text-align:left;color:var(--mut2);font-weight:500;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 5px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:var(--panel2)}
+.led td{padding:3px 5px;border-bottom:1px dashed var(--line);color:var(--mut);vertical-align:middle}
+.led tr{cursor:pointer;transition:.12s}.led tr:hover td,.led tr.on td{color:var(--ink);background:rgba(224,138,60,.10)}
+.led .et{color:var(--ink);font-weight:600}.led .mk{color:var(--cyn)}
+.led .bar{height:6px;background:var(--line);position:relative;min-width:34px}
+.led .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--cu),var(--cu2))}
+.led tr.roof td{color:var(--cu);border-top:1px solid var(--line2);font-weight:700}
+#gizmo{position:absolute;bottom:56px;right:14px;width:96px;height:96px;z-index:6;border:1px solid var(--line2);background:rgba(10,14,21,.6);backdrop-filter:blur(4px)}
+.readout{position:absolute;bottom:56px;left:14px;z-index:6;font-family:var(--mono);font-size:9.5px;color:var(--mut);background:var(--panel);border:1px solid var(--line2);padding:7px 11px;line-height:1.7;backdrop-filter:blur(6px)}
+.readout b{color:var(--cyn)}
+.cmd{position:absolute;left:14px;right:14px;bottom:14px;height:34px;z-index:6;display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--panel);border:1px solid var(--line2);backdrop-filter:blur(6px);overflow:hidden}
+.cmd .pr{color:var(--cyn);font-size:10px;flex:0 0 auto}
+.cmd .stream{display:flex;gap:18px;white-space:nowrap;will-change:transform;animation:marq 64s linear infinite;font-family:var(--mono);font-size:9.5px;color:var(--mut)}
+.cmd:hover .stream{animation-play-state:paused}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.cmd .stream b{color:var(--ink)}.cmd .stream .c{color:var(--cyn)}.cmd .stream .o{color:var(--cu)}
+#load{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg1);color:var(--mut);font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;transition:opacity .6s;text-align:center;padding:20px}
+#load.hide{opacity:0;pointer-events:none}
+#load .bar{width:180px;height:2px;background:var(--line2);margin:14px auto 0;overflow:hidden}
+#load .bar i{display:block;height:100%;width:40%;background:var(--cyn);animation:ld 1.1s ease-in-out infinite}
+@keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+.spec{position:relative;z-index:2;padding:clamp(40px,7vw,80px) clamp(14px,3.4vw,46px) 50px;border-top:1px solid var(--line2)}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:26px}
+.sh .ix{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--cyn);text-transform:uppercase;margin-bottom:8px}
+.sh h2{font-family:var(--disp);font-weight:700;text-transform:uppercase;font-size:clamp(1.4rem,4.4vw,2.6rem);letter-spacing:-.01em;line-height:.92}
+.sh h2 em{font-style:normal;color:var(--cu)}
+.sh p{font-family:var(--mono);font-size:10px;color:var(--mut);max-width:360px;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{grid-column:span 6;border:1px solid var(--line2);background:rgba(12,17,26,.55);padding:20px;position:relative;overflow:hidden;opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s,box-shadow .3s}
+.card.in{opacity:1;transform:none}.card:hover{box-shadow:0 0 0 1px var(--line2),0 18px 50px rgba(0,0,0,.4)}
+.card::before{content:attr(data-n);position:absolute;top:14px;right:16px;font-family:var(--mono);font-size:10px;color:var(--mut2);letter-spacing:.1em}
+.card .ct{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cu);margin-bottom:13px}
+.card h4{font-family:var(--disp);font-weight:500;font-size:1.12rem;margin-bottom:13px;line-height:1.08}
+.card.thin{grid-column:span 4}
+.stack{font-family:var(--mono);font-size:11px;color:var(--mut);line-height:1.5}
+.stack .ly2{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);transition:.14s}
+.stack .ly2:hover{color:var(--ink);background:rgba(39,211,211,.05)}
+.stack .ly2 b{color:var(--ink);font-weight:500}.stack .ly2 .mm{color:var(--cyn)}
+.swatch{display:inline-block;width:13px;height:13px;border:1px solid var(--line2);vertical-align:-2px;margin-right:8px}
+footer{position:relative;z-index:2;padding:24px clamp(14px,3.4vw,46px);border-top:1px solid var(--line2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--mut2);text-transform:uppercase}
+footer b{color:var(--mut)}
+.right .bd::-webkit-scrollbar{width:6px}
+@media(max-width:980px){.left{width:188px}.right{display:none}#gizmo{width:74px;height:74px}.card,.card.thin{grid-column:span 12}}
+</style>
+</head>
+<body>
+
+<header class="stamp">
+  <div class="brand">
+    <div class="kicker"><span class="dot"></span> WebGL · CSS2D‑подписи · РД 13‑23</div>
+    <h1>Остров‑8<em> · кв.8 корп. 1, 2</em></h1>
+    <div class="sub">процедурная 3D‑модель по рабочей документации · шифр 13‑23‑00/01/02 · КМ1.1 / АР1‑К1·К2 / АР3‑СТИ</div>
+  </div>
+  <div class="meta">
+    <span class="k">Заказчик</span><b>ООО «ДС СТРОЙ»</b>
+    <span class="k">Проектир.</span><b>ООО «СП КУБ»</b>
+    <span class="k">Оси X</span><b>П/1—П/29 · 233 400</b>
+    <span class="k">Оси Y</span><b>П/А—П/Д · 33 200</b>
+    <span class="k">Кровля</span><b>К1 +76,950 / К2 +76,400</b>
+    <span class="k">Стилобат</span><b>+7,050 / Ур.ГП +8,350</b>
+    <span class="k">0,000 =</span><b>абс. 128,30</b>
+  </div>
+</header>
+
+<section class="stage" id="stage">
+  <canvas id="c"></canvas>
+  <div id="labels"></div>
+  <i class="cor tl"></i><i class="cor tr"></i><i class="cor bl"></i><i class="cor br"></i>
+  <span class="tagv t" id="viewtag">вид · изометрия</span>
+  <span class="tagv b">перспектива · ЛКМ — вращать · колесо — зум</span>
+
+  <aside class="pnl left">
+    <h3>Камера · виды <span>6</span></h3>
+    <div class="bd">
+      <div class="views">
+        <button class="vbtn on" data-v="iso">ИЗО</button>
+        <button class="vbtn" data-v="front">ФАСАД</button>
+        <button class="vbtn" data-v="plan">ПЛАН</button>
+        <button class="vbtn" data-v="sideR">БОК ▸</button>
+        <button class="vbtn" data-v="sideL">БОК ◂</button>
+        <button class="vbtn" data-v="reset">СБРОС</button>
+      </div>
+      <div class="sld"><div class="row"><span>Солнце</span><b id="sunlab">17:30</b></div>
+        <input type="range" id="sun" min="6" max="20" step="0.25" value="17.5"></div>
+      <div class="tog cy on" id="tLbl"><span class="lab"><span class="sw"></span>Подписи в 3D</span></div>
+      <div class="tog on" id="tRot"><span class="lab"><span class="sw"></span>Авто‑поворот</span></div>
+      <div class="tog on" id="tLock"><span class="lab"><span class="sw"></span>Фикс. наклон (орбита)</span></div>
+    </div>
+    <h3>Слои модели <span>click</span></h3>
+    <div class="bd" id="leg"></div>
+  </aside>
+
+  <aside class="pnl right">
+    <h3>Этажи · разрез 1‑1 <span>hover</span></h3>
+    <div class="bd"><table class="led" id="led">
+      <thead><tr><th>Эт</th><th>Отметка</th><th>h, м</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </aside>
+
+  <canvas id="gizmo"></canvas>
+  <div class="readout">AZ <b id="az">—</b>° &nbsp; EL <b id="el">—</b>° &nbsp; D <b id="zm">—</b><br>mesh <b id="nm">—</b> · line <b id="nl">—</b></div>
+  <div class="cmd"><span class="pr">ОСИ&gt;</span><span class="stream" id="stream"></span></div>
+  <div id="load">Построение корпусов по РД<div class="bar"><i></i></div></div>
+</section>
+
+<section class="spec">
+  <div class="sh"><div><div class="ix">спецификация по РД</div><h2>Фасад <em>KRAUSS</em> · кровля · оси</h2></div>
+    <p>Цвета и марки из КМ1.1, пирог кровли стилобата из АР3‑СТИ, координатная сетка из АР1‑СТИ. Наведение на строку этажа справа подсвечивает пояс в 3D.</p></div>
+  <div class="grid">
+    <div class="card" data-n="01"><div class="ct">Цветовые решения фасадов</div><h4>Композит · перфорация</h4>
+      <div class="stack">
+        <div class="ly2"><span><span class="swatch" style="background:#9aa0a8"></span>Neotec PP600/502 — Sahara Grey</span><b>фон К2</b></div>
+        <div class="ly2"><span><span class="swatch" style="background:#c4c8cd"></span>Neotec PP600/507 — Sahara Silver</span><b>фон</b></div>
+        <div class="ly2"><span><span class="swatch" style="background:#c2743a"></span>Scratch Color Copper — перфорация t=4</span><b>ламели К1</b></div>
+        <div class="ly2"><span><span class="swatch" style="background:#86b6d6"></span>Панорамное остекление / СПО стемалит</span><b>витраж</b></div>
+      </div></div>
+    <div class="card thin" data-n="02"><div class="ct">Отметки · разрез 1‑1</div><h4>мм от 0,000</h4>
+      <div class="stack">
+        <div class="ly2"><span>Тех. пространство</span><b class="mm">+11,950</b></div>
+        <div class="ly2"><span>03 этаж</span><b class="mm">+15,000</b></div>
+        <div class="ly2"><span>10 этаж</span><b class="mm">+38,100</b></div>
+        <div class="ly2"><span>20 этаж</span><b class="mm">+71,400</b></div>
+        <div class="ly2"><span>Кровля К1</span><b style="color:var(--cu2)">+76,950</b></div>
+        <div class="ly2"><span>Кровля К2</span><b style="color:var(--cu2)">+76,400</b></div>
+      </div></div>
+    <div class="card thin" data-n="03"><div class="ct">Кровля стилобата · АР3‑СТИ</div><h4>Пирог К3</h4>
+      <div class="stack">
+        <div class="ly2"><span>Стяжка ЦПР М150 + сетка</span><b class="mm">40–190</b></div>
+        <div class="ly2"><span>ЭППС XPS CARBON PROF</span><b class="mm">200</b></div>
+        <div class="ly2"><span>Мембрана PLANTER‑geo</span><b class="mm">10</b></div>
+        <div class="ly2"><span>ТЕХНОЭЛАСТ ЭПП</span><b class="mm">2 сл.</b></div>
+        <div class="ly2"><span>Ограждение ОГС‑1…4</span><b>353/40/9/98</b></div>
+        <div class="ly2"><span>Воронки ВВ1</span><b>34 шт</b></div>
+      </div></div>
+    <div class="card thin" data-n="04"><div class="ct">Координатная сетка</div><h4>П/1—П/29 × П/А—П/Д</h4>
+      <div class="stack">
+        <div class="ly2"><span>Σ П/1—П/20 (Корпус 2)</span><b class="mm">155 250</b></div>
+        <div class="ly2"><span>Σ П/20—П/29 (Корпус 1)</span><b class="mm">78 150</b></div>
+        <div class="ly2"><span>Полный габарит X</span><b>233 400</b></div>
+        <div class="ly2"><span>Габарит Y (П/А—П/Д)</span><b>33 200</b></div>
+        <div class="ly2"><span>К2 Секц.2 / Секц.1</span><b>П/1‑11 / 11‑20</b></div>
+        <div class="ly2"><span>К1 Секц.1</span><b>П/21‑29</b></div>
+      </div></div>
+  </div>
+</section>
+
+<footer>
+  <span>© рендер‑демо по РД 13‑23 · СП КУБ</span>
+  <span>БОК ▸ / БОК ◂ — вид сбоку на фасады с торцов П/29 и П/1</span>
+  <span>three.js r128 · CSS2DRenderer · WebGL</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+<script>
+"use strict";
+
+/* ===== ДАННЫЕ РД ===== */
+var SX=[6700,8900,8900,8900,8900,8900,8900,8900,8900,1050,8900,8900,8900,8900,8900,8900,8900,5100,8900,9550,8900,6300,7500,8500,8900,8900,7300,12300];
+var AX=[0]; SX.forEach(function(s){AX.push(AX[AX.length-1]+s/1000);});
+var SY=[8400,8400,8400,8000]; var AY=[0]; SY.forEach(function(s){AY.push(AY[AY.length-1]+s/1000);});
+var XMIN=AX[0],XMAX=AX[AX.length-1],YMIN=AY[0],YMAX=AY[AY.length-1];
+var CX=(XMIN+XMAX)/2, CY=(YMIN+YMAX)/2;
+var FLOORS=[
+ {n:'Тех',z:11.95},{n:'03',z:15.0},{n:'04',z:18.3},{n:'05',z:21.6},{n:'06',z:24.9},
+ {n:'07',z:28.2},{n:'08',z:31.5},{n:'09',z:34.8},{n:'10',z:38.1},{n:'11',z:41.4},
+ {n:'12',z:44.7},{n:'13',z:48.0},{n:'14',z:51.3},{n:'15',z:54.6},{n:'16',z:57.9},
+ {n:'17',z:61.2},{n:'18',z:64.5},{n:'19',z:67.8},{n:'20',z:71.4}];
+var ROOF1=76.95, ROOF2=76.4, STIL=7.05, GP=8.35, ZBASE=11.95;
+
+/* ===== ОБЪЕКТЫ КОРПУСОВ ===== */
+var K2={x0:AX[0],x1:AX[19]};
+var K1={x0:AX[20],x1:AX[28]};
+
+/* ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ВОЛНЫ ===== */
+function waveC(x){
+  var Ymid=(AY[1]+AY[3])/2;
+  var WAVE_A=4.5;
+  return Ymid+WAVE_A*Math.sin((x-K2.x0)/(K2.x1-K2.x0)*Math.PI*2);
+}
+function k2Up(x){return waveC(x)+7.5;}
+function k2Lo(x){return waveC(x)-7.5;}
+
+/* ===== РЕНДЕРЕРЫ ===== */
+var canvas=document.getElementById('c');
+var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.15;
+var labelRenderer=new THREE.CSS2DRenderer(); labelRenderer.domElement.id='labels';
+document.getElementById('stage').appendChild(labelRenderer.domElement);
+
+var scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x0a0d14,0.0016);
+var camera=new THREE.PerspectiveCamera(40,1,0.5,3000);
+var controls=new THREE.OrbitControls(camera,canvas);
+controls.enableDamping=true; controls.dampingFactor=0.07; controls.enablePan=false;
+controls.minDistance=60; controls.maxDistance=900; controls.maxPolarAngle=Math.PI/2-0.04;
+controls.autoRotate=true; controls.autoRotateSpeed=0.45;
+
+/* СВЕТ */
+scene.add(new THREE.HemisphereLight(0xffe6c0,0x10182a,0.62));
+scene.add(new THREE.AmbientLight(0x46506a,0.30));
+var sun=new THREE.DirectionalLight(0xffd49a,2.4);
+sun.castShadow=true; sun.shadow.mapSize.set(2048,2048);
+var S=320; sun.shadow.camera.left=-S;sun.shadow.camera.right=S;sun.shadow.camera.top=S;sun.shadow.camera.bottom=-S;
+sun.shadow.camera.near=1;sun.shadow.camera.far=1400;sun.shadow.bias=-0.0004;sun.shadow.normalBias=0.6;
+scene.add(sun);scene.add(sun.target);
+var fill=new THREE.DirectionalLight(0x8fb6dd,0.4);fill.position.set(-300,160,-260);scene.add(fill);
+
+/* МАТЕРИАЛЫ */
+var M=function(c,o){o=o||{};return new THREE.MeshStandardMaterial({color:c,roughness:o.r==null?0.7:o.r,metalness:o.m==null?0.1:o.m,transparent:!!o.t,opacity:o.t==null?1:o.t,side:o.side||THREE.FrontSide,emissive:o.e||0x000000,emissiveIntensity:o.ei||0});};
+var matWall2=M(0x9aa0a8,{r:0.55,m:0.35});
+var matWall1=M(0xb9bdc2,{r:0.5,m:0.3});
+var matGlass=M(0x86b6d6,{r:0.06,m:0.6,t:0.32});
+var matCopper=M(0xc2743a,{r:0.34,m:0.78,e:0x3a1606,ei:0.18});
+var matPylon=M(0x2a2f36,{r:0.5,m:0.4});
+var matBelt=M(0xe7e4dd,{r:0.5,e:0x000000});
+var matStil=M(0x8b929b,{r:0.85});
+var matRoof=M(0x6f7d63,{r:0.92});
+var matRail=M(0x9fd0e8,{r:0.05,m:0.3,t:0.3});
+var matPost=M(0xb9bdc4,{r:0.5,m:0.4});
+var matFunnel=M(0xe08a3c,{r:0.4,e:0xe08a3c,ei:0.5});
+var matPent=M(0xcfd4da,{r:0.55,m:0.2});
+var matGround=M(0x11161f,{r:1});
+
+/* ГРУППЫ */
+var G={};['ground','stil','k1','k2','belt','axes'].forEach(function(n){G[n]=new THREE.Group();scene.add(G[n]);});
+var beltLines=[];
+var meshCount=0,lineCount=0;
+
+/* HELPERS */
+function addM(g,m){g.add(m);meshCount++;return m;}
+function box(g,w,h,d,m,x,y,z,sh){var o=new THREE.Mesh(new THREE.BoxGeometry(Math.max(w,.01),Math.max(h,.01),Math.max(d,.01)),m);o.position.set(x,y,z);if(sh!==false){o.castShadow=true;}o.receiveShadow=true;return addM(g,o);}
+function wallSeg(g,x0,y0,x1,y1,z0,z1,m,th){th=th||0.4;var dx=x1-x0,dy=y1-y0,L=Math.hypot(dx,dy);if(L<1e-4)return;var o=new THREE.Mesh(new THREE.BoxGeometry(L,z1-z0,th),m);o.position.set((x0+x1)/2,(z0+z1)/2,(y0+y1)/2);o.rotation.y=-Math.atan2(dy,dx);o.castShadow=true;o.receiveShadow=true;return addM(g,o);}
+function linePts(g,arr,col,op){var g2=new THREE.BufferGeometry().setFromPoints(arr.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}));var o=new THREE.Line(g2,new THREE.LineBasicMaterial({color:col,transparent:op!=null,opacity:op==null?1:op}));lineCount++;g.add(o);return o;}
+function label(txt,cls){var d=document.createElement('div');d.className='lbl '+(cls||'');d.textContent=txt;return new THREE.CSS2DObject(d);}
+
+/* ФУНКЦИИ ПОЯСОВ */
+function beltK2(z){
+  var N=48,arr=[];
+  for(var i=0;i<=N;i++){var x=K2.x0+(K2.x1-K2.x0)*i/N;arr.push([x,k2Up(x),z]);}
+  for(var i=N;i>=0;i--){var x=K2.x0+(K2.x1-K2.x0)*i/N;arr.push([x,k2Lo(x),z]);}
+  arr.push(arr[0]);
+  return linePts(G.belt,arr,0xe7e4dd,0.5);
+}
+function beltK1(z){
+  var x0=K1.x0+1.5,x1=K1.x1-1.5,y0=AY[1]+1,y1=AY[3]-1;
+  return linePts(G.belt,[[x0,y0,z],[x1,y0,z],[x1,y1,z],[x0,y1,z],[x0,y0,z]],0xe7e4dd,0.5);
+}
+
+/* ЗЕМЛЯ */
+(function(){
+  var g=new THREE.Mesh(new THREE.PlaneGeometry(1400,900),matGround);
+  g.rotation.x=-Math.PI/2;g.position.set(CX,-0.2,CY);g.receiveShadow=true;addM(G.ground,g);
+  var grid=new THREE.GridHelper(1400,70,0x1d2940,0x141b27);grid.position.set(CX,0,CY);grid.material.opacity=0.4;grid.material.transparent=true;G.ground.add(grid);lineCount++;
+})();
+
+/* СТИЛОБАТ */
+(function(){
+  var x0=XMIN-2,x1=XMAX+2,y0=YMIN-2,y1=YMAX+2,cx=(x0+x1)/2,cy=(y0+y1)/2;
+  box(G.stil,x1-x0,STIL,y1-y0,matStil,cx,STIL/2,cy);
+  box(G.stil,x1-x0+1,GP-STIL,y1-y0+1,matRoof,cx,(STIL+GP)/2,cy);
+  wallSeg(G.stil,x0,y0,x1,y0,0.9,5.2,matGlass,0.2);
+  wallSeg(G.stil,x0,y1,x1,y1,0.9,5.2,matGlass,0.2);
+  wallSeg(G.stil,x0,y0,x0,y1,0.9,5.2,matGlass,0.2);
+  wallSeg(G.stil,x1,y0,x1,y1,0.9,5.2,matGlass,0.2);
+  for(var x=x0+3;x<x1;x+=4){linePts(G.stil,[[x,y0-0.1,0.2],[x,y0-0.1,5.2]],0x3a4250);linePts(G.stil,[[x,y1+0.1,0.2],[x,y1+0.1,5.2]],0x3a4250);}
+  var z0=GP+0.4,z1=GP+1.6,per=[[x0,y0,x1,y0],[x1,y0,x1,y1],[x1,y1,x0,y1],[x0,y1,x0,y0]];
+  per.forEach(function(s){var L=Math.hypot(s[2]-s[0],s[3]-s[1]),n=Math.max(1,Math.round(L/6)),ang=Math.atan2(s[3]-s[1],s[2]-s[0]);
+    for(var k=0;k<=n;k++){var t=k/n;box(G.stil,0.12,z1-z0,0.12,matPost,s[0]+(s[2]-s[0])*t,(z0+z1)/2,s[1]+(s[3]-s[1])*t,false);}
+    var pan=new THREE.Mesh(new THREE.BoxGeometry(L,z1-z0,0.06),matRail);pan.position.set((s[0]+s[2])/2,(z0+z1)/2,(s[1]+s[3])/2);pan.rotation.y=-ang;addM(G.stil,pan);
+    var top=new THREE.Mesh(new THREE.BoxGeometry(L,0.08,0.12),matPost);top.position.set((s[0]+s[2])/2,z1,(s[1]+s[3])/2);top.rotation.y=-ang;addM(G.stil,top);});
+  var c=0;for(var i=0;i<8&&c<34;i++){var fx=x0+12+(x1-x0-24)*i/7;for(var j=0;j<5&&c<34;j++){var fy=y0+8+(y1-y0-16)*j/4;var fn=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.3,12),matFunnel);fn.position.set(fx,GP+0.15,fy);fn.castShadow=true;addM(G.stil,fn);c++;}}
+})();
+
+/* КОРПУС 2 */
+(function(){
+  var N=48,z0=ZBASE,z1=ROOF2;
+  var xs=[],up=[],lo=[];
+  for(var i=0;i<=N;i++){var x=K2.x0+(K2.x1-K2.x0)*i/N;xs.push(x);up.push([x,k2Up(x)]);lo.push([x,k2Lo(x)]);}
+  for(var i=0;i<N;i++){wallSeg(G.k2,up[i][0],up[i][1],up[i+1][0],up[i+1][1],z0,z1,matWall2,0.5);wallSeg(G.k2,lo[i][0],lo[i][1],lo[i+1][0],lo[i+1][1],z0,z1,matWall2,0.5);
+    if(i%2===0){wallSeg(G.k2,up[i][0],up[i][1],up[i][0],up[i][1],z0,z1,matPylon,0.7);wallSeg(G.k2,lo[i][0],lo[i][1],lo[i][0],lo[i][1],z0,z1,matPylon,0.7);}}
+  wallSeg(G.k2,K2.x0,k2Up(K2.x0),K2.x0,k2Lo(K2.x0),z0,z1,matWall2,0.5);
+  wallSeg(G.k2,K2.x1,k2Up(K2.x1),K2.x1,k2Lo(K2.x1),z0,z1,matWall2,0.5);
+  var r=[];for(var i=0;i<=N;i++)r.push([xs[i],k2Up(xs[i]),z1]);for(var i=N;i>=0;i--)r.push([xs[i],k2Lo(xs[i]),z1]);r.push(r[0]);
+  var rg=new THREE.BufferGeometry().setFromPoints(r.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}));
+  addM(G.k2,new THREE.Mesh(rg,new THREE.MeshStandardMaterial({color:0xaeb4ba,roughness:0.6,metalness:0.2,side:THREE.DoubleSide})));
+  box(G.k2,(K2.x1-K2.x0)*0.5,3.2,9,matPent,(K2.x0+K2.x1)/2,ROOF2+1.6,waveC((K2.x0+K2.x1)/2));
+  FLOORS.forEach(function(f,idx){var z=f.z;var pl=beltK2(z);pl.userData.floor=z;
+    if(idx%2===0){var midX=(K2.x0+K2.x1)/2;var midY=waveC(midX);var lbl=label('Эт.'+f.n+' +'+z.toFixed(2),'sm');lbl.position.set(midX,z,midY+2);scene.add(lbl);}});
+})();
+
+/* КОРПУС 1 */
+(function(){
+  var x0=K1.x0+1.5,x1=K1.x1-1.5,y0=AY[1]+1,y1=AY[3]-1,z0=ZBASE,z1=ROOF1,cx=(x0+x1)/2,cy=(y0+y1)/2;
+  box(G.k1,x1-x0,z1-z0,y1-y0,matWall1,cx,(z0+z1)/2,cy);
+  wallSeg(G.k1,x0,y0,x0,y1,z0+3,z1-1,matGlass,0.15);
+  wallSeg(G.k1,x1,y0,x1,y1,z0+3,z1-1,matGlass,0.15);
+  for(var x=x0+1.5;x<x1;x+=1.7){box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y0-0.3);box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y1+0.3);}
+  box(G.k1,(x1-x0)*0.6,3.2,7,matPent,cx,ROOF1+1.6,cy);
+  FLOORS.forEach(function(f,idx){var z=f.z;var pl=beltK1(z);pl.userData.floor=z;
+    if(idx%2===0){var lbl=label('Эт.'+f.n+' +'+z.toFixed(2),'cy');lbl.position.set(x0-8,z,cy);scene.add(lbl);}});
+})();
+
+/* ОСИ */
+(function(){
+  var yb=YMIN-12;
+  AX.forEach(function(x,i){linePts(G.axes,[[x,yb,0.3],[x,YMAX+6,0.3]],0xff4d4d,0.35);
+    var rg=new THREE.Mesh(new THREE.RingGeometry(1.2,1.9,20),new THREE.MeshBasicMaterial({color:0xff4d4d,side:THREE.DoubleSide}));rg.rotation.x=-Math.PI/2;rg.position.set(x,0.4,yb-3);G.axes.add(rg);
+    var lb=label('П/'+(i+1),'sm');lb.position.set(x,1.5,yb-3);G.axes.add(lb);});
+  AY.forEach(function(y,j){var nm=['П/А','П/Б','П/В','П/Г','П/Д'][j];linePts(G.axes,[[XMIN-12,y,0.3],[XMAX+6,y,0.3]],0xff4d4d,0.35);
+    var rg=new THREE.Mesh(new THREE.RingGeometry(1.2,1.9,20),new THREE.MeshBasicMaterial({color:0xff4d4d,side:THREE.DoubleSide}));rg.rotation.x=-Math.PI/2;rg.position.set(XMIN-15,0.4,y);G.axes.add(rg);
+    var lb=label(nm,'sm');lb.position.set(XMIN-15,1.5,y);G.axes.add(lb);});
+  G.axes.visible=false;
+})();
+
+/* ВИДЫ */
+var VIEWS={
+  iso:{p:[CX+150,150,CY+170],t:[CX,40,CY],tag:'изометрия'},
+  front:{p:[CX,46,CY-300],t:[CX,46,CY],tag:'фасад (анфас)'},
+  plan:{p:[CX,320,CY+1],t:[CX,0,CY],tag:'план'},
+  sideR:{p:[CX+255,150,70],t:[CX-45,30,CY],tag:'бок ▸ · торец П/29'},
+  sideL:{p:[CX-255,150,70],t:[CX+45,30,CY],tag:'бок ◂ · торец П/1'},
+  reset:{p:[CX+150,150,CY+170],t:[CX,40,CY],tag:'изометрия'}
+};
+var tween=null;
+function setView(v){
+  document.querySelectorAll('.vbtn').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});
+  var o=VIEWS[v];
+  if(v==='reset'){controls.autoRotate=false;document.getElementById('tRot').classList.remove('on');camera.zoom=1;camera.updateProjectionMatrix();}
+  tween={p:new THREE.Vector3(o.p[0],o.p[1],o.p[2]),t:new THREE.Vector3(o.t[0],o.t[1],o.t[2]),k:0};
+  document.getElementById('viewtag').textContent='вид · '+o.tag;
+}
+document.querySelectorAll('.vbtn').forEach(function(b){b.addEventListener('click',function(){setView(b.dataset.v);});});
+
+/* ТУМБЛЕРЫ */
+document.getElementById('tRot').addEventListener('click',function(){this.classList.toggle('on');controls.autoRotate=this.classList.contains('on');});
+var labelObjs=[];scene.traverse(function(o){if(o.isCSS2DObject)labelObjs.push(o);});
+document.getElementById('tLbl').addEventListener('click',function(){this.classList.toggle('on');var on=this.classList.contains('on');labelObjs.forEach(function(o){o.visible=on;});});
+var lockOn=true;
+function setLock(on){lockOn=on;if(on){var p=controls.getPolarAngle();controls.minPolarAngle=p;controls.maxPolarAngle=p;}else{controls.minPolarAngle=0.1;controls.maxPolarAngle=Math.PI/2-0.04;}}
+document.getElementById('tLock').addEventListener('click',function(){this.classList.toggle('on');setLock(this.classList.contains('on'));});
+
+/* СОЛНЦЕ */
+var sunEl=document.getElementById('sun'),sunLab=document.getElementById('sunlab');
+var warm=new THREE.Color(0xffb070),cool=new THREE.Color(0xfff2dd);
+function applySun(h){var t=(h-6)/14,el=Math.sin(Math.PI*t)*0.7+0.08,az=-1.0+t*2.0,R=620;
+  sun.position.set(CX+Math.cos(az)*Math.cos(el)*R,Math.sin(el)*R,CY+Math.sin(az)*Math.cos(el)*R);
+  sun.target.position.set(CX,30,CY);sun.color.copy(warm).lerp(cool,Math.sin(el));sun.intensity=1.5+Math.sin(el)*1.7;
+  var hh=Math.floor(h),mm=Math.round((h-hh)*60);sunLab.textContent=(hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;}
+sunEl.addEventListener('input',function(){applySun(+sunEl.value);});applySun(17.5);
+
+/* ЛЕГЕНДА */
+var LAYERS=[['k2','Корпус 2 (волна)',G.k2,true],['k1','Корпус 1 (ламели)',G.k1,true],['stil','Стилобат + ОГС + ВВ1',G.stil,true],['belt','Пояса этажей',G.belt,true],['axes','Оси П/ (3D)',G.axes,false]];
+var leg=document.getElementById('leg');
+LAYERS.forEach(function(L){var el=document.createElement('div');el.className='tog'+(L[3]?' on':'');
+  el.innerHTML='<span class="lab"><span class="sw"></span>'+L[1]+'</span>';
+  el.addEventListener('click',function(){el.classList.toggle('on');L[2].visible=el.classList.contains('on');});leg.appendChild(el);});
+
+/* ТАБЛИЦА ЭТАЖЕЙ */
+var tb=document.querySelector('#led tbody');
+function beltMeshesFor(z){var a=[];G.belt.children.forEach(function(o){if(Math.abs((o.userData.floor||-1)-z)<0.01)a.push(o);});return a;}
+function hiBelt(z,on){beltMeshesFor(z).forEach(function(o){o.material.color.setHex(on?0xff7a18:0xe7e4dd);o.material.opacity=on?1:0.5;});}
+FLOORS.forEach(function(f,i){var h=i>0?(f.z-FLOORS[i-1].z):0;
+  var tr=document.createElement('tr');tr.innerHTML='<td class="et">'+f.n+'</td><td class="mk">+'+f.z.toFixed(3).replace('.',',')+'</td><td>'+(h>0?h.toFixed(1):'—')+'</td><td><div class="bar"><i style="width:'+Math.min(100,h/3.3*100)+'%"></i></div></td>';
+  tr.addEventListener('mouseenter',function(){hiBelt(f.z,true);tr.classList.add('on');});
+  tr.addEventListener('mouseleave',function(){hiBelt(f.z,false);tr.classList.remove('on');});
+  tb.appendChild(tr);});
+var trr=document.createElement('tr');trr.className='roof';trr.innerHTML='<td>Кровля</td><td>+76,95/76,40</td><td>—</td><td></td>';tb.appendChild(trr);
+
+/* БЕГУЩАЯ ЛЕНТА */
+(function(){var el=document.getElementById('stream');var h='';
+  for(var r=0;r<2;r++){AX.forEach(function(x,i){h+='<span><span class="c">П/'+(i+1)+'</span> '+SX[i]+'</span>';});
+    h+='<span><b>Σ 233 400</b></span><span><span class="o">К1 +76,950</span></span><span><span class="o">К2 +76,400</span></span><span>ВВ1 = 34</span><span>ОГС 353/40/9/98</span>';}
+  el.innerHTML=h;})();
+
+/* GIZMO */
+var gc=document.getElementById('gizmo'),gx=gc.getContext('2d');
+function drawGizmo(){var w=gc.clientWidth,h=gc.clientHeight;if(!w)return;gc.width=w*devicePixelRatio;gc.height=h*devicePixelRatio;gx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);gx.clearRect(0,0,w,h);
+  var cx=w/2,cy=h/2,R=w/2-16;var m=new THREE.Matrix4().makeRotationFromQuaternion(camera.quaternion).invert();
+  [['X',new THREE.Vector3(1,0,0),'#ff4d4d'],['Y',new THREE.Vector3(0,1,0),'#39d353'],['Z',new THREE.Vector3(0,0,1),'#27d3d3']].forEach(function(a){var d=a[1].clone().applyMatrix4(m);var x=cx+d.x*R,y=cy-d.y*R;
+    gx.strokeStyle=a[2];gx.globalAlpha=0.4+0.6*Math.max(0,d.z);gx.lineWidth=2;gx.beginPath();gx.moveTo(cx,cy);gx.lineTo(x,y);gx.stroke();
+    gx.fillStyle=a[2];gx.beginPath();gx.arc(x,y,3,0,7);gx.fill();gx.globalAlpha=1;gx.font='600 9px IBM Plex Mono';gx.textAlign='center';gx.textBaseline='middle';gx.fillText(a[0],x+(x-cx)*0.18,y+(y-cy)*0.18);});}
+
+/* READOUT */
+var azEl=document.getElementById('az'),elEl=document.getElementById('el'),zmEl=document.getElementById('zm');
+document.getElementById('nm').textContent=meshCount;document.getElementById('nl').textContent=lineCount;
+function readout(){var p=camera.position.clone().sub(controls.target);var r=p.length();var elr=Math.asin(p.y/r)*180/Math.PI;var azr=Math.atan2(p.x,p.z)*180/Math.PI;azEl.textContent=azr.toFixed(0);elEl.textContent=elr.toFixed(0);zmEl.textContent=r.toFixed(0);}
+
+/* RESIZE */
+function resize(){var st=document.getElementById('stage').getBoundingClientRect();renderer.setSize(st.width,st.height,false);labelRenderer.setSize(st.width,st.height);camera.aspect=st.width/st.height;camera.updateProjectionMatrix();}
+addEventListener('resize',resize);
+
+/* LOOP */
+function loop(){requestAnimationFrame(loop);
+  if(tween){tween.k=Math.min(1,tween.k+0.045);var e=1-Math.pow(1-tween.k,3);camera.position.lerp(tween.p,e*0.22+0.05);controls.target.lerp(tween.t,e*0.22+0.05);if(tween.k>=1)tween=null;}
+  matFunnel.emissiveIntensity=0.4+Math.sin(performance.now()/1000*3)*0.3;
+  controls.update();renderer.render(scene,camera);labelRenderer.render(scene,camera);drawGizmo();readout();}
+
+/* BOOT */
+resize();camera.position.set(VIEWS.iso.p[0],VIEWS.iso.p[1],VIEWS.iso.p[2]);controls.target.set(VIEWS.iso.t[0],VIEWS.iso.t[1],VIEWS.iso.t[2]);controls.update();loop();
+setTimeout(function(){document.getElementById('load').classList.add('hide');},500);
+
+/* SCROLL REVEAL */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.14});
+document.querySelectorAll('.card').forEach(function(c){io.observe(c);});
+</script>
+</body>
+</html>
+HTMLEOF

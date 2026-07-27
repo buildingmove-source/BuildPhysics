@@ -1,3 +1,4 @@
+cat > ~/Desktop/ostrov8_render.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -238,7 +239,7 @@ footer b{color:var(--mut)}
 
 <footer>
   <span>© рендер‑демо по РД 13‑23 · СП КУБ · ГИП Бойко Д.А.</span>
-  <span>БОК ▸ / БОК ◂ — вид сбоку на фасады с торцов П/29 и П/1</span>
+  <span>БОК  / БОК ◂ — вид сбоку на фасады с торцов П/29 и П/1</span>
   <span>three.js r128 · CSS2DRenderer · WebGL</span>
 </footer>
 
@@ -263,42 +264,35 @@ var ROOF1=76.95, ROOF2=76.4, STIL=7.04, GP=8.35, ZBASE=11.95;
 
 /* ===== РЕАЛЬНАЯ ГЕОМЕТРИЯ КОРПУСОВ ===== */
 /* Корпус 2: излом на П/11 (стык секций 1 и 2) */
-var K2_SEC2={x0:AX[0],x1:AX[10],amp:5.5};
-var K2_SEC1={x0:AX[10],x1:AX[19],amp:3.8};
-var K2_DEPTH=15;
+var K2_SEC2={x0:AX[0],x1:AX[10],amp:5.5};  /* Секция 2: П/1-П/11, амплитуда 5.5м */
+var K2_SEC1={x0:AX[10],x1:AX[19],amp:3.8}; /* Секция 1: П/11-П/20, амплитуда 3.8м */
+var K2_DEPTH=15; /* глубина корпуса 15м */
 
-/* Корпус 1: ИЗГНУТАЯ ГЕОМЕТРИЯ по кладочному плану АР1-К1 */
+/* Корпус 1: реальная форма с выступами */
 var K1={
   x0:AX[20]+2, x1:AX[28]-2,
   y0:AY[1]+2, y1:AY[3]-2,
-  curveRadius:200,
-  curveCenter:{x:(AX[20]+AX[28])/2, y:AY[2]-30},
+  /* выступы по осям */
   notches:[
-    {x0:AX[21],x1:AX[22],y0:AY[1],y1:AY[1]+3},
-    {x0:AX[26],x1:AX[27],y0:AY[3]-3,y1:AY[3]}
+    {x0:AX[21],x1:AX[22],y0:AY[1],y1:AY[1]+3}, /* выступ у оси П/22 */
+    {x0:AX[26],x1:AX[27],y0:AY[3]-3,y1:AY[3]}  /* выступ у оси П/27 */
   ]
 };
 
-/* ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===== */
+/* ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ВОЛНЫ С ИЗЛОМОМ ===== */
 function waveC(x){
   var Ymid=(AY[1]+AY[3])/2;
   if(x<=K2_SEC2.x1){
+    /* Секция 2: синусоида с амплитудой 5.5м */
     return Ymid+K2_SEC2.amp*Math.sin((x-K2_SEC2.x0)/(K2_SEC2.x1-K2_SEC2.x0)*Math.PI*2);
   }else{
-    var phase=Math.PI;
+    /* Секция 1: синусоида с амплитудой 3.8м, фаза сдвинута для плавного перехода */
+    var phase=Math.PI; /* сдвиг фазы на стыке */
     return Ymid+K2_SEC1.amp*Math.sin((x-K2_SEC1.x0)/(K2_SEC1.x1-K2_SEC1.x0)*Math.PI*2+phase);
   }
 }
 function k2Up(x){return waveC(x)+K2_DEPTH/2;}
 function k2Lo(x){return waveC(x)-K2_DEPTH/2;}
-
-function k1CurveY(x){
-  var dx=x-K1.curveCenter.x;
-  var dy=Math.sqrt(Math.max(0,K1.curveRadius*K1.curveRadius-dx*dx));
-  return K1.curveCenter.y+dy;
-}
-function k1Up(x){return k1CurveY(x)+8;}
-function k1Lo(x){return k1CurveY(x)-8;}
 
 /* ===== РЕНДЕРЕРЫ ===== */
 var canvas=document.getElementById('c');
@@ -346,7 +340,7 @@ var matHill=M(0x2d4a3e,{r:0.9});
 var matTree=M(0x3a5a3a,{r:0.9});
 var matTrunk=M(0x4a3728,{r:0.9});
 var matParking=M(0x1a2028,{r:0.95});
-var matCore=M(0x3a4048,{r:0.7,m:0.2});
+var matCore=M(0x3a4048,{r:0.7,m:0.2}); /* ядра жесткости */
 
 /* ГРУППЫ */
 var G={};['ground','stil','k1','k2','belt','axes','landscape','parking','cores'].forEach(function(n){G[n]=new THREE.Group();scene.add(G[n]);});
@@ -368,11 +362,8 @@ function beltK2(z){
   return linePts(G.belt,arr,0xe7e4dd,0.5);
 }
 function beltK1(z){
-  var N=40,arr=[];
-  for(var i=0;i<=N;i++){var x=K1.x0+(K1.x1-K1.x0)*i/N;arr.push([x,k1Up(x),z]);}
-  for(var i=N;i>=0;i--){var x=K1.x0+(K1.x1-K1.x0)*i/N;arr.push([x,k1Lo(x),z]);}
-  arr.push(arr[0]);
-  return linePts(G.belt,arr,0xe7e4dd,0.5);
+  var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1;
+  return linePts(G.belt,[[x0,y0,z],[x1,y0,z],[x1,y1,z],[x0,y1,z],[x0,y0,z]],0xe7e4dd,0.5);
 }
 
 /* ЗЕМЛЯ + ГЕОПЛАСТИКА + ДЕРЕВЬЯ */
@@ -386,7 +377,7 @@ function beltK1(z){
     var crown=new THREE.Mesh(new THREE.SphereGeometry(4,8,8),matTree);crown.position.set(tx,6,tz);G.landscape.add(crown);meshCount++;}
 })();
 
-/* ПАРКИНГ */
+/* ПАРКИНГ (Части 1 и 2) */
 (function(){
   box(G.parking,XMIN-5,YMIN-5,-6,XMAX+5,YMAX+5,0,matParking);
   linePts(G.parking,[[XMIN-5,YMIN-5,0],[XMAX+5,YMIN-5,0],[XMAX+5,YMAX+5,0],[XMIN-5,YMAX+5,0],[XMIN-5,YMIN-5,0]],0x27d3d3,0.5);
@@ -416,6 +407,8 @@ function beltK1(z){
   var N=60,z0=ZBASE,z1=ROOF2;
   var xs=[],up=[],lo=[];
   for(var i=0;i<=N;i++){var x=K2_SEC2.x0+(K2_SEC1.x1-K2_SEC2.x0)*i/N;xs.push(x);up.push([x,k2Up(x)]);lo.push([x,k2Lo(x)]);}
+  
+  /* Стены с изломом */
   for(var i=0;i<N;i++){
     wallSeg(G.k2,up[i][0],up[i][1],up[i+1][0],up[i+1][1],z0,z1,matWall2,0.5);
     wallSeg(G.k2,lo[i][0],lo[i][1],lo[i+1][0],lo[i+1][1],z0,z1,matWall2,0.5);
@@ -424,71 +417,63 @@ function beltK1(z){
       wallSeg(G.k2,lo[i][0],lo[i][1],lo[i][0],lo[i][1],z0,z1,matPylon,0.7);
     }
   }
+  
+  /* Торцы */
   wallSeg(G.k2,K2_SEC2.x0,k2Up(K2_SEC2.x0),K2_SEC2.x0,k2Lo(K2_SEC2.x0),z0,z1,matWall2,0.5);
   wallSeg(G.k2,K2_SEC1.x1,k2Up(K2_SEC1.x1),K2_SEC1.x1,k2Lo(K2_SEC1.x1),z0,z1,matWall2,0.5);
+  
+  /* Кровля */
   var r=[];for(var i=0;i<=N;i++)r.push([xs[i],k2Up(xs[i]),z1]);for(var i=N;i>=0;i--)r.push([xs[i],k2Lo(xs[i]),z1]);r.push(r[0]);
   var rg=new THREE.BufferGeometry().setFromPoints(r.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}));
   addM(G.k2,new THREE.Mesh(rg,new THREE.MeshStandardMaterial({color:0xaeb4ba,roughness:0.6,metalness:0.2,side:THREE.DoubleSide})));
+  
+  /* Пентхаус */
   var pentX=(K2_SEC2.x0+K2_SEC1.x1)/2;
   box(G.k2,(K2_SEC1.x1-K2_SEC2.x0)*0.5,3.2,9,matPent,pentX,ROOF2+1.6,waveC(pentX));
+  
+  /* Метки этажей */
   FLOORS.forEach(function(f,idx){var z=f.z;var pl=beltK2(z);pl.userData.floor=z;
     if(idx%2===0){var midX=(K2_SEC2.x0+K2_SEC1.x1)/2,midY=waveC(midX);var lbl=label('Эт.'+f.n+' +'+z.toFixed(2),'md');lbl.position.set(midX,z,midY+2);scene.add(lbl);}});
+  
   var lbl=label('КОРПУС 2 · +76,400','lg');lbl.position.set((K2_SEC2.x0+K2_SEC1.x1)/2,ROOF2+5,CY);scene.add(lbl);
 })();
 
-/* КОРПУС 1 С ИЗГНУТОЙ ГЕОМЕТРИЕЙ */
+/* КОРПУС 1 С ВЫСТУПАМИ */
 (function(){
-  var z0=ZBASE,z1=ROOF1;
-  var N=40;
-  var xs=[],up=[],lo=[];
-  for(var i=0;i<=N;i++){
-    var x=K1.x0+(K1.x1-K1.x0)*i/N;
-    xs.push(x);
-    up.push([x,k1Up(x)]);
-    lo.push([x,k1Lo(x)]);
+  var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1,z0=ZBASE,z1=ROOF1,cx=(x0+x1)/2,cy=(y0+y1)/2;
+  
+  /* Основной объём */
+  box(G.k1,x1-x0,z1-z0,y1-y0,matWall1,cx,(z0+z1)/2,cy);
+  
+  /* Выступы */
+  K1.notches.forEach(function(n){
+    box(G.k1,n.x1-n.x0,z1-z0,n.y1-n.y0,matWall1,(n.x0+n.x1)/2,(z0+z1)/2,(n.y0+n.y1)/2);
+  });
+  
+  /* Стекло торцы */
+  wallSeg(G.k1,x0,y0,x0,y1,z0+3,z1-1,matGlass,0.15);
+  wallSeg(G.k1,x1,y0,x1,y1,z0+3,z1-1,matGlass,0.15);
+  
+  /* Медные ламели */
+  for(var x=x0+1.5;x<x1;x+=1.7){
+    box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y0-0.3);
+    box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y1+0.3);
   }
-  for(var i=0;i<N;i++){
-    wallSeg(G.k1,up[i][0],up[i][1],up[i+1][0],up[i+1][1],z0,z1,matWall1,0.5);
-    wallSeg(G.k1,lo[i][0],lo[i][1],lo[i+1][0],lo[i+1][1],z0,z1,matWall1,0.5);
-    if(i%2===0){
-      wallSeg(G.k1,up[i][0],up[i][1],up[i][0],up[i][1],z0,z1,matPylon,0.7);
-      wallSeg(G.k1,lo[i][0],lo[i][1],lo[i][0],lo[i][1],z0,z1,matPylon,0.7);
-    }
-  }
-  wallSeg(G.k1,K1.x0,k1Up(K1.x0),K1.x0,k1Lo(K1.x0),z0,z1,matWall1,0.5);
-  wallSeg(G.k1,K1.x1,k1Up(K1.x1),K1.x1,k1Lo(K1.x1),z0,z1,matWall1,0.5);
-  var r=[];for(var i=0;i<=N;i++)r.push([xs[i],k1Up(xs[i]),z1]);for(var i=N;i>=0;i--)r.push([xs[i],k1Lo(xs[i]),z1]);r.push(r[0]);
-  var rg=new THREE.BufferGeometry().setFromPoints(r.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}));
-  addM(G.k1,new THREE.Mesh(rg,new THREE.MeshStandardMaterial({color:0xb9bdc2,roughness:0.6,metalness:0.2,side:THREE.DoubleSide})));
-  wallSeg(G.k1,K1.x0,k1Up(K1.x0),K1.x0,k1Lo(K1.x0),z0+3,z1-1,matGlass,0.15);
-  wallSeg(G.k1,K1.x1,k1Up(K1.x1),K1.x1,k1Lo(K1.x1),z0+3,z1-1,matGlass,0.15);
-  for(var i=0;i<N;i+=2){
-    var x=(xs[i]+xs[i+1])/2;
-    var yUp=(up[i][1]+up[i+1][1])/2;
-    var yLo=(lo[i][1]+lo[i+1][1])/2;
-    box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,yUp+0.3);
-    box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,yLo-0.3);
-  }
+  
+  /* Ядра жесткости (лифтовые шахты, лестницы) */
   var coreX=[AX[22],AX[25]];
   coreX.forEach(function(cx2){
-    var cy2=k1CurveY(cx2);
-    box(G.cores,4,z1-z0,6,matCore,cx2,(z0+z1)/2,cy2);
+    box(G.cores,4,z1-z0,6,matCore,cx2,(z0+z1)/2,cy);
   });
-  var pentX=(K1.x0+K1.x1)/2;
-  var pentY=k1CurveY(pentX);
-  box(G.k1,(K1.x1-K1.x0)*0.6,3.2,7,matPent,pentX,ROOF1+1.6,pentY);
+  
+  /* Пентхаус */
+  box(G.k1,(x1-x0)*0.6,3.2,7,matPent,cx,ROOF1+1.6,cy);
+  
+  /* Метки этажей */
   FLOORS.forEach(function(f,idx){var z=f.z;var pl=beltK1(z);pl.userData.floor=z;
-    if(idx%2===0){
-      var midX=(K1.x0+K1.x1)/2;
-      var midY=k1CurveY(midX);
-      var lbl=label('Эт.'+f.n+' +'+z.toFixed(2),'md');
-      lbl.position.set(midX-10,z,midY);
-      scene.add(lbl);
-    }
-  });
-  var lbl=label('КОРПУС 1 · +76,950','lg');
-  lbl.position.set((K1.x0+K1.x1)/2,ROOF1+5,k1CurveY((K1.x0+K1.x1)/2));
-  scene.add(lbl);
+    if(idx%2===0){var lbl=label('Эт.'+f.n+' +'+z.toFixed(2),'md');lbl.position.set(x0-8,z,cy);scene.add(lbl);}});
+  
+  var lbl=label('КОРПУС 1 · +76,950','lg');lbl.position.set(cx,ROOF1+5,cy);scene.add(lbl);
 })();
 
 /* ОСИ */
@@ -509,8 +494,8 @@ var VIEWS={
   front:{p:[CX,46,CY-300],t:[CX,46,CY],tag:'фасад (анфас)'},
   plan:{p:[CX,320,CY+1],t:[CX,0,CY],tag:'план'},
   sideR:{p:[CX+255,150,70],t:[CX-45,30,CY],tag:'бок  · торец П/29'},
-  sideL:{p:[CX-255,150,70],t:[CX+45,30,CY],tag:'бок ◂ · торец П/1'},
-  k1:{p:[(K1.x0+K1.x1)/2-90,90,k1CurveY((K1.x0+K1.x1)/2)-120],t:[(K1.x0+K1.x1)/2,45,k1CurveY((K1.x0+K1.x1)/2)],tag:'Корпус 1 (изогнутый)'},
+  sideL:{p:[CX-255,150,70],t:[CX+45,30,CY],tag:'бок  · торец П/1'},
+  k1:{p:[(K1.x0+K1.x1)/2-90,90,(AY[1]+AY[3])/2-120],t:[(K1.x0+K1.x1)/2,45,(AY[1]+AY[3])/2],tag:'Корпус 1'},
   k2:{p:[(K2_SEC2.x0+K2_SEC1.x1)/2,120,YMIN-220],t:[(K2_SEC2.x0+K2_SEC1.x1)/2,45,waveC((K2_SEC2.x0+K2_SEC1.x1)/2)],tag:'Корпус 2'},
   reset:{p:[CX+150,150,CY+170],t:[CX,40,CY],tag:'изометрия'}
 };
@@ -540,7 +525,7 @@ function applySun(h){var t=(h-6)/14,el=Math.sin(Math.PI*t)*0.7+0.08,az=-1.0+t*2.
 sunEl.addEventListener('input',function(){applySun(+sunEl.value);});applySun(17.5);
 
 /* ЛЕГЕНДА */
-var LAYERS=[['k2','Корпус 2 (волна с изломом)',G.k2,true],['k1','Корпус 1 (изогнутый)',G.k1,true],['cores','Ядра жесткости',G.cores,true],['stil','Стилобат + ОГС + ВВ1',G.stil,true],['belt','Пояса этажей',G.belt,true],['axes','Оси П/ (3D)',G.axes,false],['landscape','Ландшафт',G.landscape,true],['parking','Паркинг',G.parking,true]];
+var LAYERS=[['k2','Корпус 2 (волна с изломом)',G.k2,true],['k1','Корпус 1 (с выступами)',G.k1,true],['cores','Ядра жесткости',G.cores,true],['stil','Стилобат + ОГС + ВВ1',G.stil,true],['belt','Пояса этажей',G.belt,true],['axes','Оси П/ (3D)',G.axes,false],['landscape','Ландшафт',G.landscape,true],['parking','Паркинг',G.parking,true]];
 var leg=document.getElementById('leg');
 LAYERS.forEach(function(L){var el=document.createElement('div');el.className='tog'+(L[3]?' on':'');
   el.innerHTML='<span class="lab"><span class="sw"></span>'+L[1]+'</span>';
@@ -596,3 +581,4 @@ document.querySelectorAll('.card').forEach(function(c){io.observe(c);});
 </script>
 </body>
 </html>
+HTMLEOF

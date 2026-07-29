@@ -28,8 +28,6 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   linear-gradient(180deg,var(--bg0),var(--bg1));}
 ::selection{background:var(--cu2);color:#1a0d04}
 ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--line2)}
-
-/* ===== STAMP ===== */
 .stamp{position:relative;z-index:6;display:flex;flex-wrap:wrap;gap:14px 26px;align-items:flex-end;justify-content:space-between;padding:18px clamp(14px,3vw,42px) 14px;border-bottom:1px solid var(--line2)}
 .brand{display:flex;flex-direction:column;gap:6px;min-width:0}
 .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--cu);display:flex;align-items:center;gap:9px}
@@ -41,8 +39,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .meta{font-family:var(--mono);font-size:10px;line-height:1.6;color:var(--mut);display:grid;grid-template-columns:auto auto;gap:1px 16px;align-content:end}
 .meta .k{color:var(--mut2);text-transform:uppercase;letter-spacing:.1em}.meta b{color:var(--ink);font-weight:600;text-align:right}
 
-/* ===== STAGE (только видовое окно) ===== */
-.stage{position:relative;z-index:2;width:100%;height:calc(100vh - 420px);min-height:420px}
+/* ===== STAGE ===== */
+.stage{position:relative;z-index:2;height:calc(100vh - 104px);min-height:520px;width:100%}
 #c{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}#c:active{cursor:grabbing}
 #labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .lbl{font-family:var(--mono);font-weight:600;white-space:nowrap;background:rgba(10,14,21,.82);border:1px solid var(--cu);padding:2px 7px;letter-spacing:.04em;box-shadow:0 2px 10px rgba(0,0,0,.5);backdrop-filter:blur(3px)}
@@ -50,46 +48,54 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .lbl.cy{border-color:var(--cyn);color:#dffaff}
 .cor{position:absolute;width:18px;height:18px;border:2px solid var(--cyn);z-index:5;pointer-events:none}
 .cor.tl{top:10px;left:10px;border-right:0;border-bottom:0}.cor.tr{top:10px;right:10px;border-left:0;border-bottom:0}
-.cor.bl{bottom:10px;left:10px;border-right:0;border-top:0}.cor.br{bottom:10px;right:10px;border-left:0;border-top:0}
+.cor.bl{bottom:46px;left:10px;border-right:0;border-top:0}.cor.br{bottom:46px;right:10px;border-left:0;border-top:0}
 .tagv{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut2);z-index:5;pointer-events:none}
-.tagv.t{top:16px;left:36px}.tagv.b{bottom:16px;left:36px;color:var(--grn)}
-#load{position:absolute;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg1);color:var(--mut);font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;transition:opacity .6s;text-align:center;padding:20px}
-#load.hide{opacity:0;pointer-events:none}
-#load .bar{width:180px;height:2px;background:var(--line2);margin:14px auto 0;overflow:hidden}
-#load .bar i{display:block;height:100%;width:40%;background:var(--cyn);animation:ld 1.1s ease-in-out infinite}
-@keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+.tagv.t{top:16px;left:36px}.tagv.b{bottom:52px;left:36px;color:var(--grn)}
 
-/* ===== CONTROLS (под видовым окном) ===== */
-.controls{position:relative;z-index:4;padding:14px clamp(14px,3vw,42px) 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.ctrl-panel{background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--line2);font-family:var(--mono)}
-.ctrl-panel h3{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cu);padding:9px 12px 7px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
-.ctrl-panel h3 span{color:var(--mut2)}
-.ctrl-panel .bd{padding:10px 12px}
-.ctrl-panel.right .bd{max-height:260px;overflow:auto}
-
-/* виды */
-.views{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;margin-bottom:10px}
-.vbtn{font:600 9px var(--mono);letter-spacing:.03em;text-transform:uppercase;padding:8px 2px;border:1px solid var(--line2);background:transparent;color:var(--mut);cursor:pointer;transition:.15s;position:relative;overflow:hidden}
+/* ===== CONTROLS BAR (под видовым окном) ===== */
+.controls-bar{position:relative;z-index:6;background:var(--panel);backdrop-filter:blur(9px);
+  border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);
+  display:flex;gap:0;padding:10px 14px;min-height:110px}
+.cb-left{flex:1 1 auto;display:flex;flex-wrap:wrap;gap:14px 22px;align-items:flex-start;padding-right:22px;border-right:1px solid var(--line)}
+.cb-right{flex:0 0 260px;padding-left:22px}
+.cb-left h4,.cb-right h4{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cu);margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
+.cb-left h4 span,.cb-right h4 span{color:var(--mut2)}
+.cb-views{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;min-width:260px}
+.cb-sun{min-width:180px}
+.cb-toggles{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.views{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px}
+.vbtn{font:600 9px var(--mono);letter-spacing:.03em;text-transform:uppercase;padding:7px 2px;border:1px solid var(--line2);background:transparent;color:var(--mut);cursor:pointer;transition:.15s;position:relative;overflow:hidden}
 .vbtn::after{content:"";position:absolute;inset:0;background:var(--cyn);transform:translateY(101%);transition:transform .25s;z-index:-1}
 .vbtn:hover{color:var(--ink);border-color:var(--cyn)}
 .vbtn.on{color:#06121b;border-color:var(--cyn)}.vbtn.on::after{transform:translateY(0)}
-
-/* солнце */
-.sld{margin:4px 0 9px}
+.sld{margin:4px 0 2px}
 .sld .row{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut2);margin-bottom:5px}
 .sld .row b{color:var(--cu)}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--line2);outline:none}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--cu);border:2px solid var(--bg1);cursor:pointer;transform:rotate(45deg)}
 input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--cu);border:2px solid var(--bg1);cursor:pointer;border-radius:0}
-
-/* тумблеры */
-.tog{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px dashed var(--line);cursor:pointer;user-select:none;color:var(--mut);font-size:10px;transition:.14s}
-.tog:hover{color:var(--ink)}.tog .lab{display:flex;align-items:center;gap:8px}
+.tog{display:flex;align-items:center;gap:7px;padding:4px 0;cursor:pointer;user-select:none;color:var(--mut);font-size:10px;transition:.14s}
+.tog:hover{color:var(--ink)}.tog .lab{display:flex;align-items:center;gap:7px}
 .tog .sw{width:12px;height:12px;border:1px solid var(--mut2);position:relative;flex:0 0 auto;transition:.14s}
 .tog.on .sw{background:var(--cu);border-color:var(--cu)}.tog.on .sw::after{content:"";position:absolute;inset:2px;background:var(--bg1)}
 .tog.cy.on .sw{background:var(--cyn);border-color:var(--cyn)}
 
-/* таблица этажей */
+/* ===== RIGHT PANEL (этажи) ===== */
+.right{position:absolute;top:14px;right:14px;width:236px;max-height:calc(100% - 76px);z-index:6;
+  background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--line2);font-family:var(--mono);
+  display:flex;flex-direction:column}
+.right h3{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cu);padding:9px 12px 7px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
+.right h3 span{color:var(--mut2)}.right .bd{padding:10px 12px;overflow:auto}
+
+/* ===== LEGEND (в cb-right) ===== */
+.leg-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px dashed var(--line);cursor:pointer;user-select:none;color:var(--mut);font-size:10px;transition:.14s}
+.leg-item:first-child{border-top:0}
+.leg-item:hover{color:var(--ink)}
+.leg-item .lab{display:flex;align-items:center;gap:8px}
+.leg-item .sw{width:12px;height:12px;border:1px solid var(--mut2);position:relative;flex:0 0 auto;transition:.14s}
+.leg-item.on .sw{background:var(--cu);border-color:var(--cu)}.leg-item.on .sw::after{content:"";position:absolute;inset:2px;background:var(--bg1)}
+
+/* ===== TABLE ===== */
 .led{width:100%;border-collapse:collapse;font-size:10px}
 .led th{text-align:left;color:var(--mut2);font-weight:500;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 5px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:var(--panel2)}
 .led td{padding:3px 5px;border-bottom:1px dashed var(--line);color:var(--mut);vertical-align:middle}
@@ -98,21 +104,20 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--cu);
 .led .bar{height:6px;background:var(--line);position:relative;min-width:34px}
 .led .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--cu),var(--cu2))}
 .led tr.roof td{color:var(--cu);border-top:1px solid var(--line2);font-weight:700}
-
-/* нижняя полоса: gizmo + readout + бегущая строка */
-.bottom-bar{position:relative;z-index:4;padding:0 clamp(14px,3vw,42px) 14px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:stretch}
-.gizmo-wrap{display:flex;gap:14px;align-items:center}
-#gizmo{width:96px;height:96px;border:1px solid var(--line2);background:rgba(10,14,21,.6);backdrop-filter:blur(4px)}
-.readout{font-family:var(--mono);font-size:9.5px;color:var(--mut);background:var(--panel);border:1px solid var(--line2);padding:7px 11px;line-height:1.7;backdrop-filter:blur(6px);white-space:nowrap}
+#gizmo{position:absolute;bottom:14px;right:14px;width:96px;height:96px;z-index:6;border:1px solid var(--line2);background:rgba(10,14,21,.6);backdrop-filter:blur(4px)}
+.readout{position:absolute;bottom:14px;left:14px;z-index:6;font-family:var(--mono);font-size:9.5px;color:var(--mut);background:var(--panel);border:1px solid var(--line2);padding:7px 11px;line-height:1.7;backdrop-filter:blur(6px)}
 .readout b{color:var(--cyn)}
-.cmd{display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--panel);border:1px solid var(--line2);backdrop-filter:blur(6px);overflow:hidden;min-height:34px}
+.cmd{position:absolute;left:14px;right:14px;bottom:14px;height:34px;z-index:6;display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--panel);border:1px solid var(--line2);backdrop-filter:blur(6px);overflow:hidden}
 .cmd .pr{color:var(--cyn);font-size:10px;flex:0 0 auto}
 .cmd .stream{display:flex;gap:18px;white-space:nowrap;will-change:transform;animation:marq 64s linear infinite;font-family:var(--mono);font-size:9.5px;color:var(--mut)}
 .cmd:hover .stream{animation-play-state:paused}
 @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .cmd .stream b{color:var(--ink)}.cmd .stream .c{color:var(--cyn)}.cmd .stream .o{color:var(--cu)}
-
-/* ===== SPEC ===== */
+#load{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg1);color:var(--mut);font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;transition:opacity .6s;text-align:center;padding:20px}
+#load.hide{opacity:0;pointer-events:none}
+#load .bar{width:180px;height:2px;background:var(--line2);margin:14px auto 0;overflow:hidden}
+#load .bar i{display:block;height:100%;width:40%;background:var(--cyn);animation:ld 1.1s ease-in-out infinite}
+@keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 .spec{position:relative;z-index:2;padding:clamp(40px,7vw,80px) clamp(14px,3.4vw,46px) 50px;border-top:1px solid var(--line2)}
 .sh{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:26px}
 .sh .ix{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--cyn);text-transform:uppercase;margin-bottom:8px}
@@ -133,15 +138,15 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--cu);
 .swatch{display:inline-block;width:13px;height:13px;border:1px solid var(--line2);vertical-align:-2px;margin-right:8px}
 footer{position:relative;z-index:2;padding:24px clamp(14px,3.4vw,46px);border-top:1px solid var(--line2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--mut2);text-transform:uppercase}
 footer b{color:var(--mut)}
-.ctrl-panel.right .bd::-webkit-scrollbar{width:6px}
-
+.right .bd::-webkit-scrollbar{width:6px}
 @media(max-width:980px){
-  .stage{height:calc(100vh - 340px);min-height:320px}
-  .controls{grid-template-columns:1fr}
-  .ctrl-panel.right .bd{max-height:200px}
-  .bottom-bar{grid-template-columns:1fr}
-  .gizmo-wrap{justify-content:flex-start}
+  .controls-bar{flex-direction:column;gap:10px;padding:10px 12px}
+  .cb-left{border-right:0;padding-right:0;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .cb-right{flex:0 0 auto;padding-left:0;padding-top:4px}
+  .right{display:none}
+  #gizmo{width:74px;height:74px}
   .card,.card.thin{grid-column:span 12}
+  .cb-views{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
@@ -155,7 +160,7 @@ footer b{color:var(--mut)}
   </div>
   <div class="meta">
     <span class="k">Заказчик</span><b>ООО «ДС СТРОЙ»</b>
-    <span class="k">Проектир.</span><b>ООО «СП КУБ»</b>
+    <span class="k">Исполнил</span><b>ДС Кривоносов В.В.</b>
     <span class="k">Оси X</span><b>П/1—П/29 · 233 400</b>
     <span class="k">Оси Y</span><b>П/А—П/Д · 33 200</b>
     <span class="k">Кровля</span><b>К1 +76,950 / К2 +76,400</b>
@@ -170,49 +175,52 @@ footer b{color:var(--mut)}
   <i class="cor tl"></i><i class="cor tr"></i><i class="cor bl"></i><i class="cor br"></i>
   <span class="tagv t" id="viewtag">вид · изометрия</span>
   <span class="tagv b">перспектива · ЛКМ — вращать · колесо — зум · ПКМ откл.</span>
-  <div id="load">Построение корпусов по РД<div class="bar"><i></i></div></div>
-</section>
 
-<section class="controls">
-  <div class="ctrl-panel left">
-    <h3>Камера · виды <span>8</span></h3>
-    <div class="bd">
-      <div class="views">
-        <button class="vbtn on" data-v="iso">ИЗО</button>
-        <button class="vbtn" data-v="front">ФАСАД</button>
-        <button class="vbtn" data-v="plan">ПЛАН</button>
-        <button class="vbtn" data-v="sideR">БОК ▸</button>
-        <button class="vbtn" data-v="sideL">БОК </button>
-        <button class="vbtn" data-v="k1">КОРП.1</button>
-        <button class="vbtn" data-v="k2">КОРП.2</button>
-        <button class="vbtn" data-v="reset">СБРОС</button>
-      </div>
-      <div class="sld"><div class="row"><span>Солнце</span><b id="sunlab">17:30</b></div>
-        <input type="range" id="sun" min="6" max="20" step="0.25" value="17.5"></div>
-      <div class="tog cy on" id="tLbl"><span class="lab"><span class="sw"></span>Подписи в 3D</span></div>
-      <div class="tog on" id="tFloor"><span class="lab"><span class="sw"></span>Метки этажей</span></div>
-      <div class="tog on" id="tRot"><span class="lab"><span class="sw"></span>Авто‑поворот</span></div>
-      <div class="tog on" id="tLock"><span class="lab"><span class="sw"></span>Фикс. наклон (орбита)</span></div>
-    </div>
-    <h3>Слои модели <span>click</span></h3>
-    <div class="bd" id="leg"></div>
-  </div>
-
-  <div class="ctrl-panel right">
+  <aside class="right">
     <h3>Этажи · разрез 1‑1 <span>hover</span></h3>
     <div class="bd"><table class="led" id="led">
       <thead><tr><th>Эт</th><th>Отметка</th><th>h, м</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
-  </div>
+  </aside>
+
+  <canvas id="gizmo"></canvas>
+  <div class="readout">AZ <b id="az">—</b>° &nbsp; EL <b id="el">—</b>° &nbsp; D <b id="zm">—</b><br>mesh <b id="nm">—</b> · line <b id="nl">—</b></div>
+  <div class="cmd"><span class="pr">ОСИ&gt;</span><span class="stream" id="stream"></span></div>
+  <div id="load">Построение корпусов по РД<div class="bar"><i></i></div></div>
 </section>
 
-<div class="bottom-bar">
-  <div class="gizmo-wrap">
-    <canvas id="gizmo"></canvas>
-    <div class="readout">AZ <b id="az">—</b>° &nbsp; EL <b id="el">—</b>° &nbsp; D <b id="zm">—</b><br>mesh <b id="nm">—</b> · line <b id="nl">—</b></div>
+<!-- ===== CONTROLS BAR (под видовым окном) ===== -->
+<div class="controls-bar">
+  <div class="cb-left">
+    <h4>Камера · виды <span>8</span></h4>
+    <div class="cb-views">
+      <div class="views">
+        <button class="vbtn on" data-v="iso">ИЗО</button>
+        <button class="vbtn" data-v="front">ФАСАД</button>
+        <button class="vbtn" data-v="plan">ПЛАН</button>
+        <button class="vbtn" data-v="sideR">БОК ▸</button>
+        <button class="vbtn" data-v="sideL">БОК ◂</button>
+        <button class="vbtn" data-v="k1">КОРП.1</button>
+        <button class="vbtn" data-v="k2">КОРП.2</button>
+        <button class="vbtn" data-v="reset">СБРОС</button>
+      </div>
+    </div>
+    <div class="cb-sun">
+      <div class="sld"><div class="row"><span>Солнце</span><b id="sunlab">17:30</b></div>
+        <input type="range" id="sun" min="6" max="20" step="0.25" value="17.5"></div>
+    </div>
+    <div class="cb-toggles">
+      <div class="tog cy" id="tLbl"><span class="lab"><span class="sw"></span>Подписи в 3D</span></div>
+      <div class="tog on" id="tFloor"><span class="lab"><span class="sw"></span>Метки этажей</span></div>
+      <div class="tog on" id="tRot"><span class="lab"><span class="sw"></span>Авто‑поворот</span></div>
+      <div class="tog on" id="tLock"><span class="lab"><span class="sw"></span>Фикс. наклон</span></div>
+    </div>
   </div>
-  <div class="cmd"><span class="pr">ОСИ&gt;</span><span class="stream" id="stream"></span></div>
+  <div class="cb-right">
+    <h4>Слои модели <span>click</span></h4>
+    <div id="leg"></div>
+  </div>
 </div>
 
 <section class="spec">
@@ -272,8 +280,8 @@ footer b{color:var(--mut)}
 </section>
 
 <footer>
-  <span>© рендер‑демо по РД 13‑23 · СП КУБ · ГИП Бойко Д.А.</span>
-  <span>БОК ▸ / БОК ◂ — вид сбоку на фасады с торцов П/29 и П/1</span>
+  <span>© рендер‑демо по РД 13‑23 · ДС Кривоносов В.В.</span>
+  <span>БОК ▸ / БОК  — вид сбоку на фасады с торцов П/29 и П/1</span>
   <span>three.js r128 · CSS2DRenderer · WebGL</span>
 </footer>
 
@@ -309,7 +317,6 @@ var K1={
   ]
 };
 
-/* ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ВОЛНЫ С ИЗЛОМОМ ===== */
 function waveC(x){
   var Ymid=(AY[1]+AY[3])/2;
   if(x<=K2_SEC2.x1){
@@ -430,7 +437,7 @@ function beltK1(z){
   var lbl=label('СТИЛОБАТ · +8,350','cy');lbl.position.set(CX,GP+4,YMIN-6);scene.add(lbl);
 })();
 
-/* КОРПУС 2 С ИЗЛОМОМ НА П/11 */
+/* КОРПУС 2 */
 (function(){
   var N=60,z0=ZBASE,z1=ROOF2;
   var xs=[],up=[],lo=[];
@@ -455,7 +462,7 @@ function beltK1(z){
   var lbl=label('КОРПУС 2 · +76,400','lg');lbl.position.set((K2_SEC2.x0+K2_SEC1.x1)/2,ROOF2+5,CY);scene.add(lbl);
 })();
 
-/* КОРПУС 1 С ВЫСТУПАМИ */
+/* КОРПУС 1 */
 (function(){
   var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1,z0=ZBASE,z1=ROOF1,cx=(x0+x1)/2,cy=(y0+y1)/2;
   box(G.k1,x1-x0,z1-z0,y1-y0,matWall1,cx,(z0+z1)/2,cy);
@@ -496,7 +503,7 @@ var VIEWS={
   front:{p:[CX,46,CY-300],t:[CX,46,CY],tag:'фасад (анфас)'},
   plan:{p:[CX,320,CY+1],t:[CX,0,CY],tag:'план'},
   sideR:{p:[CX+255,150,70],t:[CX-45,30,CY],tag:'бок  · торец П/29'},
-  sideL:{p:[CX-255,150,70],t:[CX+45,30,CY],tag:'бок ◂ · торец П/1'},
+  sideL:{p:[CX-255,150,70],t:[CX+45,30,CY],tag:'бок  · торец П/1'},
   k1:{p:[(K1.x0+K1.x1)/2-90,90,(AY[1]+AY[3])/2-120],t:[(K1.x0+K1.x1)/2,45,(AY[1]+AY[3])/2],tag:'Корпус 1'},
   k2:{p:[(K2_SEC2.x0+K2_SEC1.x1)/2,120,YMIN-220],t:[(K2_SEC2.x0+K2_SEC1.x1)/2,45,waveC((K2_SEC2.x0+K2_SEC1.x1)/2)],tag:'Корпус 2'},
   reset:{p:[CX+150,150,CY+170],t:[CX,40,CY],tag:'изометрия'}
@@ -529,7 +536,7 @@ sunEl.addEventListener('input',function(){applySun(+sunEl.value);});applySun(17.
 /* ЛЕГЕНДА */
 var LAYERS=[['k2','Корпус 2 (волна с изломом)',G.k2,true],['k1','Корпус 1 (с выступами)',G.k1,true],['cores','Ядра жесткости',G.cores,true],['stil','Стилобат + ОГС + ВВ1',G.stil,true],['belt','Пояса этажей',G.belt,true],['axes','Оси П/ (3D)',G.axes,false],['landscape','Ландшафт',G.landscape,true],['parking','Паркинг',G.parking,true]];
 var leg=document.getElementById('leg');
-LAYERS.forEach(function(L){var el=document.createElement('div');el.className='tog'+(L[3]?' on':'');
+LAYERS.forEach(function(L){var el=document.createElement('div');el.className='leg-item'+(L[3]?' on':'');
   el.innerHTML='<span class="lab"><span class="sw"></span>'+L[1]+'</span>';
   el.addEventListener('click',function(){el.classList.toggle('on');L[2].visible=el.classList.contains('on');});leg.appendChild(el);});
 
@@ -574,7 +581,10 @@ function loop(){requestAnimationFrame(loop);
   controls.update();renderer.render(scene,camera);labelRenderer.render(scene,camera);drawGizmo();readout();}
 
 /* BOOT */
-resize();camera.position.set(VIEWS.iso.p[0],VIEWS.iso.p[1],VIEWS.iso.p[2]);controls.target.set(VIEWS.iso.t[0],VIEWS.iso.t[1],VIEWS.iso.t[2]);controls.update();loop();
+resize();camera.position.set(VIEWS.iso.p[0],VIEWS.iso.p[1],VIEWS.iso.p[2]);controls.target.set(VIEWS.iso.t[0],VIEWS.iso.t[1],VIEWS.iso.t[2]);controls.update();
+/* Подписи в 3D по умолчанию выключены */
+labelObjs.forEach(function(o){o.visible=false;});
+loop();
 setTimeout(function(){document.getElementById('load').classList.add('hide');},500);
 
 /* SCROLL REVEAL */

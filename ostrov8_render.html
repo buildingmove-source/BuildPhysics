@@ -41,8 +41,8 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .meta{font-family:var(--mono);font-size:10px;line-height:1.6;color:var(--mut);display:grid;grid-template-columns:auto auto;gap:1px 16px;align-content:end}
 .meta .k{color:var(--mut2);text-transform:uppercase;letter-spacing:.1em}.meta b{color:var(--ink);font-weight:600;text-align:right}
 
-/* ===== STAGE (видовое окно) ===== */
-.stage{position:relative;z-index:2;height:calc(100vh - 480px);min-height:420px;width:100%;border-bottom:1px solid var(--line2)}
+/* ===== STAGE (только видовое окно) ===== */
+.stage{position:relative;z-index:2;width:100%;height:calc(100vh - 420px);min-height:420px}
 #c{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}#c:active{cursor:grabbing}
 #labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .lbl{font-family:var(--mono);font-weight:600;white-space:nowrap;background:rgba(10,14,21,.82);border:1px solid var(--cu);padding:2px 7px;letter-spacing:.04em;box-shadow:0 2px 10px rgba(0,0,0,.5);backdrop-filter:blur(3px)}
@@ -53,22 +53,29 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .cor.bl{bottom:10px;left:10px;border-right:0;border-top:0}.cor.br{bottom:10px;right:10px;border-left:0;border-top:0}
 .tagv{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut2);z-index:5;pointer-events:none}
 .tagv.t{top:16px;left:36px}.tagv.b{bottom:16px;left:36px;color:var(--grn)}
+#load{position:absolute;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg1);color:var(--mut);font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;transition:opacity .6s;text-align:center;padding:20px}
+#load.hide{opacity:0;pointer-events:none}
+#load .bar{width:180px;height:2px;background:var(--line2);margin:14px auto 0;overflow:hidden}
+#load .bar i{display:block;height:100%;width:40%;background:var(--cyn);animation:ld 1.1s ease-in-out infinite}
+@keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
 
-/* ===== CONTROLS BAR (под видовым окном) ===== */
-.controls{position:relative;z-index:3;background:var(--panel2);border-bottom:1px solid var(--line2);padding:14px clamp(14px,3vw,42px)}
-.controls-grid{display:grid;grid-template-columns:280px 220px 1fr 200px;gap:18px;align-items:start}
-.controls-section h3{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cu);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
-.controls-section h3 span{color:var(--mut2)}
+/* ===== CONTROLS (под видовым окном) ===== */
+.controls{position:relative;z-index:4;padding:14px clamp(14px,3vw,42px) 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ctrl-panel{background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--line2);font-family:var(--mono)}
+.ctrl-panel h3{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cu);padding:9px 12px 7px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
+.ctrl-panel h3 span{color:var(--mut2)}
+.ctrl-panel .bd{padding:10px 12px}
+.ctrl-panel.right .bd{max-height:260px;overflow:auto}
 
 /* виды */
-.views{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:10px}
-.vbtn{font:600 9px var(--mono);letter-spacing:.03em;text-transform:uppercase;padding:7px 2px;border:1px solid var(--line2);background:transparent;color:var(--mut);cursor:pointer;transition:.15s;position:relative;overflow:hidden}
+.views{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;margin-bottom:10px}
+.vbtn{font:600 9px var(--mono);letter-spacing:.03em;text-transform:uppercase;padding:8px 2px;border:1px solid var(--line2);background:transparent;color:var(--mut);cursor:pointer;transition:.15s;position:relative;overflow:hidden}
 .vbtn::after{content:"";position:absolute;inset:0;background:var(--cyn);transform:translateY(101%);transition:transform .25s;z-index:-1}
 .vbtn:hover{color:var(--ink);border-color:var(--cyn)}
 .vbtn.on{color:#06121b;border-color:var(--cyn)}.vbtn.on::after{transform:translateY(0)}
 
 /* солнце */
-.sld{margin:8px 0}
+.sld{margin:4px 0 9px}
 .sld .row{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut2);margin-bottom:5px}
 .sld .row b{color:var(--cu)}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--line2);outline:none}
@@ -76,40 +83,37 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--cu);border:2px solid var(--bg1);cursor:pointer;border-radius:0}
 
 /* тумблеры */
-.tog{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px dashed var(--line);cursor:pointer;user-select:none;color:var(--mut);font-size:10px;transition:.14s}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px dashed var(--line);cursor:pointer;user-select:none;color:var(--mut);font-size:10px;transition:.14s}
 .tog:hover{color:var(--ink)}.tog .lab{display:flex;align-items:center;gap:8px}
 .tog .sw{width:12px;height:12px;border:1px solid var(--mut2);position:relative;flex:0 0 auto;transition:.14s}
 .tog.on .sw{background:var(--cu);border-color:var(--cu)}.tog.on .sw::after{content:"";position:absolute;inset:2px;background:var(--bg1)}
 .tog.cy.on .sw{background:var(--cyn);border-color:var(--cyn)}
 
-/* слои */
-.layers-list{display:flex;flex-direction:column;gap:0}
-.layers-list .ly{display:flex;align-items:center;gap:9px;font-size:10px;padding:5px 2px;color:var(--mut);cursor:pointer;border-top:1px dashed var(--line);transition:.14s;user-select:none}
-.layers-list .ly:first-child{border-top:0}
-.layers-list .ly:hover{color:var(--ink)}
-.layers-list .ly .sw{width:12px;height:12px;flex:0 0 auto;position:relative;border:1px solid var(--mut2)}
-.layers-list .ly .sw::after{content:"";position:absolute;inset:2px;background:var(--bg1)}
-.layers-list .ly.on .sw{border-color:var(--cu)}.layers-list .ly.on .sw::after{background:var(--cu)}
-.layers-list .ly .hx{margin-left:auto;color:var(--mut2);font-size:9px}
-
 /* таблица этажей */
-.led{width:100%;border-collapse:collapse;font-size:9.5px}
-.led th{text-align:left;color:var(--mut2);font-weight:500;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 4px;border-bottom:1px solid var(--line2)}
-.led td{padding:3px 4px;border-bottom:1px dashed var(--line);color:var(--mut);vertical-align:middle}
+.led{width:100%;border-collapse:collapse;font-size:10px}
+.led th{text-align:left;color:var(--mut2);font-weight:500;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 5px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:var(--panel2)}
+.led td{padding:3px 5px;border-bottom:1px dashed var(--line);color:var(--mut);vertical-align:middle}
 .led tr{cursor:pointer;transition:.12s}.led tr:hover td,.led tr.on td{color:var(--ink);background:rgba(224,138,60,.10)}
 .led .et{color:var(--ink);font-weight:600}.led .mk{color:var(--cyn)}
-.led .bar{height:5px;background:var(--line);position:relative;min-width:28px}
+.led .bar{height:6px;background:var(--line);position:relative;min-width:34px}
 .led .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--cu),var(--cu2))}
 .led tr.roof td{color:var(--cu);border-top:1px solid var(--line2);font-weight:700}
 
-/* gizmo + readout */
-.gizmo-readout{display:flex;flex-direction:column;gap:10px}
-#gizmo{width:100%;height:96px;border:1px solid var(--line2);background:rgba(10,14,21,.6);backdrop-filter:blur(4px)}
-.readout{font-family:var(--mono);font-size:9px;color:var(--mut);line-height:1.6}
+/* нижняя полоса: gizmo + readout + бегущая строка */
+.bottom-bar{position:relative;z-index:4;padding:0 clamp(14px,3vw,42px) 14px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:stretch}
+.gizmo-wrap{display:flex;gap:14px;align-items:center}
+#gizmo{width:96px;height:96px;border:1px solid var(--line2);background:rgba(10,14,21,.6);backdrop-filter:blur(4px)}
+.readout{font-family:var(--mono);font-size:9.5px;color:var(--mut);background:var(--panel);border:1px solid var(--line2);padding:7px 11px;line-height:1.7;backdrop-filter:blur(6px);white-space:nowrap}
 .readout b{color:var(--cyn)}
+.cmd{display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--panel);border:1px solid var(--line2);backdrop-filter:blur(6px);overflow:hidden;min-height:34px}
+.cmd .pr{color:var(--cyn);font-size:10px;flex:0 0 auto}
+.cmd .stream{display:flex;gap:18px;white-space:nowrap;will-change:transform;animation:marq 64s linear infinite;font-family:var(--mono);font-size:9.5px;color:var(--mut)}
+.cmd:hover .stream{animation-play-state:paused}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.cmd .stream b{color:var(--ink)}.cmd .stream .c{color:var(--cyn)}.cmd .stream .o{color:var(--cu)}
 
 /* ===== SPEC ===== */
-.spec{position:relative;z-index:2;padding:clamp(40px,7vw,80px) clamp(14px,3.4vw,46px) 50px;border-bottom:1px solid var(--line2)}
+.spec{position:relative;z-index:2;padding:clamp(40px,7vw,80px) clamp(14px,3.4vw,46px) 50px;border-top:1px solid var(--line2)}
 .sh{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px;margin-bottom:26px}
 .sh .ix{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--cyn);text-transform:uppercase;margin-bottom:8px}
 .sh h2{font-family:var(--disp);font-weight:700;text-transform:uppercase;font-size:clamp(1.4rem,4.4vw,2.6rem);letter-spacing:-.01em;line-height:.92}
@@ -127,24 +131,16 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--cu);
 .stack .ly2:hover{color:var(--ink);background:rgba(39,211,211,.05)}
 .stack .ly2 b{color:var(--ink);font-weight:500}.stack .ly2 .mm{color:var(--cyn)}
 .swatch{display:inline-block;width:13px;height:13px;border:1px solid var(--line2);vertical-align:-2px;margin-right:8px}
-
-/* loader */
-#load{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg1);color:var(--mut);font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;transition:opacity .6s;text-align:center;padding:20px}
-#load.hide{opacity:0;pointer-events:none}
-#load .bar{width:180px;height:2px;background:var(--line2);margin:14px auto 0;overflow:hidden}
-#load .bar i{display:block;height:100%;width:40%;background:var(--cyn);animation:ld 1.1s ease-in-out infinite}
-@keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
-
-footer{position:relative;z-index:2;padding:24px clamp(14px,3.4vw,46px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--mut2);text-transform:uppercase}
+footer{position:relative;z-index:2;padding:24px clamp(14px,3.4vw,46px);border-top:1px solid var(--line2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--mut2);text-transform:uppercase}
 footer b{color:var(--mut)}
+.ctrl-panel.right .bd::-webkit-scrollbar{width:6px}
 
-@media(max-width:1100px){
-  .controls-grid{grid-template-columns:1fr 1fr;gap:14px}
-  .stage{height:calc(100vh - 620px)}
-}
-@media(max-width:720px){
-  .controls-grid{grid-template-columns:1fr}
-  .stage{height:calc(100vh - 780px);min-height:320px}
+@media(max-width:980px){
+  .stage{height:calc(100vh - 340px);min-height:320px}
+  .controls{grid-template-columns:1fr}
+  .ctrl-panel.right .bd{max-height:200px}
+  .bottom-bar{grid-template-columns:1fr}
+  .gizmo-wrap{justify-content:flex-start}
   .card,.card.thin{grid-column:span 12}
 }
 </style>
@@ -178,16 +174,15 @@ footer b{color:var(--mut)}
 </section>
 
 <section class="controls">
-  <div class="controls-grid">
-    <!-- КОЛОНКА 1: виды + солнце + тумблеры -->
-    <div class="controls-section">
-      <h3>Камера · виды <span>8</span></h3>
+  <div class="ctrl-panel left">
+    <h3>Камера · виды <span>8</span></h3>
+    <div class="bd">
       <div class="views">
         <button class="vbtn on" data-v="iso">ИЗО</button>
         <button class="vbtn" data-v="front">ФАСАД</button>
         <button class="vbtn" data-v="plan">ПЛАН</button>
         <button class="vbtn" data-v="sideR">БОК ▸</button>
-        <button class="vbtn" data-v="sideL">БОК ◂</button>
+        <button class="vbtn" data-v="sideL">БОК </button>
         <button class="vbtn" data-v="k1">КОРП.1</button>
         <button class="vbtn" data-v="k2">КОРП.2</button>
         <button class="vbtn" data-v="reset">СБРОС</button>
@@ -199,34 +194,30 @@ footer b{color:var(--mut)}
       <div class="tog on" id="tRot"><span class="lab"><span class="sw"></span>Авто‑поворот</span></div>
       <div class="tog on" id="tLock"><span class="lab"><span class="sw"></span>Фикс. наклон (орбита)</span></div>
     </div>
+    <h3>Слои модели <span>click</span></h3>
+    <div class="bd" id="leg"></div>
+  </div>
 
-    <!-- КОЛОНКА 2: слои -->
-    <div class="controls-section">
-      <h3>Слои модели <span>click</span></h3>
-      <div class="layers-list" id="leg"></div>
-    </div>
-
-    <!-- КОЛОНКА 3: таблица этажей -->
-    <div class="controls-section">
-      <h3>Этажи · разрез 1‑1 <span>hover</span></h3>
-      <table class="led" id="led">
-        <thead><tr><th>Эт</th><th>Отметка</th><th>h, м</th><th></th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
-    <!-- КОЛОНКА 4: gizmo + readout -->
-    <div class="controls-section gizmo-readout">
-      <h3>Ориентация</h3>
-      <canvas id="gizmo"></canvas>
-      <div class="readout">AZ <b id="az">—</b>° &nbsp; EL <b id="el">—</b>° &nbsp; D <b id="zm">—</b><br>mesh <b id="nm">—</b> · line <b id="nl">—</b></div>
-    </div>
+  <div class="ctrl-panel right">
+    <h3>Этажи · разрез 1‑1 <span>hover</span></h3>
+    <div class="bd"><table class="led" id="led">
+      <thead><tr><th>Эт</th><th>Отметка</th><th>h, м</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
   </div>
 </section>
 
+<div class="bottom-bar">
+  <div class="gizmo-wrap">
+    <canvas id="gizmo"></canvas>
+    <div class="readout">AZ <b id="az">—</b>° &nbsp; EL <b id="el">—</b>° &nbsp; D <b id="zm">—</b><br>mesh <b id="nm">—</b> · line <b id="nl">—</b></div>
+  </div>
+  <div class="cmd"><span class="pr">ОСИ&gt;</span><span class="stream" id="stream"></span></div>
+</div>
+
 <section class="spec">
   <div class="sh"><div><div class="ix">спецификация по РД</div><h2>Фасад <em>KRAUSS</em> · кровля · оси · ландшафт</h2></div>
-    <p>Цвета и марки из КМ1.1/КМ2.1, пирог кровли стилобата из АР3‑СТИ, координатная сетка из АР1‑СТИ/КЖ1, геопластика из АР3‑СТИ. Наведение на строку этажа в панели управления подсвечивает пояс в 3D.</p></div>
+    <p>Цвета и марки из КМ1.1/КМ2.1, пирог кровли стилобата из АР3‑СТИ, координатная сетка из АР1‑СТИ/КЖ1, геопластика из АР3‑СТИ. Наведение на строку этажа справа подсвечивает пояс в 3D.</p></div>
   <div class="grid">
     <div class="card" data-n="01"><div class="ct">Цветовые решения фасадов</div><h4>Композит · перфорация</h4>
       <div class="stack">
@@ -305,16 +296,28 @@ var FLOORS=[
  {n:'17',z:61.2},{n:'18',z:64.5},{n:'19',z:67.8},{n:'20',z:71.4}];
 var ROOF1=76.95, ROOF2=76.4, STIL=7.04, GP=8.35, ZBASE=11.95;
 
+/* ===== РЕАЛЬНАЯ ГЕОМЕТРИЯ КОРПУСОВ ===== */
 var K2_SEC2={x0:AX[0],x1:AX[10],amp:5.5};
 var K2_SEC1={x0:AX[10],x1:AX[19],amp:3.8};
 var K2_DEPTH=15;
-var K1={x0:AX[20]+2,x1:AX[28]-2,y0:AY[1]+2,y1:AY[3]-2,
-  notches:[{x0:AX[21],x1:AX[22],y0:AY[1],y1:AY[1]+3},{x0:AX[26],x1:AX[27],y0:AY[3]-3,y1:AY[3]}]};
+var K1={
+  x0:AX[20]+2, x1:AX[28]-2,
+  y0:AY[1]+2, y1:AY[3]-2,
+  notches:[
+    {x0:AX[21],x1:AX[22],y0:AY[1],y1:AY[1]+3},
+    {x0:AX[26],x1:AX[27],y0:AY[3]-3,y1:AY[3]}
+  ]
+};
 
+/* ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ВОЛНЫ С ИЗЛОМОМ ===== */
 function waveC(x){
   var Ymid=(AY[1]+AY[3])/2;
-  if(x<=K2_SEC2.x1){return Ymid+K2_SEC2.amp*Math.sin((x-K2_SEC2.x0)/(K2_SEC2.x1-K2_SEC2.x0)*Math.PI*2);}
-  else{var phase=Math.PI;return Ymid+K2_SEC1.amp*Math.sin((x-K2_SEC1.x0)/(K2_SEC1.x1-K2_SEC1.x0)*Math.PI*2+phase);}
+  if(x<=K2_SEC2.x1){
+    return Ymid+K2_SEC2.amp*Math.sin((x-K2_SEC2.x0)/(K2_SEC2.x1-K2_SEC2.x0)*Math.PI*2);
+  }else{
+    var phase=Math.PI;
+    return Ymid+K2_SEC1.amp*Math.sin((x-K2_SEC1.x0)/(K2_SEC1.x1-K2_SEC1.x0)*Math.PI*2+phase);
+  }
 }
 function k2Up(x){return waveC(x)+K2_DEPTH/2;}
 function k2Lo(x){return waveC(x)-K2_DEPTH/2;}
@@ -336,6 +339,7 @@ controls.enableDamping=true; controls.dampingFactor=0.07; controls.enablePan=fal
 controls.minDistance=60; controls.maxDistance=900; controls.maxPolarAngle=Math.PI/2-0.04;
 controls.autoRotate=true; controls.autoRotateSpeed=0.45;
 
+/* СВЕТ */
 scene.add(new THREE.HemisphereLight(0xffe6c0,0x10182a,0.62));
 scene.add(new THREE.AmbientLight(0x46506a,0.30));
 var sun=new THREE.DirectionalLight(0xffd49a,2.4);
@@ -345,41 +349,74 @@ sun.shadow.camera.near=1;sun.shadow.camera.far=1400;sun.shadow.bias=-0.0004;sun.
 scene.add(sun);scene.add(sun.target);
 var fill=new THREE.DirectionalLight(0x8fb6dd,0.4);fill.position.set(-300,160,-260);scene.add(fill);
 
+/* МАТЕРИАЛЫ */
 var M=function(c,o){o=o||{};return new THREE.MeshStandardMaterial({color:c,roughness:o.r==null?0.7:o.r,metalness:o.m==null?0.1:o.m,transparent:!!o.t,opacity:o.t==null?1:o.t,side:o.side||THREE.FrontSide,emissive:o.e||0x000000,emissiveIntensity:o.ei||0});};
-var matWall2=M(0x9aa0a8,{r:0.55,m:0.35}), matWall1=M(0xb9bdc2,{r:0.5,m:0.3}),
- matGlass=M(0x86b6d6,{r:0.06,m:0.6,t:0.32}), matCopper=M(0xc2743a,{r:0.34,m:0.78,e:0x3a1606,ei:0.18}),
- matPylon=M(0x2a2f36,{r:0.5,m:0.4}), matBelt=M(0xe7e4dd,{r:0.5}),
- matStil=M(0x8b929b,{r:0.85}), matRoof=M(0x6f7d63,{r:0.92}),
- matRail=M(0x9fd0e8,{r:0.05,m:0.3,t:0.3}), matPost=M(0xb9bdc4,{r:0.5,m:0.4}),
- matFunnel=M(0xe08a3c,{r:0.4,e:0xe08a3c,ei:0.5}), matPent=M(0xcfd4da,{r:0.55,m:0.2}),
- matGround=M(0x11161f,{r:1}), matHill=M(0x2d4a3e,{r:0.9}), matTree=M(0x3a5a3a,{r:0.9}),
- matTrunk=M(0x4a3728,{r:0.9}), matParking=M(0x1a2028,{r:0.95}), matCore=M(0x3a4048,{r:0.7,m:0.2});
+var matWall2=M(0x9aa0a8,{r:0.55,m:0.35});
+var matWall1=M(0xb9bdc2,{r:0.5,m:0.3});
+var matGlass=M(0x86b6d6,{r:0.06,m:0.6,t:0.32});
+var matCopper=M(0xc2743a,{r:0.34,m:0.78,e:0x3a1606,ei:0.18});
+var matPylon=M(0x2a2f36,{r:0.5,m:0.4});
+var matBelt=M(0xe7e4dd,{r:0.5});
+var matStil=M(0x8b929b,{r:0.85});
+var matRoof=M(0x6f7d63,{r:0.92});
+var matRail=M(0x9fd0e8,{r:0.05,m:0.3,t:0.3});
+var matPost=M(0xb9bdc4,{r:0.5,m:0.4});
+var matFunnel=M(0xe08a3c,{r:0.4,e:0xe08a3c,ei:0.5});
+var matPent=M(0xcfd4da,{r:0.55,m:0.2});
+var matGround=M(0x11161f,{r:1});
+var matHill=M(0x2d4a3e,{r:0.9});
+var matTree=M(0x3a5a3a,{r:0.9});
+var matTrunk=M(0x4a3728,{r:0.9});
+var matParking=M(0x1a2028,{r:0.95});
+var matCore=M(0x3a4048,{r:0.7,m:0.2});
 
+/* ГРУППЫ */
 var G={};['ground','stil','k1','k2','belt','axes','landscape','parking','cores'].forEach(function(n){G[n]=new THREE.Group();scene.add(G[n]);});
 var meshCount=0,lineCount=0;
 
+/* HELPERS */
 function addM(g,m){g.add(m);meshCount++;return m;}
 function box(g,w,h,d,m,x,y,z,sh){var o=new THREE.Mesh(new THREE.BoxGeometry(Math.max(w,.01),Math.max(h,.01),Math.max(d,.01)),m);o.position.set(x,y,z);if(sh!==false)o.castShadow=true;o.receiveShadow=true;return addM(g,o);}
 function wallSeg(g,x0,y0,x1,y1,z0,z1,m,th){th=th||0.4;var dx=x1-x0,dy=y1-y0,L=Math.hypot(dx,dy);if(L<1e-4)return;var o=new THREE.Mesh(new THREE.BoxGeometry(L,z1-z0,th),m);o.position.set((x0+x1)/2,(z0+z1)/2,(y0+y1)/2);o.rotation.y=-Math.atan2(dy,dx);o.castShadow=true;o.receiveShadow=true;return addM(g,o);}
 function linePts(g,arr,col,op){var g2=new THREE.BufferGeometry().setFromPoints(arr.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}));var o=new THREE.Line(g2,new THREE.LineBasicMaterial({color:col,transparent:op!=null,opacity:op==null?1:op}));lineCount++;g.add(o);return o;}
 function label(txt,cls){var d=document.createElement('div');d.className='lbl '+(cls||'');d.textContent=txt;return new THREE.CSS2DObject(d);}
 
-function beltK2(z){var N=60,arr=[];for(var i=0;i<=N;i++){var x=K2_SEC2.x0+(K2_SEC1.x1-K2_SEC2.x0)*i/N;arr.push([x,k2Up(x),z]);}for(var i=N;i>=0;i--){var x=K2_SEC2.x0+(K2_SEC1.x1-K2_SEC2.x0)*i/N;arr.push([x,k2Lo(x),z]);}arr.push(arr[0]);return linePts(G.belt,arr,0xe7e4dd,0.5);}
-function beltK1(z){var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1;return linePts(G.belt,[[x0,y0,z],[x1,y0,z],[x1,y1,z],[x0,y1,z],[x0,y0,z]],0xe7e4dd,0.5);}
+/* ФУНКЦИИ ПОЯСОВ */
+function beltK2(z){
+  var N=60,arr=[];
+  for(var i=0;i<=N;i++){var x=K2_SEC2.x0+(K2_SEC1.x1-K2_SEC2.x0)*i/N;arr.push([x,k2Up(x),z]);}
+  for(var i=N;i>=0;i--){var x=K2_SEC2.x0+(K2_SEC1.x1-K2_SEC2.x0)*i/N;arr.push([x,k2Lo(x),z]);}
+  arr.push(arr[0]);
+  return linePts(G.belt,arr,0xe7e4dd,0.5);
+}
+function beltK1(z){
+  var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1;
+  return linePts(G.belt,[[x0,y0,z],[x1,y0,z],[x1,y1,z],[x0,y1,z],[x0,y0,z]],0xe7e4dd,0.5);
+}
 
-/* ЗЕМЛЯ */
-(function(){var g=new THREE.Mesh(new THREE.PlaneGeometry(1400,900),matGround);g.rotation.x=-Math.PI/2;g.position.set(CX,-0.2,CY);g.receiveShadow=true;addM(G.ground,g);
+/* ЗЕМЛЯ + ГЕОПЛАСТИКА + ДЕРЕВЬЯ */
+(function(){
+  var g=new THREE.Mesh(new THREE.PlaneGeometry(1400,900),matGround);g.rotation.x=-Math.PI/2;g.position.set(CX,-0.2,CY);g.receiveShadow=true;addM(G.ground,g);
   var grid=new THREE.GridHelper(1400,70,0x1d2940,0x141b27);grid.position.set(CX,0,CY);grid.material.opacity=0.4;grid.material.transparent=true;G.ground.add(grid);lineCount++;
-  for(var i=0;i<15;i++){var hx=CX+(Math.random()-0.5)*600,hz=CY+(Math.random()-0.5)*300,hr=20+Math.random()*40,hh=2+Math.random()*6;var hill=new THREE.Mesh(new THREE.ConeGeometry(hr,hh,8),matHill);hill.position.set(hx,hh/2-0.1,hz);hill.receiveShadow=true;G.landscape.add(hill);meshCount++;}
-  for(var i=0;i<25;i++){var tx=CX+(Math.random()-0.5)*700,tz=CY+(Math.random()-0.5)*400;var trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.8,1,4,6),matTrunk);trunk.position.set(tx,2,tz);G.landscape.add(trunk);meshCount++;var crown=new THREE.Mesh(new THREE.SphereGeometry(4,8,8),matTree);crown.position.set(tx,6,tz);G.landscape.add(crown);meshCount++;}
+  for(var i=0;i<15;i++){var hx=CX+(Math.random()-0.5)*600,hz=CY+(Math.random()-0.5)*300,hr=20+Math.random()*40,hh=2+Math.random()*6;
+    var hill=new THREE.Mesh(new THREE.ConeGeometry(hr,hh,8),matHill);hill.position.set(hx,hh/2-0.1,hz);hill.receiveShadow=true;G.landscape.add(hill);meshCount++;}
+  for(var i=0;i<25;i++){var tx=CX+(Math.random()-0.5)*700,tz=CY+(Math.random()-0.5)*400;
+    var trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.8,1,4,6),matTrunk);trunk.position.set(tx,2,tz);G.landscape.add(trunk);meshCount++;
+    var crown=new THREE.Mesh(new THREE.SphereGeometry(4,8,8),matTree);crown.position.set(tx,6,tz);G.landscape.add(crown);meshCount++;}
 })();
 
 /* ПАРКИНГ */
-(function(){box(G.parking,XMIN-5,YMIN-5,-6,XMAX+5,YMAX+5,0,matParking);linePts(G.parking,[[XMIN-5,YMIN-5,0],[XMAX+5,YMIN-5,0],[XMAX+5,YMAX+5,0],[XMIN-5,YMAX+5,0],[XMIN-5,YMIN-5,0]],0x27d3d3,0.5);})();
+(function(){
+  box(G.parking,XMIN-5,YMIN-5,-6,XMAX+5,YMAX+5,0,matParking);
+  linePts(G.parking,[[XMIN-5,YMIN-5,0],[XMAX+5,YMIN-5,0],[XMAX+5,YMAX+5,0],[XMIN-5,YMAX+5,0],[XMIN-5,YMIN-5,0]],0x27d3d3,0.5);
+  var lbl=label('ПАРКИНГ · Части 1 и 2','sm');lbl.position.set(CX,1,CY);scene.add(lbl);
+})();
 
 /* СТИЛОБАТ */
-(function(){var x0=XMIN-2,x1=XMAX+2,y0=YMIN-2,y1=YMAX+2,cx=(x0+x1)/2,cy=(y0+y1)/2;
-  box(G.stil,x1-x0,STIL,y1-y0,matStil,cx,STIL/2,cy);box(G.stil,x1-x0+1,GP-STIL,y1-y0+1,matRoof,cx,(STIL+GP)/2,cy);
+(function(){
+  var x0=XMIN-2,x1=XMAX+2,y0=YMIN-2,y1=YMAX+2,cx=(x0+x1)/2,cy=(y0+y1)/2;
+  box(G.stil,x1-x0,STIL,y1-y0,matStil,cx,STIL/2,cy);
+  box(G.stil,x1-x0+1,GP-STIL,y1-y0+1,matRoof,cx,(STIL+GP)/2,cy);
   wallSeg(G.stil,x0,y0,x1,y0,0.9,5.2,matGlass,0.2);wallSeg(G.stil,x0,y1,x1,y1,0.9,5.2,matGlass,0.2);
   wallSeg(G.stil,x0,y0,x0,y1,0.9,5.2,matGlass,0.2);wallSeg(G.stil,x1,y0,x1,y1,0.9,5.2,matGlass,0.2);
   for(var x=x0+3;x<x1;x+=4){linePts(G.stil,[[x,y0-0.1,0.2],[x,y0-0.1,5.2]],0x3a4250);linePts(G.stil,[[x,y1+0.1,0.2],[x,y1+0.1,5.2]],0x3a4250);}
@@ -393,29 +430,48 @@ function beltK1(z){var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1;return linePts(G.belt
   var lbl=label('СТИЛОБАТ · +8,350','cy');lbl.position.set(CX,GP+4,YMIN-6);scene.add(lbl);
 })();
 
-/* КОРПУС 2 */
-(function(){var N=60,z0=ZBASE,z1=ROOF2;var xs=[],up=[],lo=[];
+/* КОРПУС 2 С ИЗЛОМОМ НА П/11 */
+(function(){
+  var N=60,z0=ZBASE,z1=ROOF2;
+  var xs=[],up=[],lo=[];
   for(var i=0;i<=N;i++){var x=K2_SEC2.x0+(K2_SEC1.x1-K2_SEC2.x0)*i/N;xs.push(x);up.push([x,k2Up(x)]);lo.push([x,k2Lo(x)]);}
-  for(var i=0;i<N;i++){wallSeg(G.k2,up[i][0],up[i][1],up[i+1][0],up[i+1][1],z0,z1,matWall2,0.5);wallSeg(G.k2,lo[i][0],lo[i][1],lo[i+1][0],lo[i+1][1],z0,z1,matWall2,0.5);
-    if(i%2===0){wallSeg(G.k2,up[i][0],up[i][1],up[i][0],up[i][1],z0,z1,matPylon,0.7);wallSeg(G.k2,lo[i][0],lo[i][1],lo[i][0],lo[i][1],z0,z1,matPylon,0.7);}}
+  for(var i=0;i<N;i++){
+    wallSeg(G.k2,up[i][0],up[i][1],up[i+1][0],up[i+1][1],z0,z1,matWall2,0.5);
+    wallSeg(G.k2,lo[i][0],lo[i][1],lo[i+1][0],lo[i+1][1],z0,z1,matWall2,0.5);
+    if(i%2===0){
+      wallSeg(G.k2,up[i][0],up[i][1],up[i][0],up[i][1],z0,z1,matPylon,0.7);
+      wallSeg(G.k2,lo[i][0],lo[i][1],lo[i][0],lo[i][1],z0,z1,matPylon,0.7);
+    }
+  }
   wallSeg(G.k2,K2_SEC2.x0,k2Up(K2_SEC2.x0),K2_SEC2.x0,k2Lo(K2_SEC2.x0),z0,z1,matWall2,0.5);
   wallSeg(G.k2,K2_SEC1.x1,k2Up(K2_SEC1.x1),K2_SEC1.x1,k2Lo(K2_SEC1.x1),z0,z1,matWall2,0.5);
   var r=[];for(var i=0;i<=N;i++)r.push([xs[i],k2Up(xs[i]),z1]);for(var i=N;i>=0;i--)r.push([xs[i],k2Lo(xs[i]),z1]);r.push(r[0]);
   var rg=new THREE.BufferGeometry().setFromPoints(r.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}));
   addM(G.k2,new THREE.Mesh(rg,new THREE.MeshStandardMaterial({color:0xaeb4ba,roughness:0.6,metalness:0.2,side:THREE.DoubleSide})));
-  var pentX=(K2_SEC2.x0+K2_SEC1.x1)/2;box(G.k2,(K2_SEC1.x1-K2_SEC2.x0)*0.5,3.2,9,matPent,pentX,ROOF2+1.6,waveC(pentX));
+  var pentX=(K2_SEC2.x0+K2_SEC1.x1)/2;
+  box(G.k2,(K2_SEC1.x1-K2_SEC2.x0)*0.5,3.2,9,matPent,pentX,ROOF2+1.6,waveC(pentX));
   FLOORS.forEach(function(f,idx){var z=f.z;var pl=beltK2(z);pl.userData.floor=z;
     if(idx%2===0){var midX=(K2_SEC2.x0+K2_SEC1.x1)/2,midY=waveC(midX);var lbl=label('Эт.'+f.n+' +'+z.toFixed(2),'md');lbl.position.set(midX,z,midY+2);scene.add(lbl);}});
   var lbl=label('КОРПУС 2 · +76,400','lg');lbl.position.set((K2_SEC2.x0+K2_SEC1.x1)/2,ROOF2+5,CY);scene.add(lbl);
 })();
 
-/* КОРПУС 1 */
-(function(){var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1,z0=ZBASE,z1=ROOF1,cx=(x0+x1)/2,cy=(y0+y1)/2;
+/* КОРПУС 1 С ВЫСТУПАМИ */
+(function(){
+  var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1,z0=ZBASE,z1=ROOF1,cx=(x0+x1)/2,cy=(y0+y1)/2;
   box(G.k1,x1-x0,z1-z0,y1-y0,matWall1,cx,(z0+z1)/2,cy);
-  K1.notches.forEach(function(n){box(G.k1,n.x1-n.x0,z1-z0,n.y1-n.y0,matWall1,(n.x0+n.x1)/2,(z0+z1)/2,(n.y0+n.y1)/2);});
-  wallSeg(G.k1,x0,y0,x0,y1,z0+3,z1-1,matGlass,0.15);wallSeg(G.k1,x1,y0,x1,y1,z0+3,z1-1,matGlass,0.15);
-  for(var x=x0+1.5;x<x1;x+=1.7){box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y0-0.3);box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y1+0.3);}
-  var coreX=[AX[22],AX[25]];coreX.forEach(function(cx2){box(G.cores,4,z1-z0,6,matCore,cx2,(z0+z1)/2,cy);});
+  K1.notches.forEach(function(n){
+    box(G.k1,n.x1-n.x0,z1-z0,n.y1-n.y0,matWall1,(n.x0+n.x1)/2,(z0+z1)/2,(n.y0+n.y1)/2);
+  });
+  wallSeg(G.k1,x0,y0,x0,y1,z0+3,z1-1,matGlass,0.15);
+  wallSeg(G.k1,x1,y0,x1,y1,z0+3,z1-1,matGlass,0.15);
+  for(var x=x0+1.5;x<x1;x+=1.7){
+    box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y0-0.3);
+    box(G.k1,0.3,z1-z0-2,0.5,matCopper,x,(z0+z1)/2,y1+0.3);
+  }
+  var coreX=[AX[22],AX[25]];
+  coreX.forEach(function(cx2){
+    box(G.cores,4,z1-z0,6,matCore,cx2,(z0+z1)/2,cy);
+  });
   box(G.k1,(x1-x0)*0.6,3.2,7,matPent,cx,ROOF1+1.6,cy);
   FLOORS.forEach(function(f,idx){var z=f.z;var pl=beltK1(z);pl.userData.floor=z;
     if(idx%2===0){var lbl=label('Эт.'+f.n+' +'+z.toFixed(2),'md');lbl.position.set(x0-8,z,cy);scene.add(lbl);}});
@@ -423,7 +479,8 @@ function beltK1(z){var x0=K1.x0,x1=K1.x1,y0=K1.y0,y1=K1.y1;return linePts(G.belt
 })();
 
 /* ОСИ */
-(function(){var yb=YMIN-12;
+(function(){
+  var yb=YMIN-12;
   AX.forEach(function(x,i){linePts(G.axes,[[x,yb,0.3],[x,YMAX+6,0.3]],0xff4d4d,0.35);
     var rg=new THREE.Mesh(new THREE.RingGeometry(1.2,1.9,20),new THREE.MeshBasicMaterial({color:0xff4d4d,side:THREE.DoubleSide}));rg.rotation.x=-Math.PI/2;rg.position.set(x,0.4,yb-3);G.axes.add(rg);
     var lb=label('П/'+(i+1),'sm');lb.position.set(x,1.5,yb-3);G.axes.add(lb);});
@@ -439,7 +496,7 @@ var VIEWS={
   front:{p:[CX,46,CY-300],t:[CX,46,CY],tag:'фасад (анфас)'},
   plan:{p:[CX,320,CY+1],t:[CX,0,CY],tag:'план'},
   sideR:{p:[CX+255,150,70],t:[CX-45,30,CY],tag:'бок  · торец П/29'},
-  sideL:{p:[CX-255,150,70],t:[CX+45,30,CY],tag:'бок  · торец П/1'},
+  sideL:{p:[CX-255,150,70],t:[CX+45,30,CY],tag:'бок ◂ · торец П/1'},
   k1:{p:[(K1.x0+K1.x1)/2-90,90,(AY[1]+AY[3])/2-120],t:[(K1.x0+K1.x1)/2,45,(AY[1]+AY[3])/2],tag:'Корпус 1'},
   k2:{p:[(K2_SEC2.x0+K2_SEC1.x1)/2,120,YMIN-220],t:[(K2_SEC2.x0+K2_SEC1.x1)/2,45,waveC((K2_SEC2.x0+K2_SEC1.x1)/2)],tag:'Корпус 2'},
   reset:{p:[CX+150,150,CY+170],t:[CX,40,CY],tag:'изометрия'}
@@ -469,11 +526,11 @@ function applySun(h){var t=(h-6)/14,el=Math.sin(Math.PI*t)*0.7+0.08,az=-1.0+t*2.
   var hh=Math.floor(h),mm=Math.round((h-hh)*60);sunLab.textContent=(hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;}
 sunEl.addEventListener('input',function(){applySun(+sunEl.value);});applySun(17.5);
 
-/* ЛЕГЕНДА СЛОЁВ */
+/* ЛЕГЕНДА */
 var LAYERS=[['k2','Корпус 2 (волна с изломом)',G.k2,true],['k1','Корпус 1 (с выступами)',G.k1,true],['cores','Ядра жесткости',G.cores,true],['stil','Стилобат + ОГС + ВВ1',G.stil,true],['belt','Пояса этажей',G.belt,true],['axes','Оси П/ (3D)',G.axes,false],['landscape','Ландшафт',G.landscape,true],['parking','Паркинг',G.parking,true]];
 var leg=document.getElementById('leg');
-LAYERS.forEach(function(L){var el=document.createElement('div');el.className='ly'+(L[3]?' on':'');
-  el.innerHTML='<span class="sw" style="border-color:'+(['k2','#9aa0a8'],['k1','#b9bdc2'],['cores','#3a4048'],['stil','#8b929b'],['belt','#e7e4dd'],['axes','#ff4d4d'],['landscape','#2d4a3e'],['parking','#1a2028']).find(function(x){return x[0]===L[0];})[1]+'"></span>'+L[1];
+LAYERS.forEach(function(L){var el=document.createElement('div');el.className='tog'+(L[3]?' on':'');
+  el.innerHTML='<span class="lab"><span class="sw"></span>'+L[1]+'</span>';
   el.addEventListener('click',function(){el.classList.toggle('on');L[2].visible=el.classList.contains('on');});leg.appendChild(el);});
 
 /* ТАБЛИЦА ЭТАЖЕЙ */
@@ -486,6 +543,12 @@ FLOORS.forEach(function(f,i){var h=i>0?(f.z-FLOORS[i-1].z):0;
   tr.addEventListener('mouseleave',function(){hiBelt(f.z,false);tr.classList.remove('on');});
   tb.appendChild(tr);});
 var trr=document.createElement('tr');trr.className='roof';trr.innerHTML='<td>Кровля</td><td>+76,95/76,40</td><td>—</td><td></td>';tb.appendChild(trr);
+
+/* БЕГУЩАЯ ЛЕНТА */
+(function(){var el=document.getElementById('stream');var h='';
+  for(var r=0;r<2;r++){AX.forEach(function(x,i){h+='<span><span class="c">П/'+(i+1)+'</span> '+SX[i]+'</span>';});
+    h+='<span><b>Σ 233 400</b></span><span><span class="o">К1 +76,950</span></span><span><span class="o">К2 +76,400</span></span><span>ВВ1 = 34</span><span>ОГС 353/40/9/98</span><span>Геопластика</span><span>Паркинг Части 1+2</span>';}
+  el.innerHTML=h;})();
 
 /* GIZMO */
 var gc=document.getElementById('gizmo'),gx=gc.getContext('2d');
